@@ -1,17 +1,32 @@
-import { createGlobalStyle } from 'styled-components';
+import '../src/font/font.css';
 import reset from 'styled-reset';
+import { createGlobalStyle } from 'styled-components';
 
-const GlobalStyles = createGlobalStyle`
-${reset} // 브라우저 간의 일관성을 위해 css를 초기화 
+const GlobalStyles = createGlobalStyle` 
+${reset}
 
 *{
-    padding: 0';
-    font-family: 
+    padding: 0;
+    font-family: 'Spoqa Han Sans Neo', 'sans-serif';
 }
 
-html, body, #root{
+html {
+  width: 420px;
+  height: 720px;
+  margin-left: 33%;
+  padding: 0;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
+html {
+  font-size: 16px;
+
+}
+
+body {
+  font-size: 1rem; 
+}
 li {
     list-style: none;
   }

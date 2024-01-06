@@ -1,0 +1,35 @@
+.header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 10%;
+}
+
+.header-logo,
+.login-btn {
+  margin-top: 11%;
+}
+
+a.header-logo {
+  font-family: 'Spoqa Han Sans Neo', 'sans-serif';
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: -2px;
+  color: #000;
+  margin-left: 8%;
+}
+
+.login-btn {
+  margin-left: 36%;
+  font-size: 0.9rem;
+  padding: 0.7% 2.6% 1% 2.3%; // 상 우 하 좌
+  border: 0.1px solid #ff8d1d;
+  background-color: #ff8d1d;
+  color: #fefefe;
+  border-radius: 30px;
+  cursor: pointer;
+  letter-spacing: -2px;
+  font-weight: 400;
+}
