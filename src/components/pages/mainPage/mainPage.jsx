@@ -6,7 +6,6 @@ function MainPage() {
   return (
     <>
       <Header />
-      <div className="mainpage">메인 페이지 입니다.</div>
     </>
   );
 }

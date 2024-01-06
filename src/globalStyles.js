@@ -6,7 +6,7 @@ ${reset} // 브라우저 간의 일관성을 위해 css를 초기화
 
 *{
     padding: 0';
-    font-family: 
+    font-family: 'Spoqa Han Sans', 'Spoqa Han Sans JP', 'Sans-serif';
 }
 
 html, body, #root{
