@@ -15,6 +15,20 @@ module.exports = {
       },
     ],
   },
+  rules: [
+    {
+      test: /\.(woff|woff2|eot|ttf|otf)$/,
+      use: [
+        {
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]',
+            outputPath: 'font/',
+          },
+        },
+      ],
+    },
+  ],
   devServer: {
     contentBase: path.resolve(__dirname, 'dist'),
     port: 8080,
