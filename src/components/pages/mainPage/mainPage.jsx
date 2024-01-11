@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import TabBar from '../../ui/tabBar/tabBar.jsx';
 import Header from '../../ui/header/header.jsx';
@@ -6,6 +6,7 @@ import Logo from '../../../asset/image/logo.svg';
 import '../../../asset/sass/pages/mainPage/mainPage.scss';
 
 const StyledMainPage = styled.div`
+  position: relative;
   height: 100vh;
 `;
 
@@ -19,12 +20,6 @@ const SearchInput = styled.input`
 `;
 
 function App() {
-  const [activeTab, setActiveTab] = useState(0);
-
-  const changeTab = (tabIndex) => {
-    setActiveTab(tabIndex);
-  };
-
   return (
     <StyledMainPage className="main-page-container">
       <Header />
@@ -38,7 +33,7 @@ function App() {
         className="search-input-text"
         placeholder="기업 명을 검색하세요"
       />
-      <TabBar activeTab={activeTab} changeTab={changeTab} />
+      <TabBar />
     </StyledMainPage>
   );
 }

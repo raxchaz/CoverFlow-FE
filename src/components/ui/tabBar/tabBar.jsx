@@ -1,29 +1,19 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import Usericon from '../../../asset/image/usericon.svg';
+import Alarmicon from '../../../asset/image/alarmicon.svg';
 import '../../../asset/sass/etc/tabBar/tabBar.scss';
 
-function TabBar(props) {
+const TabBar = () => {
   return (
-    <div className="tab-bar">
-      <button
-        className={`tab-btn ${props.activeTab === 0 ? 'active' : ''}`}
-        onClick={() => props.changeTab(0)}
-      >
-        마이페이지
-      </button>
-      <button
-        className={`tab-btn ${props.activeTab === 1 ? 'active' : ''}`}
-        onClick={() => props.changeTab(1)}
-      >
-        알림
-      </button>
-    </div>
+    <nav className="wrapper">
+      <div>
+        <img className="main-logo" src={Usericon} />
+      </div>
+      <div>
+        <img className="main-logo" src={Alarmicon} />
+      </div>
+    </nav>
   );
-}
-
-TabBar.propTypes = {
-  activeTab: PropTypes.number.isRequired,
-  changeTab: PropTypes.func.isRequired,
 };
 
 export default TabBar;

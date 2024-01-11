@@ -8,11 +8,11 @@ ${reset}
 
 *{
     padding: 0;
-    font-family: 'Spoqa Han Sans Neo', 'sans-serif';
+    font-family: 'Pretendard-Regular';
 }
 
 html {
-  font-family: 'Spoqa Han Sans Neo', 'sans-serif';
+  font-family: 'Pretendard-Regular';
 }
 
 body {
