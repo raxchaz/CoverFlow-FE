@@ -4,11 +4,10 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  gap: 10%;
 }
 
-.header-logo,
-.login-btn {
+a.header-logo,
+a.login-btn {
   margin-top: 11%;
 }
 
@@ -20,7 +19,7 @@ a.header-logo {
   margin-left: 8%;
 }
 
-.login-btn {
+a.login-btn {
   margin-left: 38%;
   font-size: 0.9rem;
   padding: 0.9% 2.6% 0.9% 2.1%; // 상 우 하 좌

@@ -8,6 +8,7 @@ import '../../../asset/sass/pages/mainPage/mainPage.scss';
 const StyledMainPage = styled.div`
   position: relative;
   height: 100vh;
+  background: linear-gradient(to bottom, #ffffff, #fff3e7);
 `;
 
 const SearchInput = styled.input`
@@ -19,7 +20,7 @@ const SearchInput = styled.input`
   margin: 5% 0% 0% 17%;
 `;
 
-function App() {
+function MainPage() {
   return (
     <StyledMainPage className="main-page-container">
       <Header />
@@ -39,4 +40,4 @@ function App() {
   );
 }
 
-export default App;
+export default MainPage;
