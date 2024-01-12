@@ -1,12 +1,11 @@
 import React from 'react';
 import '../../../asset/sass/etc/header/header.scss';
+import Hambar from '../../../asset/image/hambar.svg';
 
 function Header() {
   return (
     <header>
-      <a href="/" className="header-logo">
-        COVERFLOW
-      </a>
+      <img className="hambar" src={Hambar} />
       <a href="/login" className="login-btn">
         로그인 / 가입
       </a>

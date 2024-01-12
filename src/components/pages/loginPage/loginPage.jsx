@@ -29,6 +29,7 @@ function LoginPage() {
         <div className="login-info2">
           <span className="welcome-login2">{`로그인을 진행해주세요 :)`}</span>
         </div>
+        <div className=""></div>
         <img className="kakaologo" src={Kakao} />
         <img className="naverlogo" src={Naver} />
         <img className="googlelogo" src={Google} />

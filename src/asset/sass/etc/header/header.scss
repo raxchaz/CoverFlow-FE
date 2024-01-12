@@ -6,21 +6,17 @@
   width: 100%;
 }
 
-a.header-logo,
+.hambar,
 a.login-btn {
   margin-top: 11%;
 }
 
-a.header-logo {
-  font-size: 1.2rem;
-  font-weight: 600;
-  letter-spacing: -2px;
-  color: #ff8d1d;
-  margin-left: 8%;
+.hambar {
+  margin-left: 11%;
 }
 
 a.login-btn {
-  margin-left: 38%;
+  margin-left: 53%;
   font-size: 0.9rem;
   padding: 0.9% 2.6% 0.9% 2.1%; // 상 우 하 좌
   border: 0.1px solid #ff8d1d;
