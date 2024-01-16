@@ -33,18 +33,20 @@ const TabIcon = styled.div`
 const TabBar = () => {
   return (
     <TabContainer>
-      <TabLink to="/">
-        <TabIcon>
-          <FontAwesomeIcon icon={faHome} size="lg" />
-        </TabIcon>
-        메인페이지
-      </TabLink>
       <TabLink to="/mypage">
         <TabIcon>
           <FontAwesomeIcon icon={faUser} size="lg" />
         </TabIcon>
         마이페이지
       </TabLink>
+
+      <TabLink to="/">
+        <TabIcon>
+          <FontAwesomeIcon icon={faHome} size="lg" />
+        </TabIcon>
+        홈
+      </TabLink>
+
       <TabLink to="/notifications">
         <TabIcon>
           <FontAwesomeIcon icon={faBell} size="lg" />
