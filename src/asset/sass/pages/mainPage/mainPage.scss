@@ -1,0 +1,41 @@
+.main-page-container {
+  width: 420px;
+  margin-left: 36%;
+  padding: 0;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  font-size: 16px;
+  display: block;
+}
+
+.coverflow {
+  font-size: 2rem;
+  font-weight: 800;
+  margin: 45% 0% -44% 26%;
+  letter-spacing: 1px;
+}
+
+.main-info {
+  text-align: center;
+  margin-top: 45%;
+  font-size: 0.8rem;
+  letter-spacing: -1px;
+  color: #ff8d1d;
+  font-weight: 500;
+}
+
+.main-info-bold {
+  font-weight: 600;
+}
+
+.main-logo {
+  margin: 40% 0% -44% 24%;
+}
+
+.search-input-text {
+  letter-spacing: -1px;
+}
+
+.search {
+  margin: 1% 0% -0.6% -7%;
+}

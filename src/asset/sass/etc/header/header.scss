@@ -1,0 +1,29 @@
+.header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.hambar,
+a.login-btn {
+  margin-top: 11%;
+}
+
+.hambar {
+  margin-left: 11%;
+}
+
+a.login-btn {
+  margin-left: 53%;
+  font-size: 0.9rem;
+  padding: 0.9% 2.6% 0.9% 2.1%; // 상 우 하 좌
+  border: 0.1px solid #ff8d1d;
+  background-color: #ff8d1d;
+  color: #fefefe;
+  border-radius: 25px;
+  cursor: pointer;
+  letter-spacing: -1.2px;
+  font-weight: 400;
+}

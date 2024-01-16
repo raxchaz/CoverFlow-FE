@@ -1,0 +1,69 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+# This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradle
+
+name: React CI/CD with Docker
+
+# event trigger
+on:
+  # 해당 브랜치로 push 될 때 실행됩니다.
+  push:
+    branches:
+      - main
+
+  # 해당 브랜치로 PR 될 때 실행됩니다.
+  pull_request:
+    branches:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      ## Repo checkout
+      - name: Checkout source code.
+        uses: actions/checkout@v3
+
+      ## Node version 확인
+      - name: Check Node v
+        run: node -v
+
+      ## 의존 파일 설치
+      - name: Install dependencies
+        run: yarn add
+
+      ## React Build
+      - name: Generate build
+        run: CI='false' yarn build
+
+      ######### CD(Continuous Delivery) ##########
+      ## docker hub에 로그인하고 cofl-front-prod에 이미지를 빌드 & push 합니다.
+      - name: Docker build & push to prod repo
+        if: contains(github.ref, 'main')
+        run: |
+          docker login -u "${{ secrets.DOCKER_USERNAME_PROD }}" -p "${{ secrets.DOCKER_PASSWORD_PROD }}"
+          docker build -f Dockerfile-front-prod -t "${{ secrets.DOCKER_USERNAME_PROD }}"/cofl-front-prod .
+          docker push "${{ secrets.DOCKER_USERNAME_PROD }}"/cofl-front-prod
+
+      ## AWS EC2에 접속하고 production을 배포합니다.
+      - name: Deploy to Prod
+        uses: appleboy/ssh-action@master
+        id: deploy-prod
+        if: contains(github.ref, 'main')
+        with:
+          host: ${{ secrets.HOST_PROD }} # EC2 인스턴스 퍼블릭 DNS
+          username: ${{ secrets.USERNAME }} # 인스턴스를 시작하는 데 사용되는 AMI에 정의된 사용자 이름을 입력합니다.
+          key: ${{ secrets.PRIVATE_KEY }} # 키 페어의 pem 키
+          # sudo docker-compose up -d
+          script: |
+            sudo docker login -u "${{ secrets.DOCKER_USERNAME_PROD }}" -p "${{ secrets.DOCKER_PASSWORD_PROD }}"
+            sudo docker stop cofl_react_prod
+            sudo docker rm -f $(sudo docker ps --filter 'status=exited' -a -q)
+            sudo docker pull "${{ secrets.DOCKER_USERNAME_PROD }}"/cofl-front-prod
+            sudo docker run --name cofl_react_prod -d --log-driver=syslog -p 3001:3001 "${{ secrets.DOCKER_USERNAME_PROD }}"/cofl-front-prod
+            sudo docker image prune -a -f
