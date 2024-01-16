@@ -30,12 +30,40 @@
   font-weight: 100;
 }
 
-.kakaologo {
-  margin: 10% 13% 0 % 0%;
+.fast-login {
+  margin: 10% 0% -14% 40%;
 }
-.googlelogo {
-  margin: 2% 13% 0 % 0%;
+
+hr {
+  border: none;
+  border-top: 1px solid #d9d9d9;
+  text-align: center;
+  overflow: visible;
+  width: 75%;
 }
-.naverlogo {
-  margin: 2% 13% 0 % 0%;
+
+hr:after {
+  content: '또는';
+  font-size: 0.9rem;
+  position: relative;
+  top: -10px;
+  background-color: white;
+  color: #474646;
+  letter-spacing: -1px;
+  padding: 0 10px;
+}
+
+.kakao-login {
+  margin: 13% 0% 2% 14%;
+}
+
+.login-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.google-login,
+.naver-login {
+  margin: 0 10px;
 }
