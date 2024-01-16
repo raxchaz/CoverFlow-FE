@@ -13,11 +13,14 @@ const StyledLoginPage = styled.div`
 `;
 
 function LoginPage() {
+  const handleGoBack = () => {
+    window.history.back();
+  };
   return (
     <>
       <StyledLoginPage className="main-page-container">
         <div className="login">
-          <img className="back" src={Back} />
+          <img className="back" src={Back} onClick={handleGoBack} />
           로그인{' '}
         </div>
 
