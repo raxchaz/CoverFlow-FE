@@ -35,7 +35,7 @@ jobs:
 
       ## 의존 파일 설치
       - name: Install dependencies
-        run: yarn add
+        run: yarn
 
       ## React Build
       - name: Generate build
