@@ -1,8 +1,7 @@
 .main-page-container {
   width: 420px;
-  margin-left: 36%;
-  padding: 0;
-  overflow: hidden;
+  margin: 0 auto;
+  padding: 0.5%;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   font-size: 16px;
   display: block;
@@ -12,15 +11,16 @@
   font-size: 2rem;
   font-weight: 800;
   margin: 45% 0% -44% 26%;
-  letter-spacing: 1px;
+  // letter-spacing: 1px;
+  color: #ff8d1d;
 }
 
 .main-info {
   text-align: center;
   margin-top: 45%;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   letter-spacing: -1px;
-  color: #ff8d1d;
+  color: #000;
   font-weight: 500;
 }
 
@@ -38,4 +38,5 @@
 
 .search {
   margin: 1% 0% -0.6% -7%;
+  cursor: pointer;
 }
