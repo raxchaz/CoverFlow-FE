@@ -46,7 +46,7 @@ const SecondaryMessage = styled.p`
 `;
 
 const FastLoginImage = styled.img`
-  margin: 10% 0% -14% 40%;
+  margin: 10% 0% -19% 39.6%;
 `;
 
 const HorizontalRule = styled.hr`
@@ -54,17 +54,18 @@ const HorizontalRule = styled.hr`
   border-top: 1px solid #d9d9d9;
   text-align: center;
   overflow: visible;
-  width: 75%;
+  width: 73%;
 
   &:after {
     content: '또는';
-    font-size: 0.9rem;
+    font-size: 0.7rem;
     position: relative;
     top: -10px;
     background-color: white;
-    color: #474646;
+    color: #8c8c8c;
     letter-spacing: -1px;
     padding: 0 10px;
+    margin-left: 4.8%;
   }
 `;
 
@@ -104,7 +105,11 @@ function LoginPage() {
           <p className="welcome-login2">{`로그인을 진행해 주세요 :)`}</p>
         </SecondaryMessage>
 
-        <FastLoginImage src={Fastlogin} alt="빠른 로그인" />
+        <FastLoginImage
+          src={Fastlogin}
+          alt="빠른 로그인"
+          className="fast-login"
+        />
 
         <LoginButton href="/oauth2/authorization/kakao">
           <img src={Kakao} alt="Kakao 로그인" className="kakao-login" />
