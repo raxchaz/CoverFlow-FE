@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-// import TabBar from '../../ui/tabBar/tabBar.jsx';
+import TabBar from '../../ui/tabBar/tabBar.jsx';
 import Header from '../../ui/header/header.jsx';
 import Searchicon from '../../../asset/image/searchicon.svg';
 import '../../../asset/sass/pages/mainPage/mainPage.scss';
@@ -8,7 +8,6 @@ import '../../../asset/sass/pages/mainPage/mainPage.scss';
 const StyledMainPage = styled.div`
   position: relative;
   height: 100vh;
-  min-height: 100vh
   background: linear-gradient(to bottom, #ffffff, #fff3e7);
 `;
 
@@ -47,7 +46,7 @@ function MainPage() {
         placeholder="기업 명을 검색하세요"
       />
       <img className="search" src={Searchicon} />
-      {/* <TabBar /> */}
+      <TabBar />
     </StyledMainPage>
   );
 }
