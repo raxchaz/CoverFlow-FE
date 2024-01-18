@@ -3,11 +3,10 @@ import styled from 'styled-components';
 import '../../../asset/sass/pages/loginPage/nicknamePage.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
-import Back from '../../../asset/image/back.svg';
 
 const StyledNicknamePage = styled.div`
   position: relative;
-  height: 100vh;
+  height: auto;
   background-color: #ffffff;
 `;
 
@@ -79,7 +78,7 @@ const StartButton = styled.button`
   letter-spacing: 0.5px;
   font-weight: 800;
   cursor: pointer;
-  margin: 25% 0% 0% 65%;
+  margin: 25% 0% 18% 70%;
   border-radius: 5px;
   outline: none;
 
@@ -102,17 +101,10 @@ function NicknamePage() {
     setIsJobSeeking(false);
   };
 
-  const handleGoBack = () => {
-    window.history.back();
-  };
-
   return (
     <>
       <StyledNicknamePage className="main-page-container">
-        <div className="nickname">
-          <img className="back" src={Back} onClick={handleGoBack} />
-          회원 정보 설정{' '}
-        </div>
+        <div className="nickname">회원 정보 설정 </div>
 
         <div className="nickname-info">
           <span className="welcome-nickname">
@@ -126,7 +118,7 @@ function NicknamePage() {
 
         <div className="nickname-info">
           <span className="welcome-nickname">
-            현재 본인의 상황을 <br /> 체크해주세요
+            현재 본인의 상황을 <br /> 체크해 주세요
           </span>
         </div>
 
@@ -155,6 +147,12 @@ function NicknamePage() {
             직장을 다니고 있어요
           </CheckboxLabel>
         </CheckboxContainer>
+
+        <div className="nickname-info">
+          <span className="welcome-nickname">
+            연령대 및 성별을 <br /> 체크해 주세요
+          </span>
+        </div>
         <StartButton>시작하기</StartButton>
       </StyledNicknamePage>
     </>

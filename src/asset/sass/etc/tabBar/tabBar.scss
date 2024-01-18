@@ -1,0 +1,46 @@
+.wrapper {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 99;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav > div {
+  float: left;
+  width: 10%;
+  text-align: center;
+  background-color: #ffffff;
+  height: auto;
+  line-height: 45px;
+  box-shadow: inset 0px 0.5px 0px 0px rgba(0, 0, 0, 0.2);
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #000;
+}
+
+.icon {
+  font-size: 1.3rem;
+  margin-top: 10%;
+}
+
+.text {
+  margin-top: -9%;
+  margin-bottom: -8px;
+  font-size: 0.7rem;
+  letter-spacing: -1px;
+}
+
+.active {
+  color: #ff8d1d;
+}

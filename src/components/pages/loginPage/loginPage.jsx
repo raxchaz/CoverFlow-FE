@@ -101,7 +101,7 @@ function LoginPage() {
         </WelcomeMessage>
 
         <SecondaryMessage>
-          <p className="welcome-login2">{`로그인을 진행해주세요 :)`}</p>
+          <p className="welcome-login2">{`로그인을 진행해 주세요 :)`}</p>
         </SecondaryMessage>
 
         <FastLoginImage src={Fastlogin} alt="빠른 로그인" />
