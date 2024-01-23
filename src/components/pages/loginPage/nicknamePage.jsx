@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import AgeSelection from '../../ui/ageSelection/ageSelection';
+import GenderSelection from '../../ui/genderSelection/genderSelection';
 import '../../../asset/sass/pages/loginPage/nicknamePage.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
@@ -78,12 +80,12 @@ const StartButton = styled.button`
   letter-spacing: 0.5px;
   font-weight: 800;
   cursor: pointer;
-  margin: 25% 0% 18% 70%;
+  margin: 15% 0% 20% 70%;
   border-radius: 5px;
-  outline: none;
 
   &:hover {
-    background-color: #d36f0c;
+    background-color: #ff8d1d;
+    font-weight: bold;
   }
 `;
 
@@ -110,6 +112,7 @@ function NicknamePage() {
           <span className="welcome-nickname">
             원하는 닉네임을 <br /> 입력해 주세요
           </span>
+          <div className="neccessary"> * 필수</div>
         </div>
 
         <NicknameContainer>
@@ -120,6 +123,7 @@ function NicknamePage() {
           <span className="welcome-nickname">
             현재 본인의 상황을 <br /> 체크해 주세요
           </span>
+          <div className="neccessary"> * 필수</div>
         </div>
 
         <CheckboxContainer>
@@ -152,6 +156,10 @@ function NicknamePage() {
           <span className="welcome-nickname">
             연령대 및 성별을 <br /> 체크해 주세요
           </span>
+          <div className="select"> * 선택</div>
+          <AgeSelection />
+          <div className="separator"></div>
+          <GenderSelection />
         </div>
         <StartButton>시작하기</StartButton>
       </StyledNicknamePage>
