@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 const fetchToken = async (navigate) => {
   try {
-    const response = await axios.get('coverflow.co.kr/api/auth/token');
+    const response = await axios.get('https://coverflow.co.kr/api/auth/token');
     const data = response.data;
 
     console.log('Access Token:', data.accessToken);
