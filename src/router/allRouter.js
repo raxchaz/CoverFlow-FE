@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Route, Routes, BrowserRouter } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 import { LoggedinUser } from '../components/global/utils/apiUtil';
 import {
@@ -49,57 +49,54 @@ const AllRouter = () => {
 
   return (
     <div className="app">
-      <BrowserRouter>
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <MainPage
-                onLogout={handleLogout}
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <MainPage
+              onLogout={handleLogout}
+              authenticated={authenticated}
+              user={loggedinUser}
+            />
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <LoginPage authenticated={authenticated} user={loggedinUser} />
+          }
+        />
+        <Route
+          path="/login/userinfo"
+          element={
+            <NicknamePage authenticated={authenticated} user={loggedinUser} />
+          }
+        />
+        <Route
+          path="/mypage"
+          element={
+            authenticated ? (
+              <MyPage authenticated={authenticated} user={loggedinUser} />
+            ) : (
+              <LoginPage authenticated={authenticated} user={loggedinUser} />
+            )
+          }
+        />
+        <Route
+          path="/notification"
+          element={
+            authenticated ? (
+              <NotificationPage
                 authenticated={authenticated}
                 user={loggedinUser}
               />
-            }
-          />
-          <Route
-            path="/login"
-            element={
+            ) : (
               <LoginPage authenticated={authenticated} user={loggedinUser} />
-            }
-          />
-          <Route
-            path="/login/userinfo"
-            element={
-              <NicknamePage authenticated={authenticated} user={loggedinUser} />
-            }
-          />
-          <Route
-            path="/mypage"
-            element={
-              authenticated ? (
-                <MyPage authenticated={authenticated} user={loggedinUser} />
-              ) : (
-                <LoginPage authenticated={authenticated} user={loggedinUser} />
-              )
-            }
-          />
-
-          <Route
-            path="/notification"
-            element={
-              authenticated ? (
-                <NotificationPage
-                  authenticated={authenticated}
-                  user={loggedinUser}
-                />
-              ) : (
-                <LoginPage authenticated={authenticated} user={loggedinUser} />
-              )
-            }
-          />
-          <Route path="/auth/token" element={<TokenManagement />} />
-        </Routes>
-      </BrowserRouter>
+            )
+          }
+        />
+        <Route path="/auth/token" element={<TokenManagement />} />
+      </Routes>
     </div>
   );
 };
