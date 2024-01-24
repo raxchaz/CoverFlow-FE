@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
-const fetchToken = async (navigate) => {
+const fetchToken = async (history) => {
   try {
     const response = await axios.get('https://coverflow.co.kr/api/auth/token');
     const data = response.data;
@@ -14,7 +14,7 @@ const fetchToken = async (navigate) => {
     localStorage.setItem('refreshToken', data.refreshToken);
 
     if (data.accessToken && data.refreshToken) {
-      navigate('/login/userinfo');
+      history.push('/login/userinfo');
     }
   } catch (error) {
     console.error('토큰을 성공적으로 받지 못했어요', error);
@@ -22,9 +22,9 @@ const fetchToken = async (navigate) => {
 };
 
 const TokenManagement = () => {
-  const navigate = useNavigate();
+  const history = useHistory();
 
-  fetchToken(navigate);
+  fetchToken(history);
 
   return null;
 };
