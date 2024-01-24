@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-import { LoggedinUser } from '../components/pages/loginPage/utils/apiUtil';
+import { LoggedinUser } from '../components/global/utils/apiUtil';
 import {
   ACCESS_TOKEN,
   REFRESH_TOKEN,
