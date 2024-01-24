@@ -118,11 +118,11 @@ function NicknamePage() {
       let genderData = '';
 
       if (selectedGender === '여성') {
-        genderData = 'female';
+        genderData = 'Female';
       } else if (selectedGender === '남성') {
-        genderData = 'male';
+        genderData = 'Male';
       } else {
-        genderData = 'unknown';
+        genderData = 'Unknown';
       }
 
       const ageRange =
@@ -132,7 +132,7 @@ function NicknamePage() {
           '30대': '30-39',
           '40대': '40-49',
           '50대': '50-59',
-          '60대 이상': '60대 이상',
+          '60대 이상': '60-',
         }[selectedAgeKeyword] || selectedAgeKeyword;
 
       const isJobSeekingData = isJobSeeking;
