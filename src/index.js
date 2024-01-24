@@ -16,7 +16,6 @@ root.render(
       <TabBar />
     </BrowserRouter>
   </React.StrictMode>,
-  document.getElementById('root'),
 );
 
 reportWebVitals();

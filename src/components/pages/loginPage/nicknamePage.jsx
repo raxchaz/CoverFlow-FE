@@ -90,6 +90,8 @@ const StartButton = styled.button`
 `;
 
 function NicknamePage() {
+  const [selectedAgeKeyword, setSelectedAgeKeyword] = useState('');
+  const [selectedGender, setSelectedGender] = useState('');
   const [isJobSeeking, setIsJobSeeking] = useState(false);
   const [isEmployed, setIsEmployed] = useState(false);
 
@@ -101,6 +103,64 @@ function NicknamePage() {
   const handleEmployedChange = () => {
     setIsEmployed(!isEmployed);
     setIsJobSeeking(false);
+  };
+
+  const handleSelectAge = (ageKeyword) => {
+    setSelectedAgeKeyword(ageKeyword);
+  };
+
+  const handleSelectGender = (gender) => {
+    setSelectedGender(gender);
+  };
+
+  const sendDataToServer = async () => {
+    try {
+      let genderData = '';
+
+      if (selectedGender === '여성') {
+        genderData = 'female';
+      } else if (selectedGender === '남성') {
+        genderData = 'male';
+      } else {
+        genderData = 'unknown';
+      }
+
+      const ageRange =
+        {
+          '10대': '10-19',
+          '20대': '20-29',
+          '30대': '30-39',
+          '40대': '40-49',
+          '50대': '50-59',
+          '60대 이상': '60대 이상',
+        }[selectedAgeKeyword] || selectedAgeKeyword;
+
+      const isJobSeekingData = isJobSeeking;
+
+      const response = await fetch('http://15.165.1.48:8081', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          gender: genderData,
+          age: ageRange,
+          tag: isJobSeekingData,
+        }),
+      });
+
+      console.log('Server response status:', response.status);
+
+      if (!response.ok) {
+        throw new Error(`HTTP 오류! 상태: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log('서버 응답:', data);
+    } catch (error) {
+      console.error('데이터 전송 중 에러:', error);
+      console.warn('데이터를 가져오지 못했습니다.');
+    }
   };
 
   return (
@@ -157,11 +217,17 @@ function NicknamePage() {
             연령대 및 성별을 <br /> 체크해 주세요
           </span>
           <div className="select"> * 선택</div>
-          <AgeSelection />
+          <AgeSelection
+            selectedAgeKeyword={selectedAgeKeyword}
+            onSelectAge={handleSelectAge}
+          />
           <div className="separator"></div>
-          <GenderSelection />
+          <GenderSelection
+            selectedGender={selectedGender}
+            onSelectGender={handleSelectGender}
+          />
         </div>
-        <StartButton>시작하기</StartButton>
+        <StartButton onClick={sendDataToServer}>시작하기</StartButton>
       </StyledNicknamePage>
     </>
   );

@@ -1,40 +1,41 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import '../genderSelection/genderSelection.scss';
 
-const genderSelection = () => {
-  const [selectedGenderKeyword, setSelectedGenderKeyword] = useState('');
+const GenderSelection = ({ onSelectGender }) => {
+  const [selectedGender, setSelectedGender] = useState('');
 
-  const handleGenderKeywordClick = (genderKeyword) => {
-    setSelectedGenderKeyword(genderKeyword);
+  const handleGenderButtonClick = (gender) => {
+    setSelectedGender(gender);
+    onSelectGender(gender);
   };
 
   return (
     <div className="button-container">
       <button
-        className={selectedGenderKeyword === '여성' ? 'selected' : ''}
-        onClick={() => handleGenderKeywordClick('여성')}
+        className={selectedGender === '여성' ? 'selected' : ''}
+        onClick={() => handleGenderButtonClick('여성')}
       >
-        {' '}
         여성
       </button>
       <button
-        className={selectedGenderKeyword === '남성' ? 'selected' : ''}
-        onClick={() => handleGenderKeywordClick('남성')}
+        className={selectedGender === '남성' ? 'selected' : ''}
+        onClick={() => handleGenderButtonClick('남성')}
       >
-        {' '}
         남성
       </button>
       <button
-        className={
-          selectedGenderKeyword === '밝히고 싶지 않음' ? 'selected' : ''
-        }
-        onClick={() => handleGenderKeywordClick('밝히고 싶지 않음')}
+        className={selectedGender === '밝히고싶지않음' ? 'selected' : ''}
+        onClick={() => handleGenderButtonClick('밝히고싶지않음')}
       >
-        {' '}
         밝히고 싶지 않음
       </button>
     </div>
   );
 };
 
-export default genderSelection;
+GenderSelection.propTypes = {
+  onSelectGender: PropTypes.func.isRequired,
+};
+
+export default GenderSelection;
