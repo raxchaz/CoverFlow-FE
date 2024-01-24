@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import AgeSelection from '../../ui/ageSelection/ageSelection';
+import GenderSelection from '../../ui/genderSelection/genderSelection';
 import '../../../asset/sass/pages/loginPage/nicknamePage.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
@@ -78,16 +80,18 @@ const StartButton = styled.button`
   letter-spacing: 0.5px;
   font-weight: 800;
   cursor: pointer;
-  margin: 25% 0% 18% 70%;
+  margin: 15% 0% 20% 70%;
   border-radius: 5px;
-  outline: none;
 
   &:hover {
-    background-color: #d36f0c;
+    background-color: #ff8d1d;
+    font-weight: bold;
   }
 `;
 
 function NicknamePage() {
+  const [selectedAgeKeyword, setSelectedAgeKeyword] = useState('');
+  const [selectedGender, setSelectedGender] = useState('');
   const [isJobSeeking, setIsJobSeeking] = useState(false);
   const [isEmployed, setIsEmployed] = useState(false);
 
@@ -101,6 +105,64 @@ function NicknamePage() {
     setIsJobSeeking(false);
   };
 
+  const handleSelectAge = (ageKeyword) => {
+    setSelectedAgeKeyword(ageKeyword);
+  };
+
+  const handleSelectGender = (gender) => {
+    setSelectedGender(gender);
+  };
+
+  const sendDataToServer = async () => {
+    try {
+      let genderData = '';
+
+      if (selectedGender === '여성') {
+        genderData = 'Female';
+      } else if (selectedGender === '남성') {
+        genderData = 'Male';
+      } else {
+        genderData = 'Unknown';
+      }
+
+      const ageRange =
+        {
+          '10대': '10-19',
+          '20대': '20-29',
+          '30대': '30-39',
+          '40대': '40-49',
+          '50대': '50-59',
+          '60대 이상': '60-',
+        }[selectedAgeKeyword] || selectedAgeKeyword;
+
+      const isJobSeekingData = isJobSeeking;
+
+      const response = await fetch('http://15.165.1.48:8081/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          gender: genderData,
+          age: ageRange,
+          tag: isJobSeekingData,
+        }),
+      });
+
+      console.log('Server response status:', response.status);
+
+      if (!response.ok) {
+        throw new Error(`HTTP 오류! 상태: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log('서버 응답:', data);
+    } catch (error) {
+      console.error('데이터 전송 중 에러:', error);
+      console.warn('데이터를 가져오지 못했습니다.');
+    }
+  };
+
   return (
     <>
       <StyledNicknamePage className="main-page-container">
@@ -110,6 +172,7 @@ function NicknamePage() {
           <span className="welcome-nickname">
             원하는 닉네임을 <br /> 입력해 주세요
           </span>
+          <div className="neccessary"> * 필수</div>
         </div>
 
         <NicknameContainer>
@@ -120,6 +183,7 @@ function NicknamePage() {
           <span className="welcome-nickname">
             현재 본인의 상황을 <br /> 체크해 주세요
           </span>
+          <div className="neccessary"> * 필수</div>
         </div>
 
         <CheckboxContainer>
@@ -152,8 +216,18 @@ function NicknamePage() {
           <span className="welcome-nickname">
             연령대 및 성별을 <br /> 체크해 주세요
           </span>
+          <div className="select"> * 선택</div>
+          <AgeSelection
+            selectedAgeKeyword={selectedAgeKeyword}
+            onSelectAge={handleSelectAge}
+          />
+          <div className="separator"></div>
+          <GenderSelection
+            selectedGender={selectedGender}
+            onSelectGender={handleSelectGender}
+          />
         </div>
-        <StartButton>시작하기</StartButton>
+        <StartButton onClick={sendDataToServer}>시작하기</StartButton>
       </StyledNicknamePage>
     </>
   );

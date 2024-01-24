@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-import { LoggedinUser } from '../components/pages/loginPage/utils/apiUtil';
+import { LoggedinUser } from '../components/global/utils/apiUtil';
 import {
   ACCESS_TOKEN,
   REFRESH_TOKEN,
@@ -12,6 +12,7 @@ import LoginPage from '../components/pages/loginPage/loginPage';
 import NicknamePage from '../components/pages/loginPage/nicknamePage';
 import MyPage from '../components/pages/myPage/myPage';
 import NotificationPage from '../components/pages/notificationPage/notificationPage';
+import TokenManagement from '../components/global/token/tokenManagement';
 
 const AllRouter = () => {
   const [authenticated, setAuthenticated] = useState(false);
@@ -95,6 +96,7 @@ const AllRouter = () => {
             )
           }
         />
+        <Route path="/auth/token" element={<TokenManagement />} />
       </Routes>
     </div>
   );

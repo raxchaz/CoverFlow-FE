@@ -1,0 +1,26 @@
+.button-container {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 5%;
+}
+
+button {
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+  border-radius: 10px;
+  margin: 5% 10px 0% 0%;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+button.selected {
+  background-color: #ff8d1d;
+  color: #ffffff;
+  font-weight: bold;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+button:not(.selected) {
+  background-color: #cacaca;
+  color: white;
+}
