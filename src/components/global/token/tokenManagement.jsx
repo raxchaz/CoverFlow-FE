@@ -2,31 +2,31 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const fetchToken = async (navigate) => {
-  try {
-    const response = await axios.get('https://coverflow.co.kr/api/auth/token');
-    const data = response.data;
+try {
+const response = await axios.get('https://coverflow.co.kr/api/auth/token');
+const data = response.data;
 
-    console.log('Access Token:', data.accessToken);
-    console.log('Refresh Token:', data.refreshToken);
+console.log('Access Token:', data.accessToken);
+console.log('Refresh Token:', data.refreshToken);
 
-    // 토큰을 로컬 스토리지에 저장
-    localStorage.setItem('accessToken', data.accessToken);
-    localStorage.setItem('refreshToken', data.refreshToken);
+// 토큰을 로컬 스토리지에 저장
+localStorage.setItem('accessToken', data.accessToken);
+localStorage.setItem('refreshToken', data.refreshToken);
 
-    if (data.accessToken && data.refreshToken) {
-      navigate('/login/userinfo');
-    }
-  } catch (error) {
-    console.error('토큰을 성공적으로 받지 못했어요', error);
-  }
+if (data.accessToken && data.refreshToken) {
+  navigate('/login/userinfo');
+}
+} catch (error) {
+console.error('토큰을 성공적으로 받지 못했어요', error);
+}
 };
 
 const TokenManagement = () => {
-  const navigate = useNavigate();
+const navigate = useNavigate();
 
-  fetchToken(navigate);
+fetchToken(navigate);
 
-  return null;
+return null;
 };
 
 export default TokenManagement;
