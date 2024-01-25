@@ -28,23 +28,26 @@ const TokenManagement = () => {
   const location = useLocation();
 
   useEffect(() => {
-    const accessToken = localStorage.getItem('accessToken');
-    const refreshToken = localStorage.getItem('refreshToken');
+    const query = new URLSearchParams(location.search);
+    const encodedAccessToken = query.get('access_token');
+    const encodedRefreshToken = query.get('refresh_token');
 
-    if (accessToken && refreshToken) {
-      const decodedAccessToken = decodeToken(accessToken);
-      const decodedRefreshToken = decodeToken(refreshToken);
+    // 로컬 스토리지에 토큰 저장
+    localStorage.setItem('access_token', encodedAccessToken);
+    localStorage.setItem('refresh_token', encodedRefreshToken);
+
+    if (encodedAccessToken && encodedRefreshToken) {
+      const decodedAccessToken = decodeToken(encodedAccessToken);
+      const decodedRefreshToken = decodeToken(encodedRefreshToken);
+
+      console.log('디코딩된 리프레시 토큰:', decodedRefreshToken);
 
       const userRole = determineUserRole(decodedAccessToken);
 
-      console.log('디코딩된 액세스 토큰:', decodedAccessToken);
-      console.log('디코딩된 리프레시 토큰:', decodedRefreshToken);
-      console.log('사용자 역할:', userRole);
-
-      if (userRole === 'GUEST') {
-        navigate('/login/member-info');
-      } else if (userRole === 'MEMBER' || userRole === 'ADMIN') {
+      if (userRole === 'MEMBER' || userRole === 'ADMIN') {
         navigate(-1); // 이전 페이지로 이동하게 되는 로직
+      } else if (userRole === 'GUEST') {
+        navigate('/login/member-info');
       }
     } else {
       console.error('토큰이 존재하지 않습니다.');
