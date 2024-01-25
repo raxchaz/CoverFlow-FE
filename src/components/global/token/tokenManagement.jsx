@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
-import base64 from 'base-64';
+import { base64 } from 'react-base64';
 
 const decodeToken = (token) => {
   const payload = token.split('.')[1];
