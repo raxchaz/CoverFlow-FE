@@ -1,14 +1,13 @@
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { decode } from 'react-base64';
+import { Base64 } from 'react-base64';
 
 const decodeToken = (token) => {
   const payload = token.split('.')[1];
-  const decodedPayload = decode(payload);
+  const decodedPayload = Base64.decode(payload);
   const decodedToken = JSON.parse(decodedPayload);
   return decodedToken;
 };
-
 const determineUserRole = (decodedToken) => {
   console.log('디코딩된 토큰:', decodedToken);
 
