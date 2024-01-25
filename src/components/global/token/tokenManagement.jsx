@@ -1,32 +1,69 @@
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import base64 from 'base-64';
 
-const fetchToken = async (navigate) => {
-try {
-const response = await axios.get('https://coverflow.co.kr/api/auth/token');
-const data = response.data;
+const decodeToken = (token) => {
+  const payload = token.split('.')[1];
+  const decodedPayload = base64.decode(payload);
+  const decodedToken = JSON.parse(decodedPayload);
+  return decodedToken;
+};
 
-console.log('Access Token:', data.accessToken);
-console.log('Refresh Token:', data.refreshToken);
+const determineUserRole = (decodedToken) => {
+  console.log('디코딩된 토큰:', decodedToken);
 
-// 토큰을 로컬 스토리지에 저장
-localStorage.setItem('accessToken', data.accessToken);
-localStorage.setItem('refreshToken', data.refreshToken);
+  if (decodedToken.role === 'admin') {
+    console.log('관리자로 인식됨');
+    return 'ADMIN';
+  } else if (decodedToken.role === 'member') {
+    console.log('회원으로 인식됨');
+    return 'MEMBER';
+  }
 
-if (data.accessToken && data.refreshToken) {
-  navigate('/login/userinfo');
-}
-} catch (error) {
-console.error('토큰을 성공적으로 받지 못했어요', error);
-}
+  console.log('게스트로 인식됨');
+  return 'GUEST';
+};
+
+const fetchToken = async (navigate, location) => {
+  try {
+    const response = await axios.get('https://coverflow.co.kr/api/auth/token');
+    const data = response.data;
+
+    console.log('액세스 토큰:', data.accessToken);
+    console.log('리프레시 토큰:', data.refreshToken);
+
+    localStorage.setItem('accessToken', data.accessToken);
+    localStorage.setItem('refreshToken', data.refreshToken);
+
+    if (data.accessToken && data.refreshToken) {
+      const payload = data.accessToken.substring(
+        data.accessToken.indexOf('.') + 1,
+        data.accessToken.lastIndexOf('.'),
+      );
+      const decodedToken = decodeToken(base64.decode(payload));
+      const userRole = determineUserRole(decodedToken);
+
+      console.log('디코딩된 토큰:', decodedToken);
+      console.log('사용자 역할:', userRole);
+
+      if (userRole === 'GUEST') {
+        navigate('/login/member-info');
+      } else if (userRole === 'MEMBER' || userRole === 'ADMIN') {
+        navigate(-1); // 이전 페이지로 이동하게 되는 로직
+      }
+    }
+  } catch (error) {
+    console.error('토큰을 성공적으로 받지 못했어요', error);
+  }
 };
 
 const TokenManagement = () => {
-const navigate = useNavigate();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-fetchToken(navigate);
+  fetchToken(navigate, location);
 
-return null;
+  return null;
 };
 
 export default TokenManagement;
