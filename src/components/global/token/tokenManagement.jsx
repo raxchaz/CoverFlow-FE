@@ -1,10 +1,10 @@
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { base64 } from 'react-base64';
+import { decode } from 'react-base64';
 
 const decodeToken = (token) => {
   const payload = token.split('.')[1];
-  const decodedPayload = base64.decode(payload);
+  const decodedPayload = decode(payload);
   const decodedToken = JSON.parse(decodedPayload);
   return decodedToken;
 };
@@ -40,7 +40,7 @@ const fetchToken = async (navigate, location) => {
         data.accessToken.indexOf('.') + 1,
         data.accessToken.lastIndexOf('.'),
       );
-      const decodedToken = decodeToken(base64.decode(payload));
+      const decodedToken = decodeToken(payload);
       const userRole = determineUserRole(decodedToken);
 
       console.log('디코딩된 토큰:', decodedToken);
