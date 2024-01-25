@@ -11,10 +11,10 @@ const decodeToken = (token) => {
 const determineUserRole = (decodedToken) => {
   console.log('디코딩된 토큰:', decodedToken);
 
-  if (decodedToken.role === 'admin') {
+  if (decodedToken.role === 'ADMIN') {
     console.log('관리자로 인식됨');
     return 'ADMIN';
-  } else if (decodedToken.role === 'member') {
+  } else if (decodedToken.role === 'MEMBER') {
     console.log('회원으로 인식됨');
     return 'MEMBER';
   }
