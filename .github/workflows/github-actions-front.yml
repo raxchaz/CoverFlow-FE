@@ -28,6 +28,8 @@ jobs:
       ## Repo checkout
       - name: Checkout source code.
         uses: actions/checkout@v3
+         with:
+         node-version: '20'
 
       ## Node version 확인
       - name: Check Node v
