@@ -8,34 +8,9 @@ import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 
 const StyledNicknamePage = styled.div`
   position: relative;
-  height: auto;
+  height: 100vh;
   background-color: #ffffff;
-`;
-
-const NicknameContainer = styled.div`
-  margin: 2% 0% -2% 0%;
-`;
-
-const CustomInput = styled.input`
-  border: none;
-  border-bottom: 2px solid #d9d9d9;
-  width: calc(80% - 27px);
-  padding: 8px;
-  margin: 5% 0% 0% 10%;
-  font-size: 16px;
-  outline: none;
-
-  &::placeholder {
-    color: #d9d9d9;
-  }
-
-  &:focus {
-    &::placeholder {
-      color: #474646;
-    }
-    border-bottom-color: black;
-    border-bottom: 2px solid black;
-  }
+  overflow-y: auto;
 `;
 
 const CheckboxContainer = styled.div`
@@ -167,17 +142,6 @@ function NicknamePage() {
     <>
       <StyledNicknamePage className="main-page-container">
         <div className="nickname">회원 정보 설정 </div>
-
-        <div className="nickname-info">
-          <span className="welcome-nickname">
-            원하는 닉네임을 <br /> 입력해 주세요
-          </span>
-          <div className="neccessary"> * 필수</div>
-        </div>
-
-        <NicknameContainer>
-          <CustomInput type="text" placeholder="닉네임을 입력하세요" />
-        </NicknameContainer>
 
         <div className="nickname-info">
           <span className="welcome-nickname">
