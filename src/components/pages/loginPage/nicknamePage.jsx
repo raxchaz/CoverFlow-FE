@@ -8,34 +8,9 @@ import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 
 const StyledNicknamePage = styled.div`
   position: relative;
-  height: auto;
+  height: 100vh;
   background-color: #ffffff;
-`;
-
-const NicknameContainer = styled.div`
-  margin: 2% 0% -2% 0%;
-`;
-
-const CustomInput = styled.input`
-  border: none;
-  border-bottom: 2px solid #d9d9d9;
-  width: calc(80% - 27px);
-  padding: 8px;
-  margin: 5% 0% 0% 10%;
-  font-size: 16px;
-  outline: none;
-
-  &::placeholder {
-    color: #d9d9d9;
-  }
-
-  &:focus {
-    &::placeholder {
-      color: #474646;
-    }
-    border-bottom-color: black;
-    border-bottom: 2px solid black;
-  }
+  overflow-y: auto;
 `;
 
 const CheckboxContainer = styled.div`
@@ -84,8 +59,18 @@ const StartButton = styled.button`
   border-radius: 5px;
 
   &:hover {
-    background-color: #ff8d1d;
-    font-weight: bold;
+    background-color: ${(props) => (props.isActive ? '#ff8d1d' : '#ccc')};
+    font-weight: ${(props) => (props.isActive ? 'bold' : 'normal')};
+  }
+
+  &:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+
+    &:hover {
+      background-color: #ccc;
+      font-weight: 800;
+    }
   }
 `;
 
@@ -99,7 +84,6 @@ function NicknamePage() {
     setIsJobSeeking(!isJobSeeking);
     setIsEmployed(false);
   };
-
   const handleEmployedChange = () => {
     setIsEmployed(!isEmployed);
     setIsJobSeeking(false);
@@ -170,17 +154,6 @@ function NicknamePage() {
 
         <div className="nickname-info">
           <span className="welcome-nickname">
-            원하는 닉네임을 <br /> 입력해 주세요
-          </span>
-          <div className="neccessary"> * 필수</div>
-        </div>
-
-        <NicknameContainer>
-          <CustomInput type="text" placeholder="닉네임을 입력하세요" />
-        </NicknameContainer>
-
-        <div className="nickname-info">
-          <span className="welcome-nickname">
             현재 본인의 상황을 <br /> 체크해 주세요
           </span>
           <div className="neccessary"> * 필수</div>
@@ -227,7 +200,13 @@ function NicknamePage() {
             onSelectGender={handleSelectGender}
           />
         </div>
-        <StartButton onClick={sendDataToServer}>시작하기</StartButton>
+        <StartButton
+          onClick={sendDataToServer}
+          isActive={isEmployed || isJobSeeking}
+          disabled={!isEmployed && !isJobSeeking}
+        >
+          시작하기
+        </StartButton>
       </StyledNicknamePage>
     </>
   );
