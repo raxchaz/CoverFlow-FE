@@ -59,8 +59,18 @@ const StartButton = styled.button`
   border-radius: 5px;
 
   &:hover {
-    background-color: #ff8d1d;
-    font-weight: bold;
+    background-color: ${(props) => (props.isActive ? '#ff8d1d' : '#ccc')};
+    font-weight: ${(props) => (props.isActive ? 'bold' : 'normal')};
+  }
+
+  &:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+
+    &:hover {
+      background-color: #ccc;
+      font-weight: 800;
+    }
   }
 `;
 
@@ -74,7 +84,6 @@ function NicknamePage() {
     setIsJobSeeking(!isJobSeeking);
     setIsEmployed(false);
   };
-
   const handleEmployedChange = () => {
     setIsEmployed(!isEmployed);
     setIsJobSeeking(false);
@@ -191,7 +200,13 @@ function NicknamePage() {
             onSelectGender={handleSelectGender}
           />
         </div>
-        <StartButton onClick={sendDataToServer}>시작하기</StartButton>
+        <StartButton
+          onClick={sendDataToServer}
+          isActive={isEmployed || isJobSeeking}
+          disabled={!isEmployed && !isJobSeeking}
+        >
+          시작하기
+        </StartButton>
       </StyledNicknamePage>
     </>
   );
