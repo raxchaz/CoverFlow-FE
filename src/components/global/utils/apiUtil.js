@@ -1,5 +1,5 @@
 import {
-  API_BASE_URL,
+  BASE_URL,
   ACCESS_TOKEN,
 } from '../../pages/loginPage/constants/index.js';
 
@@ -47,7 +47,7 @@ export function LoggedinUser() {
 
   // API 요청이 실패한 경우에 대한 오류 처리
   return request({
-    url: `${API_BASE_URL}/member/`,
+    url: `${BASE_URL}/member/`,
     method: 'GET',
   }).catch((error) => {
     console.error(error);
