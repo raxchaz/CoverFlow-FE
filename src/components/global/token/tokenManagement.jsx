@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Base64 } from 'react-base64';
+import { Base64 } from 'js-base64';
 
 const decodeToken = (token) => {
   const payload = token.split('.')[1];
