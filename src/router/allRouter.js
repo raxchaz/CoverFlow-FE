@@ -66,7 +66,7 @@ const AllRouter = () => {
           }
         />
         <Route
-          path="/login/userinfo"
+          path="/login/member-info"
           element={
             <NicknamePage authenticated={authenticated} user={loggedinUser} />
           }
