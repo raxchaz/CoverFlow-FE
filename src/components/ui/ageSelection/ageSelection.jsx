@@ -6,8 +6,11 @@ const AgeSelection = ({ onSelectAge }) => {
   const [selectedAge, setSelectedAge] = useState('');
 
   const handleAgeKeywordClick = (ageKeyword) => {
-    setSelectedAge(ageKeyword);
-    onSelectAge(ageKeyword); // 선택된 나이를 부모 컴포넌트에 알려줍니다.
+    setSelectedAge((prevSelectedAge) =>
+      prevSelectedAge === ageKeyword ? '' : ageKeyword,
+    );
+
+    onSelectAge(ageKeyword);
   };
 
   return (

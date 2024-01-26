@@ -10,6 +10,10 @@ button {
   border-radius: 10px;
   margin: 5% 10px 0% 0%;
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
+  transition:
+    background-color 0.3s,
+    color 0.3s,
+    box-shadow 0.3s; /* 트랜지션 효과 추가 */
 }
 
 button.selected {
@@ -22,4 +26,9 @@ button.selected {
 button:not(.selected) {
   background-color: #cacaca;
   color: white;
+}
+
+button:hover {
+  background-color: #ff8d1d;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
 }

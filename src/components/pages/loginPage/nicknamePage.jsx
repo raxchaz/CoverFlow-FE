@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import AgeSelection from '../../ui/ageSelection/ageSelection';
 import GenderSelection from '../../ui/genderSelection/genderSelection';
 import '../../../asset/sass/pages/loginPage/nicknamePage.scss';
@@ -80,7 +80,7 @@ function NicknamePage() {
   const [selectedGender, setSelectedGender] = useState('');
   const [isJobSeeking, setIsJobSeeking] = useState(false);
   const [isEmployed, setIsEmployed] = useState(false);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleJobSeekingChange = () => {
     setIsJobSeeking(!isJobSeeking);
@@ -148,7 +148,7 @@ function NicknamePage() {
       console.log('서버 응답:', data);
 
       // 데이터 전송 후 mainpage로 리다이렉트
-      history.push('/');
+      navigate('/');
     } catch (error) {
       console.error('데이터 전송 중 에러:', error);
       console.warn('데이터를 가져오지 못했습니다.');
