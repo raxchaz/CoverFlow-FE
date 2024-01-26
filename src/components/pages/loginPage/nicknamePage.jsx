@@ -121,7 +121,8 @@ function NicknamePage() {
 
       const isJobSeekingData = isJobSeeking;
 
-      const response = await fetch('http://15.165.1.48:8081/', {
+      const response = await fetch('https://coverflow.co.kr/', {
+        mode: 'cors',
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
