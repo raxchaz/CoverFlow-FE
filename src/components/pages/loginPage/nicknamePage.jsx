@@ -142,14 +142,13 @@ function NicknamePage() {
       );
 
       console.log('Server response status:', response.status);
+      
+      const data = await response.json();
+      console.log('서버 응답:', data);
 
       if (!response.ok) {
         throw new Error(`HTTP 오류! 상태: ${response.status}`);
       }
-
-      const data = await response.json();
-      console.log('서버 응답:', data);
-
       // 데이터 전송 후 mainpage로 리다이렉트
       navigate('/');
     } catch (error) {
