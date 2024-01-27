@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import AgeSelection from '../../ui/ageSelection/ageSelection';
 import GenderSelection from '../../ui/genderSelection/genderSelection';
 import '../../../asset/sass/pages/loginPage/nicknamePage.scss';
@@ -47,7 +47,9 @@ const HiddenCheckbox = styled.input`
   cursor: pointer;
 `;
 
-const StartButton = styled.button`
+const StartButton = styled.button.withConfig({
+  shouldForwardProp: (prop) => prop !== 'isActive',
+})`
   background-color: #ff8d1d;
   color: white;
   border: none;
@@ -55,7 +57,7 @@ const StartButton = styled.button`
   font-size: 1rem;
   letter-spacing: 0.5px;
   font-weight: 800;
-  cursor: pointer;
+  cursor: ${(props) => (props.isActive ? 'pointer' : 'not-allowed')};
   margin: 15% 0% 20% 70%;
   border-radius: 5px;
 
@@ -80,7 +82,7 @@ function NicknamePage() {
   const [selectedGender, setSelectedGender] = useState('');
   const [isJobSeeking, setIsJobSeeking] = useState(false);
   const [isEmployed, setIsEmployed] = useState(false);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleJobSeekingChange = () => {
     setIsJobSeeking(!isJobSeeking);
@@ -124,7 +126,7 @@ function NicknamePage() {
       const isJobSeekingData = isJobSeeking;
 
       const response = await fetch(
-        'https://coverflow.co.kr/api/member/save-member-info ',
+        'https://coverflow.co.kr/api/member/save-member-info',
         {
           method: 'POST',
           headers: {
@@ -148,10 +150,11 @@ function NicknamePage() {
       console.log('서버 응답:', data);
 
       // 데이터 전송 후 mainpage로 리다이렉트
-      history.push('/');
+      navigate('/');
     } catch (error) {
       console.error('데이터 전송 중 에러:', error);
       console.warn('데이터를 가져오지 못했습니다.');
+      // 에러 발생 시 사용자에게 알리는 로직 추가 가능
     }
   };
 
@@ -212,6 +215,9 @@ function NicknamePage() {
           onClick={sendDataToServer}
           isActive={isEmployed || isJobSeeking}
           disabled={!isEmployed && !isJobSeeking}
+          style={{
+            backgroundColor: isEmployed || isJobSeeking ? '#ff8d1d' : '',
+          }}
         >
           시작하기
         </StartButton>
