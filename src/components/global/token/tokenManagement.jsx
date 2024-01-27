@@ -9,23 +9,23 @@ const decodeToken = (token) => {
   return JSON.parse(decodedPayload);
 };
 
-// 토큰의 유무로 관리자&멤버인지, 게스트인지 판별합니다.
-const determineUserRole = () => {
-  const accessToken = localStorage.getItem('access_token');
-
-  if (accessToken) {
-    console.log('토큰이 존재합니다.');
-    return 'MEMBER || ADMIN';
-  } else {
-    console.log('토큰이 존재하지 않습니다.');
-    return 'GUEST';
-  }
-};
-
 // URL에 포함되어있는 토큰을 뜯어서 localstorage에 저장하고, 디코딩합니다.
 const TokenManagement = () => {
   const navigate = useNavigate();
   const location = useLocation();
+
+  // 토큰의 권한을 확인하고 관리자&멤버인지, 게스트인지 판별합니다.
+  const determineUserRole = (decodedToken) => {
+    const userRole = decodedToken.role;
+
+    if (userRole === 'MEMBER' || userRole === 'ADMIN') {
+      console.log('토큰이 존재하고 멤버 또는 관리자로 인식됨');
+      return userRole;
+    } else {
+      console.log('토큰이 존재하지 않거나 권한이 없어 GUEST로 인식됨');
+      return 'GUEST';
+    }
+  };
 
   useEffect(() => {
     const query = new URLSearchParams(location.search);
@@ -43,6 +43,8 @@ const TokenManagement = () => {
     const userRole = determineUserRole(decodedAccessToken);
 
     // 첫 로그인이면서 게스트로 인식된 경우, member-info 페이지로 이동합니다.
+    const prevPage = localStorage.getItem('prevPage');
+
     if (userRole === 'GUEST' && !localStorage.getItem('prevPage')) {
       console.log('첫 로그인으로 인식되어 정보 등록 페이지로 이동합니다.');
       navigate('/login/member-info');
@@ -50,7 +52,6 @@ const TokenManagement = () => {
       console.log('멤버 또는 관리자로 인식됨');
       console.log('회원 정보가 존재합니다.');
 
-      const prevPage = localStorage.getItem('prevPage');
       if (prevPage) {
         localStorage.removeItem('prevPage'); // 리다이렉트 후에는 정보를 삭제합니다.
         navigate(prevPage);

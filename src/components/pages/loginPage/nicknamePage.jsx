@@ -163,15 +163,13 @@ const NicknamePage = () => {
           }),
         },
       );
+      const data = await response.json();
+      console.log('서버 응답:', data);
 
       console.log('서버 응답 상태:', response.status);
-
       if (!response.ok) {
         throw new Error(`HTTP 오류! 상태: ${response.status}`);
       }
-
-      const data = await response.json();
-      console.log('서버 응답:', data);
 
       navigate('/');
     } catch (error) {
