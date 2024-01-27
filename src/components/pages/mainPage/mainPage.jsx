@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import TabBar from '../../ui/tabBar/tabBar.jsx';
 import Header from '../../ui/header/header.jsx';
 import Searchicon from '../../../asset/image/searchicon.svg';
+// import Modal from '../../ui/modal/modal.jsx';
 import '../../../asset/sass/pages/mainPage/mainPage.scss';
 
 const StyledMainPage = styled.div`
