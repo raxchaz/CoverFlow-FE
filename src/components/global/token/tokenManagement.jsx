@@ -36,22 +36,38 @@ const TokenManagement = () => {
     localStorage.setItem('access_token', encodedAccessToken);
     localStorage.setItem('refresh_token', encodedRefreshToken);
 
-    if (encodedAccessToken && encodedRefreshToken) {
-      const decodedAccessToken = decodeToken(encodedAccessToken);
-      const decodedRefreshToken = decodeToken(encodedRefreshToken);
+    if (!encodedAccessToken || !encodedRefreshToken) {
+      console.error('토큰이 존재하지 않습니다.');
+      console.log('게스트로 인식됨');
+      navigate('/login');
+      alert('로그인에 실패했습니다. 다시 시도해주세요.');
+      return;
+    }
 
-      console.log('디코딩된 리프레시 토큰:', decodedRefreshToken);
+    const decodedAccessToken = decodeToken(encodedAccessToken);
+    const decodedRefreshToken = decodeToken(encodedRefreshToken);
 
-      const userRole = determineUserRole(decodedAccessToken);
+    console.log('디코딩된 리프레시 토큰:', decodedRefreshToken);
 
-      if (userRole === 'MEMBER' || userRole === 'ADMIN') {
-        navigate(-1); // 이전 페이지로 이동하게 되는 로직
-      } else if (userRole === 'GUEST') {
+    const userRole = determineUserRole(decodedAccessToken);
+
+    if (userRole === 'MEMBER' || userRole === 'ADMIN') {
+      console.log('멤버 또는 관리자로 인식됨');
+
+      // 나이, 성별, 태그 정보의 존재를 확인합니다..
+      const { age, gender, tag } = decodedAccessToken;
+
+      if (age && gender && tag) {
+        console.log('나이, 성별, 태그 정보가 존재합니다.');
+        navigate('/');
+      } else {
+        console.log('나이, 성별, 태그 정보가 존재하지 않습니다.');
         navigate('/login/member-info');
       }
-    } else {
-      console.error('토큰이 존재하지 않습니다.');
-      // 토큰이 없을 경우 예외 처리
+    } else if (userRole === 'GUEST') {
+      console.log('토큰이 존재하지 않아 GUEST로 인식되었습니다.');
+      navigate('/login');
+      alert('로그인에 실패하였습니다. 다시 시도해주세요.');
     }
   }, [navigate, location]);
 

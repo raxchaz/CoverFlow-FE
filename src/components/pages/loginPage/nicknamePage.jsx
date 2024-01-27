@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import AgeSelection from '../../ui/ageSelection/ageSelection';
@@ -6,6 +6,7 @@ import GenderSelection from '../../ui/genderSelection/genderSelection';
 import '../../../asset/sass/pages/loginPage/nicknamePage.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
+import { LoggedinUser } from '../../global/utils/apiUtil';
 
 const StyledNicknamePage = styled.div`
   position: relative;
@@ -13,7 +14,6 @@ const StyledNicknamePage = styled.div`
   background-color: #ffffff;
   overflow-y: auto;
 `;
-
 const CheckboxContainer = styled.div`
   display: flex;
   align-items: center;
@@ -22,7 +22,6 @@ const CheckboxContainer = styled.div`
   width: calc(80% - 25px);
   padding: 2%;
 `;
-
 const CheckboxLabel = styled.label`
   display: flex;
   align-items: center;
@@ -33,20 +32,17 @@ const CheckboxLabel = styled.label`
 
   color: #000;
 `;
-
 const Icon = styled(FontAwesomeIcon)`
   margin-right: 7px;
   width: 20px;
   height: 20px;
   color: ${(props) => (props.checked ? '#22932D' : '#d9d9d9')};
 `;
-
 const HiddenCheckbox = styled.input`
   position: absolute;
   opacity: 0;
   cursor: pointer;
 `;
-
 const StartButton = styled.button.withConfig({
   shouldForwardProp: (prop) => prop !== 'isActive',
 })`
@@ -101,6 +97,22 @@ function NicknamePage() {
     setSelectedGender(gender);
   };
 
+  useEffect(() => {
+    const checkLoginStatus = async () => {
+      try {
+        const loggedInUser = await LoggedinUser();
+
+        if (!loggedInUser || !loggedInUser.loggedIn) {
+          navigate('/login');
+        }
+      } catch (error) {
+        console.error('Error checking login status:', error);
+      }
+    };
+
+    checkLoginStatus();
+  }, [navigate]);
+
   const sendDataToServer = async () => {
     try {
       let genderData = '';
@@ -123,7 +135,13 @@ function NicknamePage() {
           '60대 이상': '60-',
         }[selectedAgeKeyword] || selectedAgeKeyword;
 
-      const isJobSeekingData = isJobSeeking;
+      let tagData = '';
+
+      if (isJobSeeking) {
+        tagData = '취준생';
+      } else if (isEmployed) {
+        tagData = '현직자';
+      }
 
       const response = await fetch(
         'https://coverflow.co.kr/api/member/save-member-info',
@@ -136,25 +154,25 @@ function NicknamePage() {
           body: JSON.stringify({
             gender: genderData,
             age: ageRange,
-            tag: isJobSeekingData,
+            tag: tagData,
+            accessToken: localStorage.getItem('ACCESS_TOKEN'),
           }),
         },
       );
 
       console.log('Server response status:', response.status);
-      
-      const data = await response.json();
-      console.log('서버 응답:', data);
 
       if (!response.ok) {
         throw new Error(`HTTP 오류! 상태: ${response.status}`);
       }
-      // 데이터 전송 후 mainpage로 리다이렉트
+
+      const data = await response.json();
+      console.log('서버 응답:', data);
+
       navigate('/');
     } catch (error) {
       console.error('데이터 전송 중 에러:', error);
       console.warn('데이터를 가져오지 못했습니다.');
-      // 에러 발생 시 사용자에게 알리는 로직 추가 가능
     }
   };
 
