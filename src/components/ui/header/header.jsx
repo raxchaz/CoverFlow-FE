@@ -28,7 +28,7 @@ function Header() {
     <header>
       <img className="hambar" src={Hambar} />
       {isLoggedIn ? (
-        <img className="loginuser" src={Loginuser} />
+        <img className="loginuser" src={Loginuser} alt="로그인 유저 아이콘" />
       ) : (
         <a href="/login" className="login-btn">
           로그인 / 가입

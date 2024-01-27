@@ -8,7 +8,7 @@ const request = async (options) => {
     'Content-type': 'application/json',
   });
 
-  // 엑세스 토큰이 존재한다면, 인증 절차 실행
+  // 엑세스 토큰이 존재한다면, 인증 절차를 실행합니다.
   if (localStorage.getItem(ACCESS_TOKEN)) {
     headers.append(
       'Authorization',
@@ -32,21 +32,25 @@ const request = async (options) => {
   );
 };
 
-// 사용자가 로그인을 하지 않았거나 로그인 후에 엑세스 토큰을 받지 못한 상황에 에러 발생
-export function LoggedinUser() {
-  if (!localStorage.getItem(ACCESS_TOKEN)) {
-    return Promise.reject(new Error('토큰이 존재하지 않습니다.'));
-  } else {
-    window.location.href = '/';
-    alert('잘못된 접근입니다.');
-  }
+export async function LoggedinUser() {
+  try {
+    if (!localStorage.getItem(ACCESS_TOKEN)) {
+      throw new Error('토큰이 존재하지 않습니다.');
+    } else {
+      window.location.href = '/';
+      alert('잘못된 접근입니다.');
+    }
 
-  // API 요청이 실패한 경우에 대한 오류 처리
-  return request({
-    url: `${BASE_URL}/member/`,
-    method: 'GET',
-  }).catch((error) => {
+    const response = await request({
+      url: `${BASE_URL}/member/`,
+      method: 'GET',
+    });
+
+    // API 요청이 성공한 경우 사용자 정보를 반환하고 콘솔에 메시지를 출력합니다.
+    console.log('사용자 정보를 성공적으로 가져왔습니다.');
+    return response;
+  } catch (error) {
     console.error(error);
     throw new Error('사용자 정보를 가져오는데 실패했습니다.');
-  });
+  }
 }
