@@ -144,7 +144,7 @@ function NicknamePage() {
         },
       );
 
-      const data = await response.json();
+      const data = await response.text();
       console.log('서버 응답:', data);
 
       if (!response.ok) {
