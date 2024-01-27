@@ -11,6 +11,10 @@ function Header() {
     checkLoggedInStatus();
   }, []);
 
+  useEffect(() => {
+    console.log('isLoggedIn:', isLoggedIn);
+  }, [isLoggedIn]);
+
   const checkLoggedInStatus = async () => {
     try {
       await LoggedinUser();
