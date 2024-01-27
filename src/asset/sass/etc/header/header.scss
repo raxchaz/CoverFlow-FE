@@ -16,11 +16,10 @@ a.login-btn {
   margin-left: 11%;
 }
 
-a.login-btn,
-.loginuser {
+a.login-btn {
   margin-left: 53%;
   font-size: 0.9rem;
-  padding: 0.9% 2.6% 0.9% 2.1%; // 상 우 하 좌
+  padding: 0.9% 2.6% 0.9% 2.1%;
   border: 0.1px solid #ff8d1d;
   background-color: #ff8d1d;
   color: #fefefe;
@@ -28,4 +27,11 @@ a.login-btn,
   cursor: pointer;
   letter-spacing: -1.2px;
   font-weight: 400;
+}
+
+.loginuser {
+  background: none;
+  border: none;
+  padding: 0;
+  margin-left: 57%;
 }
