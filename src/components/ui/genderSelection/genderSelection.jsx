@@ -6,7 +6,10 @@ const GenderSelection = ({ onSelectGender }) => {
   const [selectedGender, setSelectedGender] = useState('');
 
   const handleGenderButtonClick = (gender) => {
-    setSelectedGender(gender);
+    setSelectedGender((prevSelectedGender) =>
+      prevSelectedGender === gender ? '' : gender,
+    );
+
     onSelectGender(gender);
   };
 
