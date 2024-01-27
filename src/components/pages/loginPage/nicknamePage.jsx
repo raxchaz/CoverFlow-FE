@@ -43,6 +43,7 @@ const HiddenCheckbox = styled.input`
   opacity: 0;
   cursor: pointer;
 `;
+
 const StartButton = styled.button.withConfig({
   shouldForwardProp: (prop) => prop !== 'isActive',
 })`
@@ -73,7 +74,7 @@ const StartButton = styled.button.withConfig({
   }
 `;
 
-function NicknamePage() {
+const NicknamePage = () => {
   const [selectedAgeKeyword, setSelectedAgeKeyword] = useState('');
   const [selectedGender, setSelectedGender] = useState('');
   const [isJobSeeking, setIsJobSeeking] = useState(false);
@@ -83,10 +84,13 @@ function NicknamePage() {
   const handleJobSeekingChange = () => {
     setIsJobSeeking(!isJobSeeking);
     setIsEmployed(false);
+    localStorage.setItem('tagData', isJobSeeking ? '' : '취준생');
   };
+
   const handleEmployedChange = () => {
     setIsEmployed(!isEmployed);
     setIsJobSeeking(false);
+    localStorage.setItem('tagData', isEmployed ? '' : '현직자');
   };
 
   const handleSelectAge = (ageKeyword) => {
@@ -106,7 +110,7 @@ function NicknamePage() {
           navigate('/login');
         }
       } catch (error) {
-        console.error('Error checking login status:', error);
+        console.error('로그인 상태 확인 중 오류:', error);
       }
     };
 
@@ -160,7 +164,7 @@ function NicknamePage() {
         },
       );
 
-      console.log('Server response status:', response.status);
+      console.log('서버 응답 상태:', response.status);
 
       if (!response.ok) {
         throw new Error(`HTTP 오류! 상태: ${response.status}`);
@@ -171,7 +175,7 @@ function NicknamePage() {
 
       navigate('/');
     } catch (error) {
-      console.error('데이터 전송 중 에러:', error);
+      console.error('데이터 전송 중 오류:', error);
       console.warn('데이터를 가져오지 못했습니다.');
     }
   };
@@ -242,6 +246,6 @@ function NicknamePage() {
       </StyledNicknamePage>
     </>
   );
-}
+};
 
 export default NicknamePage;
