@@ -2,31 +2,19 @@ import React, { useState, useEffect } from 'react';
 import '../../../asset/sass/etc/header/header.scss';
 import Hambar from '../../../asset/image/hambar.svg';
 import Loginuser from '../../../asset/image/loginuser.svg';
-import { LoggedinUser } from '../../global/utils/apiUtil';
+import { ACCESS_TOKEN } from '../../pages/loginPage/constants/index.js';
 
 function Header() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    checkLoggedInStatus();
+    const token = localStorage.getItem(ACCESS_TOKEN);
+    setIsLoggedIn(!!token);
   }, []);
-
-  useEffect(() => {
-    console.log('isLoggedIn:', isLoggedIn);
-  }, [isLoggedIn]);
-
-  const checkLoggedInStatus = async () => {
-    try {
-      await LoggedinUser();
-      setIsLoggedIn(true);
-    } catch (error) {
-      setIsLoggedIn(false);
-    }
-  };
 
   return (
     <header>
-      <img className="hambar" src={Hambar} />
+      <img className="hambar" src={Hambar} alt="메뉴" />
       {isLoggedIn ? (
         <img className="loginuser" src={Loginuser} alt="로그인 유저 아이콘" />
       ) : (
