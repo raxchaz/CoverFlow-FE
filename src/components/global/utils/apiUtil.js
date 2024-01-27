@@ -8,7 +8,7 @@ const request = async (options) => {
     'Content-type': 'application/json',
   });
 
-  // 엑세스 토큰이 존재한다면, 인증 절차를 실행합니다.
+  // 엑세스 토큰이 존재한다면, 인증 절차를 진행합니다
   if (localStorage.getItem(ACCESS_TOKEN)) {
     headers.append(
       'Authorization',
@@ -18,12 +18,11 @@ const request = async (options) => {
 
   const defaults = { headers };
   options = Object.assign({}, defaults, options);
-  // default 객체는 기본적인 요청 설정을 담고 있는 부분!
 
   return fetch(options.url, options).then((response) =>
     response.json().then((json) => {
       if (!response.ok) {
-        const error = new Error(json.message || '요청이 실패했습니다.');
+        const error = new Error(json.message || '요청 처리 실패.');
         error.response = response;
         throw error;
       }
@@ -32,25 +31,18 @@ const request = async (options) => {
   );
 };
 
-export async function LoggedinUser() {
-  try {
-    if (!localStorage.getItem(ACCESS_TOKEN)) {
-      throw new Error('토큰이 존재하지 않습니다.');
-    } else {
-      window.location.href = '/';
-      alert('잘못된 접근입니다.');
-    }
+// 사용자가 로그인 되어있는지 확인하고, 사용자 데이터를 가져오는 함수
+export function LoggedinUser() {
+  if (!localStorage.getItem(ACCESS_TOKEN)) {
+    return Promise.reject(new Error('토큰이 존재하지 않습니다.'));
+  }
 
-    const response = await request({
-      url: `${BASE_URL}/member/`,
-      method: 'GET',
-    });
-
-    // API 요청이 성공한 경우 사용자 정보를 반환하고 콘솔에 메시지를 출력합니다.
-    console.log('사용자 정보를 성공적으로 가져왔습니다.');
-    return response;
-  } catch (error) {
+  // 사용자 정보를 가져오기 위한 API 요청
+  return request({
+    url: `${BASE_URL}/member/`,
+    method: 'GET',
+  }).catch((error) => {
     console.error(error);
     throw new Error('사용자 정보를 가져오는데 실패했습니다.');
-  }
+  });
 }

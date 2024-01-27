@@ -81,16 +81,16 @@ const LoginButton = styled.a`
 `;
 
 function LoginPage() {
+  useEffect(() => {
+    if (localStorage.getItem(ACCESS_TOKEN)) {
+      alert('잘못된 접근입니다.');
+      window.location.href = '/'; // 메인 페이지로 리다이렉트
+    }
+  }, []);
+
   const handleGoBack = () => {
     window.history.back();
   };
-
-  useEffect(() => {
-    if (localStorage.getItem(ACCESS_TOKEN)) {
-      window.location.href = '/';
-      alert('잘못된 접근입니다.');
-    }
-  }, []);
 
   return (
     <>
