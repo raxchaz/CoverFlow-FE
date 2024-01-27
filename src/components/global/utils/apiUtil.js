@@ -32,10 +32,13 @@ const request = async (options) => {
   );
 };
 
-// 로그인한 사용자의 엑세스 토큰이 설정되어 있지 않을 경우 에러 발생  [비동기]
+// 사용자가 로그인을 하지 않았거나 로그인 후에 엑세스 토큰을 받지 못한 상황에 에러 발생
 export function LoggedinUser() {
   if (!localStorage.getItem(ACCESS_TOKEN)) {
     return Promise.reject(new Error('토큰이 존재하지 않습니다.'));
+  } else {
+    window.location.href = '/';
+    alert('잘못된 접근입니다.');
   }
 
   // API 요청이 실패한 경우에 대한 오류 처리
