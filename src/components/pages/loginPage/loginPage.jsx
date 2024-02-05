@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import Back from '../../../asset/image/back.svg';
 import Naver from '../../../asset/image/naver.svg';
@@ -6,6 +6,7 @@ import Google from '../../../asset/image/google.svg';
 import Kakao from '../../../asset/image/kakao.svg';
 import Fastlogin from '../../../asset/image/fastlogin.svg';
 import '../../../asset/sass/pages/loginPage/loginPage.scss';
+import { ACCESS_TOKEN } from '../../pages/loginPage/constants/index.js';
 
 const StyledLoginPage = styled.div`
   position: relative;
@@ -80,6 +81,13 @@ const LoginButton = styled.a`
 `;
 
 function LoginPage() {
+  useEffect(() => {
+    if (localStorage.getItem(ACCESS_TOKEN)) {
+      alert('잘못된 접근입니다.');
+      window.location.href = '/'; // 메인 페이지로 리다이렉트
+    }
+  }, []);
+
   const handleGoBack = () => {
     window.history.back();
   };

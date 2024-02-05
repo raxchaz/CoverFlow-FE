@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import Back from '../../../asset/image/back.svg';
 import '../../../asset/sass/pages/myPage/myPage.scss';
+import BackButton from '../../ui/button/backButton/backButton';
 
 const StyledMyPage = styled.div`
   position: relative;
@@ -18,12 +18,6 @@ const MypageHeading = styled.div`
   font-weight: 600;
 `;
 
-const BackButton = styled.img`
-  margin-left: -20%;
-  margin-right: 32%;
-  cursor: pointer;
-`;
-
 function Mypage() {
   const handleGoBack = () => {
     window.history.back();
@@ -33,13 +27,8 @@ function Mypage() {
     <>
       <StyledMyPage className="main-page-container">
         <MypageHeading>
-          <BackButton
-            className="back"
-            src={Back}
-            onClick={handleGoBack}
-            alt="뒤로 가기"
-          />
-          마이페이지{' '}
+          <BackButton onClick={handleGoBack} />
+          마이페이지
         </MypageHeading>
       </StyledMyPage>
     </>
