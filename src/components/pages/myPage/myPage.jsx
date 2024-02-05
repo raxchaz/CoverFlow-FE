@@ -1,11 +1,12 @@
-// import React, { useEffect } from 'react';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import '../../../asset/sass/pages/myPage/myPage.scss';
-import BackButton from '../../ui/button/backButton/backButton';
-import { ACCESS_TOKEN } from '../../pages/loginPage/constants/index.js';
-
+import BackButton from '../../ui/button/backButton/backButton.jsx';
+import {
+  ACCESS_TOKEN,
+  REFRESH_TOKEN,
+} from '../../pages/loginPage/constants/index.js';
 
 const StyledMyPage = styled.div`
   position: relative;
@@ -20,12 +21,6 @@ const MypageHeading = styled.div`
   margin-top: 10%;
   letter-spacing: -1px;
   font-weight: 600;
-`;
-
-const BackButton = styled.img`
-  margin-left: -25%;
-  margin-right: 25%;
-  cursor: pointer;
 `;
 
 const LogoutButton = styled.button`
@@ -43,17 +38,18 @@ const LogoutButton = styled.button`
 `;
 
 function Mypage() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem(ACCESS_TOKEN);
+  useEffect(() => {
+    const token = localStorage.getItem(ACCESS_TOKEN);
 
-  //   if (!token) {
-  //     // 로그인 전에 마이페이지의 URL을 저장
-  //     localStorage.setItem('mypageURL', '/mypage');
-  //     navigate('/login');
-  //   }
-  // }, [navigate]);
+    if (!token) {
+      // 로그인 전에 마이페이지의 URL을 저장
+      localStorage.setItem('mypageURL', '/mypage');
+      navigate('/login');
+    }
+  }, [navigate]);
 
   const handleGoBack = () => {
     navigate(-1);
@@ -64,8 +60,36 @@ function Mypage() {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem(ACCESS_TOKEN);
-    navigate('/');
+    fetch('https://coverflow.co.kr/api/member/logout', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          localStorage.removeItem(ACCESS_TOKEN);
+          localStorage.removeItem(REFRESH_TOKEN);
+          setIsLoggedIn(false);
+          navigate('/');
+        } else {
+          response
+            .json()
+            .then((err) => {
+              console.error(
+                '로그아웃 실패:',
+                err.message || '서버에서 에러가 발생했습니다.',
+              );
+            })
+            .catch((jsonError) => {
+              console.error('응답 파싱 에러:', jsonError);
+            });
+        }
+      })
+      .catch((error) => {
+        console.error('네트워크 에러 또는 요청 실패:', error.message);
+      });
   };
 
   return (
@@ -74,14 +98,17 @@ function Mypage() {
         <MypageHeading>
           <BackButton
             className="back"
-            src={Back}
+            // src={Back}
             onClick={handleGoBack}
             alt="뒤로 가기"
           />
           <span className="mypage-title" onClick={handleMypageClick}>
-            마이페이지
+            마이페이지{' '}
+          </span>
         </MypageHeading>
-        <LogoutButton onClick={handleLogout}>로그아웃</LogoutButton>
+        {isLoggedIn && (
+          <LogoutButton onClick={handleLogout}>로그아웃</LogoutButton>
+        )}
       </StyledMyPage>
     </>
   );
