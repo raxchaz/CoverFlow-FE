@@ -119,18 +119,18 @@ function LoginPage() {
           className="fast-login"
         />
 
-        <LoginButton href="http://15.165.1.48:8081/oauth2/authorization/kakao">
+        <LoginButton href="/oauth2/authorization/kakao">
           <img src={Kakao} alt="Kakao 로그인" className="kakao-login" />
         </LoginButton>
 
         <HorizontalRule />
 
         <LoginButtonsContainer>
-          <LoginButton href="http://15.165.1.48:8081/oauth2/authorization/naver">
+          <LoginButton href="/oauth2/authorization/naver">
             <img src={Naver} alt="Naver 로그인" className="naver-login" />
           </LoginButton>
 
-          <LoginButton href="http://15.165.1.48:8081/oauth2/authorization/google">
+          <LoginButton href="/oauth2/authorization/google">
             <img src={Google} alt="Google 로그인" className="google-login" />
           </LoginButton>
         </LoginButtonsContainer>
