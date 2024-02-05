@@ -2,9 +2,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import Back from '../../../asset/image/back.svg';
 import '../../../asset/sass/pages/myPage/myPage.scss';
+import BackButton from '../../ui/button/backButton/backButton';
 import { ACCESS_TOKEN } from '../../pages/loginPage/constants/index.js';
+
 
 const StyledMyPage = styled.div`
   position: relative;
@@ -79,7 +80,6 @@ function Mypage() {
           />
           <span className="mypage-title" onClick={handleMypageClick}>
             마이페이지
-          </span>
         </MypageHeading>
         <LogoutButton onClick={handleLogout}>로그아웃</LogoutButton>
       </StyledMyPage>

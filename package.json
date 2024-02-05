@@ -23,6 +23,7 @@
     "react-router-dom": "^6.21.3",
     "react-scripts": "5.0.1",
     "react-split-pane": "^0.1.92",
+    "recoil": "^0.7.7",
     "sass": "^1.69.7",
     "styled-components": "^6.1.6",
     "styled-reset": "^4.5.2",
