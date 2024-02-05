@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Back from '../../../asset/image/back.svg';
 import '../../../asset/sass/pages/notificationPage/notificationPage.scss';
+import { ACCESS_TOKEN } from '../../pages/loginPage/constants/index.js';
 
 const StyledNotificationPage = styled.div`
   position: relative;
@@ -19,14 +21,30 @@ const NotificationHeading = styled.div`
 `;
 
 const BackButton = styled.img`
-  margin-left: -30%;
-  margin-right: 32%;
+  margin-left: -25%;
+  margin-right: 25%;
   cursor: pointer;
 `;
 
 function NotificationPage() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem(ACCESS_TOKEN);
+
+    if (!token) {
+      // 로그인 전에 알림 페이지의 URL을 저장
+      localStorage.setItem('notificationPageURL', '/notification');
+      navigate('/login');
+    }
+  }, [navigate]);
+
   const handleGoBack = () => {
-    window.history.back();
+    navigate(-1);
+  };
+
+  const handleNotificationClick = () => {
+    navigate('/notification');
   };
 
   return (
@@ -38,7 +56,7 @@ function NotificationPage() {
           onClick={handleGoBack}
           alt="뒤로 가기"
         />
-        알림{' '}
+        <span onClick={handleNotificationClick}>알림</span>
       </NotificationHeading>
     </StyledNotificationPage>
   );
