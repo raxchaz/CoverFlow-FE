@@ -3,7 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import '../../../asset/sass/etc/header/header.scss';
 import Hambar from '../../../asset/image/hambar.svg';
 import Loginuser from '../../../asset/image/loginuser.svg';
-import { ACCESS_TOKEN } from '../../pages/loginPage/constants/index.js';
+import {
+  ACCESS_TOKEN,
+  REFRESH_TOKEN,
+} from '../../pages/loginPage/constants/index.js';
 
 function Header() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -27,9 +30,41 @@ function Header() {
     } else if (menu === '상점') {
       navigate('/store');
     } else if (menu === '로그아웃') {
-      localStorage.removeItem(ACCESS_TOKEN);
-      setIsLoggedIn(false);
+      logout();
     }
+  };
+
+  const logout = () => {
+    fetch('https://coverflow.co.kr/api/member/logout', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          localStorage.removeItem(ACCESS_TOKEN);
+          localStorage.removeItem(REFRESH_TOKEN);
+          setIsLoggedIn(false);
+          navigate('/');
+        } else {
+          response
+            .json()
+            .then((err) => {
+              console.error(
+                '로그아웃 실패:',
+                err.message || '서버에서 에러가 발생했습니다.',
+              );
+            })
+            .catch((jsonError) => {
+              console.error('응답 파싱 에러:', jsonError);
+            });
+        }
+      })
+      .catch((error) => {
+        console.error('네트워크 에러 또는 요청 실패:', error.message);
+      });
   };
 
   useEffect(() => {
@@ -39,7 +74,6 @@ function Header() {
       }
     }
 
-    // 드롭다운 컴포넌트의 외부를 클릭했을 때, 드롭다운 메뉴가 종료되는 로직입니다.
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
