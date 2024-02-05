@@ -6,6 +6,7 @@ import NicknamePage from '../components/pages/loginPage/nicknamePage';
 import MyPage from '../components/pages/myPage/myPage';
 import NotificationPage from '../components/pages/notificationPage/notificationPage';
 import TokenManagement from '../components/global/token/tokenManagement';
+import Store from '../components/pages/storePage/storePage';
 
 const AllRouter = () => {
   return (
@@ -17,6 +18,7 @@ const AllRouter = () => {
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/notification" element={<NotificationPage />} />
         <Route path="/auth/token" element={<TokenManagement />} />
+        <Route path="/store" element={<Store />} />
       </Routes>
     </div>
   );
