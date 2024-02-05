@@ -39,6 +39,7 @@ a.login-btn {
 }
 
 .dropdown-menu {
+  position: relative;
   ul {
     list-style: none;
     padding: 0;
@@ -46,12 +47,14 @@ a.login-btn {
     background: #fff;
     border-radius: 4px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 200px;
+    max-height: 300px;
+    border-radius: 10px;
   }
 
   .dropdown-item {
     padding: 10px 20px;
     cursor: pointer;
-
     &:hover {
       background-color: #f2f2f2;
     }
