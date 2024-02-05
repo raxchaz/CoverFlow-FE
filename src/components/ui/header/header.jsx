@@ -35,7 +35,7 @@ function Header() {
   };
 
   const logout = () => {
-    fetch('https://coverflow.co.kr/api/member/logout', {
+    fetch('http://15.165.1.48:8081/api/member/logout', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
