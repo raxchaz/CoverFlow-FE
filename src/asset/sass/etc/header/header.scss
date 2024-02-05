@@ -30,8 +30,36 @@ a.login-btn {
 }
 
 .loginuser {
+  list-style-type: none;
   background: none;
   border: none;
   padding: 0;
-  margin-left: 57%;
+  margin-left: 67%;
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .dropdown-item {
+    padding: 10px 20px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #f2f2f2;
+    }
+  }
+
+  .dropdown-divider {
+    border: 0;
+    margin: 0.5rem 0;
+    border-top: 1px solid #eee;
+  }
 }

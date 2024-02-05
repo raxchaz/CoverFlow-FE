@@ -6,7 +6,6 @@ import '../../../asset/sass/pages/myPage/myPage.scss';
 import BackButton from '../../ui/button/backButton/backButton';
 import { ACCESS_TOKEN } from '../../pages/loginPage/constants/index.js';
 
-
 const StyledMyPage = styled.div`
   position: relative;
   height: 100vh;
@@ -22,11 +21,11 @@ const MypageHeading = styled.div`
   font-weight: 600;
 `;
 
-const BackButton = styled.img`
-  margin-left: -25%;
-  margin-right: 25%;
-  cursor: pointer;
-`;
+// const BackButton = styled.img`
+//   margin-left: -25%;
+//   margin-right: 25%;
+//   cursor: pointer;
+// `;
 
 const LogoutButton = styled.button`
   font-size: 14px;
@@ -74,12 +73,13 @@ function Mypage() {
         <MypageHeading>
           <BackButton
             className="back"
-            src={Back}
+            // src={Back}
             onClick={handleGoBack}
             alt="뒤로 가기"
           />
           <span className="mypage-title" onClick={handleMypageClick}>
-            마이페이지
+            마이페이지{' '}
+          </span>
         </MypageHeading>
         <LogoutButton onClick={handleLogout}>로그아웃</LogoutButton>
       </StyledMyPage>
