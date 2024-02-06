@@ -41,6 +41,7 @@ const LogoutButton = styled.button`
 
 function Mypage() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [nickname, setNickname] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -50,8 +51,25 @@ function Mypage() {
       // 로그인 전에 마이페이지의 URL을 저장
       localStorage.setItem('mypageURL', '/mypage');
       navigate('/login');
+    } else {
+      loadUserNickname();
     }
   }, [navigate]);
+
+  const loadUserNickname = () => {
+    fetch(`${API_BASE_URL}api/member/find-member`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setNickname(data.nickname);
+      })
+      .catch((error) => console.error('회원 정보 불러오기 실패:', error));
+  };
 
   const handleGoBack = () => {
     navigate(-1);
@@ -107,6 +125,7 @@ function Mypage() {
           <span className="mypage-title" onClick={handleMypageClick}>
             마이페이지{' '}
           </span>
+          {isLoggedIn && <div>닉네임: {nickname}</div>}
         </MypageHeading>
         {isLoggedIn && (
           <LogoutButton onClick={handleLogout}>로그아웃</LogoutButton>
