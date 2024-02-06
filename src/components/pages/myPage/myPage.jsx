@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import '../../../asset/sass/pages/myPage/myPage.scss';
-import BackButton from '../../ui/button/backButton/backButton.jsx';
+import Back from '../../../asset/image/back.svg';
 import {
   ACCESS_TOKEN,
   REFRESH_TOKEN,
+  BASE_URL_DEV,
 } from '../../pages/loginPage/constants/index.js';
 
+/* 스타일 컴포넌트 정의 */
 const StyledMyPage = styled.div`
   position: relative;
   height: 100vh;
@@ -37,30 +39,52 @@ const LogoutButton = styled.button`
   cursor: pointer;
 `;
 
+/* ========================================================= */
+
 function Mypage() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [nickname, setNickname] = useState('');
+  const [rewardCount, setRewardCount] = useState(0);
   const navigate = useNavigate();
 
+  /* 사용자의 토큰이 존재한다면, 사용자의 정보를 가져옵니다. */
   useEffect(() => {
     const token = localStorage.getItem(ACCESS_TOKEN);
 
     if (!token) {
-      // 로그인 전에 마이페이지의 URL을 저장
       localStorage.setItem('mypageURL', '/mypage');
       navigate('/login');
+    } else {
+      loadUserData();
     }
   }, [navigate]);
 
+  /* 뒤로가기 눌렀을 경우, 한 페이지 뒤로 가는 로직입니다. */
   const handleGoBack = () => {
     navigate(-1);
   };
 
-  const handleMypageClick = () => {
-    navigate('/mypage');
+  /* 사용자의 닉네임과 붕어빵 개수를 불러옵니다. */
+  const loadUserData = () => {
+    fetch(`${BASE_URL_DEV}/api/member/find-member`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setNickname(data.nickname);
+        setRewardCount(data.fishShapedBun);
+      })
+      .catch((error) => console.error('회원 정보 불러오기 실패:', error));
   };
 
+  /* 로그아웃 버튼을 클릭했을 경우, 서버로 로그아웃 API를 요청한 후, 
+      클라이언트 측에서 리프레쉬 토큰과 엑세스 토큰을 삭제하고 메인 페이지로 돌아갑니다. */
   const handleLogout = () => {
-    fetch('http://15.165.1.48:8081/api/member/logout', {
+    fetch(`${BASE_URL_DEV}/api/member/logout`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -92,19 +116,21 @@ function Mypage() {
       });
   };
 
+  /* ========================================================= */
+
   return (
     <>
       <StyledMyPage className="main-page-container">
         <MypageHeading>
-          <BackButton
+          <img
             className="back"
-            // src={Back}
+            src={Back}
             onClick={handleGoBack}
             alt="뒤로 가기"
           />
-          <span className="mypage-title" onClick={handleMypageClick}>
-            마이페이지{' '}
-          </span>
+          <span className="mypage-title">마이페이지 </span>
+          {isLoggedIn && <div>{nickname}님의 마이페이지</div>}
+          {isLoggedIn && <div>현재 붕어빵 {rewardCount} 개</div>}
         </MypageHeading>
         {isLoggedIn && (
           <LogoutButton onClick={handleLogout}>로그아웃</LogoutButton>

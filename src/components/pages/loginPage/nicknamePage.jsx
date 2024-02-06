@@ -6,7 +6,7 @@ import GenderSelection from '../../ui/genderSelection/genderSelection';
 import '../../../asset/sass/pages/loginPage/nicknamePage.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
-import { LoggedinUser } from '../../global/utils/apiUtil';
+import { ACCESS_TOKEN, BASE_URL_DEV } from '../loginPage/constants/index.js';
 
 const StyledNicknamePage = styled.div`
   position: relative;
@@ -102,15 +102,11 @@ const NicknamePage = () => {
   };
 
   useEffect(() => {
-    const checkLoginStatus = async () => {
-      try {
-        const loggedInUser = await LoggedinUser();
+    const checkLoginStatus = () => {
+      const token = localStorage.getItem(ACCESS_TOKEN);
 
-        if (!loggedInUser || !loggedInUser.loggedIn) {
-          navigate('/login');
-        }
-      } catch (error) {
-        console.error('로그인 상태 확인 중 오류:', error);
+      if (!token) {
+        navigate('/login');
       }
     };
 
@@ -148,12 +144,12 @@ const NicknamePage = () => {
       }
 
       const response = await fetch(
-        'http://localhost:8081/api/member/save-member-info',
+        `${BASE_URL_DEV}/api/member/save-member-info`,
         {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+            Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
           },
           body: JSON.stringify({
             gender: genderData,

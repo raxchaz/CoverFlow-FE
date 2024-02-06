@@ -20,12 +20,6 @@ const NotificationHeading = styled.div`
   font-weight: 600;
 `;
 
-const BackButton = styled.img`
-  margin-left: -25%;
-  margin-right: 25%;
-  cursor: pointer;
-`;
-
 function NotificationPage() {
   const navigate = useNavigate();
 
@@ -50,7 +44,7 @@ function NotificationPage() {
   return (
     <StyledNotificationPage className="main-page-container">
       <NotificationHeading>
-        <BackButton
+        <img
           className="back"
           src={Back}
           onClick={handleGoBack}
