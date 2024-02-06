@@ -159,7 +159,6 @@ const NicknamePage = () => {
             gender: genderData,
             age: ageRange,
             tag: tagData,
-            accessToken: localStorage.getItem('ACCESS_TOKEN'),
           }),
         },
       );
