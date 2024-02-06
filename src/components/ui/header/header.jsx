@@ -7,7 +7,7 @@ import Loginuser from '../../../asset/image/loginuser.svg';
 import {
   ACCESS_TOKEN,
   REFRESH_TOKEN,
-  API_BASE_URL,
+  BASE_URL_DEV,
 } from '../../pages/loginPage/constants/index.js';
 
 /* ========================================================= */
@@ -29,7 +29,7 @@ function Header() {
   /* API를 통해 회원 정보를 조회하여, 유저의 붕어빵 개수를 가져옵니다. */
   useEffect(() => {
     const fishRewardCount = () => {
-      fetch(`${API_BASE_URL}api/member/find-member`, {
+      fetch(`${BASE_URL_DEV}/api/member/find-member`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -101,7 +101,7 @@ function Header() {
   /* 드롭다운 내에 있는 로그아웃 버튼을 클릭했을 경우, 서버로 API 요청을 보낸 후 
       엑세스 토큰과 리프레쉬 토큰 삭제를 진행하고, 메인 페이지로 리다이렉트 되도록 하는 로직입니다. */
   const logout = () => {
-    fetch(`${API_BASE_URL}/api/member/logout`, {
+    fetch(`${BASE_URL_DEV}/api/member/logout`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

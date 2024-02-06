@@ -6,7 +6,7 @@ import Back from '../../../asset/image/back.svg';
 import {
   ACCESS_TOKEN,
   REFRESH_TOKEN,
-  API_BASE_URL,
+  BASE_URL_DEV,
 } from '../../pages/loginPage/constants/index.js';
 
 /* 스타일 컴포넌트 정의 */
@@ -66,7 +66,7 @@ function Mypage() {
 
   /* 사용자의 닉네임과 붕어빵 개수를 불러옵니다. */
   const loadUserData = () => {
-    fetch(`${API_BASE_URL}api/member/find-member`, {
+    fetch(`${BASE_URL_DEV}/api/member/find-member`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -76,7 +76,7 @@ function Mypage() {
       .then((response) => response.json())
       .then((data) => {
         setNickname(data.nickname);
-        setRewardCount(data.rewardCount);
+        setRewardCount(data.fishShapedBun);
       })
       .catch((error) => console.error('회원 정보 불러오기 실패:', error));
   };
@@ -84,7 +84,7 @@ function Mypage() {
   /* 로그아웃 버튼을 클릭했을 경우, 서버로 로그아웃 API를 요청한 후, 
       클라이언트 측에서 리프레쉬 토큰과 엑세스 토큰을 삭제하고 메인 페이지로 돌아갑니다. */
   const handleLogout = () => {
-    fetch(`${API_BASE_URL}api/member/logout`, {
+    fetch(`${BASE_URL_DEV}/api/member/logout`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
