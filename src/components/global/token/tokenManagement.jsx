@@ -1,6 +1,10 @@
 import { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Base64 } from 'js-base64';
+import {
+  ACCESS_TOKEN,
+  REFRESH_TOKEN,
+} from '../../pages/loginPage/constants/index.js';
 
 // 주어진 토큰을 디코딩하고 페이로드를 추출하여 JS 객체로 반환합니다.
 const decodeToken = (token) => {
@@ -29,11 +33,11 @@ const TokenManagement = () => {
 
   useEffect(() => {
     const query = new URLSearchParams(location.search);
-    const encodedAccessToken = query.get('access_token');
-    const encodedRefreshToken = query.get('refresh_token');
+    const encodedAccessToken = query.get(ACCESS_TOKEN);
+    const encodedRefreshToken = query.get(REFRESH_TOKEN);
 
-    localStorage.setItem('access_token', encodedAccessToken);
-    localStorage.setItem('refresh_token', encodedRefreshToken);
+    localStorage.setItem(ACCESS_TOKEN, encodedAccessToken);
+    localStorage.setItem(REFRESH_TOKEN, encodedRefreshToken);
 
     const decodedAccessToken = decodeToken(encodedAccessToken);
     const decodedRefreshToken = decodeToken(encodedRefreshToken);
