@@ -35,7 +35,7 @@ function Header() {
   };
 
   const logout = () => {
-    fetch('http://15.165.1.48:8081/api/member/logout', {
+    fetch('http://localhost:8081/api/member/logout', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
