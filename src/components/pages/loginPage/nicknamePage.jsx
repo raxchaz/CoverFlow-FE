@@ -148,7 +148,7 @@ const NicknamePage = () => {
       }
 
       const response = await fetch(
-        'http://15.165.1.48:8081/api/member/save-member-info',
+        'http://localhost:8081/api/member/save-member-info',
         {
           method: 'POST',
           headers: {
