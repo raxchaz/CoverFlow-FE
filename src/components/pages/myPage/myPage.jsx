@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import '../../../asset/sass/pages/myPage/myPage.scss';
-import BackButton from '../../ui/button/backButton/backButton.jsx';
+import Back from '../../../asset/image/back.svg';
+// import BackButton from '../../ui/button/backButton/backButton.jsx';
 import {
   ACCESS_TOKEN,
   REFRESH_TOKEN,
@@ -97,9 +98,9 @@ function Mypage() {
     <>
       <StyledMyPage className="main-page-container">
         <MypageHeading>
-          <BackButton
+          <img
             className="back"
-            // src={Back}
+            src={Back}
             onClick={handleGoBack}
             alt="뒤로 가기"
           />

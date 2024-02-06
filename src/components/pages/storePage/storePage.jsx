@@ -20,12 +20,6 @@ const StoreHeading = styled.div`
   font-weight: 600;
 `;
 
-const BackButton = styled.img`
-  margin-left: -25%;
-  margin-right: 25%;
-  cursor: pointer;
-`;
-
 function StorePage() {
   const navigate = useNavigate();
 
@@ -49,7 +43,7 @@ function StorePage() {
   return (
     <StyledStorePage className="main-page-container">
       <StoreHeading>
-        <BackButton
+        <img
           className="back"
           src={Back}
           onClick={handleGoBack}

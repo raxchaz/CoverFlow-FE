@@ -14,6 +14,7 @@ function Header() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
+  const overlayRef = useRef(null); // 오버레이를 위한 ref 추가
 
   useEffect(() => {
     const token = localStorage.getItem(ACCESS_TOKEN);
@@ -36,7 +37,7 @@ function Header() {
   };
 
   const logout = () => {
-    fetch(`${API_BASE_URL}api/member/logout`, {
+    fetch(`${API_BASE_URL}/api/member/logout`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -70,7 +71,11 @@ function Header() {
 
   useEffect(() => {
     function handleClickOutside(event) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target) &&
+        !(overlayRef.current && overlayRef.current.contains(event.target))
+      ) {
         setIsDropdownOpen(false);
       }
     }
@@ -82,49 +87,60 @@ function Header() {
   }, []);
 
   return (
-    <header>
-      <img className="hambar" src={Hambar} alt="메뉴" />
-      {isLoggedIn ? (
-        <div className="user-icon-container" ref={dropdownRef}>
-          <img
-            className="loginuser"
-            src={Loginuser}
-            alt="로그인 유저 아이콘"
-            onClick={handleUserIconClick}
-          />
-          {isDropdownOpen && (
-            <div className="dropdown-menu">
-              <ul>
-                <li
-                  className="dropdown-item"
-                  onClick={() => handleMenuClick('마이페이지')}
-                >
-                  마이페이지
-                </li>
-                <hr className="dropdown-divider" />
-                <li
-                  className="dropdown-item"
-                  onClick={() => handleMenuClick('상점')}
-                >
-                  상점
-                </li>
-                <hr className="dropdown-divider" />
-                <li
-                  className="dropdown-item"
-                  onClick={() => handleMenuClick('로그아웃')}
-                >
-                  로그아웃
-                </li>
-              </ul>
-            </div>
-          )}
-        </div>
-      ) : (
-        <a href="/login" className="login-btn">
-          로그인 / 가입
-        </a>
+    <>
+      {isDropdownOpen && (
+        <div
+          className="overlay"
+          ref={overlayRef}
+          onClick={() => setIsDropdownOpen(false)}
+        ></div>
       )}
-    </header>
+      <header>
+        <img className="hambar" src={Hambar} alt="메뉴" />
+        {isLoggedIn ? (
+          <div className="user-icon-container" ref={dropdownRef}>
+            <img
+              className="loginuser"
+              src={Loginuser}
+              alt="로그인 유저 아이콘"
+              onClick={handleUserIconClick}
+            />
+            {isDropdownOpen && (
+              <div className="dropdown-menu">
+                <ul>
+                  <hr className="up-hr" />
+                  <li
+                    className="dropdown-item"
+                    onClick={() => handleMenuClick('마이페이지')}
+                  >
+                    마이페이지
+                  </li>
+                  <hr />
+                  <li
+                    className="dropdown-item"
+                    onClick={() => handleMenuClick('상점')}
+                  >
+                    상점
+                  </li>
+                  <hr />
+                  <li
+                    className="dropdown-item"
+                    onClick={() => handleMenuClick('로그아웃')}
+                  >
+                    로그아웃
+                  </li>
+                  <hr className="down-hr" />
+                </ul>
+              </div>
+            )}
+          </div>
+        ) : (
+          <a href="/login" className="login-btn">
+            로그인 / 가입
+          </a>
+        )}
+      </header>
+    </>
   );
 }
 
