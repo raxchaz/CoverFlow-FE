@@ -6,7 +6,10 @@ import Google from '../../../asset/image/google.svg';
 import Kakao from '../../../asset/image/kakao.svg';
 import Fastlogin from '../../../asset/image/fastlogin.svg';
 import '../../../asset/sass/pages/loginPage/loginPage.scss';
-import { ACCESS_TOKEN } from '../../pages/loginPage/constants/index.js';
+import {
+  ACCESS_TOKEN,
+  API_BASE_URL,
+} from '../../pages/loginPage/constants/index.js';
 
 const StyledLoginPage = styled.div`
   position: relative;
@@ -119,18 +122,18 @@ function LoginPage() {
           className="fast-login"
         />
 
-        <LoginButton href="http://15.165.1.48:8081/oauth2/authorization/kakao">
+        <LoginButton href={`${API_BASE_URL}oauth2/authorization/kakao`}>
           <img src={Kakao} alt="Kakao 로그인" className="kakao-login" />
         </LoginButton>
 
         <HorizontalRule />
 
         <LoginButtonsContainer>
-          <LoginButton href="http://15.165.1.48:8081/oauth2/authorization/naver">
+          <LoginButton href={`${API_BASE_URL}oauth2/authorization/naver`}>
             <img src={Naver} alt="Naver 로그인" className="naver-login" />
           </LoginButton>
 
-          <LoginButton href="http://15.165.1.48:8081/oauth2/authorization/google">
+          <LoginButton href={`${API_BASE_URL}oauth2/authorization/google`}>
             <img src={Google} alt="Google 로그인" className="google-login" />
           </LoginButton>
         </LoginButtonsContainer>

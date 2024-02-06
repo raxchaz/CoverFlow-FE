@@ -6,6 +6,7 @@ import BackButton from '../../ui/button/backButton/backButton.jsx';
 import {
   ACCESS_TOKEN,
   REFRESH_TOKEN,
+  API_BASE_URL,
 } from '../../pages/loginPage/constants/index.js';
 
 const StyledMyPage = styled.div`
@@ -60,7 +61,7 @@ function Mypage() {
   };
 
   const handleLogout = () => {
-    fetch('http://15.165.1.48:8081/api/member/logout', {
+    fetch(`${API_BASE_URL}api/member/logout`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

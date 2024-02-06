@@ -6,6 +6,7 @@ import Loginuser from '../../../asset/image/loginuser.svg';
 import {
   ACCESS_TOKEN,
   REFRESH_TOKEN,
+  API_BASE_URL,
 } from '../../pages/loginPage/constants/index.js';
 
 function Header() {
@@ -35,7 +36,7 @@ function Header() {
   };
 
   const logout = () => {
-    fetch('http://localhost:8081/api/member/logout', {
+    fetch(`${API_BASE_URL}api/member/logout`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
