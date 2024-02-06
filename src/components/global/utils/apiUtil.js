@@ -8,7 +8,7 @@ const request = async (options) => {
     'Content-type': 'application/json',
   });
 
-  // 엑세스 토큰이 존재한다면, 인증 절차를 진행합니다
+  /* 엑세스 토큰이 존재한다면, 인증 절차를 진행합니다 */
   if (localStorage.getItem(ACCESS_TOKEN)) {
     headers.append(
       'Authorization',
@@ -28,7 +28,7 @@ const request = async (options) => {
   );
 };
 
-// 사용자가 로그인 되어있는지 확인하고, 사용자 데이터를 가져오는 함수
+/* 사용자가 로그인 되어있는지 확인하고, 사용자 데이터를 가져오는 함수 */
 export function LoggedinUser() {
   if (!localStorage.getItem(ACCESS_TOKEN)) {
     return Promise.reject(new Error('토큰이 존재하지 않습니다.'));
