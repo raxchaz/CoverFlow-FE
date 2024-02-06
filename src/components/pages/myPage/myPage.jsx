@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import '../../../asset/sass/pages/myPage/myPage.scss';
 import Back from '../../../asset/image/back.svg';
-// import BackButton from '../../ui/button/backButton/backButton.jsx';
 import {
   ACCESS_TOKEN,
   REFRESH_TOKEN,
@@ -42,13 +41,13 @@ const LogoutButton = styled.button`
 function Mypage() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [nickname, setNickname] = useState('');
+  const [rewardCount, setRewardCount] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem(ACCESS_TOKEN);
 
     if (!token) {
-      // 로그인 전에 마이페이지의 URL을 저장
       localStorage.setItem('mypageURL', '/mypage');
       navigate('/login');
     } else {
@@ -67,6 +66,7 @@ function Mypage() {
       .then((response) => response.json())
       .then((data) => {
         setNickname(data.nickname);
+        setRewardCount(data.rewardCount);
       })
       .catch((error) => console.error('회원 정보 불러오기 실패:', error));
   };
@@ -125,7 +125,8 @@ function Mypage() {
           <span className="mypage-title" onClick={handleMypageClick}>
             마이페이지{' '}
           </span>
-          {isLoggedIn && <div>닉네임: {nickname}</div>}
+          {isLoggedIn && <div>{nickname}님의 마이페이지</div>}
+          {isLoggedIn && <div>현재 붕어빵 {rewardCount} 개</div>}
         </MypageHeading>
         {isLoggedIn && (
           <LogoutButton onClick={handleLogout}>로그아웃</LogoutButton>

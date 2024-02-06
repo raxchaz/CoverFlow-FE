@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../../asset/sass/etc/header/header.scss';
 import Hambar from '../../../asset/image/hambar.svg';
+import Reward from '../../../asset/image/reward.svg';
 import Loginuser from '../../../asset/image/loginuser.svg';
 import {
   ACCESS_TOKEN,
@@ -12,17 +13,68 @@ import {
 function Header() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [rewardCount, setRewardCount] = useState(0);
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
-  const overlayRef = useRef(null); // 오버레이를 위한 ref 추가
+  const overlayRef = useRef(null);
 
   useEffect(() => {
     const token = localStorage.getItem(ACCESS_TOKEN);
     setIsLoggedIn(!!token);
   }, []);
 
+  useEffect(() => {
+    const fetchRewardCount = () => {
+      fetch(`${API_BASE_URL}api/member/find-member`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
+        },
+      })
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw new Error('붕어빵 개수를 가져오는 데 실패했어요.');
+          }
+        })
+        .then((data) => {
+          setRewardCount(data.count);
+        })
+        .catch((error) => {
+          console.error('API 요청 실패:', error);
+        });
+    };
+
+    if (isLoggedIn) {
+      fetchRewardCount();
+    }
+  }, [isLoggedIn]);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target) &&
+        !(overlayRef.current && overlayRef.current.contains(event.target))
+      ) {
+        setIsDropdownOpen(false);
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   const handleUserIconClick = () => {
     setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const handleRewardClick = () => {
+    navigate('/store');
   };
 
   const handleMenuClick = (menu) => {
@@ -69,36 +121,21 @@ function Header() {
       });
   };
 
-  useEffect(() => {
-    function handleClickOutside(event) {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target) &&
-        !(overlayRef.current && overlayRef.current.contains(event.target))
-      ) {
-        setIsDropdownOpen(false);
-      }
-    }
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
-
   return (
     <>
-      {isDropdownOpen && (
-        <div
-          className="overlay"
-          ref={overlayRef}
-          onClick={() => setIsDropdownOpen(false)}
-        ></div>
-      )}
       <header>
         <img className="hambar" src={Hambar} alt="메뉴" />
         {isLoggedIn ? (
           <div className="user-icon-container" ref={dropdownRef}>
+            <div className="reward-fish">
+              <img
+                className="reward"
+                src={Reward}
+                alt="붕어빵 아이콘"
+                onClick={handleRewardClick}
+              />
+            </div>
+            <div className="reward-count">{rewardCount}</div>
             <img
               className="loginuser"
               src={Loginuser}
