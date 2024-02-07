@@ -9,6 +9,7 @@ import MyPage from '../components/pages/myPage/myPage';
 import NotificationPage from '../components/pages/notificationPage/notificationPage';
 import TokenManagement from '../components/global/token/tokenManagement';
 import Store from '../components/pages/storePage/storePage';
+import SearchPage from '../components/pages/mainPage/searchPage.jsx';
 
 const AllRouter = () => {
   useEffect(() => {
@@ -30,6 +31,7 @@ const AllRouter = () => {
         <Route path="/notification" element={<NotificationPage />} />
         <Route path="/auth/token" element={<TokenManagement />} />
         <Route path="/store" element={<Store />} />
+        <Route path="/search-company" element={<SearchPage />} />
       </Routes>
     </div>
   );
