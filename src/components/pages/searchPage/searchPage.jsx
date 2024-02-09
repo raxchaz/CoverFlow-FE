@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import Back from '../../../asset/image/back.svg';
 import Searchicon from '../../../asset/image/searchicon.svg';
 import Plus from '../../../asset/image/plus.svg';
 import Warning from '../../../asset/image/warning.svg';
 import { BASE_URL } from '../loginPage/constants';
 import '../../../asset/sass/pages/searchPage/searchPage.scss';
-import { StyledPage, Heading } from '../../../styledComponent.js';
+import { StyledPage } from '../../../styledComponent.js';
+import TitleHeader from '../../ui/header/titleHeader.jsx';
 
 const SearchInput = styled.input`
   width: 300px;
@@ -108,15 +108,8 @@ function SearchPage() {
 
   return (
     <StyledPage className="main-page-container">
-      <Heading>
-        <img
-          className="back"
-          src={Back}
-          onClick={handleGoBack}
-          alt="뒤로 가기"
-        />
-        <span>검색</span>
-      </Heading>
+      <TitleHeader pageTitle="기업 검색" handleGoBack={handleGoBack} />
+
       <SearchInput
         type="text"
         className="search-input-text"

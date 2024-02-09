@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Back from '../../../asset/image/back.svg';
 import '../../../asset/sass/pages/notificationPage/notificationPage.scss';
 import { ACCESS_TOKEN } from '../../pages/loginPage/constants/index.js';
-import { StyledPage, Heading } from '../../../styledComponent.js';
+import { StyledPage } from '../../../styledComponent.js';
+import TitleHeader from '../../ui/header/titleHeader.jsx';
 
 function NotificationPage() {
   const navigate = useNavigate();
@@ -22,21 +22,9 @@ function NotificationPage() {
     navigate(-1);
   };
 
-  const handleNotificationClick = () => {
-    navigate('/notification');
-  };
-
   return (
     <StyledPage className="main-page-container">
-      <Heading>
-        <img
-          className="back"
-          src={Back}
-          onClick={handleGoBack}
-          alt="뒤로 가기"
-        />
-        <span onClick={handleNotificationClick}>알림</span>
-      </Heading>
+      <TitleHeader pageTitle="알림" handleGoBack={handleGoBack} />
     </StyledPage>
   );
 }

@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import '../../../asset/sass/pages/myPage/myPage.scss';
-import Back from '../../../asset/image/back.svg';
-import { StyledPage, Heading } from '../../../styledComponent.js';
+import { StyledPage } from '../../../styledComponent.js';
+import TitleHeader from '../../ui/header/titleHeader.jsx';
 import {
   ACCESS_TOKEN,
   REFRESH_TOKEN,
@@ -107,17 +107,9 @@ function Mypage() {
   return (
     <>
       <StyledPage className="main-page-container">
-        <Heading>
-          <img
-            className="back"
-            src={Back}
-            onClick={handleGoBack}
-            alt="뒤로 가기"
-          />
-          <span className="mypage-title">마이페이지 </span>
-          {isLoggedIn && <div>{nickname}님의 마이페이지</div>}
-          {isLoggedIn && <div>현재 붕어빵 {rewardCount} 개</div>}
-        </Heading>
+        <TitleHeader pageTitle="마이 페이지" handleGoBack={handleGoBack} />
+        {isLoggedIn && <div>{nickname}님의 마이페이지</div>}
+        {isLoggedIn && <div>현재 붕어빵 {rewardCount} 개</div>}
         {isLoggedIn && (
           <LogoutButton onClick={handleLogout}>로그아웃</LogoutButton>
         )}

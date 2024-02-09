@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Back from '../../../asset/image/back.svg';
 import '../../../asset/sass/pages/searchPage/companyRegistPage.scss';
 import { ACCESS_TOKEN } from '../../pages/loginPage/constants/index.js';
-import { StyledPage, Heading } from '../../../styledComponent.js';
+import { StyledPage } from '../../../styledComponent.js';
+import TitleHeader from '../../ui/header/titleHeader.jsx';
 
 function CompanyRegistPage() {
   const navigate = useNavigate();
@@ -23,16 +23,7 @@ function CompanyRegistPage() {
 
   return (
     <StyledPage className="main-page-container">
-      <Heading>
-        <img
-          className="back"
-          src={Back}
-          onClick={handleGoBack}
-          alt="뒤로 가기"
-        />
-        <span className="title">기업 등록</span>
-      </Heading>
-
+      <TitleHeader pageTitle="기업 등록" handleGoBack={handleGoBack} />
       <input type="text" className="input-field" placeholder="입력란 1" />
       <input type="text" className="input-field" placeholder="입력란 2" />
       <input type="text" className="input-field" placeholder="입력란 3" />
