@@ -7,13 +7,8 @@ import '../../../asset/sass/pages/loginPage/nicknamePage.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 import { ACCESS_TOKEN, BASE_URL } from '../loginPage/constants/index.js';
+import { StyledPage } from '../../../styledComponent.js';
 
-const StyledNicknamePage = styled.div`
-  position: relative;
-  height: 100vh;
-  background-color: #ffffff;
-  overflow-y: auto;
-`;
 const CheckboxContainer = styled.div`
   display: flex;
   align-items: center;
@@ -172,7 +167,7 @@ const NicknamePage = () => {
 
   return (
     <>
-      <StyledNicknamePage className="main-page-container">
+      <StyledPage className="main-page-container">
         <div className="nickname">회원 정보 설정 </div>
 
         <div className="nickname-info">
@@ -233,7 +228,7 @@ const NicknamePage = () => {
         >
           시작하기
         </StartButton>
-      </StyledNicknamePage>
+      </StyledPage>
     </>
   );
 };

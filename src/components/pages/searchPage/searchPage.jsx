@@ -8,21 +8,7 @@ import Plus from '../../../asset/image/plus.svg';
 import Warning from '../../../asset/image/warning.svg';
 import { BASE_URL } from '../loginPage/constants';
 import '../../../asset/sass/pages/searchPage/searchPage.scss';
-
-const StyledSearchPage = styled.div`
-  position: relative;
-  height: 100vh;
-  background-color: #ffffff;
-`;
-
-const SearchHeading = styled.div`
-  display: flex;
-  justify-content: center;
-  font-size: 1rem;
-  margin-top: 10%;
-  letter-spacing: -1px;
-  font-weight: 600;
-`;
+import { StyledPage, Heading } from '../../../styledComponent.js';
 
 const SearchInput = styled.input`
   width: 300px;
@@ -121,8 +107,8 @@ function SearchPage() {
   /* ===============================================================  */
 
   return (
-    <StyledSearchPage className="main-page-container">
-      <SearchHeading>
+    <StyledPage className="main-page-container">
+      <Heading>
         <img
           className="back"
           src={Back}
@@ -130,7 +116,7 @@ function SearchPage() {
           alt="뒤로 가기"
         />
         <span>검색</span>
-      </SearchHeading>
+      </Heading>
       <SearchInput
         type="text"
         className="search-input-text"
@@ -185,7 +171,7 @@ function SearchPage() {
           <option key={value.name}>{value.name}</option>
         ))}
       </div>
-    </StyledSearchPage>
+    </StyledPage>
   );
 }
 

@@ -6,25 +6,11 @@ import Google from '../../../asset/image/google.svg';
 import Kakao from '../../../asset/image/kakao.svg';
 import Fastlogin from '../../../asset/image/fastlogin.svg';
 import '../../../asset/sass/pages/loginPage/loginPage.scss';
+import { StyledPage, Heading } from '../../../styledComponent.js';
 import {
   ACCESS_TOKEN,
   BASE_URL,
 } from '../../pages/loginPage/constants/index.js';
-
-const StyledLoginPage = styled.div`
-  position: relative;
-  height: 100vh;
-  background-color: #ffffff;
-`;
-
-const LoginHeading = styled.div`
-  display: flex;
-  justify-content: center;
-  font-size: 1rem;
-  margin-top: 10%;
-  letter-spacing: -1px;
-  font-weight: 600;
-`;
 
 const BackButton = styled.img`
   margin-left: -30%;
@@ -97,8 +83,8 @@ function LoginPage() {
 
   return (
     <>
-      <StyledLoginPage className="main-page-container">
-        <LoginHeading>
+      <StyledPage className="main-page-container">
+        <Heading>
           <BackButton
             className="back"
             src={Back}
@@ -106,7 +92,7 @@ function LoginPage() {
             alt="뒤로 가기"
           />
           로그인{' '}
-        </LoginHeading>
+        </Heading>
 
         <WelcomeMessage>
           코버플로우에 <br /> 오신 것을 환영합니다
@@ -137,7 +123,7 @@ function LoginPage() {
             <img src={Google} alt="Google 로그인" className="google-login" />
           </LoginButton>
         </LoginButtonsContainer>
-      </StyledLoginPage>
+      </StyledPage>
     </>
   );
 }

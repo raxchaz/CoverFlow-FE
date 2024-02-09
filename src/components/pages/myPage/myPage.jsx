@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import '../../../asset/sass/pages/myPage/myPage.scss';
 import Back from '../../../asset/image/back.svg';
+import { StyledPage, Heading } from '../../../styledComponent.js';
 import {
   ACCESS_TOKEN,
   REFRESH_TOKEN,
@@ -10,21 +11,6 @@ import {
 } from '../../pages/loginPage/constants/index.js';
 
 /* 스타일 컴포넌트 정의 */
-const StyledMyPage = styled.div`
-  position: relative;
-  height: 100vh;
-  background-color: #ffffff;
-`;
-
-const MypageHeading = styled.div`
-  display: flex;
-  justify-content: center;
-  font-size: 1rem;
-  margin-top: 10%;
-  letter-spacing: -1px;
-  font-weight: 600;
-`;
-
 const LogoutButton = styled.button`
   font-size: 14px;
   position: fixed;
@@ -120,8 +106,8 @@ function Mypage() {
 
   return (
     <>
-      <StyledMyPage className="main-page-container">
-        <MypageHeading>
+      <StyledPage className="main-page-container">
+        <Heading>
           <img
             className="back"
             src={Back}
@@ -131,11 +117,11 @@ function Mypage() {
           <span className="mypage-title">마이페이지 </span>
           {isLoggedIn && <div>{nickname}님의 마이페이지</div>}
           {isLoggedIn && <div>현재 붕어빵 {rewardCount} 개</div>}
-        </MypageHeading>
+        </Heading>
         {isLoggedIn && (
           <LogoutButton onClick={handleLogout}>로그아웃</LogoutButton>
         )}
-      </StyledMyPage>
+      </StyledPage>
     </>
   );
 }

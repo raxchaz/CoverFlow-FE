@@ -1,6 +1,7 @@
 import '../src/font/font.css';
 import reset from 'styled-reset';
 import { createGlobalStyle } from 'styled-components';
+import { StyledPage, Heading } from './styledComponent';
 
 const GlobalStyles = createGlobalStyle` 
 ${reset}
@@ -31,6 +32,20 @@ li {
     cursor: pointer;
   }
 
+  ${StyledPage} {
+    position: relative;
+  height: 100vh;
+  background-color: #ffffff;
+  }
+
+  ${Heading} {
+    display: flex;
+    justify-content: center;
+    font-size: 1rem;
+    margin-top: 10%;
+    letter-spacing: -1px;
+    font-weight: 600;
+  }
 `;
 
 export default GlobalStyles;
