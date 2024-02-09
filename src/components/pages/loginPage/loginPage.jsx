@@ -8,7 +8,7 @@ import Fastlogin from '../../../asset/image/fastlogin.svg';
 import '../../../asset/sass/pages/loginPage/loginPage.scss';
 import {
   ACCESS_TOKEN,
-  BASE_URL_DEV,
+  BASE_URL,
 } from '../../pages/loginPage/constants/index.js';
 
 const StyledLoginPage = styled.div`
@@ -122,18 +122,18 @@ function LoginPage() {
           className="fast-login"
         />
 
-        <LoginButton href={`$BASE_URL_DEV}/oauth2/authorization/kakao`}>
+        <LoginButton href={`${BASE_URL}/oauth2/authorization/kakao`}>
           <img src={Kakao} alt="Kakao 로그인" className="kakao-login" />
         </LoginButton>
 
         <HorizontalRule />
 
         <LoginButtonsContainer>
-          <LoginButton href={`${BASE_URL_DEV}/oauth2/authorization/naver`}>
+          <LoginButton href={`${BASE_URL}/oauth2/authorization/naver`}>
             <img src={Naver} alt="Naver 로그인" className="naver-login" />
           </LoginButton>
 
-          <LoginButton href={`${BASE_URL_DEV}/oauth2/authorization/google`}>
+          <LoginButton href={`${BASE_URL}/oauth2/authorization/google`}>
             <img src={Google} alt="Google 로그인" className="google-login" />
           </LoginButton>
         </LoginButtonsContainer>

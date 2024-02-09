@@ -3,9 +3,9 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Back from '../../../asset/image/back.svg';
-import '../../../asset/sass/pages/mainPage/searchPage.scss';
 import Searchicon from '../../../asset/image/searchicon.svg';
-import { BASE_URL_DEV } from '../loginPage/constants';
+import { BASE_URL } from '../loginPage/constants';
+import '../../../asset/sass/pages/mainPage/searchPage.scss';
 
 const StyledSearchPage = styled.div`
   position: relative;
@@ -45,10 +45,16 @@ const SearchInput = styled.input`
 function SearchPage() {
   const navigate = useNavigate();
   const [searchCompany, setSearchCompany] = useState('');
+  const [autoCompleteValue, setAutoCompleteValue] = useState([]);
+
+  const isSyllable = (character) => {
+    const syllableRegex = /^[가-힣a-zA-Z0-9]$/; // 음절 정규표현식
+    return syllableRegex.test(character);
+  };
 
   const handleSearch = () => {
     axios
-      .post(`${BASE_URL_DEV}/api/company/search-companies`, {
+      .post(`${BASE_URL}/api/company/search-companies`, {
         name: searchCompany,
       })
       .then((response) => {
@@ -59,14 +65,23 @@ function SearchPage() {
       });
   };
 
-  const handleChange = (e) => {
-    setSearchCompany(e.target.value);
-    navigate('/search-company');
-  };
+  const handleInputChange = (event) => {
+    const newInputValue = event.target.value;
+    setSearchCompany(newInputValue);
 
-  const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      handleSearch();
+    if (newInputValue.length > 0) {
+      const lastCharacter = newInputValue.slice(-1);
+
+      if (isSyllable(lastCharacter)) {
+        axios
+          .get(`${BASE_URL}/api/company/auto-complete?query=${lastCharacter}`)
+          .then((response) => {
+            setAutoCompleteValue(response.data); // Update autocomplete results
+          })
+          .catch((error) => {
+            console.error('Failed to fetch autocomplete data', error);
+          });
+      }
     }
   };
 
@@ -90,11 +105,24 @@ function SearchPage() {
         className="search-input-text"
         placeholder="기업 명을 검색하세요"
         value={searchCompany}
-        onChange={(e) => setSearchCompany(e.target.value)}
-        onClick={handleChange}
-        onKeyPress={handleKeyPress}
+        onChange={handleInputChange}
+        onKeyPress={(e) => {
+          if (e.key === 'Enter') {
+            handleSearch();
+          }
+        }}
       />
-      <img className="search" src={Searchicon} onClick={handleSearch} />
+      <img
+        className="search"
+        src={Searchicon}
+        onClick={handleSearch}
+        alt="Search"
+      />
+      <div className="autoCompleteValue-style">
+        {autoCompleteValue.map((value) => (
+          <option key={value.name}>{value.name}</option>
+        ))}
+      </div>
     </StyledSearchPage>
   );
 }

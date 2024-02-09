@@ -6,7 +6,7 @@ import GenderSelection from '../../ui/genderSelection/genderSelection';
 import '../../../asset/sass/pages/loginPage/nicknamePage.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
-import { ACCESS_TOKEN, BASE_URL_DEV } from '../loginPage/constants/index.js';
+import { ACCESS_TOKEN, BASE_URL } from '../loginPage/constants/index.js';
 
 const StyledNicknamePage = styled.div`
   position: relative;
@@ -143,21 +143,18 @@ const NicknamePage = () => {
         tagData = '현직자';
       }
 
-      const response = await fetch(
-        `${BASE_URL_DEV}/api/member/save-member-info`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
-          },
-          body: JSON.stringify({
-            gender: genderData,
-            age: ageRange,
-            tag: tagData,
-          }),
+      const response = await fetch(`${BASE_URL}/api/member/save-member-info`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
         },
-      );
+        body: JSON.stringify({
+          gender: genderData,
+          age: ageRange,
+          tag: tagData,
+        }),
+      });
       const data = await response.json();
       console.log('서버 응답:', data);
 
