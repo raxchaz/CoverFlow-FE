@@ -1,5 +1,5 @@
 import {
-  BASE_URL_DEV,
+  BASE_URL,
   ACCESS_TOKEN,
 } from '../../pages/loginPage/constants/index.js';
 
@@ -36,7 +36,7 @@ export function LoggedinUser() {
 
   // 사용자 정보를 가져오기 위한 API 요청
   return request({
-    url: `${BASE_URL_DEV}/api/member/`,
+    url: `${BASE_URL}/api/member/`,
     method: 'GET',
   }).catch((error) => {
     console.error(error);

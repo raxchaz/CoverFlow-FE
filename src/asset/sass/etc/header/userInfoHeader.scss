@@ -1,0 +1,123 @@
+.user-icon-container {
+  margin-top: -5%;
+}
+
+.userInfo-container {
+  position: relative;
+  margin-top: -4%;
+}
+
+a.login-btn {
+  margin-left: 70%;
+  font-size: 0.9rem;
+  padding: 0.9% 2.6% 0.9% 2.1%;
+  border: 0.1px solid #ff8d1d;
+  background-color: #ff8d1d;
+  color: #fefefe;
+  border-radius: 25px;
+  cursor: pointer;
+  letter-spacing: -1.2px;
+  font-weight: 400;
+}
+
+.login-btn {
+  margin-top: -5%;
+}
+
+.loginuser {
+  display: flex;
+  list-style-type: none;
+  background: none;
+  border: none;
+  padding: 0;
+  margin-top: -7%;
+  margin-left: 83%;
+  cursor: pointer;
+}
+
+.reward-fish {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: -5%;
+  margin-left: 48%;
+  cursor: pointer;
+}
+.bun-count {
+  font-size: 13px;
+  margin-top: 1.2%;
+}
+
+.dropdown-menu {
+  position: relative;
+
+  ul {
+    position: absolute;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    width: 120px;
+    max-height: 350px;
+    border-radius: 5px;
+    margin-left: 65%;
+    margin-top: 5%;
+  }
+
+  .dropdown-item,
+  .dropdown-item-store,
+  .dropdown-item-logout {
+    letter-spacing: -1px;
+    font-weight: 500;
+    padding: 5px 10px;
+    text-align: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    align-items: center;
+    cursor: pointer;
+    &:hover {
+      background-color: none;
+    }
+  }
+
+  .dropdown-item {
+    margin-top: 15%;
+  }
+
+  .dropdown-item-store {
+    margin-top: -10%;
+    margin-bottom: 0%;
+  }
+
+  .dropdown-item-logout {
+    margin-top: -10%;
+    margin-bottom: 10%;
+  }
+
+  hr {
+    border: none;
+    border-top: 1px solid #d9d9d9;
+    text-align: center;
+    overflow: visible;
+    z-index: 10;
+  }
+
+  hr:after {
+    content: '';
+    z-index: 1;
+    background: none;
+  }
+
+  .down-hr {
+    margin-top: 0%;
+    border-top: 1px solid #fff;
+  }
+
+  .up-hr {
+    margin-top: 0%;
+    border-top: 1px solid #fff;
+  }
+}

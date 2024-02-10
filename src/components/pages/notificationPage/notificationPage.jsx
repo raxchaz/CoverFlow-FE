@@ -1,24 +1,9 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
-import Back from '../../../asset/image/back.svg';
 import '../../../asset/sass/pages/notificationPage/notificationPage.scss';
 import { ACCESS_TOKEN } from '../../pages/loginPage/constants/index.js';
-
-const StyledNotificationPage = styled.div`
-  position: relative;
-  height: 100vh;
-  background-color: #ffffff;
-`;
-
-const NotificationHeading = styled.div`
-  display: flex;
-  justify-content: center;
-  font-size: 1rem;
-  margin-top: 10%;
-  letter-spacing: -1px;
-  font-weight: 600;
-`;
+import { StyledPage, StyledHeader } from '../../../styledComponent.js';
+import TitleHeader from '../../ui/header/titleHeader.jsx';
 
 function NotificationPage() {
   const navigate = useNavigate();
@@ -37,22 +22,12 @@ function NotificationPage() {
     navigate(-1);
   };
 
-  const handleNotificationClick = () => {
-    navigate('/notification');
-  };
-
   return (
-    <StyledNotificationPage className="main-page-container">
-      <NotificationHeading>
-        <img
-          className="back"
-          src={Back}
-          onClick={handleGoBack}
-          alt="뒤로 가기"
-        />
-        <span onClick={handleNotificationClick}>알림</span>
-      </NotificationHeading>
-    </StyledNotificationPage>
+    <StyledPage className="main-page-container">
+      <StyledHeader>
+        <TitleHeader pageTitle="알림" handleGoBack={handleGoBack} />
+      </StyledHeader>
+    </StyledPage>
   );
 }
 

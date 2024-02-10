@@ -1,10 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import TabBar from '../../ui/tabBar/tabBar.jsx';
 import Header from '../../ui/header/header.jsx';
 import Searchicon from '../../../asset/image/searchicon.svg';
+import UserInfoHeader from '../../ui/header/userInfoHeader.jsx';
 // import Modal from '../../ui/modal/modal.jsx';
 import '../../../asset/sass/pages/mainPage/mainPage.scss';
+import { StyledHeader } from '../../../styledComponent.js';
 
 const StyledMainPage = styled.div`
   position: relative;
@@ -33,8 +36,16 @@ const SearchInput = styled.input`
 `;
 
 function MainPage() {
+  const navigate = useNavigate();
+
+  const handleChange = () => {
+    navigate('/search-company');
+  };
+
   return (
     <StyledMainPage className="main-page-container">
+      <StyledHeader />
+      <UserInfoHeader />
       <Header />
       <div className="coverflow">COVERFLOW</div>
       <div className="main-info">
@@ -45,6 +56,7 @@ function MainPage() {
         type="text"
         className="search-input-text"
         placeholder="기업 명을 검색하세요"
+        onClick={handleChange}
       />
       <img className="search" src={Searchicon} />
       <TabBar />
