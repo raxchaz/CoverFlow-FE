@@ -1,28 +1,17 @@
-import React, { useEffect, useState } from 'react';
+// import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import '../../../asset/sass/pages/myPage/myPage.scss';
-import BackButton from '../../ui/button/backButton/backButton.jsx';
+import { StyledPage, StyledHeader } from '../../../styledComponent.js';
+import TitleHeader from '../../ui/header/titleHeader.jsx';
 import {
   ACCESS_TOKEN,
   REFRESH_TOKEN,
+  BASE_URL,
 } from '../../pages/loginPage/constants/index.js';
 
-const StyledMyPage = styled.div`
-  position: relative;
-  height: 100vh;
-  background-color: #ffffff;
-`;
-
-const MypageHeading = styled.div`
-  display: flex;
-  justify-content: center;
-  font-size: 1rem;
-  margin-top: 10%;
-  letter-spacing: -1px;
-  font-weight: 600;
-`;
-
+/* 스타일 컴포넌트 정의 */
 const LogoutButton = styled.button`
   font-size: 14px;
   position: fixed;
@@ -37,30 +26,53 @@ const LogoutButton = styled.button`
   cursor: pointer;
 `;
 
+/* ========================================================= */
+
 function Mypage() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [nickname, setNickname] = useState('');
+  // const [rewardCount, setRewardCount] = useState(0);
   const navigate = useNavigate();
 
-  useEffect(() => {
+  /* 사용자의 토큰이 존재한다면, 사용자의 정보를 가져옵니다. */
+  /*  useEffect(() => {
     const token = localStorage.getItem(ACCESS_TOKEN);
 
     if (!token) {
-      // 로그인 전에 마이페이지의 URL을 저장
       localStorage.setItem('mypageURL', '/mypage');
       navigate('/login');
+    } else {
+      loadUserData();
     }
   }, [navigate]);
 
+  /* 뒤로가기 눌렀을 경우, 한 페이지 뒤로 가는 로직입니다. */
   const handleGoBack = () => {
     navigate(-1);
   };
 
-  const handleMypageClick = () => {
-    navigate('/mypage');
+  /* 사용자의 닉네임과 붕어빵 개수를 불러옵니다. */
+  /* const loadUserData = () => {
+    fetch(`${BASE_URL}/api/member/find-member`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setNickname(data.nickname);
+        setRewardCount(data.fishShapedBun);
+      })
+      .catch((error) => console.error('회원 정보 불러오기 실패:', error));
   };
+  */
 
+  /* 로그아웃 버튼을 클릭했을 경우, 서버로 로그아웃 API를 요청한 후, 
+      클라이언트 측에서 리프레쉬 토큰과 엑세스 토큰을 삭제하고 메인 페이지로 돌아갑니다. */
   const handleLogout = () => {
-    fetch('https://coverflow.co.kr/api/member/logout', {
+    fetch(`${BASE_URL}/api/member/logout`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -71,7 +83,7 @@ function Mypage() {
         if (response.ok) {
           localStorage.removeItem(ACCESS_TOKEN);
           localStorage.removeItem(REFRESH_TOKEN);
-          setIsLoggedIn(false);
+          //  setIsLoggedIn(false);
           navigate('/');
         } else {
           response
@@ -92,24 +104,36 @@ function Mypage() {
       });
   };
 
+  /* ========================================================= */
+
   return (
     <>
-      <StyledMyPage className="main-page-container">
-        <MypageHeading>
-          <BackButton
-            className="back"
-            // src={Back}
-            onClick={handleGoBack}
-            alt="뒤로 가기"
-          />
-          <span className="mypage-title" onClick={handleMypageClick}>
-            마이페이지{' '}
-          </span>
-        </MypageHeading>
-        {isLoggedIn && (
-          <LogoutButton onClick={handleLogout}>로그아웃</LogoutButton>
-        )}
-      </StyledMyPage>
+      <StyledPage className="main-page-container">
+        <StyledHeader>
+          <TitleHeader pageTitle="마이 페이지" handleGoBack={handleGoBack} />
+          {/* {isLoggedIn && (
+            <div className="user-greeting"><span className="nickname">{nickname}</span>님의 마이페이지</div>
+          )}
+          {isLoggedIn && (
+            <div className="reward-status">현재 붕어빵 <span className="bun-count">{rewardCount}</span>개</div>
+          )}
+          {isLoggedIn && (
+            <LogoutButton className="logout-button" onClick={handleLogout}>
+              로그아웃
+            </LogoutButton>
+          )} */}
+
+          <div className="title">
+            <span className="user-nickname">병장김라구</span>님의 마이페이지
+          </div>
+          <div className="bun-title">
+            현재 붕어빵 <span className="bun-count">2억개</span>
+          </div>
+          <LogoutButton className="logout-button" onClick={handleLogout}>
+            로그아웃
+          </LogoutButton>
+        </StyledHeader>
+      </StyledPage>
     </>
   );
 }

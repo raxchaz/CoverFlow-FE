@@ -1,33 +1,17 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import Back from '../../../asset/image/back.svg';
 import Naver from '../../../asset/image/naver.svg';
 import Google from '../../../asset/image/google.svg';
 import Kakao from '../../../asset/image/kakao.svg';
 import Fastlogin from '../../../asset/image/fastlogin.svg';
 import '../../../asset/sass/pages/loginPage/loginPage.scss';
-import { ACCESS_TOKEN } from '../../pages/loginPage/constants/index.js';
-
-const StyledLoginPage = styled.div`
-  position: relative;
-  height: 100vh;
-  background-color: #ffffff;
-`;
-
-const LoginHeading = styled.div`
-  display: flex;
-  justify-content: center;
-  font-size: 1rem;
-  margin-top: 10%;
-  letter-spacing: -1px;
-  font-weight: 600;
-`;
-
-const BackButton = styled.img`
-  margin-left: -30%;
-  margin-right: 32%;
-  cursor: pointer;
-`;
+import { StyledPage } from '../../../styledComponent.js';
+import TitleHeader from '../../ui/header/titleHeader.jsx';
+import { useNavigate } from 'react-router-dom';
+import {
+  ACCESS_TOKEN,
+  BASE_URL,
+} from '../../pages/loginPage/constants/index.js';
 
 const WelcomeMessage = styled.p`
   margin: 20% 0% 0% 15%;
@@ -81,10 +65,12 @@ const LoginButton = styled.a`
 `;
 
 function LoginPage() {
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (localStorage.getItem(ACCESS_TOKEN)) {
       alert('잘못된 접근입니다.');
-      window.location.href = '/'; // 메인 페이지로 리다이렉트
+      navigate('/');
     }
   }, []);
 
@@ -94,16 +80,8 @@ function LoginPage() {
 
   return (
     <>
-      <StyledLoginPage className="main-page-container">
-        <LoginHeading>
-          <BackButton
-            className="back"
-            src={Back}
-            onClick={handleGoBack}
-            alt="뒤로 가기"
-          />
-          로그인{' '}
-        </LoginHeading>
+      <StyledPage className="main-page-container">
+        <TitleHeader pageTitle="로그인" handleGoBack={handleGoBack} />
 
         <WelcomeMessage>
           코버플로우에 <br /> 오신 것을 환영합니다
@@ -119,22 +97,24 @@ function LoginPage() {
           className="fast-login"
         />
 
-        <LoginButton href="/oauth2/authorization/kakao">
+
+        <LoginButton href={`${BASE_URL}/oauth2/authorization/kakao`}>
           <img src={Kakao} alt="Kakao 로그인" className="kakao-login" />
         </LoginButton>
 
         <HorizontalRule />
 
         <LoginButtonsContainer>
-          <LoginButton href="/oauth2/authorization/naver">
+          <LoginButton href={`${BASE_URL}/oauth2/authorization/naver`}>
             <img src={Naver} alt="Naver 로그인" className="naver-login" />
           </LoginButton>
 
-          <LoginButton href="/oauth2/authorization/google">
+          <LoginButton href={`${BASE_URL}/oauth2/authorization/google`}>
+
             <img src={Google} alt="Google 로그인" className="google-login" />
           </LoginButton>
         </LoginButtonsContainer>
-      </StyledLoginPage>
+      </StyledPage>
     </>
   );
 }

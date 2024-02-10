@@ -3,66 +3,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
 }
 
-.hambar,
-a.login-btn {
-  margin-top: 11%;
-  cursor: pointer;
-}
-
-.hambar {
+img.hambar {
   margin-left: 11%;
-}
-
-a.login-btn {
-  margin-left: 53%;
-  font-size: 0.9rem;
-  padding: 0.9% 2.6% 0.9% 2.1%;
-  border: 0.1px solid #ff8d1d;
-  background-color: #ff8d1d;
-  color: #fefefe;
-  border-radius: 25px;
-  cursor: pointer;
-  letter-spacing: -1.2px;
-  font-weight: 400;
-}
-
-.loginuser {
-  list-style-type: none;
-  background: none;
-  border: none;
-  padding: 0;
-  margin-left: 67%;
-  cursor: pointer;
-}
-
-.dropdown-menu {
-  position: relative;
-  ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    background: #fff;
-    border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    width: 200px;
-    max-height: 300px;
-    border-radius: 10px;
-  }
-
-  .dropdown-item {
-    padding: 10px 20px;
-    cursor: pointer;
-    &:hover {
-      background-color: #f2f2f2;
-    }
-  }
-
-  .dropdown-divider {
-    border: 0;
-    margin: 0.5rem 0;
-    border-top: 1px solid #eee;
-  }
+  margin-top: 10%;
 }
