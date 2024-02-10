@@ -1,0 +1,3 @@
+export const SET_LOGGED_IN = 'SET_LOGGED_IN';
+export const SET_REWARD_COUNT = 'SET_REWARD_COUNT';
+export const TOGGLE_DROPDOWN = 'TOGGLE_DROPDOWN';
