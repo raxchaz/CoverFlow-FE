@@ -127,7 +127,7 @@ function Mypage() {
             <span className="user-nickname">병장김라구</span>님의 마이페이지
           </div>
           <div className="bun-title">
-            현재 붕어빵 <span className="bun-count">2억개</span>
+            현재 붕어빵 <span className="mypage-bun-count">2억개</span>
           </div>
           <LogoutButton className="logout-button" onClick={handleLogout}>
             로그아웃
