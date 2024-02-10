@@ -7,6 +7,7 @@ import Fastlogin from '../../../asset/image/fastlogin.svg';
 import '../../../asset/sass/pages/loginPage/loginPage.scss';
 import { StyledPage } from '../../../styledComponent.js';
 import TitleHeader from '../../ui/header/titleHeader.jsx';
+import { useNavigate } from 'react-router-dom';
 import {
   ACCESS_TOKEN,
   BASE_URL,
@@ -64,10 +65,12 @@ const LoginButton = styled.a`
 `;
 
 function LoginPage() {
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (localStorage.getItem(ACCESS_TOKEN)) {
       alert('잘못된 접근입니다.');
-      window.location.href = '/'; // 메인 페이지로 리다이렉트
+      navigate('/');
     }
   }, []);
 

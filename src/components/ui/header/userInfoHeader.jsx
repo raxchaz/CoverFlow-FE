@@ -59,6 +59,21 @@ function UserInfoHeader() {
     }
   }, [dispatch]);
 
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        if (isDropdownOpen) {
+          dispatch(toggleDropdown());
+        }
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isDropdownOpen, dispatch]);
+
   /* 붕어빵 아이콘을 클릭했을 경우, 상점으로 이동합니다. */
   const handleRewardClick = () => {
     navigate('/store');
@@ -118,14 +133,16 @@ function UserInfoHeader() {
                   >
                     마이페이지
                   </li>
+                  <hr />
                   <li
-                    className="dropdown-item"
+                    className="dropdown-item-store"
                     onClick={() => handleMenuClick('상점')}
                   >
                     상점
                   </li>
+                  <hr />
                   <li
-                    className="dropdown-item"
+                    className="dropdown-item-logout"
                     onClick={() => handleMenuClick('로그아웃')}
                   >
                     로그아웃

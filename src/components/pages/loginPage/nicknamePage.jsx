@@ -7,7 +7,8 @@ import '../../../asset/sass/pages/loginPage/nicknamePage.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 import { ACCESS_TOKEN, BASE_URL } from '../loginPage/constants/index.js';
-import { StyledPage } from '../../../styledComponent.js';
+import TitleHeader from '../../ui/header/titleHeader.jsx';
+import { StyledPage, StyledHeader } from '../../../styledComponent.js';
 
 const CheckboxContainer = styled.div`
   display: flex;
@@ -76,6 +77,9 @@ const NicknamePage = () => {
   const [isEmployed, setIsEmployed] = useState(false);
   const navigate = useNavigate();
 
+  /*
+    사용자가 입력해야 할 데이터들을 정의해 놓았습니다.
+  */
   const handleJobSeekingChange = () => {
     setIsJobSeeking(!isJobSeeking);
     setIsEmployed(false);
@@ -96,11 +100,16 @@ const NicknamePage = () => {
     setSelectedGender(gender);
   };
 
+  /*
+  해당 페이지에 진입하자마자 사용자의 로그인 상태를 확인합니다. 
+  토큰을 가지고 있는 사용자라면, 잘못된 접근임을 명시하고, 다시 로그인 페이지로 리다이렉트 합니다.
+  */
   useEffect(() => {
     const checkLoginStatus = () => {
       const token = localStorage.getItem(ACCESS_TOKEN);
 
       if (!token) {
+        alert('잘못된 접근입니다. 로그인이 필요합니다.');
         navigate('/login');
       }
     };
@@ -108,6 +117,10 @@ const NicknamePage = () => {
     checkLoginStatus();
   }, [navigate]);
 
+  /* 
+사용자가  데이터를 선택하고, 시작하기 버튼을 눌렀을 때, 
+데이터가 서버로 전송될 수 있도록 하는 로직입니다. 
+ */
   const sendDataToServer = async () => {
     try {
       let genderData = '';
@@ -165,69 +178,72 @@ const NicknamePage = () => {
     }
   };
 
+  /* ====================================================  */
   return (
     <>
       <StyledPage className="main-page-container">
-        <div className="nickname">회원 정보 설정 </div>
+        <StyledHeader>
+          <TitleHeader pageTitle="회원 정보 설정" />
 
-        <div className="nickname-info">
-          <span className="welcome-nickname">
-            현재 본인의 상황을 <br /> 체크해 주세요
-          </span>
-          <div className="neccessary"> * 필수</div>
-        </div>
+          <div className="nickname-info">
+            <span className="welcome-nickname">
+              현재 본인의 상황을 <br /> 체크해 주세요
+            </span>
+            <div className="neccessary"> * 필수</div>
+          </div>
 
-        <CheckboxContainer>
-          <HiddenCheckbox
-            type="checkbox"
-            id="jobSeekingCheckbox"
-            checked={isJobSeeking}
-            onChange={handleJobSeekingChange}
-          />
-          <CheckboxLabel htmlFor="jobSeekingCheckbox" checked={isJobSeeking}>
-            <Icon icon={faCircleCheck} checked={isJobSeeking} />
-            취업 준비 중이에요
-          </CheckboxLabel>
-        </CheckboxContainer>
+          <CheckboxContainer>
+            <HiddenCheckbox
+              type="checkbox"
+              id="jobSeekingCheckbox"
+              checked={isJobSeeking}
+              onChange={handleJobSeekingChange}
+            />
+            <CheckboxLabel htmlFor="jobSeekingCheckbox" checked={isJobSeeking}>
+              <Icon icon={faCircleCheck} checked={isJobSeeking} />
+              취업 준비 중이에요
+            </CheckboxLabel>
+          </CheckboxContainer>
 
-        <CheckboxContainer>
-          <HiddenCheckbox
-            type="checkbox"
-            id="employedCheckbox"
-            checked={isEmployed}
-            onChange={handleEmployedChange}
-          />
-          <CheckboxLabel htmlFor="employedCheckbox" checked={isEmployed}>
-            <Icon icon={faCircleCheck} checked={isEmployed} />
-            직장을 다니고 있어요
-          </CheckboxLabel>
-        </CheckboxContainer>
+          <CheckboxContainer>
+            <HiddenCheckbox
+              type="checkbox"
+              id="employedCheckbox"
+              checked={isEmployed}
+              onChange={handleEmployedChange}
+            />
+            <CheckboxLabel htmlFor="employedCheckbox" checked={isEmployed}>
+              <Icon icon={faCircleCheck} checked={isEmployed} />
+              직장을 다니고 있어요
+            </CheckboxLabel>
+          </CheckboxContainer>
 
-        <div className="nickname-info">
-          <span className="welcome-nickname">
-            연령대 및 성별을 <br /> 체크해 주세요
-          </span>
-          <div className="select"> * 선택</div>
-          <AgeSelection
-            selectedAgeKeyword={selectedAgeKeyword}
-            onSelectAge={handleSelectAge}
-          />
-          <div className="separator"></div>
-          <GenderSelection
-            selectedGender={selectedGender}
-            onSelectGender={handleSelectGender}
-          />
-        </div>
-        <StartButton
-          onClick={sendDataToServer}
-          isActive={isEmployed || isJobSeeking}
-          disabled={!isEmployed && !isJobSeeking}
-          style={{
-            backgroundColor: isEmployed || isJobSeeking ? '#ff8d1d' : '',
-          }}
-        >
-          시작하기
-        </StartButton>
+          <div className="nickname-info">
+            <span className="welcome-nickname">
+              연령대 및 성별을 <br /> 체크해 주세요
+            </span>
+            <div className="select"> * 선택</div>
+            <AgeSelection
+              selectedAgeKeyword={selectedAgeKeyword}
+              onSelectAge={handleSelectAge}
+            />
+            <div className="separator"></div>
+            <GenderSelection
+              selectedGender={selectedGender}
+              onSelectGender={handleSelectGender}
+            />
+          </div>
+          <StartButton
+            onClick={sendDataToServer}
+            isActive={isEmployed || isJobSeeking}
+            disabled={!isEmployed && !isJobSeeking}
+            style={{
+              backgroundColor: isEmployed || isJobSeeking ? '#ff8d1d' : '',
+            }}
+          >
+            시작하기
+          </StartButton>
+        </StyledHeader>
       </StyledPage>
     </>
   );

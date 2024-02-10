@@ -7,7 +7,7 @@ import Plus from '../../../asset/image/plus.svg';
 import Warning from '../../../asset/image/warning.svg';
 import { BASE_URL } from '../loginPage/constants';
 import '../../../asset/sass/pages/searchPage/searchPage.scss';
-import { StyledPage } from '../../../styledComponent.js';
+import { StyledPage, StyledHeader } from '../../../styledComponent.js';
 import TitleHeader from '../../ui/header/titleHeader.jsx';
 
 const SearchInput = styled.input`
@@ -108,62 +108,64 @@ function SearchPage() {
 
   return (
     <StyledPage className="main-page-container">
-      <TitleHeader pageTitle="기업 검색" handleGoBack={handleGoBack} />
+      <StyledHeader>
+        <TitleHeader pageTitle="기업 검색" handleGoBack={handleGoBack} />
 
-      <SearchInput
-        type="text"
-        className="search-input-text"
-        placeholder="기업 명을 검색하세요"
-        value={searchCompany}
-        onChange={handleInputChange}
-        onKeyPress={(e) => {
-          if (e.key === 'Enter') {
-            handleSearch();
-          }
-        }}
-      />
-      <img
-        className="search"
-        src={Searchicon}
-        onClick={handleSearch}
-        alt="Search"
-      />
+        <SearchInput
+          type="text"
+          className="search-input-text"
+          placeholder="기업 명을 검색하세요"
+          value={searchCompany}
+          onChange={handleInputChange}
+          onKeyPress={(e) => {
+            if (e.key === 'Enter') {
+              handleSearch();
+            }
+          }}
+        />
+        <img
+          className="search"
+          src={Searchicon}
+          onClick={handleSearch}
+          alt="Search"
+        />
 
-      <div>
-        {searchInitiated ? (
-          searchResult && searchResult.length > 0 ? (
-            searchResult.map((company) => (
-              <div className="result-data-complete" key={company.id}>
-                {company.name}
-              </div>
-            ))
-          ) : (
-            <span className="result-data-failed">
-              <img className="warning-icon" src={Warning} alt="SVG 이미지" />
-              <div className="failed-text">검색 결과가 없습니다</div>
-              <div className="failed-text2">
-                커버플로우에 원하는 기업을 등록해주세요
-              </div>
-              <span className="registration-container">
-                <img
-                  className="registration-icon"
-                  src={Plus}
-                  alt="SVG 이미지"
-                />
-                <a href="/company-regist" className="company-registration">
-                  기업 등록하러 가기
-                </a>
+        <div>
+          {searchInitiated ? (
+            searchResult && searchResult.length > 0 ? (
+              searchResult.map((company) => (
+                <div className="result-data-complete" key={company.id}>
+                  {company.name}
+                </div>
+              ))
+            ) : (
+              <span className="result-data-failed">
+                <img className="warning-icon" src={Warning} alt="SVG 이미지" />
+                <div className="failed-text">검색 결과가 없습니다</div>
+                <div className="failed-text2">
+                  커버플로우에 원하는 기업을 등록해주세요
+                </div>
+                <span className="registration-container">
+                  <img
+                    className="registration-icon"
+                    src={Plus}
+                    alt="SVG 이미지"
+                  />
+                  <a href="/company-regist" className="company-registration">
+                    기업 등록하러 가기
+                  </a>
+                </span>
               </span>
-            </span>
-          )
-        ) : null}
-      </div>
+            )
+          ) : null}
+        </div>
 
-      <div className="autoCompleteValue-style">
-        {autoCompleteValue.map((value) => (
-          <option key={value.name}>{value.name}</option>
-        ))}
-      </div>
+        <div className="autoCompleteValue-style">
+          {autoCompleteValue.map((value) => (
+            <option key={value.name}>{value.name}</option>
+          ))}
+        </div>
+      </StyledHeader>
     </StyledPage>
   );
 }
