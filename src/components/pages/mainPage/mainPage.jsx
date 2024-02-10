@@ -4,8 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import TabBar from '../../ui/tabBar/tabBar.jsx';
 import Header from '../../ui/header/header.jsx';
 import Searchicon from '../../../asset/image/searchicon.svg';
+import UserInfoHeader from '../../ui/header/userInfoHeader.jsx';
 // import Modal from '../../ui/modal/modal.jsx';
 import '../../../asset/sass/pages/mainPage/mainPage.scss';
+import { StyledHeader } from '../../../styledComponent.js';
 
 const StyledMainPage = styled.div`
   position: relative;
@@ -42,6 +44,8 @@ function MainPage() {
 
   return (
     <StyledMainPage className="main-page-container">
+      <StyledHeader />
+      <UserInfoHeader />
       <Header />
       <div className="coverflow">COVERFLOW</div>
       <div className="main-info">

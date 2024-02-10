@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../../asset/sass/pages/notificationPage/notificationPage.scss';
 import { ACCESS_TOKEN } from '../../pages/loginPage/constants/index.js';
-import { StyledPage } from '../../../styledComponent.js';
+import { StyledPage, StyledHeader } from '../../../styledComponent.js';
 import TitleHeader from '../../ui/header/titleHeader.jsx';
 
 function NotificationPage() {
@@ -24,7 +24,9 @@ function NotificationPage() {
 
   return (
     <StyledPage className="main-page-container">
-      <TitleHeader pageTitle="알림" handleGoBack={handleGoBack} />
+      <StyledHeader>
+        <TitleHeader pageTitle="알림" handleGoBack={handleGoBack} />
+      </StyledHeader>
     </StyledPage>
   );
 }

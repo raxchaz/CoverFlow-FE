@@ -1,50 +1,57 @@
 import '../src/font/font.css';
 import reset from 'styled-reset';
 import { createGlobalStyle } from 'styled-components';
-import { StyledPage, Heading } from './styledComponent';
+import { StyledPage, Heading, StyledHeader } from './styledComponent';
 
 const GlobalStyles = createGlobalStyle` 
-${reset}
-
-
-*{
+  ${reset}
+  
+  * {
     padding: 0;
     font-family: 'Pretendard-Regular';
-}
-
-html {
-  font-family: 'Pretendard-Regular';
-}
-
-body {
-  font-size: 1rem; 
-}
-
-li {
+  }
+  
+  html {
+    font-family: 'Pretendard-Regular';
+  }
+  
+  body {
+    font-size: 1rem; 
+  }
+  
+  li {
     list-style: none;
   }
-
+  
   a {
     text-decoration: none;
   }
-
+  
   button {
     cursor: pointer;
   }
-
+  
   ${StyledPage} {
     position: relative;
-  height: 100vh;
-  background-color: #ffffff;
+    height: 100vh;
+    background-color: #ffffff;
   }
-
+  
   ${Heading} {
     display: flex;
+
     justify-content: center;
     font-size: 1rem;
     margin-top: 10%;
     letter-spacing: -1px;
     font-weight: 600;
+  }
+  
+  ${StyledHeader} {
+    position: relative;
+    display: block;
+    flex-direction: row;
+    
   }
 `;
 

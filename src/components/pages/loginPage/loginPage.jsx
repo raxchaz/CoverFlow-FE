@@ -1,22 +1,16 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import Back from '../../../asset/image/back.svg';
 import Naver from '../../../asset/image/naver.svg';
 import Google from '../../../asset/image/google.svg';
 import Kakao from '../../../asset/image/kakao.svg';
 import Fastlogin from '../../../asset/image/fastlogin.svg';
 import '../../../asset/sass/pages/loginPage/loginPage.scss';
-import { StyledPage, Heading } from '../../../styledComponent.js';
+import { StyledPage } from '../../../styledComponent.js';
+import TitleHeader from '../../ui/header/titleHeader.jsx';
 import {
   ACCESS_TOKEN,
   BASE_URL,
 } from '../../pages/loginPage/constants/index.js';
-
-const BackButton = styled.img`
-  margin-left: -30%;
-  margin-right: 32%;
-  cursor: pointer;
-`;
 
 const WelcomeMessage = styled.p`
   margin: 20% 0% 0% 15%;
@@ -84,15 +78,7 @@ function LoginPage() {
   return (
     <>
       <StyledPage className="main-page-container">
-        <Heading>
-          <BackButton
-            className="back"
-            src={Back}
-            onClick={handleGoBack}
-            alt="뒤로 가기"
-          />
-          로그인{' '}
-        </Heading>
+        <TitleHeader pageTitle="로그인" handleGoBack={handleGoBack} />
 
         <WelcomeMessage>
           코버플로우에 <br /> 오신 것을 환영합니다
