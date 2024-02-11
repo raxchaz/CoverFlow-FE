@@ -8,10 +8,7 @@ import '../../../asset/sass/pages/loginPage/loginPage.scss';
 import { StyledPage } from '../../../styledComponent.js';
 import TitleHeader from '../../ui/header/titleHeader.jsx';
 import { useNavigate } from 'react-router-dom';
-import {
-  ACCESS_TOKEN,
-  BASE_URL,
-} from '../../pages/loginPage/constants/index.js';
+import { ACCESS_TOKEN, BASE_URL } from '../../global/constants/index.js';
 
 const WelcomeMessage = styled.p`
   margin: 20% 0% 0% 15%;

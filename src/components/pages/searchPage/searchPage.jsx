@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import Searchicon from '../../../asset/image/searchicon.svg';
 import Plus from '../../../asset/image/plus.svg';
 import Warning from '../../../asset/image/warning.svg';
-import { BASE_URL } from '../loginPage/constants';
+import { BASE_URL } from '../../global/constants/index.js';
 import '../../../asset/sass/pages/searchPage/searchPage.scss';
 import { StyledPage, StyledHeader } from '../../../styledComponent.js';
 import TitleHeader from '../../ui/header/titleHeader.jsx';

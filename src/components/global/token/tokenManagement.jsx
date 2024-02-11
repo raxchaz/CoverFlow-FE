@@ -1,10 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Base64 } from 'js-base64';
-import {
-  ACCESS_TOKEN,
-  REFRESH_TOKEN,
-} from '../../pages/loginPage/constants/index.js';
+import { ACCESS_TOKEN, REFRESH_TOKEN } from '../constants/index';
 
 // 주어진 토큰을 디코딩하고 페이로드를 추출하여 JS 객체로 반환합니다.
 const decodeToken = (token) => {

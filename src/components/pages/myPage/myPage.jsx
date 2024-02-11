@@ -10,7 +10,7 @@ import {
   ACCESS_TOKEN,
   REFRESH_TOKEN,
   BASE_URL,
-} from '../../pages/loginPage/constants/index.js';
+} from '../../global/constants/index.js';
 
 /* 스타일 컴포넌트 정의 */
 const LogoutButton = styled.button`

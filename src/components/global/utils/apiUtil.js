@@ -1,7 +1,4 @@
-import {
-  BASE_URL,
-  ACCESS_TOKEN,
-} from '../../pages/loginPage/constants/index.js';
+import { BASE_URL, ACCESS_TOKEN } from '../constants/index';
 
 const request = async (options) => {
   const headers = new Headers({
