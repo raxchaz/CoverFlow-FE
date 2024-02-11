@@ -4,6 +4,7 @@ import '../../../asset/sass/pages/searchPage/companyRegistPage.scss';
 import { ACCESS_TOKEN } from '../../pages/loginPage/constants/index.js';
 import { StyledPage, StyledHeader } from '../../../styledComponent.js';
 import TitleHeader from '../../ui/header/titleHeader.jsx';
+import TabBar from '../../ui/tabBar/tabBar.jsx';
 
 function CompanyRegistPage() {
   const navigate = useNavigate();
@@ -30,6 +31,7 @@ function CompanyRegistPage() {
         <input type="text" className="input-field" placeholder="입력란 3" />
         <input type="text" className="input-field" placeholder="입력란 4" />
       </StyledHeader>
+      <TabBar />
     </StyledPage>
   );
 }

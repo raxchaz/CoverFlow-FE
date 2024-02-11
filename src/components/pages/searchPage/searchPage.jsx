@@ -9,6 +9,7 @@ import { BASE_URL } from '../loginPage/constants';
 import '../../../asset/sass/pages/searchPage/searchPage.scss';
 import { StyledPage, StyledHeader } from '../../../styledComponent.js';
 import TitleHeader from '../../ui/header/titleHeader.jsx';
+import TabBar from '../../ui/tabBar/tabBar.jsx';
 
 const SearchInput = styled.input`
   width: 300px;
@@ -30,19 +31,39 @@ const SearchInput = styled.input`
   }
 `;
 
+const AutoCompleteContainer = styled.div`
+  position: absolute;
+  background-color: #fefefe;
+  width: 315px;
+  letter-spacing: -1px;
+  margin-left: 13%;
+  margin-top: 1%;
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  max-height: 300px;
+  overflow-y: auto;
+`;
+
+const AutoCompleteItem = styled.div`
+  padding: 10px;
+  cursor: pointer;
+  &:hover {
+    background-color: #f2f2f2;
+  }
+`;
+
 function SearchPage() {
   const navigate = useNavigate();
   const [searchCompany, setSearchCompany] = useState('');
   const [autoCompleteValue, setAutoCompleteValue] = useState([]);
   const [searchResult, setSearchResult] = useState([]);
   const [searchInitiated, setSearchInitiated] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(-1);
 
-  /* 뒤로가기 버튼을 눌렀을 때, 한 페이지 뒤로 가는 로직입니다. */
   const handleGoBack = () => {
     navigate(-1);
   };
 
-  /*  엔터 키를 누르거나, 검색 아이콘을 눌렀을 경우에 검색어를 서버로 전달하는 로직입니다.  */
   const handleSearch = () => {
     setSearchInitiated(true);
     axios
@@ -62,66 +83,66 @@ function SearchPage() {
       });
   };
 
-  /*
-      사용자가 검색 입력 필드에 텍스트를 입력할 때마다 이벤트가 발생하는 로직입니다.
-
-      1. 사용자의 새로운 입력값을 추출하여, searchCompany에 저장합니다.
-      2.  if문을 이용해서 사용자가 한 글자 이상의 음절을 입력했을 때에만 이벤트가 발생하도록 했습니다.
-      3. 마지막 문자가 정규표현식에서 정의한 문자가 맞는지 확인합니다. 
-      4. 마지막 문자가 유효한 경우에만 Axios를 사용해서 서버에 자동 완성 데이터를 요청합니다.
-      5. 응답 데이터인 response.data는 autoCompleteValue에 저장하여, 사용자에게 자동 완성 옵션을 보여줍니다!
-  */
-
   const handleInputChange = (event) => {
-    const newInputValue = event.target.value;
+    const newInputValue = event.target.value.trim();
     setSearchCompany(newInputValue);
+    setActiveIndex(-1);
 
     if (newInputValue.length > 0) {
-      const lastCharacter = newInputValue.slice(-1);
+      // 예시 데이터, 실제로는 서버 요청을 통해 데이터를 받아올 것
+      const simulatedResponse = [
+        { name: '조만제바보' },
+        { name: '조만제삼자' },
+        { name: '조만두123' },
+        { name: '조맹구를르르' },
+        { name: '조만지' },
+      ];
+      const filteredResponse = simulatedResponse.filter((item) =>
+        item.name.includes(newInputValue),
+      );
+      setAutoCompleteValue(filteredResponse);
+    } else {
+      setAutoCompleteValue([]);
+    }
+  };
 
-      if (isSyllable(lastCharacter)) {
-        axios
-          .get(`${BASE_URL}/api/company/auto-complete?query=${lastCharacter}`)
-          .then((response) => {
-            setAutoCompleteValue(response.data);
-          })
-          .catch((error) => {
-            console.error(
-              '자동완성 데이터를 가지고 오는 데 실패했어요.',
-              error,
-            );
-          });
+  const handleKeyDown = (e) => {
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      setActiveIndex((prevIndex) => (prevIndex + 1) % autoCompleteValue.length);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      setActiveIndex(
+        (prevIndex) =>
+          (prevIndex - 1 + autoCompleteValue.length) % autoCompleteValue.length,
+      );
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      if (activeIndex >= 0) {
+        setSearchCompany(autoCompleteValue[activeIndex].name);
+        setAutoCompleteValue([]);
+        handleSearch();
       }
     }
   };
 
-  /* 
-    음절 정규표현식을 사용하여, 자음과 모음의 단일 형태가 아닌
-    음절 형태일 경우에만 글자가 서버로 전송되도록 구현했습니다.
-   */
-  const isSyllable = (character) => {
-    const syllableRegex = /^[가-힣a-zA-Z0-9]$/;
-    return syllableRegex.test(character);
+  const selectAutoCompleteValue = (value) => {
+    setSearchCompany(value);
+    setAutoCompleteValue([]);
+    setActiveIndex(-1); // 선택 후 인덱스 초기화
   };
-
-  /* ===============================================================  */
 
   return (
     <StyledPage className="main-page-container">
       <StyledHeader>
         <TitleHeader pageTitle="기업 검색" handleGoBack={handleGoBack} />
-
         <SearchInput
           type="text"
           className="search-input-text"
           placeholder="기업 명을 검색하세요"
           value={searchCompany}
           onChange={handleInputChange}
-          onKeyPress={(e) => {
-            if (e.key === 'Enter') {
-              handleSearch();
-            }
-          }}
+          onKeyDown={handleKeyDown}
         />
         <img
           className="search"
@@ -129,7 +150,21 @@ function SearchPage() {
           onClick={handleSearch}
           alt="Search"
         />
-
+        {autoCompleteValue.length > 0 && (
+          <AutoCompleteContainer>
+            {autoCompleteValue.map((value, index) => (
+              <AutoCompleteItem
+                key={index}
+                onClick={() => selectAutoCompleteValue(value.name)}
+                style={
+                  index === activeIndex ? { backgroundColor: '#f2f2f2' } : {}
+                }
+              >
+                {value.name}
+              </AutoCompleteItem>
+            ))}
+          </AutoCompleteContainer>
+        )}
         <div>
           {searchInitiated ? (
             searchResult && searchResult.length > 0 ? (
@@ -140,7 +175,11 @@ function SearchPage() {
               ))
             ) : (
               <span className="result-data-failed">
-                <img className="warning-icon" src={Warning} alt="SVG 이미지" />
+                <img
+                  className="warning-icon"
+                  src={Warning}
+                  alt="Warning Icon"
+                />
                 <div className="failed-text">검색 결과가 없습니다</div>
                 <div className="failed-text2">
                   커버플로우에 원하는 기업을 등록해주세요
@@ -149,22 +188,17 @@ function SearchPage() {
                   <img
                     className="registration-icon"
                     src={Plus}
-                    alt="SVG 이미지"
+                    alt="Plus Icon"
                   />
                   <a href="/company-regist" className="company-registration">
-                    기업 등록하러 가기
+                    기업 등록하기
                   </a>
                 </span>
               </span>
             )
           ) : null}
         </div>
-
-        <div className="autoCompleteValue-style">
-          {autoCompleteValue.map((value) => (
-            <option key={value.name}>{value.name}</option>
-          ))}
-        </div>
+        <TabBar />
       </StyledHeader>
     </StyledPage>
   );

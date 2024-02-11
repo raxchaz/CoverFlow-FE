@@ -19,8 +19,8 @@ const TabBar = () => {
       </div>
 
       <div style={{ width: '33.33%' }}>
-        <Link to="/mypage" className="nav-link" onClick={() => setActiveNav(3)}>
-          <div className={activeNav === 3 ? 'nav-item active' : 'nav-item'}>
+        <Link to="/mypage" className="nav-link" onClick={() => setActiveNav(2)}>
+          <div className={activeNav === 2 ? 'nav-item active' : 'nav-item'}>
             <FontAwesomeIcon icon={faUser} className="icon" />
             <div className="text">마이페이지</div>
           </div>
@@ -31,9 +31,9 @@ const TabBar = () => {
         <Link
           to="/notification"
           className="nav-link"
-          onClick={() => setActiveNav(2)}
+          onClick={() => setActiveNav(3)}
         >
-          <div className={activeNav === 2 ? 'nav-item active' : 'nav-item'}>
+          <div className={activeNav === 3 ? 'nav-item active' : 'nav-item'}>
             <FontAwesomeIcon icon={faBell} className="icon" />
             <div className="text">알림</div>
           </div>

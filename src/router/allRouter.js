@@ -12,11 +12,11 @@ import NicknamePage from '../components/pages/loginPage/nicknamePage';
 /* 사용자 참여 페이지 관련 */
 import Store from '../components/pages/storePage/storePage';
 import MyPage from '../components/pages/myPage/myPage';
-import CompanyRegistPage from '../components/pages/searchPage/companyRegistPage.jsx';
 import NotificationPage from '../components/pages/notificationPage/notificationPage';
 
 /* 질문 페이지 관련 */
 import SearchPage from '../components/pages/searchPage/searchPage.jsx';
+import CompanyRegistPage from '../components/pages/searchPage/companyRegistPage.jsx';
 
 /* 그 외 유틸  */
 import TokenManagement from '../components/global/token/tokenManagement';

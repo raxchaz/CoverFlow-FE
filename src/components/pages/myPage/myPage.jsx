@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import '../../../asset/sass/pages/myPage/myPage.scss';
 import { StyledPage, StyledHeader } from '../../../styledComponent.js';
 import TitleHeader from '../../ui/header/titleHeader.jsx';
+import TabBar from '../../ui/tabBar/tabBar.jsx';
 import {
   ACCESS_TOKEN,
   REFRESH_TOKEN,
@@ -129,6 +130,7 @@ function Mypage() {
           <div className="bun-title">
             현재 붕어빵 <span className="mypage-bun-count">2억개</span>
           </div>
+          <TabBar />
           <LogoutButton className="logout-button" onClick={handleLogout}>
             로그아웃
           </LogoutButton>

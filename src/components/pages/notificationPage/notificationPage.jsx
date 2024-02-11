@@ -4,6 +4,7 @@ import '../../../asset/sass/pages/notificationPage/notificationPage.scss';
 import { ACCESS_TOKEN } from '../../pages/loginPage/constants/index.js';
 import { StyledPage, StyledHeader } from '../../../styledComponent.js';
 import TitleHeader from '../../ui/header/titleHeader.jsx';
+import TabBar from '../../ui/tabBar/tabBar.jsx';
 
 function NotificationPage() {
   const navigate = useNavigate();
@@ -27,6 +28,7 @@ function NotificationPage() {
       <StyledHeader>
         <TitleHeader pageTitle="알림" handleGoBack={handleGoBack} />
       </StyledHeader>
+      <TabBar />
     </StyledPage>
   );
 }

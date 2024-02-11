@@ -4,6 +4,7 @@ import '../../../asset/sass/pages/storePage/storePage.scss';
 import { ACCESS_TOKEN } from '../../pages/loginPage/constants/index.js';
 import { StyledPage, StyledHeader } from '../../../styledComponent.js';
 import TitleHeader from '../../ui/header/titleHeader.jsx';
+import TabBar from '../../ui/tabBar/tabBar.jsx';
 import UserInfoHeader from '../../ui/header/userInfoHeader.jsx';
 
 function StorePage() {
@@ -27,6 +28,7 @@ function StorePage() {
       <StyledHeader>
         <TitleHeader pageTitle="상점" handleGoBack={handleGoBack} />
         <UserInfoHeader />
+        <TabBar />
       </StyledHeader>
     </StyledPage>
   );
