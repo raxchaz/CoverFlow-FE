@@ -94,18 +94,18 @@ function LoginPage() {
           className="fast-login"
         />
 
-        <LoginButton href={`${BASE_URL}/oauth2/authorization/kakao`}>
+        <LoginButton href={`https://coverflow.co.kr/oauth2/authorization/kakao`}>
           <img src={Kakao} alt="Kakao 로그인" className="kakao-login" />
         </LoginButton>
 
         <HorizontalRule />
 
         <LoginButtonsContainer>
-          <LoginButton href={`${BASE_URL}/oauth2/authorization/naver`}>
+          <LoginButton href={`https://coverflow.co.kr/oauth2/authorization/naver`}>
             <img src={Naver} alt="Naver 로그인" className="naver-login" />
           </LoginButton>
 
-          <LoginButton href={`${BASE_URL}/oauth2/authorization/google`}>
+          <LoginButton href={`https://coverflow.co.kr/oauth2/authorization/google`}>
             <img src={Google} alt="Google 로그인" className="google-login" />
           </LoginButton>
         </LoginButtonsContainer>
