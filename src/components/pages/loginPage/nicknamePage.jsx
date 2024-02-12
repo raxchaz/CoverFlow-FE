@@ -6,7 +6,7 @@ import GenderSelection from '../../ui/genderSelection/genderSelection';
 import '../../../asset/sass/pages/loginPage/nicknamePage.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
-import { ACCESS_TOKEN, BASE_URL } from '../loginPage/constants/index.js';
+import { ACCESS_TOKEN, BASE_URL } from '../../global/constants/index.js';
 import TitleHeader from '../../ui/header/titleHeader.jsx';
 import { StyledPage, StyledHeader } from '../../../styledComponent.js';
 
@@ -83,13 +83,11 @@ const NicknamePage = () => {
   const handleJobSeekingChange = () => {
     setIsJobSeeking(!isJobSeeking);
     setIsEmployed(false);
-    localStorage.setItem('tagData', isJobSeeking ? '' : '취준생');
   };
 
   const handleEmployedChange = () => {
     setIsEmployed(!isEmployed);
     setIsJobSeeking(false);
-    localStorage.setItem('tagData', isEmployed ? '' : '현직자');
   };
 
   const handleSelectAge = (ageKeyword) => {

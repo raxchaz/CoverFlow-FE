@@ -13,7 +13,7 @@ import {
   BASE_URL,
   ACCESS_TOKEN,
   REFRESH_TOKEN,
-} from '../../pages/loginPage/constants';
+} from '../../global/constants/index';
 
 function UserInfoHeader() {
   const { isLoggedIn, rewardCount, isDropdownOpen } = useSelector(
@@ -93,6 +93,8 @@ function UserInfoHeader() {
       navigate('/mypage');
     } else if (menu === '상점') {
       navigate('/store');
+      // } else if (menu === '메인') {
+      //   navigate('/');
     } else if (menu === '로그아웃') {
       logout();
     }
@@ -141,6 +143,12 @@ function UserInfoHeader() {
                     상점
                   </li>
                   <hr />
+                  {/* <li
+                    className="dropdown-item-main"
+                    onClick={() => handleMenuClick('메인')}
+                  >
+                    메인
+                  </li> */}
                   <li
                     className="dropdown-item-logout"
                     onClick={() => handleMenuClick('로그아웃')}
