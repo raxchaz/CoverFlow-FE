@@ -53,7 +53,7 @@ function Mypage() {
   };
 
   /* 사용자의 닉네임과 붕어빵 개수를 불러옵니다. */
-  /* const loadUserData = () => {
+  const loadUserData = () => {
     fetch(`${BASE_URL}/api/member/find-member`, {
       method: 'GET',
       headers: {
@@ -68,7 +68,6 @@ function Mypage() {
       })
       .catch((error) => console.error('회원 정보 불러오기 실패:', error));
   };
-  */
 
   /* 로그아웃 버튼을 클릭했을 경우, 서버로 로그아웃 API를 요청한 후, 
       클라이언트 측에서 리프레쉬 토큰과 엑세스 토큰을 삭제하고 메인 페이지로 돌아갑니다. */
