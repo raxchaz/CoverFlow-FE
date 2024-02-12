@@ -14,7 +14,6 @@ function StorePage() {
     const token = localStorage.getItem(ACCESS_TOKEN);
 
     if (!token) {
-      localStorage.setItem('notificationPageURL', '/store');
       navigate('/login');
     }
   }, [navigate]);
