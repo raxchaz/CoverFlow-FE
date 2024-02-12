@@ -8,7 +8,7 @@ import '../../../asset/sass/pages/loginPage/loginPage.scss';
 import { StyledPage } from '../../../styledComponent.js';
 import TitleHeader from '../../ui/header/titleHeader.jsx';
 import { useNavigate } from 'react-router-dom';
-import { ACCESS_TOKEN} from '../../global/constants/index.js';
+import { ACCESS_TOKEN, BASE_URL } from '../../global/constants/index.js';
 
 const WelcomeMessage = styled.p`
   margin: 20% 0% 0% 15%;
@@ -94,18 +94,18 @@ function LoginPage() {
           className="fast-login"
         />
 
-        <LoginButton href={`http://15.165.1.48:8081/authorization/kakao`}>
+        <LoginButton href={`${BASE_URL}/authorization/kakao`}>
           <img src={Kakao} alt="Kakao 로그인" className="kakao-login" />
         </LoginButton>
 
         <HorizontalRule />
 
         <LoginButtonsContainer>
-          <LoginButton href={`http://15.165.1.48:8081/oauth2/authorization/naver`}>
+          <LoginButton href={`${BASE_URL}/oauth2/authorization/naver`}>
             <img src={Naver} alt="Naver 로그인" className="naver-login" />
           </LoginButton>
 
-          <LoginButton href={`http://15.165.1.48:8081/oauth2/authorization/google`}>
+          <LoginButton href={`${BASE_URL}/oauth2/authorization/google`}>
             <img src={Google} alt="Google 로그인" className="google-login" />
           </LoginButton>
         </LoginButtonsContainer>
