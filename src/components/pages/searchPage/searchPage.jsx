@@ -63,12 +63,15 @@ function SearchPage() {
   // 유효한 문자열 검사 (한글, 영문, 숫자)
   const isSyllable = (character) => {
     const syllableRegex = /^[가-힣a-zA-Z0-9]$/;
+    const result = syllableRegex.test(character);
+    console.log('글자 유효성 검사 결과', { character, result });
     return syllableRegex.test(character);
   };
 
   // 입력값 변경 핸들러
   const handleInputChange = (event) => {
     const newInputValue = event.target.value.trim();
+    console.log('입력값 변경됨', newInputValue);
     setSearchCompany(newInputValue);
     setActiveIndex(-1);
 
@@ -86,13 +89,15 @@ function SearchPage() {
 
   // 자동완성 데이터 요청
   const fetchAutoCompleteData = (query) => {
+    console.log('자동완성 데이터 요청 중', query);
     axios
-      .get(`${BASE_URL}/api/company/auto-complete?query=${query}`)
+      .get(`${BASE_URL}/api/company/auto-complete?name=${query}`)
       .then((response) => {
+        console.log('자동완성 데이터 응답', response.data);
         setAutoCompleteValue(response.data);
       })
       .catch((error) => {
-        console.error('자동완성 데이터를 가져오는 데 실패했습니다.', error);
+        console.error('자동완성 데이터를 가져오기 실패', error);
         setAutoCompleteValue([]);
       });
   };
@@ -105,6 +110,7 @@ function SearchPage() {
         `${BASE_URL}/api/company/search-companies`,
         { name: searchCompany },
       );
+      console.log('검색 결과', response.data);
       if (response.status === 200 && response.data.length > 0) {
         const searchDataWithQuestionsCount = response.data.map((company) => ({
           ...company,
@@ -118,7 +124,7 @@ function SearchPage() {
         setSearchResult([]);
       }
     } catch (error) {
-      console.error(error);
+      console.error('검색 중 오류 발생', error);
       setSearchResult([]);
     }
   };
