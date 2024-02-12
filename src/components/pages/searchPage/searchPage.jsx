@@ -192,7 +192,7 @@ function SearchPage() {
                   />
                   <div className="failed-text">검색 결과가 없습니다</div>
                   <div className="failed-text2">
-                    커버플로우에 원하는 기업을 등록해주세요
+                    코버플로우에 원하는 기업을 등록해 주세요
                   </div>
                   <span className="registration-container">
                     <img className="plus-icon" src={Plus} alt="Plus Icon" />
