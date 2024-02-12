@@ -19,7 +19,6 @@ function CompanyRegistPage() {
     }
   }, [navigate]);
 
-  // 회사 정보 상태 관리
   const [companyInfo, setCompanyInfo] = useState({
     companyName: '',
     industry: '',
@@ -27,11 +26,19 @@ function CompanyRegistPage() {
     cityOrDistrict: '',
   });
 
-  // '직접 입력' 선택 시 사용하는 상태
-  const [otherIndustry, setOtherIndustry] = useState('');
-
-  // 업종 및 지역 선택 옵션
-  const industries = ['정보기술', '제조', '금융', '직접 입력'];
+  const industries = [
+    '서비스업',
+    '제조／화학',
+    '의료／제약／복지',
+    '유통／무역／운송',
+    '교육업',
+    '건설업',
+    'IT / 웹 / 통신',
+    '미디어 / 디자인',
+    '은행 / 금융업',
+    '기관 / 협회',
+    '미디어 및 엔터테인먼트',
+  ];
   const provinces = [
     '서울특별시',
     '부산광역시',
@@ -52,37 +59,14 @@ function CompanyRegistPage() {
     '제주특별자치도',
   ];
 
-  // 입력 변경 핸들러
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name === 'industry' && value !== '직접 입력') {
-      setOtherIndustry(''); // 업종이 '직접 입력'이 아닐 경우 otherIndustry 초기화
-    }
     setCompanyInfo((prevInfo) => ({
       ...prevInfo,
       [name]: value,
     }));
   };
 
-  // '직접 입력' 업종 변경 핸들러
-  const handleOtherInputChange = (e) => {
-    setOtherIndustry(e.target.value);
-    setCompanyInfo((prevInfo) => ({
-      ...prevInfo,
-      industry: e.target.value, // 직접 입력한 업종으로 업데이트
-    }));
-  };
-
-  // 로그인 상태 검사
-  useEffect(() => {
-    const token = localStorage.getItem(ACCESS_TOKEN);
-    if (!token) {
-      localStorage.setItem('companyRegistPageURL', '/company-regist');
-      navigate('/login');
-    }
-  }, [navigate]);
-
-  // 폼 제출 핸들러
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('Company Information:', companyInfo);
@@ -103,7 +87,6 @@ function CompanyRegistPage() {
       });
   };
 
-  // 뒤로 가기 핸들러
   const handleGoBack = () => {
     navigate(-1);
   };
@@ -113,19 +96,17 @@ function CompanyRegistPage() {
       <StyledHeader>
         <TitleHeader pageTitle="기업 등록" handleGoBack={handleGoBack} />
         <form onSubmit={handleSubmit} className="company-form">
-          {/* 기업명 입력 */}
           <div className="regist-company-name">
             기업명 <div className="neccessary"> * 필수</div>
           </div>
           <input
             type="text"
             className="input-field-regist"
-            placeholder="기업 이름을 정확히 작성해주세요"
+            placeholder="기업 이름을 정확히 작성해 주세요"
             name="companyName"
             value={companyInfo.companyName}
             onChange={handleChange}
           />
-          {/* 업종 선택 */}
           <div className="regist-company-industry">
             업종 <div className="neccessary"> * 필수</div>
           </div>
@@ -135,24 +116,13 @@ function CompanyRegistPage() {
             value={companyInfo.industry}
             onChange={handleChange}
           >
-            <option value="">업종을 선택해주세요</option>
+            <option value="">업종을 선택해 주세요</option>
             {industries.map((industry) => (
               <option key={industry} value={industry}>
                 {industry}
               </option>
             ))}
           </select>
-          {companyInfo.industry === '직접 입력' && (
-            <input
-              type="text"
-              className="input-field-regist"
-              placeholder="업종 직접 입력"
-              name="otherIndustry"
-              value={otherIndustry}
-              onChange={handleOtherInputChange}
-            />
-          )}
-          {/* 지역 선택 */}
           <div className="location-container">
             <div className="regist-company-province">
               지역 <div className="neccessary"> * 필수</div>
@@ -173,7 +143,7 @@ function CompanyRegistPage() {
             <input
               type="text"
               className="input-field-regist"
-              placeholder="시/군/구"
+              placeholder="시 /군 /구 (선택)"
               name="cityOrDistrict"
               value={companyInfo.cityOrDistrict}
               onChange={handleChange}

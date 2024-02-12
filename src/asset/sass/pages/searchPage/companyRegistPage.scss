@@ -61,8 +61,11 @@
   border-radius: 0px;
 }
 
-.neccessary {
-  font-size: 11px;
-  color: #d50202;
-  margin: -1% 0% 0% 2%;
+.regist-company-name,
+.regist-company-industry,
+.regist-company-province {
+  .neccessary {
+    margin-left: 3px;
+    color: #d50202;
+  }
 }
