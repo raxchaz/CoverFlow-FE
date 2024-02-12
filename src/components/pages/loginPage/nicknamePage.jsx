@@ -148,8 +148,8 @@ const NicknamePage = () => {
       } else if (isEmployed) {
         tagData = '현직자';
       }
-
-      const response = await fetch(`${BASE_URL}/api/member/save-member-info`, {
+      console.log(ACCESS_TOKEN);
+      const response = await fetch(`http://15.165.1.48:8081/api/member/save-member-info`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
