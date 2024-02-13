@@ -1,11 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { StyledPage, StyledHeader } from '../../../styledComponent.js';
 import TitleHeader from '../../ui/header/titleHeader.jsx';
 import styled from 'styled-components';
 import TabBar from '../../ui/tabBar/tabBar.jsx';
 import '../../../asset/sass/pages/searchPage/searchResultPage.scss';
-import { ACCESS_TOKEN } from '../../global/constants/index.js';
 
 const ResultsContainer = styled.div``;
 
@@ -92,15 +91,6 @@ function SearchResultPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const { searchResult } = location.state || {};
-
-  useEffect(() => {
-    const token = localStorage.getItem(ACCESS_TOKEN);
-
-    if (!token) {
-      localStorage.setItem('prevPage', '/search-result');
-      navigate('/login');
-    }
-  }, [navigate]);
 
   const handleGoBack = () => {
     navigate(-1);

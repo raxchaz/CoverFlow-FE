@@ -1,5 +1,5 @@
-// import React, { useEffect } from 'react';
 import React from 'react';
+// import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 // import { ACCESS_TOKEN } from '../components/global/constants/index.js';
 
@@ -26,14 +26,14 @@ import TokenManagement from '../components/global/token/tokenManagement';
 /* ===================================================================  */
 
 const AllRouter = () => {
-  /*  useEffect(() => {
-    if (!localStorage.getItem(ACCESS_TOKEN)) {
-      localStorage.setItem(
-        ACCESS_TOKEN,
-        'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJBY2Nlc3NUb2tlbiIsImV4cCI6MTcwNjg3OTExOSwibWVtYmVySWQiOiJmMDQyY2RlYy00ZjRkLTQxYTItODI5Zi04ZDEzZTlkNjBhYWMiLCJyb2xlIjoiTUVNQkVSIn0.Eb3gmFQd_Ig8mqOhuFpUUjGQ8pmRmmoVac0qakLTTYpq5RLkjmwdTFY2XL-AAYNSyGSWqyl2VLPdwdfliqL_OA',
-      );
-    }
-  }, []); */
+  // useEffect(() => {
+  //   if (!localStorage.getItem(ACCESS_TOKEN)) {
+  //     localStorage.setItem(
+  //       ACCESS_TOKEN,
+  //       'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJBY2Nlc3NUb2tlbiIsImV4cCI6MTcwNjg3OTExOSwibWVtYmVySWQiOiJmMDQyY2RlYy00ZjRkLTQxYTItODI5Zi04ZDEzZTlkNjBhYWMiLCJyb2xlIjoiTUVNQkVSIn0.Eb3gmFQd_Ig8mqOhuFpUUjGQ8pmRmmoVac0qakLTTYpq5RLkjmwdTFY2XL-AAYNSyGSWqyl2VLPdwdfliqL_OA',
+  //     );
+  //   }
+  // }, []);
 
   return (
     <div className="app">
@@ -50,7 +50,7 @@ const AllRouter = () => {
         <Route path="/company-regist" element={<CompanyRegistPage />} />
 
         <Route path="/search-company" element={<SearchPage />} />
-        <Route path="/search-result" element={<SearchResultPage />} />
+        <Route path="/search-result/:searchId" element={<SearchResultPage />} />
       </Routes>
     </div>
   );

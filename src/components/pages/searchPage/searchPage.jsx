@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -59,6 +59,8 @@ function SearchPage() {
   const [searchResult, setSearchResult] = useState([]);
   const [searchInitiated, setSearchInitiated] = useState(false);
   const [activeIndex, setActiveIndex] = useState(-1);
+  const searchInputRef = useRef(null);
+  const autoCompleteRef = useRef(null);
 
   // 유효한 문자열 검사 (한글, 영문, 숫자)
   const isSyllable = (character) => {
@@ -139,7 +141,7 @@ function SearchPage() {
 
       // 사용자가 입력한 검색어로 검색을 진행할 경우
       else {
-        const response = await axios.post(
+        const response = await axios.get(
           `${BASE_URL}/api/company/search-companies`,
           { name: searchCompany },
         );
@@ -170,6 +172,25 @@ function SearchPage() {
       setSearchResult([]);
     }
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        searchInputRef.current &&
+        autoCompleteRef.current &&
+        !searchInputRef.current.contains(event.target) &&
+        !autoCompleteRef.current.contains(event.target)
+      ) {
+        setAutoCompleteValue([]);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   // 자동완성 선택 함수
   const selectAutoCompleteValue = (value) => {
