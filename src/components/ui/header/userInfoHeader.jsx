@@ -46,6 +46,7 @@ function UserInfoHeader() {
         .then((data) => {
           if (data && data.data && data.data.fishShapedBun !== undefined) {
             dispatch(setRewardCount(data.data.fishShapedBun));
+            console.log('붕어빵 개수:', data.data.fishShapedBun);
           } else {
             console.error('유효하지 않은 데이터를 받았습니다.', data);
           }
