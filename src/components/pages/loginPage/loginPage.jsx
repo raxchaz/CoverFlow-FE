@@ -72,7 +72,7 @@ function LoginPage() {
   }, []);
 
   const handleGoBack = () => {
-    window.history.back();
+    navigate(-1);
   };
 
   return (
