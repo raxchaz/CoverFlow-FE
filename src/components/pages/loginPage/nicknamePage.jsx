@@ -149,8 +149,7 @@ const NicknamePage = () => {
         tagData = '현직자';
       }
       
-      // const response = 
-        await fetch('http://localhost:8081/api/member/save-member-info', {
+      const response = await fetch('http://15.165.1.48:8081/api/member/save-member-info', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -162,22 +161,14 @@ const NicknamePage = () => {
             gender: genderData
           }),
         },
-      ).then(response => {
-  console.log('서버 응답 상태:', response.status);
-  if (!response.ok) {
-    throw new Error(`HTTP 오류! 상태: ${response.status}`);
-  }
-  return response.json();
-})
-.then(data => console.log(data))
-.catch(error => console.error('Error:', error));
+      );
       
-      // const data = await response.json();
-      // console.log('서버 응답:', data);
-      // console.log('서버 응답 상태:', response.status);
-      // if (!response.ok) {
-      //   throw new Error(`HTTP 오류! 상태: ${response.status}`);
-      // }
+      const data = await response.json();
+      console.log('서버 응답:', data);
+      console.log('서버 응답 상태:', response.status);
+      if (!response.ok) {
+        throw new Error(`HTTP 오류! 상태: ${response.status}`);
+      }
 
       navigate('/');
     } catch (error) {
