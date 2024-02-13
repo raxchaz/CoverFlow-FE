@@ -119,7 +119,7 @@ const NicknamePage = () => {
 사용자가  데이터를 선택하고, 시작하기 버튼을 눌렀을 때, 
 데이터가 서버로 전송될 수 있도록 하는 로직입니다. 
  */
-  const sendDataToServer = () => {
+  const sendDataToServer = async () => {
     try {
       let genderData = '';
       
@@ -149,7 +149,8 @@ const NicknamePage = () => {
         tagData = '현직자';
       }
       
-      const response = fetch('http://localhost:8081/api/member/save-member-info', {
+      // const response = 
+        await fetch('http://localhost:8081/api/member/save-member-info', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -161,14 +162,22 @@ const NicknamePage = () => {
             gender: genderData
           }),
         },
-      );
+      ).then(response => {
+  console.log('서버 응답 상태:', response.status);
+  if (!response.ok) {
+    throw new Error(`HTTP 오류! 상태: ${response.status}`);
+  }
+  return response.json();
+})
+.then(data => console.log(data))
+.catch(error => console.error('Error:', error));
       
-      const data = response.json();
-      console.log('서버 응답:', data);
-      console.log('서버 응답 상태:', response.status);
-      if (!response.ok) {
-        throw new Error(`HTTP 오류! 상태: ${response.status}`);
-      }
+      // const data = await response.json();
+      // console.log('서버 응답:', data);
+      // console.log('서버 응답 상태:', response.status);
+      // if (!response.ok) {
+      //   throw new Error(`HTTP 오류! 상태: ${response.status}`);
+      // }
 
       navigate('/');
     } catch (error) {
