@@ -94,7 +94,7 @@ function LoginPage() {
           className="fast-login"
         />
 
-        <LoginButton href={`${BASE_URL}/authorization/kakao`}>
+        <LoginButton href={`${BASE_URL}/oauth2/authorization/kakao`}>
           <img src={Kakao} alt="Kakao 로그인" className="kakao-login" />
         </LoginButton>
 
