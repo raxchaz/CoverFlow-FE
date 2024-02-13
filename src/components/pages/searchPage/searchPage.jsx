@@ -139,7 +139,7 @@ function SearchPage() {
 
       // 사용자가 입력한 검색어로 검색을 진행할 경우
       else {
-        const response = await axios.post(
+        const response = await axios.get(
           `${BASE_URL}/api/company/search-companies`,
           { name: searchCompany },
         );
