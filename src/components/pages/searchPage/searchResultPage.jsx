@@ -97,7 +97,7 @@ function SearchResultPage() {
     const token = localStorage.getItem(ACCESS_TOKEN);
 
     if (!token) {
-      localStorage.setItem('searchResultURL', '/search-result/:searchId');
+      localStorage.setItem('prevPage', '/search-result');
       navigate('/login');
     }
   }, [navigate]);
@@ -108,7 +108,7 @@ function SearchResultPage() {
 
   const goToResultDetailPage = (companyId) => {
     navigate(`/company-detail/${companyId}`, {
-      state: { companyId: companyId },
+      state: { companyId },
     });
   };
 
@@ -129,7 +129,7 @@ function SearchResultPage() {
                   onClick={() => goToResultDetailPage(company.id)}
                 >
                   <span>{company.name}</span>
-                  <QuestionCount>{company.questionsCount}</QuestionCount>
+                  <QuestionCount>{company.questionCount}</QuestionCount>
                 </ResultItem>
               ))}
             </ResultsList>

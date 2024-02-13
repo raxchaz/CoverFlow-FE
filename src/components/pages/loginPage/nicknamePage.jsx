@@ -105,13 +105,11 @@ const NicknamePage = () => {
   useEffect(() => {
     // const checkLoginStatus = () => {
     //   const token = localStorage.getItem(ACCESS_TOKEN);
-
     //   if (!token) {
     //     alert('잘못된 접근입니다. 로그인이 필요합니다.');
     //     navigate('/login');
     //   }
     // };
-
     // checkLoginStatus();
   }, [navigate]);
 
@@ -122,7 +120,7 @@ const NicknamePage = () => {
   const sendDataToServer = async () => {
     try {
       let genderData = '';
-      
+
       if (selectedGender === '여성') {
         genderData = 'Female';
       } else if (selectedGender === '남성') {
@@ -130,7 +128,7 @@ const NicknamePage = () => {
       } else {
         genderData = 'Unknown';
       }
-      
+
       const ageRange =
         {
           '10대': '10-19',
@@ -140,29 +138,28 @@ const NicknamePage = () => {
           '50대': '50-59',
           '60대 이상': '60-',
         }[selectedAgeKeyword] || selectedAgeKeyword;
-      
+
       let tagData = '';
-      
+
       if (isJobSeeking) {
         tagData = '취준생';
       } else if (isEmployed) {
         tagData = '현직자';
       }
-      
+
       const response = await fetch(`${BASE_URL}/api/member/save-member-info`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
-          },
-          body: JSON.stringify({
-            tag: tagData,
-            age: ageRange,
-            gender: genderData
-          }),
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
         },
-      );
-      
+        body: JSON.stringify({
+          tag: tagData,
+          age: ageRange,
+          gender: genderData,
+        }),
+      });
+
       const data = await response.json();
       console.log('서버 응답:', data);
       console.log('서버 응답 상태:', response.status);
@@ -183,7 +180,6 @@ const NicknamePage = () => {
       <StyledPage className="main-page-container">
         <StyledHeader>
           <TitleHeader pageTitle="회원 정보 설정" />
-
           <div className="nickname-info">
             <span className="welcome-nickname">
               현재 본인의 상황을 <br /> 체크해 주세요
