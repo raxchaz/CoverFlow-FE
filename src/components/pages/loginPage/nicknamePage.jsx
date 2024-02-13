@@ -119,7 +119,7 @@ const NicknamePage = () => {
 사용자가  데이터를 선택하고, 시작하기 버튼을 눌렀을 때, 
 데이터가 서버로 전송될 수 있도록 하는 로직입니다. 
  */
-  const sendDataToServer = async () => {
+  const sendDataToServer = () => {
     try {
       let genderData = '';
       
