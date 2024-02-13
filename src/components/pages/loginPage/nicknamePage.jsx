@@ -155,8 +155,8 @@ const NicknamePage = () => {
       const response = await fetch(`${BASE_URL}/api/member/save-member-info`, {
         method: 'POST',
         headers: {
-          "Content-Type":"application/json; charset=utf-8",
-          "Authorization": `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
+          "Content-Type":"application/json;",
+          Authorization: 'Bearer localStorage.getItem(ACCESS_TOKEN)',
         },
         body: JSON.stringify({
           gender: genderData,
