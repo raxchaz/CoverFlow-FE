@@ -148,7 +148,10 @@ const NicknamePage = () => {
       } else if (isEmployed) {
         tagData = '현직자';
       }
-      console.log(ACCESS_TOKEN);
+      console.log(localStorage.getItem(ACCESS_TOKEN));
+      console.log(genderData);
+      console.log(ageRange);
+      console.log(tagData);
       const response = await fetch(`${BASE_URL}/api/member/save-member-info`, {
         method: 'POST',
         headers: {
@@ -163,7 +166,6 @@ const NicknamePage = () => {
       });
       const data = await response.json();
       console.log('서버 응답:', data);
-
       console.log('서버 응답 상태:', response.status);
       if (!response.ok) {
         throw new Error(`HTTP 오류! 상태: ${response.status}`);
