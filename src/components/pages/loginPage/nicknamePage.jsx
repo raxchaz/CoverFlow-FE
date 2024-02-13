@@ -149,7 +149,8 @@ const NicknamePage = () => {
         tagData = '현직자';
       }
 
-      let accessToken = localStorage.getItem(ACCESS_TOKEN);
+      let accessToken = '';
+      accessToken = localStorage.getItem(ACCESS_TOKEN);
       console.log(accessToken);
       console.log(genderData);
       console.log(ageRange);
