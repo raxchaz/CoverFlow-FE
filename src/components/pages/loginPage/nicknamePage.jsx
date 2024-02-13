@@ -6,7 +6,7 @@ import GenderSelection from '../../ui/genderSelection/genderSelection';
 import '../../../asset/sass/pages/loginPage/nicknamePage.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
-// import { ACCESS_TOKEN } from '../../global/constants/index.js';
+import { ACCESS_TOKEN, BASE_URL } from '../../global/constants/index.js';
 import TitleHeader from '../../ui/header/titleHeader.jsx';
 import { StyledPage, StyledHeader } from '../../../styledComponent.js';
 
@@ -149,11 +149,11 @@ const NicknamePage = () => {
         tagData = '현직자';
       }
       
-      const response = await fetch('http://15.165.1.48:8081/api/member/save-member-info', {
+      const response = await fetch(`${BASE_URL}/api/member/save-member-info`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+            Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
           },
           body: JSON.stringify({
             tag: tagData,
