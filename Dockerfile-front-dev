@@ -1,5 +1,12 @@
-FROM node:20-alpine
-COPY package.json ./
+FROM node:20-alpine as builder
+WORKDIR /app
+COPY package.json yarn.lock ./
 RUN yarn
 COPY ./ ./
-CMD [ "yarn","start" ]
+RUN yarn build
+
+FROM node:20-alpine as runner
+WORKDIR /app
+COPY --from=builder /app ./
+EXPOSE 3001
+CMD ["yarn", "start"]
