@@ -14,7 +14,7 @@ function CompanyRegistPage() {
     const token = localStorage.getItem(ACCESS_TOKEN);
 
     if (!token) {
-      localStorage.setItem('companyRegistURL', '/company-regist');
+      localStorage.setItem('prevPage', '/company-regist');
       navigate('/login');
     }
   }, [navigate]);

@@ -94,7 +94,7 @@ function SearchPage() {
       .get(`${BASE_URL}/api/company/auto-complete?name=${query}`)
       .then((response) => {
         console.log('자동완성 데이터 응답', response.data);
-        setAutoCompleteValue(response.data);
+        setAutoCompleteValue(response.data.data);
       })
       .catch((error) => {
         console.error('자동완성 데이터를 가져오기 실패', error);
@@ -102,26 +102,68 @@ function SearchPage() {
       });
   };
 
+  // 자동 완성 내역 저장 함수
+  const saveAutoCompleteHistory = async (searchText) => {
+    try {
+      const response = await axios.post(
+        `${BASE_URL}/api/company/auto-complete`,
+        { searchText },
+      );
+      console.log('자동완성 내역 저장 결과:', response.data);
+    } catch (error) {
+      console.error('자동완성 내역 저장 중 오류 발생:', error);
+    }
+  };
+
   // 검색 함수
   const handleSearch = async () => {
     setSearchInitiated(true);
+
     try {
-      const response = await axios.post(
-        `${BASE_URL}/api/company/search-companies`,
-        { name: searchCompany },
-      );
-      console.log('검색 결과', response.data);
-      if (response.status === 200 && response.data.length > 0) {
-        const searchDataWithQuestionsCount = response.data.map((company) => ({
-          ...company,
-          questionsCount: company.questionsCount || 0,
-        }));
+      // 사용자가 방향키로 특정 자동완성 항목을 선택하지 않고,
+      // 자동완성 목록이 있을 경우엔 전체 데이터를 결과 페이지로 전달합니다.
+      if (activeIndex === -1 && autoCompleteValue.length > 0) {
+        console.log('자동완성 값:', autoCompleteValue);
 
         navigate('/search-result', {
-          state: { searchResult: searchDataWithQuestionsCount },
+          state: { searchResult: autoCompleteValue },
         });
-      } else {
-        setSearchResult([]);
+      }
+      // 사용자가 방향키로 특정 자동완성 항목을 선택한 경우에 특정 항목만 결과 페이지로 전달합니다.
+      else if (activeIndex >= 0 && autoCompleteValue[activeIndex]) {
+        console.log('선택된 자동완성 값:', autoCompleteValue[activeIndex]);
+        navigate('/search-result', {
+          state: { searchResult: [autoCompleteValue[activeIndex]] },
+        });
+      }
+
+      // 사용자가 입력한 검색어로 검색을 진행할 경우
+      else {
+        const response = await axios.post(
+          `${BASE_URL}/api/company/search-companies`,
+          { name: searchCompany },
+        );
+        console.log('검색 결과', response.data);
+
+        if (response.status === 200 && response.data.length > 0) {
+          const searchDataWithQuestionsCount = response.data.map((company) => ({
+            ...company,
+            questionsCount: company.questionsCount || 0,
+          }));
+          console.log(
+            '검색 결과 (질문 수 포함):',
+            searchDataWithQuestionsCount,
+          );
+
+          navigate('/search-result', {
+            state: { searchResult: searchDataWithQuestionsCount },
+          });
+        } else {
+          setSearchResult([]);
+        }
+
+        // 검색 내역 저장
+        saveAutoCompleteHistory(searchCompany);
       }
     } catch (error) {
       console.error('검색 중 오류 발생', error);
@@ -154,9 +196,23 @@ function SearchPage() {
             placeholder="기업 명을 검색하세요"
             value={searchCompany}
             onChange={handleInputChange}
-            onKeyPress={(e) => {
-              if (e.key === 'Enter') {
-                handleSearch();
+            onKeyDown={(e) => {
+              if (
+                e.key === 'ArrowDown' &&
+                activeIndex < autoCompleteValue.length - 1
+              ) {
+                e.preventDefault();
+                setActiveIndex(activeIndex + 1);
+              } else if (e.key === 'ArrowUp' && activeIndex > 0) {
+                e.preventDefault();
+                setActiveIndex(activeIndex - 1);
+              } else if (e.key === 'Enter') {
+                e.preventDefault();
+                if (activeIndex >= 0 && autoCompleteValue[activeIndex]) {
+                  selectAutoCompleteValue(autoCompleteValue[activeIndex].name);
+                } else {
+                  handleSearch();
+                }
               }
             }}
           />

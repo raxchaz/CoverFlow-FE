@@ -30,7 +30,8 @@ isRequired를 통해 해당 props들은 필수적으로 제공되어야 한다�
 */
 MyPageHeader.propTypes = {
   pageTitle: PropTypes.string.isRequired,
-  handleGoBack: PropTypes.func.isRequired,
+  handleGoBack: PropTypes.func,
+  // handleGoBack 로직이 필수가 아니도록 변경하여, 뒤로 가기가 없는 로직도 잘 돌아가도록 설정했습니다.
 };
 
 export default MyPageHeader;
