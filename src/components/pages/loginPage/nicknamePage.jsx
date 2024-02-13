@@ -152,7 +152,7 @@ const NicknamePage = () => {
       console.log(genderData);
       console.log(ageRange);
       console.log(tagData);
-      const response = await fetch(`http://15.165.1.48:8081/api/member/save-member-info`, {
+      const response = await fetch(`http://localhost:8081/api/member/save-member-info`, {
         method: 'POST',
         headers: {
           "Content-Type":"application/json;",
@@ -164,12 +164,13 @@ const NicknamePage = () => {
           tag: tagData,
         }),
       });
+      
+      const data = await response.json();
+      console.log('서버 응답:', data);
       console.log('서버 응답 상태:', response.status);
       if (!response.ok) {
         throw new Error(`HTTP 오류! 상태: ${response.status}`);
       }
-      const data = await response.json();
-      console.log('서버 응답:', data);
 
       navigate('/');
     } catch (error) {
