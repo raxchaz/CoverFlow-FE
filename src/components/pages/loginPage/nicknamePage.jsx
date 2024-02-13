@@ -103,16 +103,16 @@ const NicknamePage = () => {
   토큰을 가지고 있는 사용자라면, 잘못된 접근임을 명시하고, 다시 로그인 페이지로 리다이렉트 합니다.
   */
   useEffect(() => {
-    const checkLoginStatus = () => {
-      const token = localStorage.getItem(ACCESS_TOKEN);
+    // const checkLoginStatus = () => {
+    //   const token = localStorage.getItem(ACCESS_TOKEN);
 
-      if (!token) {
-        alert('잘못된 접근입니다. 로그인이 필요합니다.');
-        navigate('/login');
-      }
-    };
+    //   if (!token) {
+    //     alert('잘못된 접근입니다. 로그인이 필요합니다.');
+    //     navigate('/login');
+    //   }
+    // };
 
-    checkLoginStatus();
+    // checkLoginStatus();
   }, [navigate]);
 
   /* 
