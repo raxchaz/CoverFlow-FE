@@ -6,7 +6,7 @@ import GenderSelection from '../../ui/genderSelection/genderSelection';
 import '../../../asset/sass/pages/loginPage/nicknamePage.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
-import { ACCESS_TOKEN, BASE_URL } from '../../global/constants/index.js';
+import { ACCESS_TOKEN } from '../../global/constants/index.js';
 import TitleHeader from '../../ui/header/titleHeader.jsx';
 import { StyledPage, StyledHeader } from '../../../styledComponent.js';
 
@@ -152,7 +152,7 @@ const NicknamePage = () => {
       console.log(genderData);
       console.log(ageRange);
       console.log(tagData);
-      const response = await fetch(`${BASE_URL}/api/member/save-member-info`, {
+      const response = await fetch(`http://localhost:8081/api/member/save-member-info`, {
         method: 'POST',
         headers: {
           "Content-Type":"application/json;",
