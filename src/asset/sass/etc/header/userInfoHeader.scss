@@ -1,5 +1,5 @@
 .user-icon-container {
-  margin-top: -5%;
+  margin-top: -50%;
 }
 
 .userInfo-container {
@@ -39,14 +39,15 @@ a.login-btn {
   padding: 0;
 }
 
-// .reward-fish {
-//   display: flex;
-//   align-items: center;
-//   flex-direction: column;
-//   margin-top: -5%;
-//   margin-left: 48%;
-//   cursor: pointer;
-// }
+div.reward-fish {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: -5%;
+  margin-left: 1%;
+  cursor: pointer;
+}
+
 .bun-count {
   font-size: 13px;
   margin-top: 1.2%;
