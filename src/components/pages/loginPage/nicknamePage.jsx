@@ -148,23 +148,25 @@ const NicknamePage = () => {
       } else if (isEmployed) {
         tagData = '현직자';
       }
-      console.log(localStorage.getItem(ACCESS_TOKEN));
+
+      let accessToken = localStorage.getItem(ACCESS_TOKEN);
+      console.log(accessToken);
       console.log(genderData);
       console.log(ageRange);
       console.log(tagData);
-      const response = await fetch(`http://localhost:8081/api/member/save-member-info`, {
-        method: 'POST',
-        headers: {
-          "Content-Type":"application/json",
-          Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
+      const response = await fetch('http://localhost:8081/api/member/save-member-info', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${accessToken}`,
+          },
+          body: JSON.stringify({
+            tag: tagData,
+            age: ageRange,
+            gender: genderData
+          }),
         },
-        body: JSON.stringify({
-          gender: genderData,
-          age: ageRange,
-          tag: tagData,
-        }),
-      });
-      
+      );
       const data = await response.json();
       console.log('서버 응답:', data);
       console.log('서버 응답 상태:', response.status);
