@@ -60,11 +60,11 @@ const TokenManagement = () => {
 
       if (prevPage) {
         navigate(prevPage);
-      } else {
-        // 권한도 없고 어떤 예외가 발생했을 경우
-        alert('로그인에 실패하였습니다. 다시 시도해주세요.');
-        navigate('/login');
       }
+    } else {
+      // 권한도 없고 어떤 예외가 발생했을 경우
+      alert('로그인에 실패하였습니다. 다시 시도해주세요.');
+      navigate('/login');
     }
   }, [navigate, location]);
   return null;
