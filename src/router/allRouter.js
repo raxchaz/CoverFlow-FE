@@ -23,6 +23,8 @@ import ContactPage from '../components/pages/myPage/contactPage.jsx';
 import SearchPage from '../components/pages/searchPage/searchPage.jsx';
 import CompanyRegistPage from '../components/pages/searchPage/companyRegistPage.jsx';
 import SearchResultPage from '../components/pages/searchPage/searchResultPage.jsx';
+import CompanyInfoPage from '../components/pages/searchPage/companyInfoPage.jsx';
+import QuestionWritePage from '../components/pages/postPage/questionWritePage.jsx';
 
 /* 그 외 유틸  */
 import TokenManagement from '../components/global/token/tokenManagement';
@@ -60,6 +62,9 @@ const AllRouter = () => {
 
         <Route path="/search-company" element={<SearchPage />} />
         <Route path="/search-result" element={<SearchResultPage />} />
+        <Route path="/company-info" element={<CompanyInfoPage />} />
+
+        <Route path="/question-write" element={<QuestionWritePage />} />
       </Routes>
     </div>
   );

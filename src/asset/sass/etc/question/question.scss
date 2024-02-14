@@ -1,0 +1,91 @@
+.user-container {
+  letter-spacing: -1px;
+  display: flex;
+  justify-content: space-between;
+  margin: 10% 0% 0% 10%;
+}
+
+.view-container {
+  white-space: nowrap;
+  display: flex;
+  margin: -5.5% 0% 0% 59%;
+}
+
+.write-user-info {
+}
+
+.answer-writer {
+  font-weight: bold;
+  color: #000;
+}
+
+.writer-tag {
+  margin-left: 8px;
+  border-radius: 4px;
+  font-size: 15px;
+  color: #666;
+}
+
+.answer-data {
+  white-space: nowrap;
+  gap: 10px;
+}
+
+.reply-count {
+  margin-right: 10%;
+  font-size: 13px;
+  margin-top: 6%;
+  margin-left: -1%;
+}
+
+.answer-view {
+  white-space: nowrap;
+  margin-right: 10%;
+  font-size: 13px;
+  margin-top: 6%;
+}
+
+.view-img {
+  white-space: nowrap;
+  margin-right: 4%;
+  margin-left: 3%;
+  margin-top: 3%;
+}
+.chat-img {
+  margin-right: 2%;
+  margin-top: 3%;
+}
+
+.answer-content {
+  margin-top: 4%;
+  margin-left: 10%;
+  width: 79%;
+  filter: blur(5px);
+}
+
+.no-login-user {
+  letter-spacing: -1px;
+  font-size: 12px;
+  font-weight: bold;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  margin-top: -16%;
+}
+
+.answer-reply-day {
+  display: flex;
+  color: #666;
+  letter-spacing: -1px;
+  font-size: 12px;
+  justify-content: right;
+  margin-right: 14%;
+  margin-top: 5%;
+  align-items: right;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+}
