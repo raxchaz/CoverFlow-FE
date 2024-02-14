@@ -15,7 +15,21 @@ const TabBar = () => {
     } else {
       setShowTabBar(true);
     }
-  }, []);
+    switch (location.pathname) {
+      case '/':
+        setActiveNav(1);
+        break;
+      case '/mypage':
+        setActiveNav(2);
+        break;
+      case '/notification':
+        setActiveNav(3);
+        break;
+      default:
+        break;
+    }
+  }, [location]);
+
   if (!showTabBar) {
     return null;
   }
