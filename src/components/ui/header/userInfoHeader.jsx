@@ -13,7 +13,7 @@ import {
   BASE_URL,
   ACCESS_TOKEN,
   REFRESH_TOKEN,
-} from '../../pages/loginPage/constants';
+} from '../../global/constants/index';
 
 function UserInfoHeader() {
   const { isLoggedIn, rewardCount, isDropdownOpen } = useSelector(
@@ -44,8 +44,9 @@ function UserInfoHeader() {
       })
         .then((response) => response.json())
         .then((data) => {
-          if (data && data.fishShapedBun !== undefined) {
-            dispatch(setRewardCount(data.fishShapedBun));
+          if (data && data.data && data.data.fishShapedBun !== undefined) {
+            dispatch(setRewardCount(data.data.fishShapedBun));
+            console.log('붕어빵 개수:', data.data.fishShapedBun);
           } else {
             console.error('유효하지 않은 데이터를 받았습니다.', data);
           }
@@ -93,6 +94,8 @@ function UserInfoHeader() {
       navigate('/mypage');
     } else if (menu === '상점') {
       navigate('/store');
+      // } else if (menu === '메인') {
+      //   navigate('/');
     } else if (menu === '로그아웃') {
       logout();
     }
@@ -141,6 +144,12 @@ function UserInfoHeader() {
                     상점
                   </li>
                   <hr />
+                  {/* <li
+                    className="dropdown-item-main"
+                    onClick={() => handleMenuClick('메인')}
+                  >
+                    메인
+                  </li> */}
                   <li
                     className="dropdown-item-logout"
                     onClick={() => handleMenuClick('로그아웃')}

@@ -1,9 +1,71 @@
-.input-field {
+.company-form,
+.location-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  width: 100%;
+}
+
+.regist-company-name,
+.regist-company-industry,
+.regist-company-province {
+  font-weight: 600;
+  letter-spacing: -1px;
+  margin-top: 10%;
+  align-self: flex-start;
+}
+
+.input-field-regist,
+.option-field {
+  letter-spacing: -1px;
+  font-size: 16px;
+  border: none;
+  border-bottom: 2px solid #ddd;
+  margin: 10px 0;
+  width: 80%;
+  background-color: transparent;
+  transition: border-color 0.3s;
+  padding: 8px 0;
+}
+
+.input-field-regist::placeholder,
+.option-field::placeholder {
+  color: #474646;
+  opacity: 1;
+}
+
+.input-field-regist:focus,
+.option-field:focus {
+  border-color: #ff8d1d;
+  outline: none;
+}
+
+.input-field-regist:hover,
+.option-field:hover {
+  border-color: #ff8d1d;
+}
+
+.regist-company-name,
+.regist-company-industry,
+.regist-company-province {
+  margin-left: 10%;
+}
+
+.submit-regist {
+  font-weight: 100;
+  font-size: 16px;
+  letter-spacing: 0px;
+  width: 82%;
+  margin-top: 13%;
+  margin-left: 2%;
+  border-radius: 0px;
+}
+
+.regist-company-name,
+.regist-company-industry,
+.regist-company-province {
+  .neccessary {
+    margin-left: 3px;
+    color: #d50202;
+  }
 }

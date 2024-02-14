@@ -37,7 +37,8 @@ const SearchInput = styled.input`
 
 function MainPage() {
   const navigate = useNavigate();
-
+  localStorage.setItem('prevPage', '/');
+  
   const handleChange = () => {
     navigate('/search-company');
   };

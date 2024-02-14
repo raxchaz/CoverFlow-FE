@@ -35,7 +35,11 @@ a.login-btn {
   cursor: pointer;
 }
 
-.reward-fish {
+.reward {
+  padding: 0;
+}
+
+div.reward-fish {
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -43,6 +47,7 @@ a.login-btn {
   margin-left: 48%;
   cursor: pointer;
 }
+
 .bun-count {
   font-size: 13px;
   margin-top: 1.2%;
@@ -67,7 +72,8 @@ a.login-btn {
 
   .dropdown-item,
   .dropdown-item-store,
-  .dropdown-item-logout {
+  .dropdown-item-logout,
+  .dropdown-item-main {
     letter-spacing: -1px;
     font-weight: 500;
     padding: 5px 10px;
@@ -82,6 +88,11 @@ a.login-btn {
       background-color: none;
     }
   }
+
+  // .dropdown-item-main {
+  //   margin-top: -%;
+  //   margin-bottom: 10%;
+  // }
 
   .dropdown-item {
     margin-top: 15%;

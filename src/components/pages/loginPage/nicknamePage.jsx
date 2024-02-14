@@ -6,7 +6,7 @@ import GenderSelection from '../../ui/genderSelection/genderSelection';
 import '../../../asset/sass/pages/loginPage/nicknamePage.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
-import { ACCESS_TOKEN, BASE_URL } from '../loginPage/constants/index.js';
+import { ACCESS_TOKEN, BASE_URL } from '../../global/constants/index.js';
 import TitleHeader from '../../ui/header/titleHeader.jsx';
 import { StyledPage, StyledHeader } from '../../../styledComponent.js';
 
@@ -83,13 +83,11 @@ const NicknamePage = () => {
   const handleJobSeekingChange = () => {
     setIsJobSeeking(!isJobSeeking);
     setIsEmployed(false);
-    localStorage.setItem('tagData', isJobSeeking ? '' : '취준생');
   };
 
   const handleEmployedChange = () => {
     setIsEmployed(!isEmployed);
     setIsJobSeeking(false);
-    localStorage.setItem('tagData', isEmployed ? '' : '현직자');
   };
 
   const handleSelectAge = (ageKeyword) => {
@@ -105,16 +103,14 @@ const NicknamePage = () => {
   토큰을 가지고 있는 사용자라면, 잘못된 접근임을 명시하고, 다시 로그인 페이지로 리다이렉트 합니다.
   */
   useEffect(() => {
-    const checkLoginStatus = () => {
-      const token = localStorage.getItem(ACCESS_TOKEN);
-
-      if (!token) {
-        alert('잘못된 접근입니다. 로그인이 필요합니다.');
-        navigate('/login');
-      }
-    };
-
-    checkLoginStatus();
+    // const checkLoginStatus = () => {
+    //   const token = localStorage.getItem(ACCESS_TOKEN);
+    //   if (!token) {
+    //     alert('잘못된 접근입니다. 로그인이 필요합니다.');
+    //     navigate('/login');
+    //   }
+    // };
+    // checkLoginStatus();
   }, [navigate]);
 
   /* 
@@ -158,14 +154,14 @@ const NicknamePage = () => {
           Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
         },
         body: JSON.stringify({
-          gender: genderData,
-          age: ageRange,
           tag: tagData,
+          age: ageRange,
+          gender: genderData,
         }),
       });
+
       const data = await response.json();
       console.log('서버 응답:', data);
-
       console.log('서버 응답 상태:', response.status);
       if (!response.ok) {
         throw new Error(`HTTP 오류! 상태: ${response.status}`);
@@ -184,7 +180,6 @@ const NicknamePage = () => {
       <StyledPage className="main-page-container">
         <StyledHeader>
           <TitleHeader pageTitle="회원 정보 설정" />
-
           <div className="nickname-info">
             <span className="welcome-nickname">
               현재 본인의 상황을 <br /> 체크해 주세요
