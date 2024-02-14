@@ -14,6 +14,10 @@ import NicknamePage from '../components/pages/loginPage/nicknamePage';
 import Store from '../components/pages/storePage/storePage';
 import MyPage from '../components/pages/myPage/myPage';
 import NotificationPage from '../components/pages/notificationPage/notificationPage';
+import NoticePage from '../components/pages/myPage/noticePage.jsx';
+import EventPage from '../components/pages/myPage/eventPage.jsx';
+import InfoEditPage from '../components/pages/myPage/infoEditPage.jsx';
+import ContactPage from '../components/pages/myPage/contactPage.jsx';
 
 /* 질문 페이지 관련 */
 import SearchPage from '../components/pages/searchPage/searchPage.jsx';
@@ -49,8 +53,13 @@ const AllRouter = () => {
         <Route path="/notification" element={<NotificationPage />} />
         <Route path="/company-regist" element={<CompanyRegistPage />} />
 
+        <Route path="/notice" element={<NoticePage />} />
+        <Route path="/event" element={<EventPage />} />
+        <Route path="/info-edit" element={<InfoEditPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+
         <Route path="/search-company" element={<SearchPage />} />
-        <Route path="/search-result/:searchId" element={<SearchResultPage />} />
+        <Route path="/search-result" element={<SearchResultPage />} />
       </Routes>
     </div>
   );
