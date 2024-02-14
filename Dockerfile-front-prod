@@ -1,11 +1,13 @@
-FROM node:20-alpine as builder
+# 빌드 스테이지
+FROM node:20-alpine as build
 WORKDIR /app
-COPY . .
-RUN yarn install
+COPY package.json yarn.lock ./
+RUN yarn
+COPY ./ ./
 RUN yarn build
 
-FROM node:20-alpine as runner
-WORKDIR /app
-COPY --from=builder /app ./
-EXPOSE 3001
-CMD ["yarn", "start"]
+# 실행 스테이지
+FROM nginx:alpine
+COPY --from=build /app/build /usr/share/nginx/html
+EXPOSE 443
+CMD ["nginx", "-g", "daemon off;"]
