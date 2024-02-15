@@ -1,3 +1,8 @@
+.question-container {
+  height: auto;
+}
+
+// 유저 닉네임 + 태그 부분 scss
 .user-container {
   letter-spacing: -1px;
   display: flex;
@@ -5,43 +10,44 @@
   margin: 10% 0% 0% 10%;
 }
 
-.view-container {
-  white-space: nowrap;
-  display: flex;
-  margin: -5.5% 0% 0% 59%;
-}
-
 .write-user-info {
+  white-space: nowrap;
 }
 
 .answer-writer {
-  font-weight: bold;
+  font-weight: 900;
   color: #000;
 }
 
+.middle {
+  margin-left: 2%;
+}
+
 .writer-tag {
-  margin-left: 8px;
+  margin-left: 2%;
   border-radius: 4px;
-  font-size: 15px;
+  font-size: 12px;
   color: #666;
 }
 
-.answer-data {
+/* =========================================================== */
+
+// 조회수 + 답변 개수 scss
+.view-container {
   white-space: nowrap;
-  gap: 10px;
+  display: flex;
+  margin: -5% 0% 0% 70%;
 }
 
-.reply-count {
-  margin-right: 10%;
-  font-size: 13px;
-  margin-top: 6%;
-  margin-left: -1%;
+.chat-img {
+  margin-right: 1%;
+  margin-top: 3%;
 }
 
-.answer-view {
+.chat-count {
   white-space: nowrap;
-  margin-right: 10%;
-  font-size: 13px;
+  margin-right: 8%;
+  font-size: 12px;
   margin-top: 6%;
 }
 
@@ -51,27 +57,30 @@
   margin-left: 3%;
   margin-top: 3%;
 }
-.chat-img {
-  margin-right: 2%;
-  margin-top: 3%;
+
+.view-count {
+  margin-right: 4%;
+  font-size: 12px;
+  margin-top: 6%;
+  margin-left: -2.5%;
 }
 
-.answer-content {
-  margin-top: 4%;
-  margin-left: 10%;
-  width: 79%;
-  filter: blur(5px);
-}
+// 답변 내용 부분 scss
 
 .no-login-user {
   letter-spacing: -1px;
   font-size: 12px;
-  font-weight: bold;
+  font-family: 'Pretendard-Bold';
   display: flex;
   text-align: center;
   justify-content: center;
   align-items: center;
-  margin-top: -16%;
+  text-align: center;
+  height: auto;
+  margin-top: -5%;
+}
+
+.answer-content {
 }
 
 .answer-reply-day {
@@ -88,4 +97,7 @@
 .field {
   display: flex;
   flex-direction: column;
+  margin-top: 3%;
+  margin-left: 11%;
+  width: 81%;
 }

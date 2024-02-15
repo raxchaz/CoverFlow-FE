@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import '../../../asset/sass/etc/question/question.scss';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import Chat from '../../../asset/image/chat.svg';
 import View from '../../../asset/image/view.svg';
+import { ACCESS_TOKEN } from '../../global/constants/index.js';
 
 const Line = styled.div`
   height: 1px;
@@ -11,6 +13,7 @@ const Line = styled.div`
   width: 103%;
   margin: 5% 0% -5% -1.5%;
 `;
+
 const LoginButton = styled.button`
   letter-spacing: -0.7px;
   background-color: #ff8d1d !important;
@@ -22,6 +25,22 @@ const LoginButton = styled.button`
   width: 15%;
 `;
 
+const ContentBlur = styled.span`
+  ${({ isLoggedIn }) =>
+    !isLoggedIn &&
+    css`
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      overflow: hidden;
+      filter: blur(5px);
+      margin-top: 3%;
+      margin-left: 10%;
+      width: 80%;
+      text-overflow: ellipsis;
+    `}
+`;
+
 function QuestionModule({
   answerNickname,
   answerTag,
@@ -30,32 +49,53 @@ function QuestionModule({
   createAt,
   content,
 }) {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLoginClick = () => {
+    navigate('/login'); // 로그인 페이지로 이동
+  };
+
+  useEffect(() => {
+    const token = localStorage.getItem(ACCESS_TOKEN);
+    setIsLoggedIn(!!token);
+  }, []);
+
   return (
     <>
       <Line />
-      <div className="user-container">
-        <div className="write-user-info">
-          <span className="answer-writer">{answerNickname}</span>
-          <span className="writer-tag">{answerTag}</span>
+      <div className="question-container">
+        <div className="user-container">
+          <div className="write-user-info">
+            <span className="answer-writer">{answerNickname}</span>
+            <span className="middle">•</span>
+            <span className="writer-tag">{answerTag}</span>
+          </div>
+        </div>
+
+        <div className="view-container">
+          <img className="chat-img" src={Chat} />
+          <span className="chat-count">{answerCount}</span>
+          <img className="view-img" src={View} />
+          <span className="view-count">{viewCount}</span>
+        </div>
+        <div className="field">
+          <ContentBlur isLoggedIn={isLoggedIn}>
+            <span className="answer-content">{content}</span>
+          </ContentBlur>
+          {!isLoggedIn && (
+            <>
+              <span className="no-login-user">
+                이 기업의 질문과 답변이 궁금하신가요? <br /> 로그인하시고 기업의
+                더 자세한 정보를 열람하세요{' '}
+              </span>
+              <LoginButton onClick={handleLoginClick}>로그인</LoginButton>
+            </>
+          )}
+          <span className="answer-reply-day">{createAt}</span>
         </div>
       </div>
-
-      <div className="view-container">
-        <img className="chat-img" src={Chat} />
-        <span className="answer-view">{answerCount}</span>
-        <img className="view-img" src={View} />
-        <span className="reply-count">{viewCount}</span>
-      </div>
-      <div className="field">
-        <span className="answer-content">{content} </span>
-        <span className="no-login-user">
-          이 기업의 질문과 답변이 궁금하신가요? <br /> 로그인하시고 기업의 더
-          자세한 정보를 열람하세요{' '}
-        </span>
-        <LoginButton>로그인</LoginButton>
-        <span className="answer-reply-day">{createAt}</span>
-        <Line />
-      </div>
+      <Line />
     </>
   );
 }
@@ -67,6 +107,7 @@ QuestionModule.propTypes = {
   answerCount: PropTypes.string.isRequired,
   createAt: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
+  isLoggedIn: PropTypes.bool,
 };
 
 export default QuestionModule;

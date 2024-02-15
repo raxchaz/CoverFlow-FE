@@ -13,9 +13,11 @@ const GlobalStyles = createGlobalStyle`
   
   html {
     font-family: 'Pretendard-Regular';
+    height: 100vh;
   }
   
   body {
+    height: 100vh;
     font-size: 1rem; 
   }
   
@@ -39,7 +41,6 @@ const GlobalStyles = createGlobalStyle`
   
   ${Heading} {
     display: flex;
-
     justify-content: center;
     font-size: 1rem;
     margin-top: 10%;

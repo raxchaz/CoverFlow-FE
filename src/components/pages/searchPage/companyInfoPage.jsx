@@ -47,6 +47,10 @@ const QuestionButton = styled.button`
   margin: 9% 10% 0% 0%;
 `;
 
+const QuestionList = styled.div`
+  height: 100vh;
+`;
+
 function CompanyInfoPage() {
   const navigate = useNavigate();
   //  const [companyData, setCompanyData] = useState([]);
@@ -78,12 +82,13 @@ function CompanyInfoPage() {
   }, []); */
 
   return (
-    <StyledPage className="main-page-container">
+    <StyledPage className="main-page-container-companyinfo">
       <StyledHeader>
         <TitleHeader pageTitle="검색" handleGoBack={handleGoBack} />
         <UserInfoHeader />
         <SearchInput />
       </StyledHeader>
+
       <div className="company-result-title">기업 정보</div>
       <CompanyContainer>
         <div className="company">
@@ -103,14 +108,32 @@ function CompanyInfoPage() {
           질문 남기기
         </QuestionButton>
       </div>
-      <Question
-        answerNickname="조뿡치"
-        answerTag="취업준비중"
-        viewCount="600"
-        answerCount="6"
-        content="ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ"
-        createAt="2023-05-23"
-      />
+      <QuestionList>
+        <Question
+          answerNickname="조뿡치"
+          answerTag="취업준비중"
+          viewCount="600"
+          answerCount="6"
+          content="ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ"
+          createAt="2023-05-23"
+        />
+        <Question
+          answerNickname="조뿡치"
+          answerTag="취업준비중"
+          viewCount="600"
+          answerCount="6"
+          content="아니 진짜 근데 괴담이 사실이 맞대요? 아니 진심으로요? 전 너누머눔 궁금해요"
+          createAt="2023-05-23"
+        />
+        <Question
+          answerNickname="조뿡치"
+          answerTag="취업준비중"
+          viewCount="600"
+          answerCount="6"
+          content="별루였는데 이거 어카나요?"
+          createAt="2023-05-23"
+        />
+      </QuestionList>
       <TabBar />
     </StyledPage>
   );

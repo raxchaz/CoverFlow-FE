@@ -8,7 +8,6 @@ export const StyledPage = styled.div`
 
 export const Heading = styled.div`
   display: flex;
-
   justify-content: center;
   font-size: 1rem;
   margin-top: 10%;

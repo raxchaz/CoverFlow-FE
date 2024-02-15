@@ -18,7 +18,6 @@ const ResultItem = styled.li`
   letter-spacing: -1px;
   list-style: none;
   padding: 20px 20px;
-  margin: 8px 0;
   background-color: #ffffff;
   border: 1.5px solid #eaeaea;
   box-shadow:
@@ -31,6 +30,7 @@ const ResultItem = styled.li`
   align-items: center;
   justify-content: space-between;
   position: relative;
+  margin-bottom: 15px;
 
   &:hover {
     background-color: #f9f9f9;
@@ -68,11 +68,12 @@ const Line = styled.div`
 
 const ResultsList = styled.ul`
   padding: 10;
-  margin-top: 5%;
+  margin-top: 8%;
   width: 80%;
   margin-left: 10%;
   display: flex;
   flex-direction: column;
+  height: 100vh;
 `;
 
 const ResultCount = styled.div`
