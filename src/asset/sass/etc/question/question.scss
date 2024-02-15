@@ -1,5 +1,6 @@
 .question-container {
   height: auto;
+  margin-top: 5%;
 }
 
 // 유저 닉네임 + 태그 부분 scss
@@ -7,7 +8,7 @@
   letter-spacing: -1px;
   display: flex;
   justify-content: space-between;
-  margin: 10% 0% 0% 10%;
+  margin: 5% 0% -5% -57%;
 }
 
 .write-user-info {
@@ -36,19 +37,19 @@
 .view-container {
   white-space: nowrap;
   display: flex;
-  margin: -5% 0% 0% 70%;
+  margin: -3% 0% -3% 55%;
 }
 
 .chat-img {
-  margin-right: 1%;
-  margin-top: 3%;
+  margin-right: 0%;
+  margin-top: 4%;
 }
 
 .chat-count {
   white-space: nowrap;
-  margin-right: 8%;
+  margin-right: 15%;
   font-size: 12px;
-  margin-top: 6%;
+  margin-top: 10%;
 }
 
 .view-img {
@@ -59,10 +60,10 @@
 }
 
 .view-count {
-  margin-right: 4%;
+  // margin-right: 0%;
   font-size: 12px;
-  margin-top: 6%;
-  margin-left: -2.5%;
+  margin-top: 10%;
+  margin-left: -1%;
 }
 
 // 답변 내용 부분 scss
@@ -89,7 +90,7 @@
   letter-spacing: -1px;
   font-size: 12px;
   justify-content: right;
-  margin-right: 14%;
+  margin-right: 5%;
   margin-top: 5%;
   align-items: right;
 }
@@ -98,6 +99,6 @@
   display: flex;
   flex-direction: column;
   margin-top: 3%;
-  margin-left: 11%;
+  margin-left: 2.5%;
   width: 81%;
 }

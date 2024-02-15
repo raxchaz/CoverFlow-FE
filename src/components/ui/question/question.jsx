@@ -11,7 +11,7 @@ const Line = styled.div`
   height: 1px;
   background-color: #f2f2f2;
   width: 103%;
-  margin: 5% 0% -5% -1.5%;
+  margin: 7% 0% -5% -1.5%;
 `;
 
 const LoginButton = styled.button`
@@ -34,9 +34,6 @@ const ContentBlur = styled.span`
       -webkit-line-clamp: 2;
       overflow: hidden;
       filter: blur(5px);
-      margin-top: 3%;
-      margin-left: 10%;
-      width: 80%;
       text-overflow: ellipsis;
     `}
 `;
@@ -63,7 +60,6 @@ function QuestionModule({
 
   return (
     <>
-      <Line />
       <div className="question-container">
         <div className="user-container">
           <div className="write-user-info">

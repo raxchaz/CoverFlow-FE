@@ -9,15 +9,16 @@ import SearchInput from '../../ui/searchInput/searchInput.jsx';
 import TabBar from '../../ui/tabBar/tabBar.jsx';
 import '../../../asset/sass/pages/searchPage/companyInfoPage.scss';
 import Question from '../../ui/question/question.jsx';
-// import { BASE_URL } from '../../global/constants/index.js';
+import { ACCESS_TOKEN } from '../../global/constants/index.js';
 
 const CompanyContainer = styled.div`
   background-color: #ffffff;
-  margin: 3% 0% 0% 10%;
+  margin: 5% 0% 5% 10%;
   padding: 20px;
   border: 1.5px solid #ff8d1d;
   width: 70%;
   display: flex;
+  border-radius: 10px;
 `;
 
 const CompanyName = styled.div`
@@ -45,6 +46,7 @@ const QuestionButton = styled.button`
   padding: 7px 10px;
   font-weight: 600;
   margin: 9% 10% 0% 0%;
+  font-family: 'Pretendard-ExtraLight' !important;
 `;
 
 const QuestionList = styled.div`
@@ -56,7 +58,14 @@ function CompanyInfoPage() {
   //  const [companyData, setCompanyData] = useState([]);
 
   const handleQuestionClick = () => {
-    navigate('/question-write');
+    const token = localStorage.getItem(ACCESS_TOKEN);
+
+    if (token) {
+      navigate('/question-write');
+    } else {
+      alert('로그인이 필요한 기능입니다.');
+      navigate('/login');
+    }
   };
 
   const handleGoBack = () => {
