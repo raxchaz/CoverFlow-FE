@@ -1,0 +1,89 @@
+.answer-container {
+  display: flex;
+  width: 80%;
+  margin-top: 5%;
+  margin-bottom: 10%;
+  cursor: pointer;
+}
+
+.user-container {
+  letter-spacing: -1px;
+  display: flex;
+  justify-content: space-between;
+  margin: 5% 0% -5% 15%;
+  white-space: nowrap;
+}
+
+.answerer-info {
+  white-space: nowrap;
+}
+
+.answerer {
+  font-weight: 900;
+  color: #000;
+}
+
+.middle {
+  margin-left: 2%;
+}
+
+.answererTag {
+  margin-left: 2%;
+  margin-top: 3.5%;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #666;
+}
+
+// ------------------------------------------
+
+.answerContent-container {
+  display: flex;
+  padding: 10px;
+  margin: 8% 0% 0% 10%;
+  width: 80%;
+  height: 8%;
+  border-radius: 10px;
+  background-color: #f2f2f2;
+}
+
+.reply-img {
+  margin-right: 7%;
+  margin-top: 4%;
+}
+
+.replyCountContainer {
+  margin-left: 85%;
+  margin-top: 2%;
+}
+
+.reply-count {
+  position: relative;
+  white-space: nowrap;
+  font-size: 12px;
+  top: -6px;
+}
+
+.answerContent {
+  margin-left: 1%;
+  margin-top: 1%;
+}
+
+.answer-reply-day {
+  display: flex;
+  color: #666;
+  letter-spacing: -1px;
+  font-size: 12px;
+  justify-content: right;
+  margin-right: 39%;
+  align-items: right;
+  margin-top: 4%;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  margin-top: 3%;
+  margin-left: 2.5%;
+  width: 81%;
+}

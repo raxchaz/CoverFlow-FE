@@ -119,27 +119,30 @@ function CompanyInfoPage() {
       </div>
       <QuestionList>
         <Question
-          answerNickname="조뿡치"
-          answerTag="취업준비중"
+          questioner="조뿡치"
+          questionerTag="취업준비중"
           viewCount="600"
           answerCount="6"
-          content="ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ"
+          questionTitle="제가 오늘 여기 지원했는데, 기업 문화가 좀 구린 것 같아서요ㅠㅠ 현직자분 계신가요?"
+          questionContent="ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ"
           createAt="2023-05-23"
         />
         <Question
-          answerNickname="조뿡치"
-          answerTag="취업준비중"
+          questioner="조뿡치"
+          questionerTag="취업준비중"
           viewCount="600"
           answerCount="6"
-          content="아니 진짜 근데 괴담이 사실이 맞대요? 아니 진심으로요? 전 너누머눔 궁금해요"
+          questionTitle="혹시 .. 여기 뭔가요?"
+          questionContent="아니 진짜 근데 괴담이 사실이 맞대요? 아니 진심으로요? 전 너누머눔 궁금해요"
           createAt="2023-05-23"
         />
         <Question
-          answerNickname="조뿡치"
-          answerTag="취업준비중"
+          questioner="조뿡치"
+          questionerTag="취업준비중"
           viewCount="600"
           answerCount="6"
-          content="별루였는데 이거 어카나요?"
+          questionTitle="혹시 .. 여기 뭔가요?"
+          questionContent="별루였는데 이거 어카나요?"
           createAt="2023-05-23"
         />
       </QuestionList>

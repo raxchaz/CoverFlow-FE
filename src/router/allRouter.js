@@ -25,6 +25,7 @@ import CompanyRegistPage from '../components/pages/searchPage/companyRegistPage.
 import SearchResultPage from '../components/pages/searchPage/searchResultPage.jsx';
 import CompanyInfoPage from '../components/pages/searchPage/companyInfoPage.jsx';
 import QuestionWritePage from '../components/pages/postPage/questionWritePage.jsx';
+import QuestionDetailPage from '../components/pages/postPage/questionDetailPage.jsx';
 
 /* 그 외 유틸  */
 import TokenManagement from '../components/global/token/tokenManagement';
@@ -65,6 +66,7 @@ const AllRouter = () => {
         <Route path="/company-info" element={<CompanyInfoPage />} />
 
         <Route path="/question-write" element={<QuestionWritePage />} />
+        <Route path="/question-detail" element={<QuestionDetailPage />} />
       </Routes>
     </div>
   );

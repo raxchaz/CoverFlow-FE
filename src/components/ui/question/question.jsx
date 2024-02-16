@@ -38,19 +38,40 @@ const ContentBlur = styled.span`
     `}
 `;
 
+function truncateTitle(title, maxLength = 25) {
+  return title.length > maxLength
+    ? title.substring(0, maxLength - 3) + '...'
+    : title;
+}
+
 function QuestionModule({
-  answerNickname,
-  answerTag,
+  questioner,
+  questionerTag,
   viewCount,
   answerCount,
+  questionTitle,
+  questionContent,
   createAt,
-  content,
 }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
   const handleLoginClick = () => {
     navigate('/login'); // 로그인 페이지로 이동
+  };
+
+  const goToDetail = () => {
+    navigate('/question-detail', {
+      state: {
+        questioner,
+        questionerTag,
+        viewCount,
+        answerCount,
+        questionTitle,
+        questionContent,
+        createAt,
+      },
+    });
   };
 
   useEffect(() => {
@@ -60,12 +81,12 @@ function QuestionModule({
 
   return (
     <>
-      <div className="question-container">
-        <div className="user-container">
-          <div className="write-user-info">
-            <span className="answer-writer">{answerNickname}</span>
+      <div className="question-container" onClick={goToDetail}>
+        <div className="questioner-container">
+          <div className="questioner-info">
+            <span className="questioner">{questioner}</span>
             <span className="middle">•</span>
-            <span className="writer-tag">{answerTag}</span>
+            <span className="questioner-tag">{questionerTag}</span>
           </div>
         </div>
 
@@ -76,8 +97,13 @@ function QuestionModule({
           <span className="view-count">{viewCount}</span>
         </div>
         <div className="field">
+          <span className="question-title">
+            Q. {truncateTitle(questionTitle)}
+          </span>
           <ContentBlur isLoggedIn={isLoggedIn}>
-            <span className="answer-content">{content}</span>
+            {/* <div className="question-container"> */}
+            <span className="question-content">{questionContent}</span>
+            {/* </div> */}
           </ContentBlur>
           {!isLoggedIn && (
             <>
@@ -97,12 +123,13 @@ function QuestionModule({
 }
 
 QuestionModule.propTypes = {
-  answerNickname: PropTypes.string.isRequired,
-  answerTag: PropTypes.string.isRequired,
+  questioner: PropTypes.string.isRequired,
+  questionerTag: PropTypes.string.isRequired,
   viewCount: PropTypes.string.isRequired,
   answerCount: PropTypes.string.isRequired,
   createAt: PropTypes.string.isRequired,
-  content: PropTypes.string.isRequired,
+  questionContent: PropTypes.string.isRequired,
+  questionTitle: PropTypes.string.isRequired,
   isLoggedIn: PropTypes.bool,
 };
 

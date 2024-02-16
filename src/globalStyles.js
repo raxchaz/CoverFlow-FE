@@ -9,15 +9,16 @@ const GlobalStyles = createGlobalStyle`
   * {
     padding: 0;
     font-family: 'Pretendard-Regular';
+    
   }
   
   html {
     font-family: 'Pretendard-Regular';
-    height: 100vh;
+    height: 100%;
   }
   
   body {
-    height: 100vh;
+    height: 100%;
     font-size: 1rem; 
   }
   
@@ -35,7 +36,7 @@ const GlobalStyles = createGlobalStyle`
   
   ${StyledPage} {
     position: relative;
-    height: 100vh;
+    height: 100vh !important;
     background-color: #ffffff;
   }
   
