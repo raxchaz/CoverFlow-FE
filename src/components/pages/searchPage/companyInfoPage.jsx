@@ -63,8 +63,14 @@ function CompanyInfoPage() {
       try {
         const response = await fetch(`${BASE_URL}/api/company/find-company`);
         const data = await response.json();
+        console.log('응답:', response);
+        console.log('데이터:', data);
+
         if (response.ok && data.data) {
+          console.log('응답 성공 여부:', response.ok);
+
           setCompanyData(data.data);
+          console.log('회사 데이터:', data.data);
         } else {
           throw new Error('데이터가 존재하지 않습니다.');
         }
