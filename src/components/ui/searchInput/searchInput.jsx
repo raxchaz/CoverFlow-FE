@@ -129,10 +129,10 @@ function SearchInput() {
       // 사용자가 방향키로 특정 자동완성 항목을 선택하지 않고,
       // 자동완성 목록이 있을 경우엔 전체 데이터를 결과 페이지로 전달합니다.
       if (activeIndex === -1 && autoCompleteValue.length > 0) {
-        console.log('자동완성 값:', autoCompleteValue);
+        console.log('자동완성 값 searchCompany:', searchCompany);
 
         navigate('/search-result', {
-          state: { searchResult: autoCompleteValue },
+          state: { searchResult: searchCompany },
         });
       }
       // 사용자가 방향키로 특정 자동완성 항목을 선택한 경우에 특정 항목만 결과 페이지로 전달합니다.
