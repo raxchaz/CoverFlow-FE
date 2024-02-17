@@ -132,6 +132,7 @@ function SearchResultPage() {
         const { data } = await response.json();
         console.log('로그 테스트');
         if (response.ok) {
+          console.log(data);
           setSearchResult(data);
         } else {
           alert('데이터를 불러오는 데 실패했습니다.');
@@ -145,9 +146,9 @@ function SearchResultPage() {
     fetchData();
   }, []);
 
-  const goToResultDetailPage = (companyId) => {
+  const goToResultDetailPage = (companyName) => {
     navigate(`/company-info`, {
-      state: { companyId },
+      state: { companyName },
     });
   };
 
@@ -164,10 +165,10 @@ function SearchResultPage() {
           </ResultCount>
           {searchResult && searchResult.length > 0 && (
             <ResultsList>
-              {searchResult.map((company, index) => (
+              {searchResult.map((data, index) => (
                 <ResultItem
-                  key={company.companyId}
-                  onClick={() => goToResultDetailPage(company.companyId)}
+                  key={data.companyName}
+                  onClick={() => goToResultDetailPage(data.companyName)}
                 >
                   <div
                     style={{
@@ -175,10 +176,10 @@ function SearchResultPage() {
                       flexDirection: 'column',
                     }}
                   >
-                    <span>{company.name}</span>
-                    <IndustryTag>{company.type}</IndustryTag>
+                    <span>{data.name}</span>
+                    <IndustryTag>{data.type}</IndustryTag>
                   </div>
-                  <QuestionCount>{company.questionCount}</QuestionCount>
+                  <QuestionCount>{data.questionCount}</QuestionCount>
                 </ResultItem>
               ))}
             </ResultsList>
