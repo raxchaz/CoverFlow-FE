@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { StyledPage, StyledHeader } from '../../../styledComponent.js';
 import TitleHeader from '../../ui/header/titleHeader.jsx';
@@ -111,19 +111,19 @@ const QuestionCount = styled.div`
 function SearchResultPage() {
   const navigate = useNavigate();
   const location = useLocation();
-  const searchResult = location.state?.searchResult;
-  // const [searchResult, setSearchResult] = useState([]);
+  const keyword = location.state?.keyword;
+  console.log('searchResult 로그 테스트', keyword);
+  const [searchResult, setSearchResult] = useState([]);
 
   const handleGoBack = () => {
     navigate(-1);
   };
 
   useEffect(() => {
-    console.log('searchResult 로그 테스트', searchResult);
     async function fetchData() {
       try {
         const response = await fetch(
-          `${BASE_URL}/api/company/search-companies?name=${searchResult}`,
+          `${BASE_URL}/api/company/search-companies?name=${keyword}`,
           {
             method: 'GET',
             headers: {
@@ -135,7 +135,7 @@ function SearchResultPage() {
         console.log('로그 테스트');
         if (response.ok) {
           console.log(data);
-          // setSearchResult(data);
+          setSearchResult(data);
         } else {
           alert('데이터를 불러오는 데 실패했습니다.');
         }
