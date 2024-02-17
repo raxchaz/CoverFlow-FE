@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { StyledPage, StyledHeader } from '../../../styledComponent.js';
 import TitleHeader from '../../ui/header/titleHeader.jsx';
 import styled from 'styled-components';
@@ -110,7 +110,9 @@ const QuestionCount = styled.div`
 
 function SearchResultPage() {
   const navigate = useNavigate();
-  const [searchResult, setSearchResult] = useState([]);
+  const location = useLocation();
+  const searchResult = location.state?.searchResult;
+  // const [searchResult, setSearchResult] = useState([]);
 
   const handleGoBack = () => {
     navigate(-1);
@@ -118,7 +120,6 @@ function SearchResultPage() {
 
   useEffect(() => {
     console.log('searchResult 로그 테스트', searchResult);
-    console.log('searchResult 로그 테스트2', searchResult.name);
     async function fetchData() {
       try {
         const response = await fetch(
@@ -134,7 +135,7 @@ function SearchResultPage() {
         console.log('로그 테스트');
         if (response.ok) {
           console.log(data);
-          setSearchResult(data);
+          // setSearchResult(data);
         } else {
           alert('데이터를 불러오는 데 실패했습니다.');
         }
