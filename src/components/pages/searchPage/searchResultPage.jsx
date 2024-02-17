@@ -166,8 +166,8 @@ function SearchResultPage() {
             <ResultsList>
               {searchResult.map((company, index) => (
                 <ResultItem
-                  key={company.id}
-                  onClick={() => goToResultDetailPage(company.id)}
+                  key={company.companyId}
+                  onClick={() => goToResultDetailPage(company.companyId)}
                 >
                   <div
                     style={{
@@ -176,7 +176,7 @@ function SearchResultPage() {
                     }}
                   >
                     <span>{company.name}</span>
-                    <IndustryTag>{company.industry}</IndustryTag>
+                    <IndustryTag>{company.type}</IndustryTag>
                   </div>
                   <QuestionCount>{company.questionCount}</QuestionCount>
                 </ResultItem>
