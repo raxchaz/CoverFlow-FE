@@ -8,7 +8,7 @@ import Warning from '../../../asset/image/warning.svg';
 import { BASE_URL } from '../../global/constants/index.js';
 
 const StyledSearchInput = styled.input`
-  width: 300px;
+  width: 350px;
   height: 20px;
   padding: 8px;
   border: 1px solid #f2f2f2;
