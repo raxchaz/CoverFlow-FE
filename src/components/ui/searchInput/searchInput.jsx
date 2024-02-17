@@ -51,7 +51,7 @@ const AutoCompleteItem = styled.div`
 
 function SearchInput() {
   const navigate = useNavigate();
-  const [searchCompany, setSearchCompany] = useState('');
+  const [keyword, setKeyword] = useState('');
   const [autoCompleteValue, setAutoCompleteValue] = useState([]);
   const [searchResult, setSearchResult] = useState([]);
   const [searchInitiated, setSearchInitiated] = useState(false);
@@ -71,7 +71,7 @@ function SearchInput() {
   const handleInputChange = (event) => {
     const newInputValue = event.target.value.trim();
     console.log('입력값 변경됨', newInputValue);
-    setSearchCompany(newInputValue);
+    setKeyword(newInputValue);
     setActiveIndex(-1);
 
     if (newInputValue.length > 0) {
@@ -129,48 +129,48 @@ function SearchInput() {
       // 사용자가 방향키로 특정 자동완성 항목을 선택하지 않고,
       // 자동완성 목록이 있을 경우엔 전체 데이터를 결과 페이지로 전달합니다.
       if (activeIndex === -1 && autoCompleteValue.length > 0) {
-        console.log('자동완성 값 searchCompany:', searchCompany);
+        console.log('자동완성 값 keyword:', keyword);
 
         navigate('/search-result', {
-          state: { searchResult: searchCompany },
+          state: { keyword: keyword },
         });
       }
       // 사용자가 방향키로 특정 자동완성 항목을 선택한 경우에 특정 항목만 결과 페이지로 전달합니다.
       else if (activeIndex >= 0 && autoCompleteValue[activeIndex]) {
         console.log('선택된 자동완성 값:', autoCompleteValue[activeIndex]);
         navigate('/search-result', {
-          state: { searchResult: [autoCompleteValue[activeIndex]] },
+          state: { keyword: [autoCompleteValue[activeIndex]] },
         });
       }
 
-      // 사용자가 입력한 검색어로 검색을 진행할 경우
-      else {
-        const response = await axios.get(
-          `${BASE_URL}/api/company/search-companies`,
-          { name: searchCompany },
-        );
-        console.log('검색 결과', response.data);
+      // // 사용자가 입력한 검색어로 검색을 진행할 경우
+      // else {
+      //   const response = await axios.get(
+      //     `${BASE_URL}/api/company/search-companies`,
+      //     { name: keyword },
+      //   );
+      //   console.log('검색 결과', response.data);
 
-        if (response.status === 200 && response.data.length > 0) {
-          const searchDataWithQuestionsCount = response.data.map((company) => ({
-            ...company,
-            questionsCount: company.questionsCount || 0,
-          }));
-          console.log(
-            '검색 결과 (질문 수 포함):',
-            searchDataWithQuestionsCount,
-          );
+      //   if (response.status === 200 && response.data.length > 0) {
+      //     const searchDataWithQuestionsCount = response.data.map((company) => ({
+      //       ...company,
+      //       questionsCount: company.questionsCount || 0,
+      //     }));
+      //     console.log(
+      //       '검색 결과 (질문 수 포함):',
+      //       searchDataWithQuestionsCount,
+      //     );
 
-          navigate('/search-result', {
-            state: { searchResult: searchDataWithQuestionsCount },
-          });
-        } else {
-          setSearchResult([]);
-        }
+      //     navigate('/search-result', {
+      //       state: { keyword: searchDataWithQuestionsCount },
+      //     });
+      //   } else {
+      //     setSearchResult([]);
+      //   }
 
-        // 검색 내역 저장
-        // saveAutoCompleteHistory(searchCompany);
-      }
+      // 검색 내역 저장
+      // saveAutoCompleteHistory(searchCompany);
+      // }
     } catch (error) {
       console.error('검색 중 오류 발생', error);
       setSearchResult([]);
@@ -198,7 +198,7 @@ function SearchInput() {
 
   // 자동완성 선택 함수
   const selectAutoCompleteValue = (value) => {
-    setSearchCompany(value);
+    setKeyword(value);
     setAutoCompleteValue([]);
     handleSearch();
   };
@@ -209,7 +209,7 @@ function SearchInput() {
         type="text"
         className="search-input-text"
         placeholder="기업 명을 검색하세요"
-        value={searchCompany}
+        value={keyword}
         onChange={handleInputChange}
         onKeyDown={(e) => {
           if (
