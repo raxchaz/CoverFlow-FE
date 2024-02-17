@@ -19,6 +19,7 @@ import EventPage from '../components/pages/myPage/eventPage.jsx';
 import InfoEditPage from '../components/pages/myPage/infoEditPage.jsx';
 import ContactPage from '../components/pages/myPage/contactPage.jsx';
 import FeedbackPage from '../components/pages/myPage/feedbackPage.jsx';
+import SecessionPage from '../components/pages/myPage/secessionPage.jsx';
 
 /* 질문 페이지 관련 */
 import SearchPage from '../components/pages/searchPage/searchPage.jsx';
@@ -62,6 +63,7 @@ const AllRouter = () => {
         <Route path="/info-edit" element={<InfoEditPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/feedback" element={<FeedbackPage />} />
+        <Route path="/secession-page" element={<SecessionPage />} />
 
         <Route path="/search-company" element={<SearchPage />} />
         <Route path="/search-result" element={<SearchResultPage />} />

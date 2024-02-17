@@ -1,0 +1,79 @@
+.user-nick-title {
+  letter-spacing: -1px;
+  margin: 15% 0% 0% 12%;
+  font-size: 22px;
+  font-family: pretendard-bold;
+}
+
+.user-nick-cover {
+  letter-spacing: -1px;
+  font-size: 18px;
+  margin: 1.5% 0% 0% 1%;
+  font-family: pretendard-medium;
+}
+
+.socialType-ui {
+  margin: 1% 0% 0% 12%;
+  letter-spacing: -1px;
+  font-size: 15px;
+  font-family: pretendard-regular;
+  color: #474646;
+}
+
+//===========================
+
+.modify-nick-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modify-nick {
+  letter-spacing: -1px;
+  display: flex;
+  align-items: center;
+  font-family: pretendard-bold;
+  color: #474646;
+}
+.modify-nick-info {
+  font-size: 12px;
+  margin-top: 1%;
+  letter-spacing: -1px;
+  flex-grow: 1; // 남은 공간을 모두 차지하도록 설정
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
+}
+
+.modify-info {
+  margin: 10% 0% 0% 12%;
+}
+
+//= ===========================
+
+.secessionPage-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.userSecession {
+  letter-spacing: -1px;
+  display: flex;
+  align-items: center;
+  font-family: pretendard-bold;
+  color: #474646;
+}
+.userSecession-info {
+  font-size: 12px;
+  margin-top: 1%;
+  letter-spacing: -1px;
+  flex-grow: 1; // 남은 공간을 모두 차지하도록 설정
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
+}
+
+.secessionUser-info {
+  margin: 10% 0% 0% 12%;
+}

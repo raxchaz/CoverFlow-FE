@@ -1,5 +1,5 @@
-// import React, { useEffect, useState } from 'react';
-import React from 'react';
+// import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import '../../../asset/sass/pages/myPage/myPage.scss';
@@ -43,12 +43,11 @@ const PremiunButton = styled.button`
 /* ========================================================= */
 
 function Mypage() {
-  // const [isLoggedIn, setIsLoggedIn] = useState(false);
-  // const [nickname, setNickname] = useState('');
+  const [nickname, setNickname] = useState('');
   const navigate = useNavigate();
 
   /* 사용자의 토큰이 존재한다면, 사용자의 정보를 가져옵니다. */
-  /*  useEffect(() => {
+  useEffect(() => {
     const token = localStorage.getItem(ACCESS_TOKEN);
 
     if (!token) {
@@ -59,10 +58,8 @@ function Mypage() {
     }
   }, [navigate]);
 
-
-
   /* 사용자의 닉네임과 붕어빵 개수를 불러옵니다. */
-  /* const loadUserData = () => {
+  const loadUserData = () => {
     fetch(`${BASE_URL}/api/member/find-member`, {
       method: 'GET',
       headers: {
@@ -76,7 +73,6 @@ function Mypage() {
       })
       .catch((error) => console.error('회원 정보 불러오기 실패:', error));
   };
-  */
 
   /* 로그아웃 버튼을 클릭했을 경우, 서버로 로그아웃 API를 요청한 후, 
       클라이언트 측에서 리프레쉬 토큰과 엑세스 토큰을 삭제하고 메인 페이지로 돌아갑니다. */
@@ -92,7 +88,6 @@ function Mypage() {
         if (response.ok) {
           localStorage.removeItem(ACCESS_TOKEN);
           localStorage.removeItem(REFRESH_TOKEN);
-          //  setIsLoggedIn(false);
           navigate('/');
         } else {
           response
@@ -128,7 +123,7 @@ function Mypage() {
     navigate('/contact');
   };
   const goToEdit = () => {
-    navigate('/info-edit');
+    navigate('/info-edit', { state: { nickname: nickname } });
   };
 
   /* ========================================================= */
@@ -138,20 +133,11 @@ function Mypage() {
       <StyledPage className="main-page-container">
         <StyledHeader>
           <TitleHeader pageTitle="마이 페이지" handleGoBack={handleGoBack} />
-          {/* {isLoggedIn && (
-            <div className="user-greeting"><span className="nickname">{nickname}</span>님, 안녕하세요</div>
-          )}
-          {isLoggedIn && (
-            <div className="reward-status">현재 붕어빵 <span className="bun-count">{rewardCount}</span>개</div>
-          )}
-          {isLoggedIn && (
-            <LogoutButton className="logout-button" onClick={handleLogout}>
-              로그아웃
-            </LogoutButton>
-          )} */}
+
           <div className="title-container">
             <div className="title">
-              눅눅한 크로와상<span className="title-title">님, 안녕하세요</span>
+              {nickname}
+              <span className="title-title">님, 안녕하세요</span>
             </div>
             <PremiunButton className="premium-button">
               프리미엄 이용하기
