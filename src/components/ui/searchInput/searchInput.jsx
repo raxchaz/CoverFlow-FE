@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import '../../../asset/sass/etc/searchInput/searchInput.scss';
 import styled from 'styled-components';
 import Searchicon from '../../../asset/image/searchicon.svg';
 import Plus from '../../../asset/image/plus.svg';
@@ -78,24 +79,28 @@ function SearchInput() {
       if (isSyllable(lastCharacter)) {
         fetchAutoCompleteData(newInputValue);
       } else {
+        console.log('마지막 문자가 유효하지 않아 자동완성 목록을 비웁니다.');
         setAutoCompleteValue([]);
       }
     } else {
+      console.log('검색어가 비어있어 자동완성 목록을 비웁니다.');
       setAutoCompleteValue([]);
     }
   };
 
   // 자동완성 데이터 요청
   const fetchAutoCompleteData = (query) => {
-    console.log('자동완성 데이터 요청 중', query);
+    console.log(`자동완성 데이터 요청: ${query}`);
     axios
       .get(`${BASE_URL}/api/company/auto-complete?name=${query}`)
       .then((response) => {
-        console.log('자동완성 데이터 응답', response.data);
+        console.log(
+          `자동완성 데이터 응답: ${response.data.data.length}개의 항목을 받음`,
+        );
         setAutoCompleteValue(response.data.data);
       })
       .catch((error) => {
-        console.error('자동완성 데이터를 가져오기 실패', error);
+        console.error('자동완성 데이터 요청 실패', error);
         setAutoCompleteValue([]);
       });
   };
@@ -109,14 +114,15 @@ function SearchInput() {
           searchText,
         },
       );
-      console.log('자동완성 내역 저장 결과:', response.data);
+      console.log('자동완성 내역 저장 성공:', response.data);
     } catch (error) {
-      console.error('자동완성 내역 저장 중 오류 발생:', error);
+      console.error('자동완성 내역 저장 실패:', error);
     }
   };
 
   // 검색 함수
   const handleSearch = async () => {
+    console.log('검색 시작');
     setSearchInitiated(true);
 
     try {
