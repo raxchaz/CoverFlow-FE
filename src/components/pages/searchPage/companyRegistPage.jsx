@@ -11,10 +11,10 @@ function CompanyRegistPage() {
   const navigate = useNavigate();
 
   const [companyInfo, setCompanyInfo] = useState({
-    companyName: '',
-    industry: '',
-    stateOrProvince: '',
-    cityOrDistrict: '',
+    name: '',
+    type: '',
+    city: '',
+    district: '',
   });
 
   const industries = [
@@ -95,7 +95,7 @@ function CompanyRegistPage() {
             className="input-field-regist"
             placeholder="기업 이름을 정확히 작성해 주세요"
             name="companyName"
-            value={companyInfo.companyName}
+            value={companyInfo.name}
             onChange={handleChange}
           />
           <div className="regist-company-industry">
@@ -104,13 +104,13 @@ function CompanyRegistPage() {
           <select
             className="option-field"
             name="industry"
-            value={companyInfo.industry}
+            value={companyInfo.type}
             onChange={handleChange}
           >
             <option value="">업종을 선택해 주세요</option>
-            {industries.map((industry) => (
-              <option key={industry} value={industry}>
-                {industry}
+            {industries.map((type) => (
+              <option key={type} value={type}>
+                {type}
               </option>
             ))}
           </select>
@@ -121,13 +121,13 @@ function CompanyRegistPage() {
             <select
               className="option-field"
               name="stateOrProvince"
-              value={companyInfo.stateOrProvince}
+              value={companyInfo.city}
               onChange={handleChange}
             >
               <option value="">도 / 특별시 / 광역시</option>
-              {provinces.map((province) => (
-                <option key={province} value={province}>
-                  {province}
+              {provinces.map((city) => (
+                <option key={city} value={city}>
+                  {city}
                 </option>
               ))}
             </select>
@@ -136,7 +136,7 @@ function CompanyRegistPage() {
               className="input-field-regist"
               placeholder="시 /군 /구 (선택)"
               name="cityOrDistrict"
-              value={companyInfo.cityOrDistrict}
+              value={companyInfo.district}
               onChange={handleChange}
             />
           </div>

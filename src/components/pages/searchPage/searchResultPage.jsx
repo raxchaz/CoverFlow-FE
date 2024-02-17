@@ -117,10 +117,11 @@ function SearchResultPage() {
   };
 
   useEffect(() => {
+    console.log('searchResult 로그 테스트', searchResult);
     async function fetchData() {
       try {
         const response = await fetch(
-          `${BASE_URL}/api/company/search-companies`,
+          `${BASE_URL}/api/company/search-companies?name=${searchResult}`,
           {
             method: 'GET',
             headers: {
@@ -129,6 +130,7 @@ function SearchResultPage() {
           },
         );
         const { data } = await response.json();
+        console.log('로그 테스트');
         if (response.ok) {
           setSearchResult(data);
         } else {
