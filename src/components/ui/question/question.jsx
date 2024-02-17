@@ -101,9 +101,7 @@ function QuestionModule({
             Q. {truncateTitle(questionTitle)}
           </span>
           <ContentBlur isLoggedIn={isLoggedIn}>
-            {/* <div className="question-container"> */}
             <span className="question-content">{questionContent}</span>
-            {/* </div> */}
           </ContentBlur>
           {!isLoggedIn && (
             <>
@@ -114,7 +112,7 @@ function QuestionModule({
               <LoginButton onClick={handleLoginClick}>로그인</LoginButton>
             </>
           )}
-          <span className="answer-reply-day">{createAt}</span>
+          <span className="question-answer-day">{createAt}</span>
         </div>
       </div>
       <Line />

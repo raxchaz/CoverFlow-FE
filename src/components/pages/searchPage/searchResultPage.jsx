@@ -1,11 +1,12 @@
-import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { StyledPage, StyledHeader } from '../../../styledComponent.js';
 import TitleHeader from '../../ui/header/titleHeader.jsx';
 import styled from 'styled-components';
 import TabBar from '../../ui/tabBar/tabBar.jsx';
 import SearchInput from '../../ui/searchInput/searchInput.jsx';
 import '../../../asset/sass/pages/searchPage/searchResultPage.scss';
+import { BASE_URL } from '../../global/constants/index.js';
 
 const ResultsContainer = styled.div`
   position: relative;
@@ -109,12 +110,38 @@ const QuestionCount = styled.div`
 
 function SearchResultPage() {
   const navigate = useNavigate();
-  const location = useLocation();
-  const { searchResult } = location.state || {};
+  const [searchResult, setSearchResult] = useState([]);
 
   const handleGoBack = () => {
     navigate(-1);
   };
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetch(
+          `${BASE_URL}/api/company/search-companies`,
+          {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          },
+        );
+        const { data } = await response.json();
+        if (response.ok) {
+          setSearchResult(data);
+        } else {
+          alert('데이터를 불러오는 데 실패했습니다.');
+        }
+      } catch (error) {
+        console.error('데이터 요청 중 오류 발생:', error);
+      }
+    }
+
+    console.log('데이터를 불러오는 중입니다.');
+    fetchData();
+  }, []);
 
   const goToResultDetailPage = (companyId) => {
     navigate(`/company-info`, {
@@ -147,7 +174,7 @@ function SearchResultPage() {
                     }}
                   >
                     <span>{company.name}</span>
-                    <IndustryTag>{company.industry || 'IT / 통신'}</IndustryTag>
+                    <IndustryTag>{company.industry}</IndustryTag>
                   </div>
                   <QuestionCount>{company.questionCount}</QuestionCount>
                 </ResultItem>

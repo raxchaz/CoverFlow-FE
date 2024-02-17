@@ -1,5 +1,4 @@
-// import React, { useEffect, useState } from 'react';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { StyledPage, StyledHeader } from '../../../styledComponent.js';
@@ -9,7 +8,7 @@ import SearchInput from '../../ui/searchInput/searchInput.jsx';
 import TabBar from '../../ui/tabBar/tabBar.jsx';
 import '../../../asset/sass/pages/searchPage/companyInfoPage.scss';
 import Question from '../../ui/question/question.jsx';
-import { ACCESS_TOKEN } from '../../global/constants/index.js';
+import { ACCESS_TOKEN, BASE_URL } from '../../global/constants/index.js';
 
 const CompanyContainer = styled.div`
   background-color: #ffffff;
@@ -36,7 +35,6 @@ const CompanyType = styled.div`
 `;
 
 const CompanyAddress = styled.div``;
-
 const CompanyEstablishment = styled.div``;
 
 const QuestionButton = styled.button`
@@ -53,9 +51,43 @@ const QuestionList = styled.div`
   height: 100vh;
 `;
 
+// ================================================================
+
 function CompanyInfoPage() {
   const navigate = useNavigate();
-  //  const [companyData, setCompanyData] = useState([]);
+  const [error, setError] = useState(null);
+  const [companyData, setCompanyData] = useState(null);
+
+  useEffect(() => {
+    async function fetchCompanyData() {
+      try {
+        const response = await fetch(`${BASE_URL}/api/company/find-company`);
+        const data = await response.json();
+        console.log('응답:', response);
+        console.log('데이터:', data);
+
+        if (response.ok && data.data) {
+          console.log('응답 성공 여부:', response.ok);
+
+          setCompanyData(data.data);
+          console.log('회사 데이터:', data.data);
+        } else {
+          throw new Error('데이터가 존재하지 않습니다.');
+        }
+      } catch (error) {
+        setError(error);
+      }
+    }
+
+    fetchCompanyData();
+  }, [navigate]);
+
+  useEffect(() => {
+    if (error) {
+      alert('기업 데이터가 존재하지 않아, 검색 페이지로 돌아갑니다.');
+      navigate(-1);
+    }
+  }, [error, navigate]);
 
   const handleQuestionClick = () => {
     const token = localStorage.getItem(ACCESS_TOKEN);
@@ -72,24 +104,6 @@ function CompanyInfoPage() {
     navigate(-1);
   };
 
-  /*  useEffect(() => {
-    // API 호출 함수
-    async function fetchCompanyData() {
-      try {
-        const response = await fetch(
-          `${BASE_URL}/api/company/search-companies`,
-        );
-        const data = await response.json();
-        setCompanyData(data.data);
-      } catch (error) {
-        console.error('API 호출에 실패했습니다:', error);
-        setCompanyData([]);
-      }
-    }
-
-    fetchCompanyData();
-  }, []); */
-
   return (
     <StyledPage className="main-page-container-companyinfo">
       <StyledHeader>
@@ -98,63 +112,53 @@ function CompanyInfoPage() {
         <SearchInput />
       </StyledHeader>
 
-      <div className="company-result-title">기업 정보</div>
-      <CompanyContainer>
-        <div className="company">
-          <div className="main-company-info">
-            <CompanyName>카카오</CompanyName>
-            <CompanyType>IT / 통신</CompanyType>
+      {companyData && (
+        <>
+          <div className="company-result-title">기업 정보</div>
+          <CompanyContainer>
+            <div className="company">
+              <div className="main-company-info">
+                <CompanyName>{companyData.companyName}</CompanyName>
+                <CompanyType>{companyData.type}</CompanyType>
+              </div>
+
+              <div className="sub-info">
+                <CompanyAddress>{companyData.address}</CompanyAddress>
+                <CompanyEstablishment>
+                  {companyData.establishment}
+                </CompanyEstablishment>
+              </div>
+            </div>
+          </CompanyContainer>
+
+          <div className="question-info-container">
+            <div className="company-question-title">기업 관련 질문</div>
+            <QuestionButton onClick={handleQuestionClick}>
+              질문 남기기
+            </QuestionButton>
           </div>
-          <div className="sub-info">
-            <CompanyAddress>경기도 성남시</CompanyAddress>
-            <CompanyEstablishment>2010년 3월</CompanyEstablishment>
-          </div>
-        </div>
-      </CompanyContainer>
-      <div className="question-info-container">
-        <div className="company-question-title">기업 관련 질문</div>
-        <QuestionButton onClick={handleQuestionClick}>
-          질문 남기기
-        </QuestionButton>
-      </div>
-      <QuestionList>
-        <Question
-          questioner="조뿡치"
-          questionerTag="취업준비중"
-          viewCount="600"
-          answerCount="6"
-          questionTitle="제가 오늘 여기 지원했는데, 기업 문화가 좀 구린 것 같아서요ㅠㅠ 현직자분 계신가요?"
-          questionContent="ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ"
-          createAt="2023-05-23"
-        />
-        <Question
-          questioner="조뿡치"
-          questionerTag="취업준비중"
-          viewCount="600"
-          answerCount="6"
-          questionTitle="혹시 .. 여기 뭔가요?"
-          questionContent="아니 진짜 근데 괴담이 사실이 맞대요? 아니 진심으로요? 전 너누머눔 궁금해요"
-          createAt="2023-05-23"
-        />
-        <Question
-          questioner="조뿡치"
-          questionerTag="취업준비중"
-          viewCount="600"
-          answerCount="6"
-          questionTitle="혹시 .. 여기 뭔가요?"
-          questionContent="별루였는데 이거 어카나요?"
-          createAt="2023-05-23"
-        />
-      </QuestionList>
+
+          <QuestionList>
+            {companyData.questions &&
+              companyData.questions.map((question, index) => (
+                <Question
+                  key={index}
+                  questioner={question.nickname}
+                  questionerTag={question.tag}
+                  viewCount={question.viewCount.toString()}
+                  answerCount={question.answerCount.toString()}
+                  questionTitle={question.title}
+                  questionContent={question.content}
+                  createAt={question.createAt}
+                />
+              ))}
+          </QuestionList>
+        </>
+      )}
+
       <TabBar />
     </StyledPage>
   );
 }
 
 export default CompanyInfoPage;
-
-// answerNickname,
-// answerTag,
-// viewCount,
-// answerCount,
-// createAt,
