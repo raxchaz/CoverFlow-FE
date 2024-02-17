@@ -3,12 +3,12 @@ import styled from 'styled-components';
 export const StyledPage = styled.div`
   position: relative;
   height: 100vh;
+  width: 480px;
   background-color: #ffffff;
 `;
 
 export const Heading = styled.div`
   display: flex;
-
   justify-content: center;
   font-size: 1rem;
   margin-top: 10%;

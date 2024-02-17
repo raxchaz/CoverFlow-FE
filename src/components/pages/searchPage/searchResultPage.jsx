@@ -4,20 +4,24 @@ import { StyledPage, StyledHeader } from '../../../styledComponent.js';
 import TitleHeader from '../../ui/header/titleHeader.jsx';
 import styled from 'styled-components';
 import TabBar from '../../ui/tabBar/tabBar.jsx';
+import SearchInput from '../../ui/searchInput/searchInput.jsx';
 import '../../../asset/sass/pages/searchPage/searchResultPage.scss';
 
-const ResultsContainer = styled.div``;
+const ResultsContainer = styled.div`
+  position: relative;
+  height: 100vh;
+  background-color: #ffffff;
+`;
 
 const ResultItem = styled.li`
   font-size: 18px;
   letter-spacing: -1px;
   list-style: none;
-  padding: 25px 20px;
-  margin: 8px 0;
+  padding: 20px 20px;
   background-color: #ffffff;
-  border: 1px solid #eaeaea;
+  border: 1.5px solid #eaeaea;
   box-shadow:
-    0 1px 3px rgba(0, 0, 0, 0.05),
+    0 1px 2px rgba(0, 0, 0, 0.05),
     0 1px 2px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   transition: all 0.3s ease-in-out;
@@ -26,10 +30,12 @@ const ResultItem = styled.li`
   align-items: center;
   justify-content: space-between;
   position: relative;
+  margin-bottom: 15px;
 
   &:hover {
     background-color: #f9f9f9;
     border-color: #d1d1d1;
+    border: 2px solid cecece;
     box-shadow:
       0 2px 4px rgba(0, 0, 0, 0.08),
       0 4px 6px rgba(0, 0, 0, 0.1);
@@ -47,18 +53,32 @@ const ResultItem = styled.li`
   }
 `;
 
+const IndustryTag = styled.span`
+  color: #9b9898;
+  font-size: 12px;
+  margin: 10% 0% 0% -1%;
+`;
+
+const Line = styled.div`
+  height: 13px;
+  background-color: #f2f2f2;
+  width: 103%;
+  margin: 6% 0% 0% -1.5%;
+`;
+
 const ResultsList = styled.ul`
   padding: 10;
-  margin-top: 5%;
+  margin-top: 8%;
   width: 80%;
   margin-left: 10%;
   display: flex;
   flex-direction: column;
+  height: 100vh;
 `;
 
 const ResultCount = styled.div`
   letter-spacing: -1px;
-  margin: 13% 10% -3% 13%;
+  margin: 9% 0% -3% 11%;
   color: #333;
   font-size: 14px;
   font-weight: 600;
@@ -97,7 +117,7 @@ function SearchResultPage() {
   };
 
   const goToResultDetailPage = (companyId) => {
-    navigate(`/company-detail/${companyId}`, {
+    navigate(`/company-info`, {
       state: { companyId },
     });
   };
@@ -107,6 +127,8 @@ function SearchResultPage() {
       <StyledHeader>
         <ResultsContainer>
           <TitleHeader pageTitle="검색" handleGoBack={handleGoBack} />
+          <SearchInput />
+          <Line />
           <ResultCount>
             기업 검색 결과{' '}
             <span className="result-count"> {searchResult.length}</span>
@@ -118,7 +140,15 @@ function SearchResultPage() {
                   key={company.id}
                   onClick={() => goToResultDetailPage(company.id)}
                 >
-                  <span>{company.name}</span>
+                  <div
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                    }}
+                  >
+                    <span>{company.name}</span>
+                    <IndustryTag>{company.industry || 'IT / 통신'}</IndustryTag>
+                  </div>
                   <QuestionCount>{company.questionCount}</QuestionCount>
                 </ResultItem>
               ))}

@@ -1,0 +1,118 @@
+.question-container {
+  height: auto;
+  margin-top: 5%;
+  cursor: pointer;
+}
+
+// 유저 닉네임 + 태그 부분 scss
+.questioner-container {
+  letter-spacing: -1px;
+  display: flex;
+  justify-content: space-between;
+  margin: 5% 0% -5% -57%;
+}
+
+.questioner-info {
+  white-space: nowrap;
+}
+
+.questioner {
+  font-weight: 900;
+  color: #000;
+}
+
+.middle {
+  margin-left: 2%;
+}
+
+.questioner-tag {
+  margin-left: 2%;
+  margin-top: 3.5%;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #666;
+}
+
+/* =========================================================== */
+
+// 조회수 + 답변 개수 scss
+.view-container {
+  white-space: nowrap;
+  display: flex;
+  margin: -3% 0% -3% 55%;
+}
+
+.chat-img {
+  margin-right: 0%;
+  margin-top: 4%;
+}
+
+.chat-count {
+  white-space: nowrap;
+  margin-right: 15%;
+  font-size: 12px;
+  margin-top: 10%;
+}
+
+.view-img {
+  white-space: nowrap;
+  margin-right: 4%;
+  margin-left: 3%;
+  margin-top: 3%;
+}
+
+.view-count {
+  // margin-right: 0%;
+  font-size: 12px;
+  margin-top: 10%;
+  margin-left: -1%;
+}
+
+// 답변 내용 부분 scss
+
+.no-login-user {
+  letter-spacing: -1px;
+  font-size: 12px;
+  font-family: 'Pretendard-Bold';
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: auto;
+  margin-top: -5%;
+}
+
+.question-title {
+  display: flex;
+  align-items: left;
+  justify-content: flex-start;
+  margin-bottom: 3%;
+  font-family: 'Pretendard-Bold';
+  letter-spacing: -1.5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.question-content {
+}
+
+.answer-reply-day {
+  display: flex;
+  color: #666;
+  letter-spacing: -1px;
+  font-size: 12px;
+  justify-content: right;
+  margin-right: 5%;
+  margin-top: 5%;
+  align-items: right;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  margin-top: 3%;
+  margin-left: 2.5%;
+  width: 81%;
+}

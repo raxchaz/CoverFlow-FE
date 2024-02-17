@@ -1,14 +1,11 @@
 .user-icon-container {
-  margin-top: -5%;
-}
-
-.userInfo-container {
-  position: relative;
-  margin-top: -4%;
+  // margin-top: -5%;
 }
 
 a.login-btn {
+  position: relative;
   margin-left: 70%;
+  top: 2px;
   font-size: 0.9rem;
   padding: 0.9% 2.6% 0.9% 2.1%;
   border: 0.1px solid #ff8d1d;
@@ -18,10 +15,6 @@ a.login-btn {
   cursor: pointer;
   letter-spacing: -1.2px;
   font-weight: 400;
-}
-
-.login-btn {
-  margin-top: -5%;
 }
 
 .loginuser {
@@ -46,6 +39,7 @@ div.reward-fish {
   margin-top: -5%;
   margin-left: 48%;
   cursor: pointer;
+  padding: 0;
 }
 
 .bun-count {
