@@ -35,7 +35,6 @@ const CompanyType = styled.div`
 `;
 
 const CompanyAddress = styled.div``;
-
 const CompanyEstablishment = styled.div``;
 
 const QuestionButton = styled.button`

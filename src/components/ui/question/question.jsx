@@ -112,7 +112,7 @@ function QuestionModule({
               <LoginButton onClick={handleLoginClick}>로그인</LoginButton>
             </>
           )}
-          <span className="question-reply-day">{createAt}</span>
+          <span className="question-answer-day">{createAt}</span>
         </div>
       </div>
       <Line />
