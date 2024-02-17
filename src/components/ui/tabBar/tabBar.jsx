@@ -35,7 +35,7 @@ const TabBar = () => {
   }
 
   return (
-    <nav className="wrapper" style={{ width: '434px', margin: '0 auto' }}>
+    <nav className="wrapper" style={{ width: '489px', margin: '0 auto' }}>
       <div style={{ width: '33.33%' }}>
         <Link to="/" className="nav-link" onClick={() => setActiveNav(1)}>
           <div className={activeNav === 1 ? 'nav-item active' : 'nav-item'}>

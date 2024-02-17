@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const StyledPage = styled.div`
   position: relative;
   height: 100vh;
+  width: 480px;
   background-color: #ffffff;
 `;
 

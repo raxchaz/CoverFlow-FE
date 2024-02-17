@@ -34,10 +34,11 @@
   align-items: center;
   font-family: pretendard-bold;
   color: #474646;
+  font-size: 19px;
 }
 .modify-nick-info {
-  font-size: 12px;
-  margin-top: 1%;
+  font-size: 14px;
+  margin-top: 2%;
   letter-spacing: -1px;
   flex-grow: 1; // 남은 공간을 모두 차지하도록 설정
   justify-content: space-between;
@@ -58,6 +59,7 @@
 }
 
 .userSecession {
+  font-size: 19px;
   letter-spacing: -1px;
   display: flex;
   align-items: center;
@@ -65,7 +67,7 @@
   color: #474646;
 }
 .userSecession-info {
-  font-size: 12px;
+  font-size: 14px;
   margin-top: 1%;
   letter-spacing: -1px;
   flex-grow: 1; // 남은 공간을 모두 차지하도록 설정

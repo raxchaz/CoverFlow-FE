@@ -68,11 +68,11 @@ function InfoEditPage() {
 
   // const renderSocialType = (type) => {
   //   switch (type) {
-  //     case 'Google':
+  //     case 'GOOGLE':
   //       return <div className="socialType-ui">구글 로그인 사용 중</div>;
-  //     case 'Kakao':
-  //       return <div className="socialType-ui">카카오톡 로그인 사용 중</div>;
-  //     case 'Naver':
+  //     case 'KAKAO':
+  //       return <div className="socialType-ui">카카오 로그인 사용 중</div>;
+  //     case 'NAVER':
   //       return <div className="socialType-ui">네이버 로그인 사용 중</div>;
 
   //     default:
@@ -100,7 +100,7 @@ function InfoEditPage() {
         {/* <div className="user-socialType">
           {renderSocialType(userInfo.socialType)}
         </div> */}
-        <div className="socialType-ui">카카오톡 로그인 사용 중</div>
+        <div className="socialType-ui">카카오 로그인 사용 중</div>
         <Divider />
         <div className="modify-nick-container">
           <div className="modify-info">
