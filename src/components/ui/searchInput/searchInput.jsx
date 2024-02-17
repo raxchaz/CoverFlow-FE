@@ -89,10 +89,10 @@ function SearchInput() {
   };
 
   // 자동완성 데이터 요청
-  const fetchAutoCompleteData = (query) => {
-    console.log(`자동완성 데이터 요청: ${query}`);
+  const fetchAutoCompleteData = (name) => {
+    console.log(`자동완성 데이터 요청: ${name}`);
     axios
-      .get(`${BASE_URL}/api/company/auto-complete?name=${query}`)
+      .get(`${BASE_URL}/api/company/auto-complete?name=${name}`)
       .then((response) => {
         console.log(
           `자동완성 데이터 응답: ${response.data.data.length}개의 항목을 받음`,
@@ -106,19 +106,19 @@ function SearchInput() {
   };
 
   // 자동 완성 내역 저장 함수
-  const saveAutoCompleteHistory = async (searchText) => {
-    try {
-      const response = await axios.post(
-        `${BASE_URL}/api/company/auto-complete`,
-        {
-          searchText,
-        },
-      );
-      console.log('자동완성 내역 저장 성공:', response.data);
-    } catch (error) {
-      console.error('자동완성 내역 저장 실패:', error);
-    }
-  };
+  // const saveAutoCompleteHistory = async (searchText) => {
+  //   try {
+  //     const response = await axios.post(
+  //       `${BASE_URL}/api/company/auto-complete`,
+  //       {
+  //         searchText,
+  //       },
+  //     );
+  //     console.log('자동완성 내역 저장 성공:', response.data);
+  //   } catch (error) {
+  //     console.error('자동완성 내역 저장 실패:', error);
+  //   }
+  // };
 
   // 검색 함수
   const handleSearch = async () => {
@@ -169,7 +169,7 @@ function SearchInput() {
         }
 
         // 검색 내역 저장
-        saveAutoCompleteHistory(searchCompany);
+        // saveAutoCompleteHistory(searchCompany);
       }
     } catch (error) {
       console.error('검색 중 오류 발생', error);
