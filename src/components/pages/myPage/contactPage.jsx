@@ -1,22 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { StyledPage, StyledHeader } from '../../../styledComponent.js';
 import TitleHeader from '../../ui/header/titleHeader.jsx';
 import TabBar from '../../ui/tabBar/tabBar.jsx';
 import '../../../asset/sass/pages/myPage/contactPage.scss';
-import { ACCESS_TOKEN } from '../../global/constants/index.js';
 
 function ContactPage() {
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const token = localStorage.getItem(ACCESS_TOKEN);
-
-    if (!token) {
-      localStorage.setItem('prevPage', '/contact');
-      navigate('/login');
-    }
-  }, [navigate]);
 
   const handleGoBack = () => {
     navigate(-1);

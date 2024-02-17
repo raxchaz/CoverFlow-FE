@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../../../asset/sass/pages/searchPage/companyRegistPage.scss';
@@ -9,15 +9,6 @@ import TabBar from '../../ui/tabBar/tabBar.jsx';
 
 function CompanyRegistPage() {
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const token = localStorage.getItem(ACCESS_TOKEN);
-
-    if (!token) {
-      localStorage.setItem('prevPage', '/company-regist');
-      navigate('/login');
-    }
-  }, [navigate]);
 
   const [companyInfo, setCompanyInfo] = useState({
     companyName: '',
@@ -69,7 +60,7 @@ function CompanyRegistPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Company Information:', companyInfo);
+    console.log('기업 정보 제출 중:', companyInfo);
 
     axios
       .post(`${BASE_URL}/api/company/admin/save-company`, companyInfo, {
@@ -79,7 +70,7 @@ function CompanyRegistPage() {
         },
       })
       .then((response) => {
-        console.log('Server Response:', response.data);
+        console.log('서버 응답:', response.data);
         navigate('/');
       })
       .catch((error) => {

@@ -38,7 +38,14 @@ const PremiunButton = styled.button`
   font-size: 12px;
   border-radius: 5px;
   margin: 13% 10% 0% 0%;
+  &:hover {
+    cursor: pointer;
+  }
 `;
+
+const handlePremiumButtonClick = () => {
+  alert('준비 중인 페이지입니다.');
+};
 
 /* ========================================================= */
 
@@ -139,7 +146,10 @@ function Mypage() {
               {nickname}
               <span className="title-title">님, 안녕하세요</span>
             </div>
-            <PremiunButton className="premium-button">
+            <PremiunButton
+              className="premium-button"
+              onClick={handlePremiumButtonClick}
+            >
               프리미엄 이용하기
             </PremiunButton>
           </div>
