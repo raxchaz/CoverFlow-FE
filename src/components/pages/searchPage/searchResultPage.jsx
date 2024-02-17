@@ -118,6 +118,7 @@ function SearchResultPage() {
 
   useEffect(() => {
     console.log('searchResult 로그 테스트', searchResult);
+    console.log('searchResult 로그 테스트2', searchResult.name);
     async function fetchData() {
       try {
         const response = await fetch(
@@ -147,6 +148,7 @@ function SearchResultPage() {
   }, []);
 
   const goToResultDetailPage = (companyName) => {
+    console.log(companyName);
     navigate(`/company-info`, {
       state: { companyName },
     });
