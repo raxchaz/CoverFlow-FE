@@ -9,7 +9,7 @@
   letter-spacing: -1px;
   display: flex;
   justify-content: space-between;
-  margin: 5% 0% -5% -57%;
+  margin: 5% 0% -5% 10%;
 }
 
 .questioner-info {
@@ -37,35 +37,35 @@
 
 // 조회수 + 답변 개수 scss
 .view-container {
-  white-space: nowrap;
   display: flex;
-  margin: -3% 0% -3% 55%;
+  position: relative;
+  white-space: nowrap;
+  margin: 0% 0% -5% 65%;
 }
 
 .chat-img {
   margin-right: 0%;
-  margin-top: 4%;
+  margin-top: 5%;
 }
 
 .chat-count {
   white-space: nowrap;
   margin-right: 15%;
   font-size: 12px;
-  margin-top: 10%;
+  margin-top: 7%;
 }
 
 .view-img {
   white-space: nowrap;
   margin-right: 4%;
   margin-left: 3%;
-  margin-top: 3%;
+  margin-top: 4%;
 }
 
 .view-count {
-  // margin-right: 0%;
   font-size: 12px;
-  margin-top: 10%;
-  margin-left: -1%;
+  margin-top: 7%;
+  margin-left: -3%;
 }
 
 // 답변 내용 부분 scss
@@ -80,19 +80,25 @@
   align-items: center;
   text-align: center;
   height: auto;
-  margin-top: -5%;
+  margin-top: 1%;
+  margin-left: 13%;
 }
 
 .question-title {
   display: flex;
   align-items: left;
   justify-content: flex-start;
-  margin-bottom: 3%;
   font-family: 'Pretendard-Bold';
   letter-spacing: -1.5px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  margin: 8% 0% 0% 9%;
+}
+
+.question-content {
+  width: 70%;
+  margin-left: 10%;
 }
 
 .question-answer-day {
@@ -109,7 +115,6 @@
 .field {
   display: flex;
   flex-direction: column;
-  margin-top: 3%;
-  margin-left: 2.5%;
+  margin: 3% 0% 2.5% 10%;
   width: 81%;
 }
