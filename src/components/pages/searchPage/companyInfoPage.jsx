@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { StyledPage, StyledHeader } from '../../../styledComponent.js';
 import TitleHeader from '../../ui/header/titleHeader.jsx';
@@ -43,13 +43,11 @@ const QuestionButton = styled.button`
   border-radius: 3px;
   padding: 7px 10px;
   font-weight: 600;
-  margin: 9% 10% 0% 0%;
+  margin: 0% 0% 5% 70%;
   font-family: 'Pretendard-ExtraLight' !important;
 `;
 
-const QuestionList = styled.div`
-  height: 100vh;
-`;
+const QuestionList = styled.div``;
 
 // ================================================================
 
@@ -57,11 +55,21 @@ function CompanyInfoPage() {
   const navigate = useNavigate();
   const [error, setError] = useState(null);
   const [companyData, setCompanyData] = useState(null);
+  const { companyId } = useParams();
 
   useEffect(() => {
+    console.log('회사 companyId: ', companyId);
     async function fetchCompanyData() {
       try {
-        const response = await fetch(`${BASE_URL}/api/company/find-company`);
+        const response = await fetch(
+          `${BASE_URL}/api/company/find-company/${companyId}`,
+          {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json; charset=UTF-8',
+            },
+          },
+        );
         const data = await response.json();
         console.log('응답:', response);
         console.log('데이터:', data);
@@ -72,9 +80,11 @@ function CompanyInfoPage() {
           setCompanyData(data.data);
           console.log('회사 데이터:', data.data);
         } else {
+          console.log('dwqwq');
           throw new Error('데이터가 존재하지 않습니다.');
         }
       } catch (error) {
+        console.log(error);
         setError(error);
       }
     }
@@ -84,7 +94,7 @@ function CompanyInfoPage() {
 
   useEffect(() => {
     if (error) {
-      alert('기업 데이터가 존재하지 않아, 검색 페이지로 돌아갑니다.');
+      alert('기업 데이터가 존재하지 않아, 검색 결과 페이지로 돌아갑니다.');
       navigate(-1);
     }
   }, [error, navigate]);
@@ -105,7 +115,7 @@ function CompanyInfoPage() {
   };
 
   return (
-    <StyledPage className="main-page-container-companyinfo">
+    <StyledPage className="main-page-container">
       <StyledHeader>
         <TitleHeader pageTitle="검색" handleGoBack={handleGoBack} />
         <UserInfoHeader />
@@ -155,7 +165,6 @@ function CompanyInfoPage() {
           </QuestionList>
         </>
       )}
-
       <TabBar />
     </StyledPage>
   );

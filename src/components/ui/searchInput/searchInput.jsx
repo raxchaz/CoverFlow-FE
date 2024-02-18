@@ -4,8 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import '../../../asset/sass/etc/searchInput/searchInput.scss';
 import styled from 'styled-components';
 import Searchicon from '../../../asset/image/searchicon.svg';
-import Plus from '../../../asset/image/plus.svg';
-import Warning from '../../../asset/image/warning.svg';
 import { BASE_URL } from '../../global/constants/index.js';
 
 const StyledSearchInput = styled.input`
@@ -31,14 +29,15 @@ const StyledSearchInput = styled.input`
 const AutoCompleteContainer = styled.div`
   position: absolute;
   background-color: #fefefe;
-  width: 315px;
+  width: 361px;
   letter-spacing: -1px;
-  margin-left: 13%;
+  margin-left: 13.5%;
   margin-top: 1%;
   border-radius: 0 0 10px 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   max-height: 300px;
   overflow-y: auto;
+  z-index: 99;
 `;
 
 const AutoCompleteItem = styled.div`
@@ -53,8 +52,6 @@ function SearchInput() {
   const navigate = useNavigate();
   const [keyword, setKeyword] = useState('');
   const [autoCompleteValue, setAutoCompleteValue] = useState([]);
-  const [searchResult, setSearchResult] = useState([]);
-  const [searchInitiated, setSearchInitiated] = useState(false);
   const [activeIndex, setActiveIndex] = useState(-1);
   const searchInputRef = useRef(null);
   const autoCompleteRef = useRef(null);
@@ -62,15 +59,14 @@ function SearchInput() {
   // 유효한 문자열 검사 (한글, 영문, 숫자)
   const isSyllable = (character) => {
     const syllableRegex = /^[가-힣a-zA-Z0-9]$/;
-    const result = syllableRegex.test(character);
-    console.log('글자 유효성 검사 결과', { character, result });
+
     return syllableRegex.test(character);
   };
 
   // 입력값 변경 핸들러
   const handleInputChange = (event) => {
     const newInputValue = event.target.value.trim();
-    console.log('입력값 변경됨', newInputValue);
+
     setKeyword(newInputValue);
     setActiveIndex(-1);
 
@@ -79,24 +75,18 @@ function SearchInput() {
       if (isSyllable(lastCharacter)) {
         fetchAutoCompleteData(newInputValue);
       } else {
-        console.log('마지막 문자가 유효하지 않아 자동완성 목록을 비웁니다.');
         setAutoCompleteValue([]);
       }
     } else {
-      console.log('검색어가 비어있어 자동완성 목록을 비웁니다.');
       setAutoCompleteValue([]);
     }
   };
 
   // 자동완성 데이터 요청
   const fetchAutoCompleteData = (name) => {
-    console.log(`자동완성 데이터 요청: ${name}`);
     axios
       .get(`${BASE_URL}/api/company/auto-complete?name=${name}`)
       .then((response) => {
-        console.log(
-          `자동완성 데이터 응답: ${response.data.data.length}개의 항목을 받음`,
-        );
         setAutoCompleteValue(response.data.data);
       })
       .catch((error) => {
@@ -105,75 +95,24 @@ function SearchInput() {
       });
   };
 
-  // 자동 완성 내역 저장 함수
-  // const saveAutoCompleteHistory = async (searchText) => {
-  //   try {
-  //     const response = await axios.post(
-  //       `${BASE_URL}/api/company/auto-complete`,
-  //       {
-  //         searchText,
-  //       },
-  //     );
-  //     console.log('자동완성 내역 저장 성공:', response.data);
-  //   } catch (error) {
-  //     console.error('자동완성 내역 저장 실패:', error);
-  //   }
-  // };
-
   // 검색 함수
-  const handleSearch = async () => {
-    console.log('검색 시작');
-    setSearchInitiated(true);
-
+  const handleSearch = () => {
     try {
       // 사용자가 방향키로 특정 자동완성 항목을 선택하지 않고,
       // 자동완성 목록이 있을 경우엔 전체 데이터를 결과 페이지로 전달합니다.
-      if (activeIndex === -1 && autoCompleteValue.length > 0) {
-        console.log('자동완성 값 keyword:', keyword);
-
-        navigate('/search-result', {
-          state: { keyword: keyword },
-        });
+      if (activeIndex === -1) {
+        const params = new URLSearchParams();
+        params.append('keyword', keyword);
+        navigate(`/search-result?${params.toString()}`);
       }
       // 사용자가 방향키로 특정 자동완성 항목을 선택한 경우에 특정 항목만 결과 페이지로 전달합니다.
       else if (activeIndex >= 0 && autoCompleteValue[activeIndex]) {
-        console.log('선택된 자동완성 값:', autoCompleteValue[activeIndex]);
-        navigate('/search-result', {
-          state: { keyword: [autoCompleteValue[activeIndex]] },
-        });
+        const params = new URLSearchParams();
+        params.append('keyword', autoCompleteValue[activeIndex].name);
+        navigate(`/search-result?${params.toString()}`);
       }
-
-      // // 사용자가 입력한 검색어로 검색을 진행할 경우
-      // else {
-      //   const response = await axios.get(
-      //     `${BASE_URL}/api/company/search-companies`,
-      //     { name: keyword },
-      //   );
-      //   console.log('검색 결과', response.data);
-
-      //   if (response.status === 200 && response.data.length > 0) {
-      //     const searchDataWithQuestionsCount = response.data.map((company) => ({
-      //       ...company,
-      //       questionsCount: company.questionsCount || 0,
-      //     }));
-      //     console.log(
-      //       '검색 결과 (질문 수 포함):',
-      //       searchDataWithQuestionsCount,
-      //     );
-
-      //     navigate('/search-result', {
-      //       state: { keyword: searchDataWithQuestionsCount },
-      //     });
-      //   } else {
-      //     setSearchResult([]);
-      //   }
-
-      // 검색 내역 저장
-      // saveAutoCompleteHistory(searchCompany);
-      // }
     } catch (error) {
       console.error('검색 중 오류 발생', error);
-      setSearchResult([]);
     }
   };
 
@@ -188,7 +127,6 @@ function SearchInput() {
         setAutoCompleteValue([]);
       }
     };
-
     document.addEventListener('mousedown', handleClickOutside);
 
     return () => {
@@ -237,6 +175,7 @@ function SearchInput() {
         onClick={handleSearch}
         alt="Search"
       />
+
       {autoCompleteValue.length > 0 && (
         <AutoCompleteContainer>
           {autoCompleteValue.map((value, index) => (
@@ -252,30 +191,6 @@ function SearchInput() {
           ))}
         </AutoCompleteContainer>
       )}
-      <div>
-        {searchInitiated &&
-          (searchResult.length > 0 ? (
-            searchResult.map((company) => (
-              <div className="result-data-complete" key={company.id}>
-                {company.name}
-              </div>
-            ))
-          ) : (
-            <span className="result-data-failed">
-              <img className="warning-icon" src={Warning} alt="Warning Icon" />
-              <div className="failed-text">검색 결과가 없습니다</div>
-              <div className="failed-text2">
-                코버플로우에 원하는 기업을 등록해 주세요
-              </div>
-              <span className="registration-container">
-                <img className="plus-icon" src={Plus} alt="Plus Icon" />
-                <a href="/company-regist" className="company-registration">
-                  기업 등록하기
-                </a>
-              </span>
-            </span>
-          ))}
-      </div>
     </>
   );
 }

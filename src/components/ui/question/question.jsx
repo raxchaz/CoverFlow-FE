@@ -7,12 +7,12 @@ import Chat from '../../../asset/image/chat.svg';
 import View from '../../../asset/image/view.svg';
 import { ACCESS_TOKEN } from '../../global/constants/index.js';
 
-const Line = styled.div`
-  height: 1px;
-  background-color: #f2f2f2;
-  width: 103%;
-  margin: 7% 0% -5% -1.5%;
-`;
+// const Line = styled.div`
+//   height: 1px;
+//   background-color: #f2f2f2;
+//   width: 103%;
+//   margin: 7% 0% -5% -1.5%;
+// `;
 
 const LoginButton = styled.button`
   letter-spacing: -0.7px;
@@ -20,7 +20,7 @@ const LoginButton = styled.button`
   border-radius: 3px;
   font-weight: 600;
   font-size: 12px;
-  margin: 2% 10% 0% 40%;
+  margin: 2% 10% 0% 48%;
   padding: 5px 5px;
   width: 15%;
 `;
@@ -81,41 +81,65 @@ function QuestionModule({
 
   return (
     <>
-      <div className="question-container" onClick={goToDetail}>
-        <div className="questioner-container">
-          <div className="questioner-info">
-            <span className="questioner">{questioner}</span>
-            <span className="middle">•</span>
-            <span className="questioner-tag">{questionerTag}</span>
+      {isLoggedIn ? (
+        <div className="question-container" onClick={goToDetail}>
+          <div className="questioner-container">
+            <div className="questioner-info">
+              <span className="questioner">{questioner}</span>
+              <span className="middle">•</span>
+              <span className="questioner-tag">{questionerTag}</span>
+            </div>
+          </div>
+
+          <div className="view-container">
+            <img className="chat-img" src={Chat} />
+            <span className="chat-count">{answerCount}</span>
+            <img className="view-img" src={View} />
+            <span className="view-count">{viewCount}</span>
+          </div>
+          <div className="field">
+            <span className="question-title">
+              Q. {truncateTitle(questionTitle)}
+            </span>
+            <span className="question-answer-day">{createAt}</span>
           </div>
         </div>
+      ) : (
+        <div className="question-container">
+          <div className="questioner-container">
+            <div className="questioner-info">
+              <span className="questioner">{questioner}</span>
+              <span className="middle">•</span>
+              <span className="questioner-tag">{questionerTag}</span>
+            </div>
+          </div>
 
-        <div className="view-container">
-          <img className="chat-img" src={Chat} />
-          <span className="chat-count">{answerCount}</span>
-          <img className="view-img" src={View} />
-          <span className="view-count">{viewCount}</span>
+          <div className="view-container">
+            <img className="chat-img" src={Chat} />
+            <span className="chat-count">{answerCount}</span>
+            <img className="view-img" src={View} />
+            <span className="view-count">{viewCount}</span>
+          </div>
+          <div className="field">
+            <span className="question-title">
+              Q. {truncateTitle(questionTitle)}
+            </span>
+
+            <ContentBlur isLoggedIn={isLoggedIn}>
+              <span className="question-content">{questionContent}</span>
+            </ContentBlur>
+
+            <span className="no-login-user">
+              이 기업의 질문과 답변이 궁금하신가요? <br /> 로그인하시고 기업의
+              더 자세한 정보를 열람하세요{' '}
+            </span>
+            <LoginButton onClick={handleLoginClick}>로그인</LoginButton>
+
+            <span className="question-answer-day">{createAt}</span>
+          </div>
         </div>
-        <div className="field">
-          <span className="question-title">
-            Q. {truncateTitle(questionTitle)}
-          </span>
-          <ContentBlur isLoggedIn={isLoggedIn}>
-            <span className="question-content">{questionContent}</span>
-          </ContentBlur>
-          {!isLoggedIn && (
-            <>
-              <span className="no-login-user">
-                이 기업의 질문과 답변이 궁금하신가요? <br /> 로그인하시고 기업의
-                더 자세한 정보를 열람하세요{' '}
-              </span>
-              <LoginButton onClick={handleLoginClick}>로그인</LoginButton>
-            </>
-          )}
-          <span className="question-answer-day">{createAt}</span>
-        </div>
-      </div>
-      <Line />
+      )}
+      {/* <Line /> */}
     </>
   );
 }
