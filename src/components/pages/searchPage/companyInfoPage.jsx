@@ -90,7 +90,7 @@ function CompanyInfoPage() {
     }
 
     fetchCompanyData();
-  }, [navigate]);
+  }, []);
 
   useEffect(() => {
     if (error) {

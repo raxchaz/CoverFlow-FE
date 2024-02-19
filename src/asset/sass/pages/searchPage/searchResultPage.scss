@@ -39,14 +39,20 @@
   margin-bottom: 5%;
 }
 
+.registContainer {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}
+
 .plus-icon {
-  width: 20px;
-  height: 20px;
+  width: 13px;
+  height: 13px;
 }
 
 .company-registration {
   display: flex;
-  margin: 2% 0% 0% 14%;
+  margin: 0% 0% 0% 0%;
   color: #ff8d1d;
   font-size: 14px;
   letter-spacing: -1px;

@@ -75,7 +75,7 @@ function SecessionPage() {
   };
 
   return (
-    <StyledPage className="main-page-container">
+    <StyledPage>
       <StyledHeader>
         <TitleHeader pageTitle="회원 탈퇴" handleGoBack={handleGoBack} />
       </StyledHeader>

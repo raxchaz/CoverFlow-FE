@@ -23,15 +23,17 @@
 
 .company {
   display: flex;
+  position: relative;
+  text-align: center;
+  align-items: center;
   justify-content: space-between;
 }
 
 .main-company-info {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  margin-left: 15%;
   white-space: nowrap;
+  padding-right: 50px;
 }
 
 .sub-info {
@@ -40,6 +42,5 @@
   letter-spacing: -1px;
   display: flex;
   flex-direction: column;
-  margin-left: 80%;
   white-space: nowrap;
 }

@@ -12,7 +12,6 @@ import Warning from '../../../asset/image/warning.svg';
 
 const ResultsContainer = styled.div`
   position: relative;
-  height: 100vh;
   background-color: #ffffff;
 `;
 
@@ -76,7 +75,6 @@ const ResultsList = styled.ul`
   margin-left: 10%;
   display: flex;
   flex-direction: column;
-  height: 100vh;
 `;
 
 const ResultCount = styled.div`
@@ -194,10 +192,12 @@ function SearchResultPage() {
                   코버플로우에 원하는 기업을 등록해 주세요
                 </div>
 
-                <img className="plus-icon" src={Plus} alt="Plus Icon" />
-                <a href="/company-regist" className="company-registration">
-                  기업 등록하기
-                </a>
+                <div className="registContainer">
+                  <img className="plus-icon" src={Plus} alt="Plus Icon" />
+                  <a href="/company-regist" className="company-registration">
+                    기업 등록하기
+                  </a>
+                </div>
               </span>
             )}
           </ResultsList>

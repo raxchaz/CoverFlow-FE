@@ -18,7 +18,7 @@ const GlobalStyles = createGlobalStyle`
   }
   
   body {
-
+    height: 100%;
     font-size: 1rem; 
   }
   
@@ -36,7 +36,7 @@ const GlobalStyles = createGlobalStyle`
 
 
   ${StyledPage} {
-    height: auto;
+    height: 100%;
     width: 480px;
     background-color: #ffffff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
