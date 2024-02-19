@@ -6,10 +6,7 @@
 .questioner-info {
   display: flex;
   justify-content: space-between;
-}
-
-.middle {
-  margin-left: 5%;
+  letter-spacing: -1px;
 }
 
 .question-date {
@@ -54,10 +51,10 @@
   .comment-input {
     resize: none;
     width: 100%;
-    background: #f2f2f2;
+    background: #f6f6f6;
     padding: 20px 15px;
     padding-right: 80px;
-    border: 1px solid #f2f2f2;
+    border: 1px solid #f6f6f6;
     border-radius: 10px;
     font-size: 15px;
     letter-spacing: -1px;
