@@ -109,7 +109,7 @@ function CompanyInfoPage() {
       navigate('/login');
     }
   };
-  
+
   const handleGoBack = () => {
     navigate(-1);
   };
