@@ -14,11 +14,9 @@ const GlobalStyles = createGlobalStyle`
   
   html {
     font-family: 'Pretendard-Regular';
-
   }
   
   body {
-    height: 100%;
     font-size: 1rem; 
   }
   
@@ -36,7 +34,7 @@ const GlobalStyles = createGlobalStyle`
 
 
   ${StyledPage} {
-    height: 100%;
+    height: 100vh;
     width: 480px;
     background-color: #ffffff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);

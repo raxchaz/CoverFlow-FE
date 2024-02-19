@@ -17,7 +17,7 @@ const Questioner = styled.div`
 
 const QuestionerTag = styled.div`
   letter-spacing: -1px;
-  margin-right: 45%;
+  margin-left: -61%;
   margin-top: 0.5%;
   font-size: 13px;
 `;
@@ -26,6 +26,9 @@ const QuestionTitle = styled.div`
   margin-top: 5%;
   font-family: pretendard-bold;
   letter-spacing: -0.5px;
+  background-color: #f6f6f6;
+  border-radius: 10px;
+  padding: 10px;
 `;
 
 const QuestionContent = styled.div`
@@ -124,8 +127,7 @@ function QuestionDetailPage() {
       <div className="question-detail-container">
         <div className="questioner-info">
           <Questioner>
-            {questioner}
-            <span className="middle">•</span>
+            {questioner} <span className="middle">•</span>
           </Questioner>
 
           <QuestionerTag>{questionerTag}</QuestionerTag>
@@ -135,7 +137,7 @@ function QuestionDetailPage() {
         <FirstLine />
 
         <QuestionTitle>
-          <span className="Q">Q. </span>
+          <span className="Q"> </span>
           {questionTitle}
         </QuestionTitle>
 

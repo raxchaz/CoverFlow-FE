@@ -16,24 +16,25 @@
   font-family: 'Pretendard-Black';
 }
 
-// .question-info-container {
-//   display: flex;
-//   justify-content: space-between;
-// }
+.question-info-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
 
 .company {
   display: flex;
   position: relative;
   text-align: center;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  flex: 1;
 }
 
 .main-company-info {
   display: flex;
-  flex-direction: column;
-  white-space: nowrap;
-  padding-right: 50px;
+  justify-content: space-between;
+  flex: 1;
 }
 
 .sub-info {

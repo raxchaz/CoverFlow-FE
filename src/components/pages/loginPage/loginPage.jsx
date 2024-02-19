@@ -61,6 +61,8 @@ const LoginButton = styled.a`
   margin: 0 10px;
 `;
 
+const KakaoLoginButton = styled.a``;
+
 function LoginPage() {
   const navigate = useNavigate();
 
@@ -94,9 +96,9 @@ function LoginPage() {
           className="fast-login"
         />
 
-        <LoginButton href={`${BASE_URL}/oauth2/authorization/kakao`}>
+        <KakaoLoginButton href={`${BASE_URL}/oauth2/authorization/kakao`}>
           <img src={Kakao} alt="Kakao 로그인" className="kakao-login" />
-        </LoginButton>
+        </KakaoLoginButton>
 
         <HorizontalRule />
 

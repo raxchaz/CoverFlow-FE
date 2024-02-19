@@ -40,7 +40,7 @@
   display: flex;
   position: relative;
   white-space: nowrap;
-  margin: 0% 0% -5% 65%;
+  margin: 0% 0% -5% 68%;
 }
 
 .chat-img {
@@ -92,13 +92,16 @@
   letter-spacing: -1.5px;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-size: 20px;
   white-space: nowrap;
   margin: 8% 0% 0% 9%;
 }
 
 .question-content {
-  width: 70%;
-  margin-left: 10%;
+  width: 90%;
+  margin: 5% 0% 0% 9%;
+  font-family: pretendard-extraLight;
+  font-size: 15px;
 }
 
 .question-answer-day {

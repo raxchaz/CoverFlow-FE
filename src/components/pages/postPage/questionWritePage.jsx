@@ -40,8 +40,8 @@ function QuestionWritePage() {
           Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
         },
         body: JSON.stringify({
-          title: [title],
-          content: [content],
+          title: title,
+          content: content,
           companyId: parseInt(companyId),
           reward: parseInt(reward),
         }),
