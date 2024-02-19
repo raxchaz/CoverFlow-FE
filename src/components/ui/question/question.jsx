@@ -7,12 +7,12 @@ import Chat from '../../../asset/image/chat.svg';
 import View from '../../../asset/image/view.svg';
 import { ACCESS_TOKEN } from '../../global/constants/index.js';
 
-// const Line = styled.div`
-//   height: 1px;
-//   background-color: #f2f2f2;
-//   width: 103%;
-//   margin: 7% 0% -5% -1.5%;
-// `;
+const Line = styled.div`
+  height: 1px;
+  background-color: #f2f2f2;
+  width: 102%;
+  margin: 3% 0% 5% -1.5%;
+`;
 
 const LoginButton = styled.button`
   letter-spacing: -0.7px;
@@ -42,6 +42,12 @@ function truncateTitle(title, maxLength = 25) {
   return title.length > maxLength
     ? title.substring(0, maxLength - 3) + '...'
     : title;
+}
+
+function truncateContent(questionContent, maxLength = 30) {
+  return questionContent.length > maxLength
+    ? questionContent.substring(0, maxLength + 20) + '...'
+    : questionContent;
 }
 
 function QuestionModule({
@@ -99,7 +105,10 @@ function QuestionModule({
           </div>
           <div className="field">
             <span className="question-title">
-              Q. {truncateTitle(questionTitle)}
+              [Q] {truncateTitle(questionTitle)}
+            </span>
+            <span className="question-content">
+              {truncateContent(questionContent)}
             </span>
             <span className="question-answer-day">{createAt}</span>
           </div>
@@ -139,7 +148,7 @@ function QuestionModule({
           </div>
         </div>
       )}
-      {/* <Line /> */}
+      <Line />
     </>
   );
 }

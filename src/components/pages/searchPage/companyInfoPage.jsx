@@ -24,7 +24,7 @@ const CompanyName = styled.div`
   font-size: 20px;
   letter-spacing: -1px;
   font-weight: 800;
-  margin-bottom: 5%;
+  padding-left: 50px;
 `;
 
 const CompanyType = styled.div`
@@ -32,18 +32,21 @@ const CompanyType = styled.div`
   color: cecece;
   letter-spacing: -1px;
   margin-right: 20px;
+  padding-left: 50px;
 `;
 
-const CompanyAddress = styled.div``;
-const CompanyEstablishment = styled.div``;
-
+const CompanyAddress = styled.div`
+  padding-right: 50px;
+`;
+const CompanyEstablishment = styled.div`
+  padding-left: 50px;
+`;
 const QuestionButton = styled.button`
   letter-spacing: -0.7px;
   background-color: #ff8d1d !important;
   border-radius: 3px;
-  padding: 7px 10px;
   font-weight: 600;
-  margin: 0% 0% 5% 70%;
+  margin: 8.5% 11% 5% 0%;
   font-family: 'Pretendard-ExtraLight' !important;
 `;
 
