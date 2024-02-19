@@ -52,6 +52,14 @@ function CompanyRegistPage() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    // if (name === 'name') {
+    //   if (/^[a-zA-Z0-9ㄱ-ㅎㅏ-ㅣ가-힣]{1}$/.test(value)) {
+    //     alert('기업 이름에는 한글, 영문, 숫자로만 이루어져야 합니다.');
+    //     return;
+    //   }
+    // }
+
     setCompanyInfo((prevInfo) => ({
       ...prevInfo,
       [name]: value,
@@ -61,6 +69,15 @@ function CompanyRegistPage() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('기업 정보 제출 중:', companyInfo);
+
+    if (
+      companyInfo.name === '' ||
+      companyInfo.city === '' ||
+      companyInfo.type === ''
+    ) {
+      alert('필수 필드를 모두 입력해주세요.');
+      return;
+    }
 
     axios
       .post(`${BASE_URL}/api/company/save-company`, companyInfo, {
@@ -140,7 +157,15 @@ function CompanyRegistPage() {
               onChange={handleChange}
             />
           </div>
-          <button type="submit" className="submit-regist">
+          <button
+            type="submit"
+            className="submit-regist"
+            disabled={
+              companyInfo.name === '' ||
+              companyInfo.city === '' ||
+              companyInfo.type === ''
+            }
+          >
             등록하기
           </button>
         </form>
