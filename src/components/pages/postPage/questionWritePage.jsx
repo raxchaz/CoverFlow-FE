@@ -32,6 +32,7 @@ function QuestionWritePage() {
   const handleRegister = async () => {
     const questionData = {
       title,
+      companyId,
       content: question,
       reward: parseInt(reward, 10),
     };
@@ -53,7 +54,7 @@ function QuestionWritePage() {
         const result = await response.json();
         console.log('등록 성공:', result);
         alert('질문이 등록되었습니다');
-        navigate('/company-regist');
+        navigate('/search-company');
       } else {
         throw new Error('서버 에러');
       }
