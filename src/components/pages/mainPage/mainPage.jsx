@@ -16,12 +16,12 @@ const StyledMainPage = styled.div`
 `;
 
 const SearchInput = styled.input`
-  width: 250px;
+  width: 300px;
   height: 20px;
   padding: 8px;
   border: 1px solid #ffbd7c;
   border-radius: 10px;
-  margin: 5% 0% 0% 23%;
+  margin: 5% 0% 0% 20%;
   outline: none;
 
   &:focus {

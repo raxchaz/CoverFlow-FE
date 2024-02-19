@@ -49,13 +49,17 @@ const AutoCompleteItem = styled.div`
 `;
 
 function SearchInput() {
+  const inputRef = useRef(null);
   const navigate = useNavigate();
   const [keyword, setKeyword] = useState('');
   const [autoCompleteValue, setAutoCompleteValue] = useState([]);
   const [activeIndex, setActiveIndex] = useState(-1);
-  // const searchInputRef = useRef(null);
   const [showAutoComplete, setShowAutoComplete] = useState(false);
   const autoCompleteContainerRef = useRef(null);
+
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
 
   // 유효한 문자열 검사 (한글, 영문, 숫자)
   const isSyllable = (character) => {
@@ -144,6 +148,7 @@ function SearchInput() {
   return (
     <>
       <StyledSearchInput
+        ref={inputRef}
         type="text"
         className="search-input-text"
         placeholder="기업 명을 검색하세요"
