@@ -32,11 +32,11 @@ function QuestionWritePage() {
   const handleRegister = async () => {
     const questionData = {
       title: [title],
-      companyId: [companyId],
       content: [content],
+      companyId: parseInt(companyId),
       reward: parseInt(reward),
     };
-    console.log('title', 'companyId', 'content', 'reward');
+    console.log(title, companyId, content, reward);
 
     try {
       const response = await fetch(
