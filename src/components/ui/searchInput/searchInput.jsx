@@ -53,8 +53,9 @@ function SearchInput() {
   const [keyword, setKeyword] = useState('');
   const [autoCompleteValue, setAutoCompleteValue] = useState([]);
   const [activeIndex, setActiveIndex] = useState(-1);
-  const searchInputRef = useRef(null);
-  const autoCompleteRef = useRef(null);
+  // const searchInputRef = useRef(null);
+  const [showAutoComplete, setShowAutoComplete] = useState(false);
+  const autoCompleteContainerRef = useRef(null);
 
   // 유효한 문자열 검사 (한글, 영문, 숫자)
   const isSyllable = (character) => {
@@ -66,7 +67,7 @@ function SearchInput() {
   // 입력값 변경 핸들러
   const handleInputChange = (event) => {
     const newInputValue = event.target.value.trim();
-
+    setShowAutoComplete(true);
     setKeyword(newInputValue);
     setActiveIndex(-1);
 
@@ -117,20 +118,19 @@ function SearchInput() {
   };
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
+    const handleOutsideClick = (e) => {
       if (
-        searchInputRef.current &&
-        autoCompleteRef.current &&
-        !searchInputRef.current.contains(event.target) &&
-        !autoCompleteRef.current.contains(event.target)
+        autoCompleteContainerRef.current &&
+        !autoCompleteContainerRef.current.contains(e.target)
       ) {
-        setAutoCompleteValue([]);
+        setShowAutoComplete(false);
       }
     };
-    document.addEventListener('mousedown', handleClickOutside);
+
+    document.addEventListener('mousedown', handleOutsideClick);
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('mousedown', handleOutsideClick);
     };
   }, []);
 
@@ -176,8 +176,8 @@ function SearchInput() {
         alt="Search"
       />
 
-      {autoCompleteValue.length > 0 && (
-        <AutoCompleteContainer>
+      {showAutoComplete && autoCompleteValue.length > 0 && (
+        <AutoCompleteContainer ref={autoCompleteContainerRef}>
           {autoCompleteValue.map((value, index) => (
             <AutoCompleteItem
               key={index}
