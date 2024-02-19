@@ -63,7 +63,7 @@ function CompanyRegistPage() {
     console.log('기업 정보 제출 중:', companyInfo);
 
     axios
-      .post(`${BASE_URL}/api/company/admin/save-company`, companyInfo, {
+      .post(`${BASE_URL}/api/company/save-company`, companyInfo, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
@@ -71,7 +71,8 @@ function CompanyRegistPage() {
       })
       .then((response) => {
         console.log('서버 응답:', response.data);
-        navigate('/');
+        navigate('/search-company');
+        alert('기업 등록이 완료되었어요!');
       })
       .catch((error) => {
         console.error('기업 등록에 실패했어요', error);
