@@ -4,7 +4,7 @@ import { StyledPage, StyledHeader } from '../../../styledComponent.js';
 import TitleHeader from '../../ui/header/titleHeader.jsx';
 import TabBar from '../../ui/tabBar/tabBar.jsx';
 import '../../../asset/sass/pages/postPage/questionWritePage.scss';
-import { BASE_URL } from '../../global/constants/index.js';
+import { BASE_URL, ACCESS_TOKEN } from '../../global/constants/index.js';
 
 function QuestionWritePage() {
   const navigate = useNavigate();
