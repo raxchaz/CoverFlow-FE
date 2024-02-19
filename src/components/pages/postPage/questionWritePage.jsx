@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { StyledPage, StyledHeader } from '../../../styledComponent.js';
 import TitleHeader from '../../ui/header/titleHeader.jsx';
 import TabBar from '../../ui/tabBar/tabBar.jsx';
@@ -11,6 +11,7 @@ function QuestionWritePage() {
   const [question, setQuestion] = useState('');
   const [title, setTitle] = useState('');
   const [reward, setReward] = useState(0);
+  const { companyId } = useParams();
 
   const handleGoBack = () => {
     navigate(-1);
@@ -36,14 +37,17 @@ function QuestionWritePage() {
     };
 
     try {
-      const response = await fetch(`${BASE_URL}/api/question/save-question`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-           Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
+      const response = await fetch(
+        `${BASE_URL}/api/question/save-question/${companyId}`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
+          },
+          body: JSON.stringify(questionData),
         },
-        body: JSON.stringify(questionData),
-      });
+      );
 
       if (response.ok) {
         const result = await response.json();
@@ -63,6 +67,7 @@ function QuestionWritePage() {
       <StyledHeader>
         <TitleHeader pageTitle="질문 등록" handleGoBack={handleGoBack} />
         <div className="info-questionWrite"></div>
+        {/* <div className="compnayID">{companyId}</div> */}
         <select value={reward} onChange={handleRewardChange}>
           <option value={0}>보상으로 걸 붕어빵의 수를 정하세요 </option>
           {[10, 20, 30, 40, 50, 60, 70, 80, 90, 100].map((value) => (
