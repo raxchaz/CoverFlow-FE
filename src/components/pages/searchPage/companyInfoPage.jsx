@@ -103,13 +103,13 @@ function CompanyInfoPage() {
     const token = localStorage.getItem(ACCESS_TOKEN);
 
     if (token) {
-      navigate('/question-write');
+      navigate(`/company-info/${companyId}/question-write`);
     } else {
       alert('로그인이 필요한 기능입니다.');
       navigate('/login');
     }
   };
-
+  
   const handleGoBack = () => {
     navigate(-1);
   };
