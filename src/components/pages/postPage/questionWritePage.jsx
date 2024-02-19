@@ -8,7 +8,7 @@ import { BASE_URL, ACCESS_TOKEN } from '../../global/constants/index.js';
 
 function QuestionWritePage() {
   const navigate = useNavigate();
-  const [question, setQuestion] = useState('');
+  const [content, setContent] = useState('');
   const [title, setTitle] = useState('');
   const [reward, setReward] = useState(0);
   const { companyId } = useParams();
@@ -18,7 +18,7 @@ function QuestionWritePage() {
   };
 
   const handleInputChange = (e) => {
-    setQuestion(e.target.value);
+    setContent(e.target.value);
   };
 
   const handleTitleChange = (e) => {
@@ -31,10 +31,10 @@ function QuestionWritePage() {
 
   const handleRegister = async () => {
     const questionData = {
-      title,
-      companyId,
-      content: question,
-      reward: parseInt(reward, 10),
+      title: [title],
+      companyId: [companyId],
+      content: [content],
+      reward: parseInt(reward),
     };
 
     try {
@@ -86,7 +86,7 @@ function QuestionWritePage() {
         <textarea
           className="question-input"
           placeholder="질문 내용 입력.."
-          value={question}
+          value={content}
           onChange={handleInputChange}
         ></textarea>
         <button className="register-button" onClick={handleRegister}>
