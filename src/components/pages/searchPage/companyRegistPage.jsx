@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../../../asset/sass/pages/searchPage/companyRegistPage.scss';
-import { ACCESS_TOKEN, BASE_URL } from '../../global/constants/index.js';
+import { BASE_URL } from '../../global/constants/index.js';
 import { StyledPage, StyledHeader } from '../../../styledComponent.js';
 import TitleHeader from '../../ui/header/titleHeader.jsx';
 import TabBar from '../../ui/tabBar/tabBar.jsx';
@@ -17,7 +17,7 @@ function CompanyRegistPage() {
     district: '',
   });
 
-  const industries = [
+  const type = [
     '서비스업',
     '제조／화학',
     '의료／제약／복지',
@@ -30,7 +30,7 @@ function CompanyRegistPage() {
     '기관 / 협회',
     '미디어 및 엔터테인먼트',
   ];
-  const provinces = [
+  const city = [
     '서울특별시',
     '부산광역시',
     '대구광역시',
@@ -66,7 +66,6 @@ function CompanyRegistPage() {
       .post(`${BASE_URL}/api/company/admin/save-company`, companyInfo, {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
         },
       })
       .then((response) => {
@@ -108,7 +107,7 @@ function CompanyRegistPage() {
             onChange={handleChange}
           >
             <option value="">업종을 선택해 주세요</option>
-            {industries.map((type) => (
+            {type.map((type) => (
               <option key={type} value={type}>
                 {type}
               </option>
@@ -125,7 +124,7 @@ function CompanyRegistPage() {
               onChange={handleChange}
             >
               <option value="">도 / 특별시 / 광역시</option>
-              {provinces.map((city) => (
+              {city.map((city) => (
                 <option key={city} value={city}>
                   {city}
                 </option>
