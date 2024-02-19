@@ -7,10 +7,11 @@ import TabBar from '../../ui/tabBar/tabBar.jsx';
 import SearchInput from '../../ui/searchInput/searchInput.jsx';
 import '../../../asset/sass/pages/searchPage/searchResultPage.scss';
 import { BASE_URL } from '../../global/constants/index.js';
+import Plus from '../../../asset/image/plus.svg';
+import Warning from '../../../asset/image/warning.svg';
 
 const ResultsContainer = styled.div`
   position: relative;
-  height: 100vh;
   background-color: #ffffff;
 `;
 
@@ -74,7 +75,6 @@ const ResultsList = styled.ul`
   margin-left: 10%;
   display: flex;
   flex-direction: column;
-  height: 100vh;
 `;
 
 const ResultCount = styled.div`
@@ -111,8 +111,8 @@ const QuestionCount = styled.div`
 function SearchResultPage() {
   const navigate = useNavigate();
   const location = useLocation();
-  const keyword = location.state?.keyword;
-  console.log('searchResult 로그 테스트', keyword);
+  const queryParams = new URLSearchParams(location.search);
+  const keyword = queryParams.get('keyword');
   const [searchResult, setSearchResult] = useState([]);
 
   const handleGoBack = () => {
@@ -132,7 +132,6 @@ function SearchResultPage() {
           },
         );
         const { data } = await response.json();
-        console.log('로그 테스트');
         if (response.ok) {
           console.log(data);
           setSearchResult(data);
@@ -144,34 +143,30 @@ function SearchResultPage() {
       }
     }
 
-    console.log('데이터를 불러오는 중입니다.');
     fetchData();
-  }, []);
+  }, [location.search]);
 
-  const goToResultDetailPage = (companyName) => {
-    console.log(companyName);
-    navigate(`/company-info`, {
-      state: { companyName },
-    });
+  const goToResultDetailPage = (companyId) => {
+    navigate(`/company-info/${companyId}`);
   };
 
   return (
     <StyledPage className="main-page-container">
       <StyledHeader>
         <ResultsContainer>
-          <TitleHeader pageTitle="검색" handleGoBack={handleGoBack} />
+          <TitleHeader pageTitle="검색 결과" handleGoBack={handleGoBack} />
           <SearchInput />
           <Line />
           <ResultCount>
             기업 검색 결과{' '}
             <span className="result-count"> {searchResult.length}</span>
           </ResultCount>
-          {searchResult && searchResult.length > 0 && (
-            <ResultsList>
-              {searchResult.map((data, index) => (
+          <ResultsList>
+            {searchResult.length > 0 ? (
+              searchResult.map((data, index) => (
                 <ResultItem
-                  key={data.companyName}
-                  onClick={() => goToResultDetailPage(data.companyName)}
+                  key={data.id}
+                  onClick={() => goToResultDetailPage(data.id)}
                 >
                   <div
                     style={{
@@ -184,9 +179,28 @@ function SearchResultPage() {
                   </div>
                   <QuestionCount>{data.questionCount}</QuestionCount>
                 </ResultItem>
-              ))}
-            </ResultsList>
-          )}
+              ))
+            ) : (
+              <span className="result-data-failed">
+                <img
+                  className="warning-icon"
+                  src={Warning}
+                  alt="Warning Icon"
+                />
+                <div className="failed-text">검색 결과가 없습니다</div>
+                <div className="failed-text2">
+                  코버플로우에 원하는 기업을 등록해 주세요
+                </div>
+
+                <div className="registContainer">
+                  <img className="plus-icon" src={Plus} alt="Plus Icon" />
+                  <a href="/company-regist" className="company-registration">
+                    기업 등록하기
+                  </a>
+                </div>
+              </span>
+            )}
+          </ResultsList>
         </ResultsContainer>
         <TabBar />
       </StyledHeader>

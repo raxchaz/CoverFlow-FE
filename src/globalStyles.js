@@ -14,7 +14,7 @@ const GlobalStyles = createGlobalStyle`
   
   html {
     font-family: 'Pretendard-Regular';
-    height: 100%;
+
   }
   
   body {
@@ -33,11 +33,14 @@ const GlobalStyles = createGlobalStyle`
   button {
     cursor: pointer;
   }
-  
+
+
   ${StyledPage} {
-    position: relative;
-    height: 100vh !important;
+    height: 100%;
+    width: 480px;
     background-color: #ffffff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
   }
   
   ${Heading} {

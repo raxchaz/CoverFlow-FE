@@ -14,15 +14,13 @@ function SearchPage() {
   };
 
   return (
-    <>
-      <StyledPage className="main-page-container">
-        <StyledHeader>
-          <TitleHeader pageTitle="기업 검색" handleGoBack={handleGoBack} />
-          <SearchInput />
-        </StyledHeader>
-        <TabBar />
-      </StyledPage>
-    </>
+    <StyledPage className="main-page-container">
+      <StyledHeader>
+        <TitleHeader pageTitle="기업 검색" handleGoBack={handleGoBack} />
+        <SearchInput />
+      </StyledHeader>
+      <TabBar />
+    </StyledPage>
   );
 }
 

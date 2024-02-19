@@ -67,7 +67,7 @@ const AllRouter = () => {
 
         <Route path="/search-company" element={<SearchPage />} />
         <Route path="/search-result" element={<SearchResultPage />} />
-        <Route path="/company-info" element={<CompanyInfoPage />} />
+        <Route path="/company-info/:companyId" element={<CompanyInfoPage />} />
 
         <Route path="/question-write" element={<QuestionWritePage />} />
         <Route path="/question-detail" element={<QuestionDetailPage />} />

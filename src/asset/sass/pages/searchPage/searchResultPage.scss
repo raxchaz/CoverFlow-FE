@@ -6,3 +6,55 @@
 .divider {
   color: #000;
 }
+
+.result-data-failed {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+  letter-spacing: -1px;
+}
+
+.warning-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 55px;
+  width: 55px;
+  margin-top: 20%;
+  margin-bottom: 5%;
+  margin-left: 45%;
+}
+
+.failed-text {
+  font-family: pretendard-bold;
+  color: #474646;
+  font-size: 25px;
+  margin-bottom: 1%;
+}
+
+.failed-text2 {
+  font-family: pretendard-light;
+  color: darkgray;
+  margin-bottom: 5%;
+}
+
+.registContainer {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.plus-icon {
+  width: 13px;
+  height: 13px;
+}
+
+.company-registration {
+  display: flex;
+  margin: 0% 0% 0% 0%;
+  color: #ff8d1d;
+  font-size: 14px;
+  letter-spacing: -1px;
+  font-family: pretendard-medium;
+}

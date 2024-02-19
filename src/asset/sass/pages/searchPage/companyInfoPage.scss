@@ -7,6 +7,8 @@
 }
 
 .company-question-title {
+  display: flex;
+  position: relative;
   letter-spacing: -1px;
   margin: 10% 0% 0% 10%;
   font-size: 18px;
@@ -14,34 +16,24 @@
   font-family: 'Pretendard-Black';
 }
 
-.question-info-container {
-  display: flex;
-  justify-content: space-between;
-}
+// .question-info-container {
+//   display: flex;
+//   justify-content: space-between;
+// }
 
 .company {
   display: flex;
-  justify-content: space-between;
-}
-
-.main-page-container-companyinfo {
   position: relative;
-  height: auto !important;
-  background-color: #ffffff;
-  width: 420px;
-  margin: 0 auto;
-  padding: 0.5%;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  font-size: 16px;
-  display: block;
+  text-align: center;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .main-company-info {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  margin-left: 15%;
   white-space: nowrap;
+  padding-right: 50px;
 }
 
 .sub-info {
@@ -50,6 +42,5 @@
   letter-spacing: -1px;
   display: flex;
   flex-direction: column;
-  margin-left: 80%;
   white-space: nowrap;
 }

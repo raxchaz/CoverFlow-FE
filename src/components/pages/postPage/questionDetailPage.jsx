@@ -48,9 +48,7 @@ const LastLine = styled.div`
   margin: 10% 0% 0% 9%;
 `;
 
-const AnswerList = styled.div`
-  height: 100vh;
-`;
+const AnswerList = styled.div``;
 
 function QuestionDetailPage() {
   const navigate = useNavigate();
