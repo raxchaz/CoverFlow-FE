@@ -30,26 +30,22 @@ function QuestionWritePage() {
   };
 
   const handleRegister = async () => {
-    const questionData = {
-      title: [title],
-      content: [content],
-      companyId: parseInt(companyId),
-      reward: parseInt(reward),
-    };
     console.log(title, companyId, content, reward);
 
     try {
-      const response = await fetch(
-        `${BASE_URL}/api/question/save-question/${companyId}`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
-          },
-          body: JSON.stringify(questionData),
+      const response = await fetch(`${BASE_URL}/api/question/save-question`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
         },
-      );
+        body: JSON.stringify({
+          title: [title],
+          content: [content],
+          companyId: parseInt(companyId),
+          reward: parseInt(reward),
+        }),
+      });
 
       if (response.ok) {
         const result = await response.json();
