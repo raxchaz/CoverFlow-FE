@@ -94,7 +94,7 @@ function CompanyRegistPage() {
             type="text"
             className="input-field-regist"
             placeholder="기업 이름을 정확히 작성해 주세요"
-            name="companyName"
+            name="name"
             value={companyInfo.name}
             onChange={handleChange}
           />
@@ -103,7 +103,7 @@ function CompanyRegistPage() {
           </div>
           <select
             className="option-field"
-            name="industry"
+            name="type"
             value={companyInfo.type}
             onChange={handleChange}
           >
@@ -120,7 +120,7 @@ function CompanyRegistPage() {
             </div>
             <select
               className="option-field"
-              name="stateOrProvince"
+              name="city"
               value={companyInfo.city}
               onChange={handleChange}
             >
@@ -135,7 +135,7 @@ function CompanyRegistPage() {
               type="text"
               className="input-field-regist"
               placeholder="시 /군 /구 (선택)"
-              name="cityOrDistrict"
+              name="district"
               value={companyInfo.district}
               onChange={handleChange}
             />

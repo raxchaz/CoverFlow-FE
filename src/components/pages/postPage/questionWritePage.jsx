@@ -36,6 +36,7 @@ function QuestionWritePage() {
       content: [content],
       reward: parseInt(reward),
     };
+    console.log('title', 'companyId', 'content', 'reward');
 
     try {
       const response = await fetch(
@@ -69,7 +70,7 @@ function QuestionWritePage() {
         <TitleHeader pageTitle="질문 등록" handleGoBack={handleGoBack} />
         <div className="info-questionWrite"></div>
         {/* <div className="compnayID">{companyId}</div> */}
-        <select value={reward} onChange={handleRewardChange}>
+        <select name="reward" value={reward} onChange={handleRewardChange}>
           <option value={0}>보상으로 걸 붕어빵의 수를 정하세요 </option>
           {[10, 20, 30, 40, 50, 60, 70, 80, 90, 100].map((value) => (
             <option key={value} value={value}>
@@ -80,12 +81,14 @@ function QuestionWritePage() {
         <input
           className="question-title-input"
           placeholder="질문 제목 입력.."
+          name="title"
           value={title}
           onChange={handleTitleChange}
         />
         <textarea
           className="question-input"
           placeholder="질문 내용 입력.."
+          name="content"
           value={content}
           onChange={handleInputChange}
         ></textarea>
