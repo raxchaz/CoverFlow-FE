@@ -40,6 +40,7 @@ function QuestionWritePage() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+           Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
         },
         body: JSON.stringify(questionData),
       });
