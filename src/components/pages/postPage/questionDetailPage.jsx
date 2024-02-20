@@ -70,8 +70,7 @@ function QuestionDetailPage() {
     questionNickname: '',
     questionTag: '',
     createAt: '',
-    answers: [],
-    content: [],
+    answers: []
   });
   const { questionId } = useParams();
   console.log("id",questionId);
@@ -111,9 +110,9 @@ function QuestionDetailPage() {
           const questionData = response.data.data;
           const updatedQuestionDetail = {
             ...questionData,
-            answers: [...questionData.answers],
-            content: [...questionData.content],
+            answers: [...questionData.answers]
           };
+          console.log(updateQuestionDetail);
           setQuestionDetail(updatedQuestionDetail);
         }
       })
