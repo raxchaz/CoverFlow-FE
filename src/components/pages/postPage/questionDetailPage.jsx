@@ -207,8 +207,8 @@ function QuestionDetailPage() {
           className="comment-input"
           rows="4"
           value={answer}
-{/*           onChange={(e) => setAnswer(e.target.value)} */}
         ></textarea>
+{/*           onChange={(e) => setAnswer(e.target.value)} */}
         <button className="submit-comment" onClick={handleAnswerSubmit}>
           등록
         </button>
