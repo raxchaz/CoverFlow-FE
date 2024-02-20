@@ -36,43 +36,39 @@ const SecessionBtn = styled.button`
 function InfoEditPage() {
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState({ socialType: ' ' });
-  const { nickname } = userInfo;
+  const [nickname, setNickname] = useState('');
 
+  /* 사용자의 토큰이 존재한다면, 사용자의 정보를 가져옵니다. */
   useEffect(() => {
-    const loadUserInfo = async () => {
-      try {
-        console.log('사용자 정보 불러오는 중...');
-        const response = await fetch(`${BASE_URL}/api/member/find-member`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('ACCESS_TOKEN')}`,
-            'Content-Type': 'application/json',
-          },
-        });
+    // setNickname(''); // 렌덜이 전에 사용자의 nickname을 초기화!
+    const token = localStorage.getItem(ACCESS_TOKEN);
 
-        if (response.ok) {
-          try {
-            const data = await response.json();
-            console.log('사용자 정보 성공적으로 불러옴:', data);
-            setUserInfo({
-              ...userInfo,
-              nickname: data.nickname,
-              socialType: data.socialType,
-            });
-          } catch (jsonError) {
-            console.error('JSON 파싱 에러:', jsonError);
-          }
-        } else {
-          const errorMessage = await response.text();
-          console.error('사용자 정보를 불러오는데 실패했습니다.', errorMessage);
-        }
-      } catch (error) {
-        console.error('에러 발생:', error);
-      }
-    };
-
-    loadUserInfo();
+    if (!token) {
+      localStorage.setItem('mypageURL', '/mypage');
+      navigate('/login');
+    } else {
+      console.log('사용자 정보 로딩 시작');
+      loadUserData();
+    }
   }, [nickname]);
 
+  /* 사용자의 닉네임과 붕어빵 개수를 불러옵니다. */
+  const loadUserData = () => {
+    fetch(`${BASE_URL}/api/member/find-member`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('사용자 정보:', data);
+        setNickname(data.nickname);
+      })
+      .catch((error) => console.error('회원 정보 불러오기 실패:', error));
+  };
+  
   const renderSocialType = (type) => {
     switch (type) {
       case 'GOOGLE':
@@ -104,21 +100,15 @@ function InfoEditPage() {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
         },
-        body: JSON.stringify({
-          nickname: nickname,
-        }),
       });
 
-      const responseData = await response.json();
+      const data = await response.json();
 
-      if (response.ok) {
-        console.log('닉네임이 성공적으로 변경되었습니다.');
-        alert('닉네임이 성공적으로 변경되었습니다.');
-      } else {
-        const errorMessage = responseData.message || '닉네임 변경 실패';
-        console.error('닉네임 변경 실패:', errorMessage);
-        alert(`닉네임 변경 중 오류가 발생했습니다: ${errorMessage}`);
-      }
+      console.log('닉네임이 성공적으로 변경되었습니다.');
+      console.log(data);
+      setNickname(data.nickname);
+      alert('닉네임이 성공적으로 변경되었습니다.');
+
     } catch (error) {
       console.error('닉네임 변경 요청 중 오류가 발생했습니다.', error);
       alert('닉네임 변경 중 예상치 못한 오류가 발생했습니다.');
