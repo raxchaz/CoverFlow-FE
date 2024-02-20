@@ -129,19 +129,24 @@ function QuestionDetailPage() {
   } = location.state || {};
 
   const handleCommentSubmit = () => {
-    const questionId = questionDetail.questionId;
+    const questionId = questionDetail && questionDetail.questionId;
 
     const requestData = {
       content: comment,
       questionId: questionId,
     };
 
+    console.log('답변 제출 중:', requestData);
+
     axios
       .post(`${BASE_URL}/api/answer/save-answer`, requestData)
       .then((response) => {
+        console.log('답변 제출 응답:', response.data);
         if (response.data && response.data.statusCode === 'OK') {
           console.log('답변이 성공적으로 등록되었습니다.');
+          alert('답변이 등록되었습니다.');
 
+          setComment('');
           fetchQuestionDetail(questionId);
         }
       })
