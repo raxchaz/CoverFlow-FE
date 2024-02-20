@@ -74,6 +74,7 @@ function QuestionDetailPage() {
     content: [],
   });
   const { questionId } = useParams();
+  console.log("id",questionId);
 
   function formatDate(fullDate) {
     const date = new Date(fullDate);
@@ -91,6 +92,7 @@ function QuestionDetailPage() {
       navigate(-1);
     }
     if (questionId) {
+      console.log(questionId);
       fetchQuestionDetail(questionId);
     }
   }, [answer]);
