@@ -126,7 +126,7 @@ function CompanyInfoPage() {
   };
 
   const handleGoBack = () => {
-    navigate(-1);
+    navigate(`/search-result`);
   };
 
   return (
