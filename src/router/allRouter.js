@@ -1,7 +1,7 @@
-import React from 'react';
-// import React, { useEffect } from 'react';
+// import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
-// import { ACCESS_TOKEN } from '../components/global/constants/index.js';
+import { ACCESS_TOKEN } from '../components/global/constants/index.js';
 
 /* 메인 페이지 관련 impot */
 import MainPage from '../components/pages/mainPage/mainPage';
@@ -35,14 +35,14 @@ import TokenManagement from '../components/global/token/tokenManagement';
 /* ===================================================================  */
 
 const AllRouter = () => {
-  // useEffect(() => {
-  //   if (!localStorage.getItem(ACCESS_TOKEN)) {
-  //     localStorage.setItem(
-  //       ACCESS_TOKEN,
-  //       'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJBY2Nlc3NUb2tlbiIsImV4cCI6MTcwNjg3OTExOSwibWVtYmVySWQiOiJmMDQyY2RlYy00ZjRkLTQxYTItODI5Zi04ZDEzZTlkNjBhYWMiLCJyb2xlIjoiTUVNQkVSIn0.Eb3gmFQd_Ig8mqOhuFpUUjGQ8pmRmmoVac0qakLTTYpq5RLkjmwdTFY2XL-AAYNSyGSWqyl2VLPdwdfliqL_OA',
-  //     );
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (!localStorage.getItem(ACCESS_TOKEN)) {
+      localStorage.setItem(
+        ACCESS_TOKEN,
+        'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJBY2Nlc3NUb2tlbiIsImV4cCI6MTcwNjg3OTExOSwibWVtYmVySWQiOiJmMDQyY2RlYy00ZjRkLTQxYTItODI5Zi04ZDEzZTlkNjBhYWMiLCJyb2xlIjoiTUVNQkVSIn0.Eb3gmFQd_Ig8mqOhuFpUUjGQ8pmRmmoVac0qakLTTYpq5RLkjmwdTFY2XL-AAYNSyGSWqyl2VLPdwdfliqL_OA',
+      );
+    }
+  }, []);
 
   return (
     <div className="app">

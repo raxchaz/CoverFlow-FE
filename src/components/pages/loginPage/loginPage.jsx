@@ -5,7 +5,7 @@ import Google from '../../../asset/image/google.svg';
 import Kakao from '../../../asset/image/kakao.svg';
 import Fastlogin from '../../../asset/image/fastlogin.svg';
 import '../../../asset/sass/pages/loginPage/loginPage.scss';
-import { StyledPage } from '../../../styledComponent.js';
+import { StyledPage, StyledHeader } from '../../../styledComponent.js';
 import TitleHeader from '../../ui/header/titleHeader.jsx';
 import { useNavigate } from 'react-router-dom';
 import { ACCESS_TOKEN, BASE_URL } from '../../global/constants/index.js';
@@ -28,7 +28,7 @@ const SecondaryMessage = styled.p`
 `;
 
 const FastLoginImage = styled.img`
-  margin: 10% 0% -19% 39.6%;
+  margin: 0% 0% -21% 41.5%;
 `;
 
 const HorizontalRule = styled.hr`
@@ -58,7 +58,8 @@ const LoginButtonsContainer = styled.div`
 `;
 
 const LoginButton = styled.a`
-  margin: 0 10px;
+  margin-right: 1.5%;
+  margin-left: 4.5%;
 `;
 
 const KakaoLoginButton = styled.a``;
@@ -78,9 +79,13 @@ function LoginPage() {
   };
 
   return (
-    <>
-      <StyledPage className="main-page-container">
-        <TitleHeader pageTitle="로그인" handleGoBack={handleGoBack} />
+    <StyledPage className="main-page-container">
+      <StyledHeader>
+        <TitleHeader
+          className="title-login"
+          pageTitle="로그인"
+          handleGoBack={handleGoBack}
+        />
 
         <WelcomeMessage>
           코버플로우에 <br /> 오신 것을 환영합니다
@@ -111,8 +116,8 @@ function LoginPage() {
             <img src={Google} alt="Google 로그인" className="google-login" />
           </LoginButton>
         </LoginButtonsContainer>
-      </StyledPage>
-    </>
+      </StyledHeader>
+    </StyledPage>
   );
 }
 

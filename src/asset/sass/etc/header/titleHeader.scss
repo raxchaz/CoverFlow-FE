@@ -1,8 +1,10 @@
-.back {
-  margin-top: -5%;
-  cursor: pointer;
+img.back {
+  margin-right: 30%;
+  margin-top: 0.8%;
 }
 
-.page-title {
-  margin-top: -4%;
+span.page-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
