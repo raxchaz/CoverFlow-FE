@@ -48,12 +48,13 @@ function InfoEditPage() {
             'Content-Type': 'application/json',
           },
         });
+
         if (response.ok) {
           const data = await response.json();
           setUserInfo({ socialType: data.socialType });
         } else {
-          // 에러 처리
-          console.error('사용자 정보를 불러오는데 실패했습니다.');
+          const errorMessage = await response.text(); // 응답 본문을 텍스트로 읽을 경우
+          console.error('사용자 정보를 불러오는데 실패했습니다.', errorMessage);
         }
       } catch (error) {
         console.error('에러 발생:', error);
@@ -85,6 +86,32 @@ function InfoEditPage() {
     navigate('/secession-page');
   };
 
+  const handleModifyNickname = async () => {
+    try {
+      const response = await fetch(`${BASE_URL}/api/member/update-nickname`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('ACCESS_TOKEN')}`,
+        },
+        body: JSON.stringify({
+          nickname: nickname,
+        }),
+      });
+
+      if (response.ok) {
+        alert('닉네임이 성공적으로 변경되었습니다.');
+      } else {
+        const errorMessage = await response.text();
+        console.error('닉네임 변경 실패:', errorMessage);
+        alert(`닉네임 변경 중 오류가 발생했습니다: ${errorMessage}`);
+      }
+    } catch (error) {
+      console.error('닉네임 변경 요청 중 오류가 발생했습니다.', error);
+      alert('닉네임 변경 중 예상치 못한 오류가 발생했습니다.');
+    }
+  };
+
   return (
     <StyledPage className="main-page-container">
       <StyledHeader>
@@ -107,7 +134,7 @@ function InfoEditPage() {
               변경 버튼을 누르면, 붕어빵 20개가 차감되며 <br /> 다른 랜덤
               닉네임으로 변경됩니다
             </div>
-            <NickModifyBtn> 변경 </NickModifyBtn>
+            <NickModifyBtn onClick={handleModifyNickname}> 변경 </NickModifyBtn>
           </div>
         </div>
 

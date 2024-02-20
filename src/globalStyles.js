@@ -35,7 +35,6 @@ const GlobalStyles = createGlobalStyle`
 
   ${StyledPage} {
     minHeight: 100vh;
-    height: 100%;
     width: 480px;
     background-color: #ffffff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
