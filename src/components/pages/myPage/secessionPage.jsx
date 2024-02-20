@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate, useLocation } from 'react-router-dom';
-// import styled from 'styled-components';
 import SecessionSelection from '../../ui/selection/secessionSelection.jsx';
 import '../../../asset/sass/pages/myPage/secessionPage.scss';
 import { StyledPage, StyledHeader } from '../../../styledComponent.js';
@@ -22,7 +21,9 @@ function SecessionPage() {
   const [isAgreed, setIsAgreed] = useState(false);
   const [secessionReason, setSecessionReason] = useState('');
   const location = useLocation();
-  const { nickname } = location.state || {};
+  console.log('Location:', location);
+  const nicknameParam = new URLSearchParams(location.search).get('nickname');
+  const nickname = nicknameParam || '';
 
   const handleReasonChange = (reason) => {
     setSecessionReason(reason);
@@ -41,7 +42,7 @@ function SecessionPage() {
   };
 
   const handleConfirmSecession = async () => {
-    console.log('탈퇴 요청');
+    console.log('탈퇴 요청 시작');
     if (!isAgreed) {
       alert('탈퇴하기 전에, 동의해야 합니다.');
       return;
@@ -75,10 +76,11 @@ function SecessionPage() {
   };
 
   return (
-    <StyledPage>
+    <StyledPage className="main-page-container">
       <StyledHeader>
         <TitleHeader pageTitle="회원 탈퇴" handleGoBack={handleGoBack} />
       </StyledHeader>
+
       <div className="user-nick-title">
         <div className="user-nickname">
           {nickname}
