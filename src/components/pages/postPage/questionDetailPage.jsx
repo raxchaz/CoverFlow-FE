@@ -67,6 +67,7 @@ function QuestionDetailPage() {
     questionTag: '',
     createAt: '',
     answers: [],
+    content: [],
   });
 
   useEffect(() => {
@@ -85,7 +86,13 @@ function QuestionDetailPage() {
       })
       .then((response) => {
         if (response.data && response.data.statusCode === 'OK') {
-          setQuestionDetail(response.data.data);
+          const questionData = response.data.data;
+          const updatedQuestionDetail = {
+            ...questionData,
+            answers: [...questionData.answers],
+            content: [...questionData.content],
+          };
+          setQuestionDetail(updatedQuestionDetail);
         }
       })
       .catch((error) => {
@@ -107,11 +114,13 @@ function QuestionDetailPage() {
     createAt,
   } = location.state || {};
 
-  const handleCommentSubmit = (content, questionId) => {
+  const handleCommentSubmit = (content) => {
+    const questionId = questionDetail.questionId;
     axios
       .post(`${BASE_URL}/api/answer/save-answer`, { content, questionId })
       .then((response) => {
         console.log('답변이 성공적으로 등록되었습니다.');
+        fetchQuestionDetail(questionId);
       })
       .catch((error) => {
         console.error('답변 등록에 실패했습니다.', error);

@@ -63,7 +63,7 @@ function Mypage() {
     } else {
       loadUserData();
     }
-  }, [navigate]);
+  }, [navigate, nickname]);
 
   /* 사용자의 닉네임과 붕어빵 개수를 불러옵니다. */
   const loadUserData = () => {
