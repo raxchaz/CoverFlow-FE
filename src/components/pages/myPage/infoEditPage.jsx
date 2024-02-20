@@ -51,11 +51,15 @@ function InfoEditPage() {
         });
 
         if (response.ok) {
-          const data = await response.json();
-          console.log('사용자 정보 성공적으로 불러옴:', data);
-          setUserInfo({ socialType: data.socialType });
+          try {
+            const data = await response.json();
+            console.log('사용자 정보 성공적으로 불러옴:', data);
+            setUserInfo({ socialType: data.socialType });
+          } catch (jsonError) {
+            console.error('JSON 파싱 에러:', jsonError);
+          }
         } else {
-          const errorMessage = await response.text(); // 응답 본문을 텍스트로 읽을 경우
+          const errorMessage = await response.text(); 
           console.error('사용자 정보를 불러오는데 실패했습니다.', errorMessage);
         }
       } catch (error) {
