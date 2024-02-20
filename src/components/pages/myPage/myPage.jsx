@@ -55,6 +55,7 @@ function Mypage() {
 
   /* 사용자의 토큰이 존재한다면, 사용자의 정보를 가져옵니다. */
   useEffect(() => {
+    setNickname(''); // 렌덜이 전에 사용자의 nickname을 초기화!
     const token = localStorage.getItem(ACCESS_TOKEN);
 
     if (!token) {
@@ -146,9 +147,11 @@ function Mypage() {
           <TitleHeader pageTitle="마이 페이지" handleGoBack={handleGoBack} />
 
           <div className="title-container">
-            <div className="title">
-              <span className="title-title"> {nickname}님, 안녕하세요</span>
-            </div>
+            <span className="title-title">
+              {' '}
+              <div className="title">{nickname}</div>님, 안녕하세요
+            </span>
+
             <PremiunButton
               className="premium-button"
               onClick={handlePremiumButtonClick}
