@@ -74,6 +74,8 @@ function CompanyInfoPage() {
   const [companyData, setCompanyData] = useState(null);
   const { companyId } = useParams();
 
+  localStorage.setItem('prevPage', window.location.href);
+
   useEffect(() => {
     console.log('회사 companyId: ', companyId);
     async function fetchCompanyData() {
@@ -118,9 +120,7 @@ function CompanyInfoPage() {
 
     if (token) {
       navigate(`/company-info/${companyId}/question-write`);
-    } 
-    
-    if(confirm('로그인이 필요한 기능입니다. 로그인 하시겠습니까?') === true){
+    } else if(confirm('로그인이 필요합니다. 로그인 하시겠습니까?') === true){
       navigate(`/login`);
     }
   };
