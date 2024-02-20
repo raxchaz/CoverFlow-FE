@@ -94,7 +94,7 @@ function QuestionModule({
 
   useEffect(() => {
     const token = localStorage.getItem(ACCESS_TOKEN);
-    setIsLoggedIn(!token);
+    setIsLoggedIn(!!token);
   }, []);
 
   const formattedDate = formatDate(createAt);
