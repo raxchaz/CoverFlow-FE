@@ -63,7 +63,7 @@ function Mypage() {
     } else {
       loadUserData();
     }
-  }, [navigate, nickname]);
+  }, [navigate]);
 
   /* 사용자의 닉네임과 붕어빵 개수를 불러옵니다. */
   const loadUserData = () => {
@@ -143,8 +143,12 @@ function Mypage() {
 
           <div className="title-container">
             <div className="title">
-              {nickname}
-              <span className="title-title">님, 안녕하세요</span>
+              {nickname && (
+                <>
+                  {nickname}
+                  <span className="title-title">님, 안녕하세요</span>
+                </>
+              )}
             </div>
             <PremiunButton
               className="premium-button"
