@@ -168,6 +168,7 @@ function CompanyInfoPage() {
             {companyData.questions.map((question, index) => (
                 <Question
                   key={index}
+                  companyId={companyId}
                   questionId={question.questionId}
                   questioner={question.nickname}
                   questionerTag={question.tag}
