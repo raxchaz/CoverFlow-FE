@@ -220,7 +220,7 @@ function QuestionDetailPage() {
             answerId={answer.answerId.toString()}
             answerer={answer.answerNickname}
             answererTag={answer.answerTag}
-{/*             replyCount={answer.replyCount.toString()} */}
+            replyCount={'0'}
             answerContent={answer.content}
             createAt={answer.createAt}
           />
