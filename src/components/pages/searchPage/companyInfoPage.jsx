@@ -120,7 +120,7 @@ function CompanyInfoPage() {
       navigate(`/company-info/${companyId}/question-write`);
     } 
     
-    if(confirm('로그인이 필요한 기능입니다. 로그인 하시겠습니까?') == true){
+    if(confirm('로그인이 필요한 기능입니다. 로그인 하시겠습니까?') === true){
       navigate(`/login`);
     }
   };
