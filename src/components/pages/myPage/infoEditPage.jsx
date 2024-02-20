@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import '../../../asset/sass/pages/myPage/infoEditPage.scss';
 import { StyledPage, StyledHeader } from '../../../styledComponent.js';
 import TitleHeader from '../../ui/header/titleHeader.jsx';
@@ -35,10 +35,8 @@ const SecessionBtn = styled.button`
 
 function InfoEditPage() {
   const navigate = useNavigate();
-  const [userInfo, setUserInfo] = useState({ socialType: '' });
-  const location = useLocation();
-  const { nickname } = location.state || {};
-  console.log('nickname:', nickname);
+  const [userInfo, setUserInfo] = useState({ socialType: ' ' });
+  const { nickname } = userInfo;
 
   useEffect(() => {
     const loadUserInfo = async () => {
@@ -55,12 +53,16 @@ function InfoEditPage() {
           try {
             const data = await response.json();
             console.log('사용자 정보 성공적으로 불러옴:', data);
-            setUserInfo({ socialType: data.socialType });
+            setUserInfo({
+              ...userInfo,
+              nickname: data.nickname,
+              socialType: data.socialType,
+            });
           } catch (jsonError) {
             console.error('JSON 파싱 에러:', jsonError);
           }
         } else {
-          const errorMessage = await response.text(); // 응답 본문을 텍스트로 읽을 경우
+          const errorMessage = await response.text();
           console.error('사용자 정보를 불러오는데 실패했습니다.', errorMessage);
         }
       } catch (error) {
@@ -69,7 +71,7 @@ function InfoEditPage() {
     };
 
     loadUserInfo();
-  }, []);
+  }, [nickname]);
 
   const renderSocialType = (type) => {
     switch (type) {
@@ -107,11 +109,13 @@ function InfoEditPage() {
         }),
       });
 
+      const responseData = await response.json();
+
       if (response.ok) {
         console.log('닉네임이 성공적으로 변경되었습니다.');
         alert('닉네임이 성공적으로 변경되었습니다.');
       } else {
-        const errorMessage = await response.text();
+        const errorMessage = responseData.message || '닉네임 변경 실패';
         console.error('닉네임 변경 실패:', errorMessage);
         alert(`닉네임 변경 중 오류가 발생했습니다: ${errorMessage}`);
       }
