@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-// import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 // import styled from 'styled-components';
 import SecessionSelection from '../../ui/selection/secessionSelection.jsx';
 import '../../../asset/sass/pages/myPage/secessionPage.scss';
@@ -22,8 +21,8 @@ function SecessionPage() {
   const navigate = useNavigate();
   const [isAgreed, setIsAgreed] = useState(false);
   const [secessionReason, setSecessionReason] = useState('');
-  // const location = useLocation();
-  // const { nickname } = location.state || {};
+  const location = useLocation();
+  const { nickname } = location.state || {};
 
   const handleReasonChange = (reason) => {
     setSecessionReason(reason);
@@ -79,12 +78,13 @@ function SecessionPage() {
       <StyledHeader>
         <TitleHeader pageTitle="회원 탈퇴" handleGoBack={handleGoBack} />
       </StyledHeader>
-      {/* <div className="user-nickname">{nickname}<span className="user-nick-cover">님, </span></div> */}
-      {/* <div className="secession-info"> 정말로 탈퇴하시겠습니까? </div> */}
       <div className="user-nick-title">
-        눅눅한 크로와상<span className="user-nick-cover">님, </span>
+        <div className="user-nickname">
+          {nickname}
+          <span className="user-nick-cover">님, </span>
+        </div>
+        <div className="secession-info"> 정말로 탈퇴하시겠습니까? </div>
       </div>
-      <div className="secession-info"> 정말로 탈퇴하시겠습니까? </div>
       <div className="warning1">
         <img className="warningicon" src={SecessionWarning} />{' '}
         <div className="warning-info">
