@@ -74,7 +74,7 @@ function CompanyInfoPage() {
   const [companyData, setCompanyData] = useState(null);
   const { companyId } = useParams();
 
-  localStorage.setItem('prevPage', window.location.href);
+  localStorage.setItem('prevPage', window.location.pathname);
 
   useEffect(() => {
     console.log('회사 companyId: ', companyId);
