@@ -70,7 +70,7 @@ const QuestionList = styled.div`
 
 function CompanyInfoPage() {
   const navigate = useNavigate();
-  const [error, setError] = useState(null);
+  // const [error, setError] = useState(null);
   const [companyData, setCompanyData] = useState(null);
   const { companyId } = useParams();
 
@@ -88,42 +88,39 @@ function CompanyInfoPage() {
           },
         );
         const data = await response.json();
-        console.log('응답:', response);
-        console.log('데이터:', data);
 
         if (response.ok && data.data) {
-          console.log('응답 성공 여부:', response.ok);
-
           setCompanyData(data.data);
           console.log('회사 데이터:', data.data);
         } else {
-          console.log('dwqwq');
           throw new Error('데이터가 존재하지 않습니다.');
         }
       } catch (error) {
         console.log(error);
-        setError(error);
+        // setError(error);
+        alert('기업 데이터가 존재하지 않아, 검색 결과 페이지로 돌아갑니다.');
+        navigate(-1);
       }
     }
 
     fetchCompanyData();
   }, []);
 
-  useEffect(() => {
-    if (error) {
-      alert('기업 데이터가 존재하지 않아, 검색 결과 페이지로 돌아갑니다.');
-      navigate(-1);
-    }
-  }, [error, navigate]);
+  // useEffect(() => {
+  //   if (error) {
+  //     alert('기업 데이터가 존재하지 않아, 검색 결과 페이지로 돌아갑니다.');
+  //     navigate(-1);
+  //   }
+  // }, [error, navigate]);
 
   const handleQuestionClick = () => {
     const token = localStorage.getItem(ACCESS_TOKEN);
 
     if (token) {
-      navigate(`/company-info/${companyId}/question-write`);
+      navigate(`/company-info/${companyId}/${questionId}`);
     } else {
       alert('로그인이 필요한 기능입니다.');
-      navigate('/login');
+      navigate(-1);
     }
   };
 
