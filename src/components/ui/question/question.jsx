@@ -25,7 +25,22 @@ const LoginButton = styled.button`
   width: 15%;
 `;
 
-const ContentBlur = styled.span`
+// const ContentBlur = styled.span`
+//   ${({ isLoggedIn }) =>
+//     !isLoggedIn &&
+//     css`
+//       display: -webkit-box;
+//       -webkit-box-orient: vertical;
+//       -webkit-line-clamp: 2;
+//       overflow: hidden;
+//       filter: blur(5px);
+//       text-overflow: ellipsis;
+//     `}
+// `;
+
+const ContentBlur = styled.span.attrs(({ isLoggedIn }) => ({
+  isLoggedIn: isLoggedIn,
+}))`
   ${({ isLoggedIn }) =>
     !isLoggedIn &&
     css`
