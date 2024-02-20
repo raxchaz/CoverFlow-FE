@@ -50,6 +50,15 @@ function truncateContent(questionContent, maxLength = 30) {
     : questionContent;
 }
 
+function formatDate(fullDate) {
+  const date = new Date(fullDate);
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
+  const day = date.getDate().toString().padStart(2, '0');
+
+  return `${year}-${month}-${day}`;
+}
+
 function QuestionModule({
   questioner,
   questionerTag,
@@ -85,14 +94,17 @@ function QuestionModule({
     setIsLoggedIn(!!token);
   }, []);
 
+  const formattedDate = formatDate(createAt);
+
   return (
     <>
       {isLoggedIn ? (
         <div className="question-container" onClick={goToDetail}>
           <div className="questioner-container">
             <div className="questioner-info">
-              <span className="questioner">{questioner}</span>
-              <span className="middle">•</span>
+              <span className="questioner">
+                {questioner} <span className="middle">•</span>
+              </span>
               <span className="questioner-tag">{questionerTag}</span>
             </div>
           </div>
@@ -105,12 +117,12 @@ function QuestionModule({
           </div>
           <div className="field">
             <span className="question-title">
-              [Q] {truncateTitle(questionTitle)}
+              {truncateTitle(questionTitle)}
             </span>
             <span className="question-content">
               {truncateContent(questionContent)}
             </span>
-            <span className="question-answer-day">{createAt}</span>
+            <span className="question-answer-day">{formattedDate}</span>
           </div>
         </div>
       ) : (
@@ -144,7 +156,7 @@ function QuestionModule({
             </span>
             <LoginButton onClick={handleLoginClick}>로그인</LoginButton>
 
-            <span className="question-answer-day">{createAt}</span>
+            <span className="question-answer-day">{formattedDate}</span>
           </div>
         </div>
       )}

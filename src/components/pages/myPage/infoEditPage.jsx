@@ -1,15 +1,12 @@
-// import React, { useEffect, useState } from 'react';
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-// import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import '../../../asset/sass/pages/myPage/infoEditPage.scss';
 import { StyledPage, StyledHeader } from '../../../styledComponent.js';
 import TitleHeader from '../../ui/header/titleHeader.jsx';
 import UserInfoHeader from '../../ui/header/userInfoHeader.jsx';
 import TabBar from '../../ui/tabBar/tabBar.jsx';
-
-// import { BASE_URL } from '../../global/constants/index.js';
+import { BASE_URL } from '../../global/constants/index.js';
 
 const Divider = styled.div`
   height: 1px;
@@ -38,47 +35,47 @@ const SecessionBtn = styled.button`
 
 function InfoEditPage() {
   const navigate = useNavigate();
-  // const [userInfo, setUserInfo] = useState({ socialType: '' });
-  // const location = useLocation();
-  //  const { nickname } = location.state || {};
+  const [userInfo, setUserInfo] = useState({ socialType: '' });
+  const location = useLocation();
+  const { nickname } = location.state || {};
 
-  // useEffect(() => {
-  //   const loadUserInfo = async () => {
-  //     try {
-  //       const response = await fetch(`${BASE_URL}/api/member/find-member`, {
-  //         headers: {
-  //           Authorization: `Bearer ${localStorage.getItem('ACCESS_TOKEN')}`,
-  //           'Content-Type': 'application/json',
-  //         },
-  //       });
-  //       if (response.ok) {
-  //         const data = await response.json();
-  //         setUserInfo({ socialType: data.socialType });
-  //       } else {
-  //         // 에러 처리
-  //         console.error('사용자 정보를 불러오는데 실패했습니다.');
-  //       }
-  //     } catch (error) {
-  //       console.error('에러 발생:', error);
-  //     }
-  //   };
+  useEffect(() => {
+    const loadUserInfo = async () => {
+      try {
+        const response = await fetch(`${BASE_URL}/api/member/find-member`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('ACCESS_TOKEN')}`,
+            'Content-Type': 'application/json',
+          },
+        });
+        if (response.ok) {
+          const data = await response.json();
+          setUserInfo({ socialType: data.socialType });
+        } else {
+          // 에러 처리
+          console.error('사용자 정보를 불러오는데 실패했습니다.');
+        }
+      } catch (error) {
+        console.error('에러 발생:', error);
+      }
+    };
 
-  //   loadUserInfo();
-  // }, []);
+    loadUserInfo();
+  }, []);
 
-  // const renderSocialType = (type) => {
-  //   switch (type) {
-  //     case 'GOOGLE':
-  //       return <div className="socialType-ui">구글 로그인 사용 중</div>;
-  //     case 'KAKAO':
-  //       return <div className="socialType-ui">카카오 로그인 사용 중</div>;
-  //     case 'NAVER':
-  //       return <div className="socialType-ui">네이버 로그인 사용 중</div>;
+  const renderSocialType = (type) => {
+    switch (type) {
+      case 'GOOGLE':
+        return <div className="socialType-ui">구글 로그인 사용 중</div>;
+      case 'KAKAO':
+        return <div className="socialType-ui">카카오 로그인 사용 중</div>;
+      case 'NAVER':
+        return <div className="socialType-ui">네이버 로그인 사용 중</div>;
 
-  //     default:
-  //       return null;
-  //   }
-  // };
+      default:
+        return null;
+    }
+  };
 
   const handleGoBack = () => {
     navigate(-1);
@@ -93,14 +90,15 @@ function InfoEditPage() {
       <StyledHeader>
         <TitleHeader pageTitle="내 정보 수정" handleGoBack={handleGoBack} />
         <UserInfoHeader />
-        {/* <div className="user-nickname">{nickname}<span className="user-nick-cover">님</span></div> */}
         <div className="user-nick-title">
-          눅눅한 크로와상<span className="user-nick-cover">님</span>
+          {nickname}
+          <span className="user-nick-cover">님</span>
         </div>
-        {/* <div className="user-socialType">
+
+        <div className="socialType-ui">
           {renderSocialType(userInfo.socialType)}
-        </div> */}
-        <div className="socialType-ui">카카오 로그인 사용 중</div>
+        </div>
+
         <Divider />
         <div className="modify-nick-container">
           <div className="modify-info">

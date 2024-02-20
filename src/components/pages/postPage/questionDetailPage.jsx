@@ -12,19 +12,21 @@ import View from '../../../asset/image/view.svg';
 import { BASE_URL } from '../../global/constants/index.js';
 
 const Questioner = styled.div`
-  font-family: pretendard-bold;
+  font-family: pretendard-medium;
+  letter-spacing: -1px;
+  margin-left: 2%;
 `;
 
 const QuestionerTag = styled.div`
   letter-spacing: -1px;
-  margin-left: -61%;
+  margin-left: -49%;
   margin-top: 0.5%;
   font-size: 13px;
 `;
 
 const QuestionTitle = styled.div`
   margin-top: 5%;
-  font-family: pretendard-bold;
+  font-family: pretendard-black;
   letter-spacing: -0.5px;
   background-color: #f6f6f6;
   border-radius: 10px;
@@ -32,7 +34,9 @@ const QuestionTitle = styled.div`
 `;
 
 const QuestionContent = styled.div`
-  margin-top: 5%;
+  margin-top: 7%;
+  margin-left: 2%;
+  margin-bottom: 7%;
   letter-spacing: -1px;
   font-family: pretendard-light;
 `;
@@ -56,6 +60,7 @@ const AnswerList = styled.div``;
 function QuestionDetailPage() {
   const navigate = useNavigate();
   const location = useLocation();
+  const [comment, setComment] = useState('');
   const [questionDetail, setQuestionDetail] = useState({
     questionId: null,
     title: '',
@@ -69,6 +74,15 @@ function QuestionDetailPage() {
     answers: [],
     content: [],
   });
+
+  function formatDate(fullDate) {
+    const date = new Date(fullDate);
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
+    const day = date.getDate().toString().padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
+  }
 
   useEffect(() => {
     const questionId = location.state?.questionId;
@@ -114,18 +128,29 @@ function QuestionDetailPage() {
     createAt,
   } = location.state || {};
 
-  const handleCommentSubmit = (content) => {
+  const handleCommentSubmit = () => {
     const questionId = questionDetail.questionId;
+
+    const requestData = {
+      content: comment,
+      questionId: questionId,
+    };
+
     axios
-      .post(`${BASE_URL}/api/answer/save-answer`, { content, questionId })
+      .post(`${BASE_URL}/api/answer/save-answer`, requestData)
       .then((response) => {
-        console.log('답변이 성공적으로 등록되었습니다.');
-        fetchQuestionDetail(questionId);
+        if (response.data && response.data.statusCode === 'OK') {
+          console.log('답변이 성공적으로 등록되었습니다.');
+
+          fetchQuestionDetail(questionId);
+        }
       })
       .catch((error) => {
         console.error('답변 등록에 실패했습니다.', error);
       });
   };
+
+  const formattedDate = formatDate(createAt);
 
   return (
     <StyledPage className="main-page-container">
@@ -140,7 +165,7 @@ function QuestionDetailPage() {
           </Questioner>
 
           <QuestionerTag>{questionerTag}</QuestionerTag>
-          <div className="question-date">{createAt}</div>
+          <span className="question-date">{formattedDate}</span>
         </div>
 
         <FirstLine />
@@ -165,6 +190,8 @@ function QuestionDetailPage() {
           placeholder="답변을 입력해주세요.."
           className="comment-input"
           rows="4"
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
         ></textarea>
         <button className="submit-comment" onClick={handleCommentSubmit}>
           등록

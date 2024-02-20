@@ -35,22 +35,36 @@ const CompanyType = styled.div`
   padding-left: 50px;
 `;
 
+const Line = styled.div`
+  height: 1px;
+  background-color: #f2f2f2;
+  width: 80%;
+  margin: 10% 0% 5% 10%;
+`;
+
 const CompanyAddress = styled.div`
   padding-right: 50px;
 `;
+
 const CompanyEstablishment = styled.div`
   padding-left: 50px;
 `;
+
 const QuestionButton = styled.button`
   letter-spacing: -0.7px;
   background-color: #ff8d1d !important;
   border-radius: 3px;
   font-weight: 600;
-  margin: 8.5% 11% 5% 0%;
+  font-size: 0.7rem;
+  border-radius: 7px;
+  padding: 1% 2% 1% 2%;
+  margin: 10% 13% 5% 0%;
   font-family: 'Pretendard-ExtraLight' !important;
 `;
 
-const QuestionList = styled.div``;
+const QuestionList = styled.div`
+  overflow: visible;
+`;
 
 // ================================================================
 
@@ -120,7 +134,7 @@ function CompanyInfoPage() {
   return (
     <StyledPage className="main-page-container">
       <StyledHeader>
-        <TitleHeader pageTitle="검색" handleGoBack={handleGoBack} />
+        <TitleHeader pageTitle="검색 결과" handleGoBack={handleGoBack} />
         <UserInfoHeader />
         <SearchInput />
       </StyledHeader>
@@ -143,6 +157,8 @@ function CompanyInfoPage() {
               </div>
             </div>
           </CompanyContainer>
+
+          <Line />
 
           <div className="question-info-container">
             <div className="company-question-title">기업 관련 질문</div>

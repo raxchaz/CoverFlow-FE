@@ -41,6 +41,7 @@ function SecessionPage() {
   };
 
   const handleConfirmSecession = async () => {
+    console.log('탈퇴 요청');
     if (!isAgreed) {
       alert('탈퇴하기 전에, 동의해야 합니다.');
       return;

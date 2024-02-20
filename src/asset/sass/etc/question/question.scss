@@ -19,17 +19,18 @@
 .questioner {
   font-weight: 900;
   color: #000;
+  margin-left: 10%;
 }
 
 .middle {
-  margin-left: 2%;
+  margin-left: 5%;
 }
 
 .questioner-tag {
-  margin-left: 2%;
-  margin-top: 3.5%;
+  margin-left: 4%;
+  margin-top: 2%;
   border-radius: 4px;
-  font-size: 12px;
+  font-size: 0.8rem;
   color: #666;
 }
 
@@ -40,7 +41,7 @@
   display: flex;
   position: relative;
   white-space: nowrap;
-  margin: 0% 0% -5% 68%;
+  margin: 0% 0% -5% 73%;
 }
 
 .chat-img {
@@ -57,8 +58,8 @@
 
 .view-img {
   white-space: nowrap;
-  margin-right: 4%;
-  margin-left: 3%;
+  margin-right: 4.5%;
+  margin-left: -4%;
   margin-top: 4%;
 }
 
@@ -94,12 +95,12 @@
   text-overflow: ellipsis;
   font-size: 20px;
   white-space: nowrap;
-  margin: 8% 0% 0% 9%;
+  margin: 8% 0% 0% 3%;
 }
 
 .question-content {
   width: 90%;
-  margin: 5% 0% 0% 9%;
+  margin: 5% 0% 0% 3%;
   font-family: pretendard-extraLight;
   font-size: 15px;
 }
@@ -111,6 +112,7 @@
   font-size: 12px;
   justify-content: right;
   margin-right: 5%;
+  margin-bottom: 5%;
   margin-top: 5%;
   align-items: right;
 }
