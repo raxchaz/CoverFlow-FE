@@ -6,7 +6,7 @@ import { StyledPage, StyledHeader } from '../../../styledComponent.js';
 import TitleHeader from '../../ui/header/titleHeader.jsx';
 import UserInfoHeader from '../../ui/header/userInfoHeader.jsx';
 import TabBar from '../../ui/tabBar/tabBar.jsx';
-import { BASE_URL } from '../../global/constants/index.js';
+import { BASE_URL, ACCESS_TOKEN } from '../../global/constants/index.js';
 
 const Divider = styled.div`
   height: 1px;
@@ -38,6 +38,7 @@ function InfoEditPage() {
   const [userInfo, setUserInfo] = useState({ socialType: '' });
   const location = useLocation();
   const { nickname } = location.state || {};
+  console.log('nickname:', nickname);
 
   useEffect(() => {
     const loadUserInfo = async () => {
@@ -59,7 +60,7 @@ function InfoEditPage() {
             console.error('JSON 파싱 에러:', jsonError);
           }
         } else {
-          const errorMessage = await response.text(); 
+          const errorMessage = await response.text(); // 응답 본문을 텍스트로 읽을 경우
           console.error('사용자 정보를 불러오는데 실패했습니다.', errorMessage);
         }
       } catch (error) {
@@ -99,7 +100,7 @@ function InfoEditPage() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('ACCESS_TOKEN')}`,
+          Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
         },
         body: JSON.stringify({
           nickname: nickname,
@@ -125,12 +126,13 @@ function InfoEditPage() {
       <StyledHeader>
         <TitleHeader pageTitle="내 정보 수정" handleGoBack={handleGoBack} />
         <UserInfoHeader />
-        <div className="user-nick-title">
-          <span className="user-nick-cover"> {nickname}님</span>
-        </div>
-        <div className="socialType-ui">
-          {renderSocialType(userInfo.socialType)}
-        </div>
+
+        <span className="user-nick-cover">
+          <div className="user-nick-title"> {nickname} </div>님
+          <div className="socialType-ui">
+            {renderSocialType(userInfo.socialType)}
+          </div>
+        </span>
 
         <Divider />
         <div className="modify-nick-container">
