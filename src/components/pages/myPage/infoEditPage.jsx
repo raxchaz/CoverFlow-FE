@@ -35,8 +35,9 @@ const SecessionBtn = styled.button`
 
 function InfoEditPage() {
   const navigate = useNavigate();
-  const [userInfo, setUserInfo] = useState({ socialType: ' ' });
+  // const [userInfo, setUserInfo] = useState({ socialType: ' ' });
   const [nickname, setNickname] = useState('');
+  const [socialType, setSocialType] = useState('');
 
   /* 사용자의 토큰이 존재한다면, 사용자의 정보를 가져옵니다. */
   useEffect(() => {
@@ -65,6 +66,7 @@ function InfoEditPage() {
       .then((data) => {
         console.log('사용자 정보:', data);
         setNickname(data.nickname);
+        setSocialType(data.socialType);
       })
       .catch((error) => console.error('회원 정보 불러오기 실패:', error));
   };
@@ -124,7 +126,7 @@ function InfoEditPage() {
         <span className="user-nick-cover">
           <div className="user-nick-title"> {nickname} </div>님
           <div className="socialType-ui">
-            {renderSocialType(userInfo.socialType)}
+            {renderSocialType(socialType)}
           </div>
         </span>
 
