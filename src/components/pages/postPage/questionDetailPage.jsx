@@ -59,6 +59,7 @@ const AnswerList = styled.div``;
 
 function QuestionDetailPage() {
   const navigate = useNavigate();
+  const [submit, setSubmit] = useState('');
   const [answer, setAnswer] = useState('');
   const [questionDetail, setQuestionDetail] = useState({
     questionId: '',
@@ -94,7 +95,7 @@ function QuestionDetailPage() {
     if (questionId) {
       fetchQuestionDetail(questionId);
     }
-  }, [answer]);
+  }, [submit]);
   
   const fetchQuestionDetail = (questionId) => {
     axios
@@ -157,7 +158,7 @@ function QuestionDetailPage() {
         if (response.data && response.data.statusCode === 'OK') {
           console.log('답변이 성공적으로 등록되었습니다.');
           alert('답변이 등록되었습니다.');
-          setAnswer('');
+          setSubmit('');
         }
       })
       .catch((error) => {
