@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import '../../../asset/sass/etc/question/question.scss';
 import styled, { css } from 'styled-components';
@@ -60,6 +60,7 @@ function formatDate(fullDate) {
 }
 
 function QuestionModule({
+  companyId,
   questionId,
   questioner,
   questionerTag,
@@ -71,14 +72,13 @@ function QuestionModule({
 }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
-  const { companyId } = useParams();
 
   const handleLoginClick = () => {
     navigate('/login'); // 로그인 페이지로 이동
   };
 
   const goToDetail = () => {
-    navigate('/company-info/${companyId}/${questionId}', 
+    navigate('/company-info/${companyId}/${questionId}' 
       // state: {
       //   questionId,
       //   questioner,
@@ -169,6 +169,8 @@ function QuestionModule({
 }
 
 QuestionModule.propTypes = {
+  companyId: PropTypes.string.isRequired,
+  questionId: PropTypes.string.isRequired,
   questioner: PropTypes.string.isRequired,
   questionerTag: PropTypes.string.isRequired,
   viewCount: PropTypes.string.isRequired,
