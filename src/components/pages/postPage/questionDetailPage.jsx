@@ -61,7 +61,7 @@ function QuestionDetailPage() {
   const navigate = useNavigate();
   const [answer, setAnswer] = useState('');
   const [questionDetail, setQuestionDetail] = useState({
-    questionId: null,
+    questionId: '',
     title: '',
     questionContent: '',
     viewCount: 0,
@@ -112,7 +112,7 @@ function QuestionDetailPage() {
             ...questionData,
             answers: [...questionData.answers]
           };
-          console.log(updateQuestionDetail);
+          console.log(updatedQuestionDetail);
           setQuestionDetail(updatedQuestionDetail);
         }
       })
