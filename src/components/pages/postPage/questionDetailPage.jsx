@@ -136,7 +136,7 @@ function QuestionDetailPage() {
   //   createAt,
   // } = location.state || {};
 
-  const handleAnswerSubmit = () => {
+  const handleAnswerSubmit = async () => {
     // const questionId = questionDetail && questionDetail.questionId;
 
     const requestData = {
@@ -146,7 +146,7 @@ function QuestionDetailPage() {
 
     console.log('답변 제출 중:', requestData);
 
-    axios
+    await axios
       .post(`${BASE_URL}/api/answer/save-answer`, requestData, {
         headers: {
           'Content-Type': 'application/json',
@@ -207,7 +207,7 @@ function QuestionDetailPage() {
           className="comment-input"
           rows="4"
           value={answer}
-          onChange={(e) => setAnswer(e.target.value)}
+{/*           onChange={(e) => setAnswer(e.target.value)} */}
         ></textarea>
         <button className="submit-comment" onClick={handleAnswerSubmit}>
           등록
