@@ -50,7 +50,6 @@ const handlePremiumButtonClick = () => {
 /* ========================================================= */
 
 function Mypage() {
-  const [rendered, setRendered] = useState(false);
   const [nickname, setNickname] = useState('');
   const navigate = useNavigate();
 
@@ -64,7 +63,7 @@ function Mypage() {
     } else {
       loadUserData();
     }
-  }, [navigate, rendered]);
+  }, [navigate]);
 
   /* 사용자의 닉네임과 붕어빵 개수를 불러옵니다. */
   const loadUserData = () => {
@@ -77,8 +76,8 @@ function Mypage() {
     })
       .then((response) => response.json())
       .then((data) => {
+        console.log('사용자 정보:', data);
         setNickname(data.nickname);
-        setRendered(true);
       })
       .catch((error) => console.error('회원 정보 불러오기 실패:', error));
   };
@@ -145,12 +144,7 @@ function Mypage() {
 
           <div className="title-container">
             <div className="title">
-              {nickname && (
-                <>
-                  {nickname}
-                  <span className="title-title">님, 안녕하세요</span>
-                </>
-              )}
+              <span className="title-title"> {nickname}님, 안녕하세요</span>
             </div>
             <PremiunButton
               className="premium-button"
@@ -180,11 +174,10 @@ function Mypage() {
               <div className="letter">내 정보 수정</div>
             </div>
           </div>
-
-          <TabBar />
           <LogoutButton className="logout-button" onClick={handleLogout}>
             로그아웃
           </LogoutButton>
+          <TabBar />
         </StyledHeader>
       </StyledPage>
     </>

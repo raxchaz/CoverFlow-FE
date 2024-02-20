@@ -118,10 +118,8 @@ function InfoEditPage() {
         <TitleHeader pageTitle="내 정보 수정" handleGoBack={handleGoBack} />
         <UserInfoHeader />
         <div className="user-nick-title">
-          {nickname}
-          <span className="user-nick-cover">님</span>
+          <span className="user-nick-cover"> {nickname}님</span>
         </div>
-
         <div className="socialType-ui">
           {renderSocialType(userInfo.socialType)}
         </div>

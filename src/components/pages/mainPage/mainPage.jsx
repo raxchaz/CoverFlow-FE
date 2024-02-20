@@ -7,13 +7,7 @@ import Searchicon from '../../../asset/image/searchicon.svg';
 import UserInfoHeader from '../../ui/header/userInfoHeader.jsx';
 // import Modal from '../../ui/modal/modal.jsx';
 import '../../../asset/sass/pages/mainPage/mainPage.scss';
-import { StyledHeader } from '../../../styledComponent.js';
-
-const StyledMainPage = styled.div`
-  position: relative;
-  height: 100vh;
-  background: linear-gradient(to bottom, #ffffff, #fff3e7);
-`;
+import { StyledPage, StyledHeader } from '../../../styledComponent.js';
 
 const SearchInput = styled.input`
   width: 300px;
@@ -44,7 +38,7 @@ function MainPage() {
   };
 
   return (
-    <StyledMainPage className="main-page-container">
+    <StyledPage className="main-page-deco">
       <StyledHeader />
       <UserInfoHeader />
       <Header />
@@ -61,7 +55,7 @@ function MainPage() {
       />
       <img className="search" src={Searchicon} />
       <TabBar />
-    </StyledMainPage>
+    </StyledPage>
   );
 }
 
