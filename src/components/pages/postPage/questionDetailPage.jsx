@@ -217,10 +217,10 @@ function QuestionDetailPage() {
         {questionDetail.answers.map((answer, index) => (
           <Answer
             key={index}
-            answer={answer.answerId}
+            answerId={answer.answerId.toString()}
             answerer={answer.answerNickname}
             answererTag={answer.answerTag}
-            replyCount={answer.replyCount}
+            replyCount={answer.replyCount.toString()}
             answerContent={answer.content}
             createAt={answer.createAt}
           />
