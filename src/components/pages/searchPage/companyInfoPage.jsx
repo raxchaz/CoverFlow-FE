@@ -115,6 +115,8 @@ function CompanyInfoPage() {
 
   const handleQuestionClick = () => {
     const token = localStorage.getItem(ACCESS_TOKEN);
+    const questionId = questionId;
+    console.log(questionId);
 
     if (token) {
       navigate(`/company-info/${companyId}/${questionId}`);
@@ -169,6 +171,7 @@ function CompanyInfoPage() {
               companyData.questions.map((question, index) => (
                 <Question
                   key={index}
+                  questionId={question.questionId}
                   questioner={question.nickname}
                   questionerTag={question.tag}
                   viewCount={question.viewCount.toString()}
