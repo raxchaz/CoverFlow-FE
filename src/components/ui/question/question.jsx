@@ -78,7 +78,7 @@ function QuestionModule({
   };
 
   const goToDetail = () => {
-    navigate('/company-info/${companyId}/${questionId}' 
+    navigate(`/company-info/${companyId}/${questionId}` 
       // state: {
       //   questionId,
       //   questioner,
