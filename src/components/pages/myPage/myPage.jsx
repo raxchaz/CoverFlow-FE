@@ -50,6 +50,7 @@ const handlePremiumButtonClick = () => {
 /* ========================================================= */
 
 function Mypage() {
+  const [rendered, setRendered] = useState(false);
   const [nickname, setNickname] = useState('');
   const navigate = useNavigate();
 
@@ -63,7 +64,7 @@ function Mypage() {
     } else {
       loadUserData();
     }
-  }, [navigate]);
+  }, [navigate, rendered]);
 
   /* 사용자의 닉네임과 붕어빵 개수를 불러옵니다. */
   const loadUserData = () => {
@@ -77,6 +78,7 @@ function Mypage() {
       .then((response) => response.json())
       .then((data) => {
         setNickname(data.nickname);
+        setRendered(true);
       })
       .catch((error) => console.error('회원 정보 불러오기 실패:', error));
   };
