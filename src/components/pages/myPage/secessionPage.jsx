@@ -20,6 +20,7 @@ function SecessionPage() {
   const navigate = useNavigate();
   const [isAgreed, setIsAgreed] = useState(false);
   const [secessionReason, setSecessionReason] = useState('');
+
   const location = useLocation();
   console.log('Location:', location);
   const nicknameParam = new URLSearchParams(location.search).get('nickname');
@@ -42,13 +43,13 @@ function SecessionPage() {
   };
 
   const handleConfirmSecession = async () => {
-    console.log('탈퇴 요청 시작');
+    console.log('탈퇴 확인 시작');
     if (!isAgreed) {
       alert('탈퇴하기 전에, 동의해야 합니다.');
       return;
     }
 
-    console.log(secessionReason);
+    console.log('탈퇴 사유:', secessionReason);
 
     try {
       const response = await fetch(`${BASE_URL}/api/member/leave`, {

@@ -61,6 +61,7 @@ function Mypage() {
       localStorage.setItem('mypageURL', '/mypage');
       navigate('/login');
     } else {
+      console.log('사용자 정보 로딩 시작');
       loadUserData();
     }
   }, [navigate]);
@@ -85,6 +86,7 @@ function Mypage() {
   /* 로그아웃 버튼을 클릭했을 경우, 서버로 로그아웃 API를 요청한 후, 
       클라이언트 측에서 리프레쉬 토큰과 엑세스 토큰을 삭제하고 메인 페이지로 돌아갑니다. */
   const handleLogout = () => {
+    console.log('로그아웃 요청 시작');
     fetch(`${BASE_URL}/api/member/logout`, {
       method: 'POST',
       headers: {
@@ -94,6 +96,7 @@ function Mypage() {
     })
       .then((response) => {
         if (response.ok) {
+          console.log('로그아웃 성공');
           localStorage.removeItem(ACCESS_TOKEN);
           localStorage.removeItem(REFRESH_TOKEN);
           navigate('/');
