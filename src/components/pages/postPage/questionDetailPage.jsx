@@ -94,7 +94,7 @@ function QuestionDetailPage() {
     if (questionId) {
       fetchQuestionDetail(questionId);
     }
-  }, []);
+  }, [answer]);
   
   const fetchQuestionDetail = (questionId) => {
     axios
