@@ -163,7 +163,7 @@ function QuestionDetailPage() {
       });
   };
 
-  const formattedDate = formatDate(createAt);
+  const formattedDate = formatDate(questionDetail.createAt);
 
   return (
     <StyledPage className="main-page-container">
@@ -174,10 +174,10 @@ function QuestionDetailPage() {
       <div className="question-detail-container">
         <div className="questioner-info">
           <Questioner>
-            {questioner} <span className="middle">•</span>
+            {questionDetail.questionNickname} <span className="middle">•</span>
           </Questioner>
 
-          <QuestionerTag>{questionerTag}</QuestionerTag>
+          <QuestionerTag>{questionDetail.questionTag}</QuestionerTag>
           <span className="question-date">{formattedDate}</span>
         </div>
 
@@ -185,16 +185,16 @@ function QuestionDetailPage() {
 
         <QuestionTitle>
           <span className="Q"> </span>
-          {questionTitle}
+          {questionDetail.title}
         </QuestionTitle>
 
-        <QuestionContent>{questionContent}</QuestionContent>
+        <QuestionContent>{questionDetail.questionContent}</QuestionContent>
 
         <div className="view-info-container">
           <img className="answer-img" src={Chat} />
-          <span className="answer-count">{answerCount}</span>
+          <span className="answer-count">{questionDetail.answerCount}</span>
           <img className="answerview-img" src={View} />
-          <span className="answerview-count">{viewCount}</span>
+          <span className="answerview-count">{questionDetail.viewCount}</span>
         </div>
       </div>
 
