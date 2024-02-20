@@ -115,11 +115,9 @@ function CompanyInfoPage() {
 
   const handleQuestionClick = () => {
     const token = localStorage.getItem(ACCESS_TOKEN);
-    const questionId = questionId;
-    console.log(questionId);
 
     if (token) {
-      navigate(`/company-info/${companyId}/${questionId}`);
+      navigate(`/company-info/${companyId}/question-write`);
     } else {
       alert('로그인이 필요한 기능입니다.');
       navigate(-1);
@@ -167,8 +165,7 @@ function CompanyInfoPage() {
           </div>
 
           <QuestionList>
-            {companyData.questions &&
-              companyData.questions.map((question, index) => (
+            {companyData.questions.map((question, index) => (
                 <Question
                   key={index}
                   questionId={question.questionId}
@@ -180,7 +177,8 @@ function CompanyInfoPage() {
                   questionContent={question.content}
                   createAt={question.createAt}
                 />
-              ))}
+              ))
+            }
           </QuestionList>
         </>
       )}
