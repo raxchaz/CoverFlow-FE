@@ -42,6 +42,7 @@ function InfoEditPage() {
   useEffect(() => {
     const loadUserInfo = async () => {
       try {
+        console.log('사용자 정보 불러오는 중...');
         const response = await fetch(`${BASE_URL}/api/member/find-member`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('ACCESS_TOKEN')}`,
@@ -51,6 +52,7 @@ function InfoEditPage() {
 
         if (response.ok) {
           const data = await response.json();
+          console.log('사용자 정보 성공적으로 불러옴:', data);
           setUserInfo({ socialType: data.socialType });
         } else {
           const errorMessage = await response.text(); // 응답 본문을 텍스트로 읽을 경우
@@ -88,6 +90,7 @@ function InfoEditPage() {
 
   const handleModifyNickname = async () => {
     try {
+      console.log('닉네임 변경 요청 중...');
       const response = await fetch(`${BASE_URL}/api/member/update-nickname`, {
         method: 'POST',
         headers: {
@@ -100,6 +103,7 @@ function InfoEditPage() {
       });
 
       if (response.ok) {
+        console.log('닉네임이 성공적으로 변경되었습니다.');
         alert('닉네임이 성공적으로 변경되었습니다.');
       } else {
         const errorMessage = await response.text();
@@ -118,10 +122,8 @@ function InfoEditPage() {
         <TitleHeader pageTitle="내 정보 수정" handleGoBack={handleGoBack} />
         <UserInfoHeader />
         <div className="user-nick-title">
-          {nickname}
-          <span className="user-nick-cover">님</span>
+          <span className="user-nick-cover"> {nickname}님</span>
         </div>
-
         <div className="socialType-ui">
           {renderSocialType(userInfo.socialType)}
         </div>

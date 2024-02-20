@@ -50,7 +50,6 @@ const handlePremiumButtonClick = () => {
 /* ========================================================= */
 
 function Mypage() {
-  const [rendered, setRendered] = useState(false);
   const [nickname, setNickname] = useState('');
   const navigate = useNavigate();
 
@@ -62,9 +61,10 @@ function Mypage() {
       localStorage.setItem('mypageURL', '/mypage');
       navigate('/login');
     } else {
+      console.log('사용자 정보 로딩 시작');
       loadUserData();
     }
-  }, [navigate, rendered]);
+  }, [navigate]);
 
   /* 사용자의 닉네임과 붕어빵 개수를 불러옵니다. */
   const loadUserData = () => {
@@ -77,8 +77,8 @@ function Mypage() {
     })
       .then((response) => response.json())
       .then((data) => {
+        console.log('사용자 정보:', data);
         setNickname(data.nickname);
-        setRendered(true);
       })
       .catch((error) => console.error('회원 정보 불러오기 실패:', error));
   };
@@ -86,6 +86,7 @@ function Mypage() {
   /* 로그아웃 버튼을 클릭했을 경우, 서버로 로그아웃 API를 요청한 후, 
       클라이언트 측에서 리프레쉬 토큰과 엑세스 토큰을 삭제하고 메인 페이지로 돌아갑니다. */
   const handleLogout = () => {
+    console.log('로그아웃 요청 시작');
     fetch(`${BASE_URL}/api/member/logout`, {
       method: 'POST',
       headers: {
@@ -95,6 +96,7 @@ function Mypage() {
     })
       .then((response) => {
         if (response.ok) {
+          console.log('로그아웃 성공');
           localStorage.removeItem(ACCESS_TOKEN);
           localStorage.removeItem(REFRESH_TOKEN);
           navigate('/');
@@ -145,12 +147,7 @@ function Mypage() {
 
           <div className="title-container">
             <div className="title">
-              {nickname && (
-                <>
-                  {nickname}
-                  <span className="title-title">님, 안녕하세요</span>
-                </>
-              )}
+              <span className="title-title"> {nickname}님, 안녕하세요</span>
             </div>
             <PremiunButton
               className="premium-button"
@@ -180,11 +177,10 @@ function Mypage() {
               <div className="letter">내 정보 수정</div>
             </div>
           </div>
-
-          <TabBar />
           <LogoutButton className="logout-button" onClick={handleLogout}>
             로그아웃
           </LogoutButton>
+          <TabBar />
         </StyledHeader>
       </StyledPage>
     </>

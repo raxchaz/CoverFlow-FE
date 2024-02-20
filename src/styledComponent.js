@@ -1,12 +1,14 @@
 import styled from 'styled-components';
 
 export const StyledPage = styled.div`
-  minheight: 100vh;
-  height: 100vh;
+  height: 200vh;
   width: 480px;
   background-color: #ffffff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   font-size: 16px;
+  margin: 0 auto;
+  padding: 0.5%;
+  overflow: auto;
 `;
 
 export const Heading = styled.div`
