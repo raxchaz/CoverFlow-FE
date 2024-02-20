@@ -9,7 +9,7 @@ import Answer from '../../ui/question/answer.jsx';
 import TabBar from '../../ui/tabBar/tabBar.jsx';
 import Chat from '../../../asset/image/chat.svg';
 import View from '../../../asset/image/view.svg';
-import { BASE_URL } from '../../global/constants/index.js';
+import { BASE_URL, ACCESS_TOKEN } from '../../global/constants/index.js';
 
 const Questioner = styled.div`
   font-family: pretendard-medium;
@@ -90,6 +90,14 @@ function QuestionDetailPage() {
       fetchQuestionDetail(questionId);
     }
   }, [location.state]);
+
+  useEffect(() => {
+    const token = localStorage.getItem(ACCESS_TOKEN);
+
+    if (!token) {
+      navigate(-1);
+    }
+  }, []);
 
   const fetchQuestionDetail = (questionId) => {
     axios
