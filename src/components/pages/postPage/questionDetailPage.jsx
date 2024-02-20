@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import '../../../asset/sass/pages/postPage/questionDetailPage.scss';
 import { StyledPage, StyledHeader } from '../../../styledComponent.js';
@@ -59,10 +59,9 @@ const AnswerList = styled.div``;
 
 function QuestionDetailPage() {
   const navigate = useNavigate();
-  const location = useLocation();
-  const [comment, setComment] = useState('');
+  const [answer, setAnswer] = useState('');
   const [questionDetail, setQuestionDetail] = useState({
-    questionId: undefined, 
+    questionId: null,
     title: '',
     questionContent: '',
     viewCount: 0,
@@ -74,22 +73,16 @@ function QuestionDetailPage() {
     answers: [],
     content: [],
   });
+  const { questionId } = useParams();
 
   function formatDate(fullDate) {
     const date = new Date(fullDate);
     const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, '0'); 
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
     const day = date.getDate().toString().padStart(2, '0');
 
     return `${year}-${month}-${day}`;
   }
-
-  useEffect(() => {
-    const questionId = location.state?.questionId;
-    if (questionId !== undefined) { 
-      fetchQuestionDetail(questionId);
-    }
-  }, [location.state]);
 
   useEffect(() => {
     const token = localStorage.getItem(ACCESS_TOKEN);
@@ -97,8 +90,11 @@ function QuestionDetailPage() {
     if (!token) {
       navigate(-1);
     }
-  }, []);
-
+    if (questionId) {
+      fetchQuestionDetail(questionId);
+    }
+  }, [answer]);
+  
   const fetchQuestionDetail = (questionId) => {
     axios
       .get(`${BASE_URL}/api/question/find-question`, {
@@ -108,6 +104,7 @@ function QuestionDetailPage() {
       })
       .then((response) => {
         if (response.data && response.data.statusCode === 'OK') {
+          console.log(response.data);
           const questionData = response.data.data;
           const updatedQuestionDetail = {
             ...questionData,
@@ -126,21 +123,21 @@ function QuestionDetailPage() {
     navigate(-1);
   };
 
-  const {
-    questioner,
-    questionerTag,
-    viewCount,
-    answerCount,
-    questionTitle,
-    questionContent,
-    createAt,
-  } = location.state || {};
+  // const {
+  //   questioner,
+  //   questionerTag,
+  //   viewCount,
+  //   answerCount,
+  //   questionTitle,
+  //   questionContent,
+  //   createAt,
+  // } = location.state || {};
 
-  const handleCommentSubmit = () => {
+  const handleAnswerSubmit = () => {
     const questionId = questionDetail && questionDetail.questionId;
 
     const requestData = {
-      content: comment,
+      content: answer,
       questionId: questionId,
     };
 
@@ -158,9 +155,7 @@ function QuestionDetailPage() {
         if (response.data && response.data.statusCode === 'OK') {
           console.log('답변이 성공적으로 등록되었습니다.');
           alert('답변이 등록되었습니다.');
-
-          setComment('');
-          fetchQuestionDetail(questionId);
+          setAnswer('');
         }
       })
       .catch((error) => {
@@ -208,10 +203,10 @@ function QuestionDetailPage() {
           placeholder="답변을 입력해주세요.."
           className="comment-input"
           rows="4"
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
+          value={answer}
+          onChange={(e) => setAnswer(e.target.value)}
         ></textarea>
-        <button className="submit-comment" onClick={handleCommentSubmit}>
+        <button className="submit-comment" onClick={handleAnswerSubmit}>
           등록
         </button>
       </div>
@@ -220,6 +215,7 @@ function QuestionDetailPage() {
         {questionDetail.answers.map((answer, index) => (
           <Answer
             key={index}
+            answer={answer.answerId}
             answerer={answer.answerNickname}
             answererTag={answer.answerTag}
             replyCount={answer.replyCount}
