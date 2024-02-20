@@ -99,11 +99,7 @@ function QuestionDetailPage() {
   
   const fetchQuestionDetail = (questionId) => {
     axios
-      .get(`${BASE_URL}/api/question/find-question`, {
-        params: {
-          questionId: questionId,
-        },
-      })
+      .get(`${BASE_URL}/api/question/find-question/${questionId}`)
       .then((response) => {
         if (response.data && response.data.statusCode === 'OK') {
           console.log(response.data);
