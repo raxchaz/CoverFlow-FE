@@ -170,7 +170,7 @@ function CompanyInfoPage() {
                 <Question
                   key={index}
                   companyId={companyId}
-                  questionId={question.questionId}
+                  questionId={question.questionId.toString()}
                   questioner={question.nickname}
                   questionerTag={question.tag}
                   viewCount={question.viewCount.toString()}
