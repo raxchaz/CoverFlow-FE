@@ -89,13 +89,13 @@ function QuestionDetailPage() {
     const token = localStorage.getItem(ACCESS_TOKEN);
 
     if (!token) {
+      alert('로그인이 필요합니다.');
       navigate(-1);
     }
     if (questionId) {
-      console.log(questionId);
       fetchQuestionDetail(questionId);
     }
-  }, [answer]);
+  }, []);
   
   const fetchQuestionDetail = (questionId) => {
     axios
@@ -136,7 +136,7 @@ function QuestionDetailPage() {
   // } = location.state || {};
 
   const handleAnswerSubmit = () => {
-    const questionId = questionDetail && questionDetail.questionId;
+    // const questionId = questionDetail && questionDetail.questionId;
 
     const requestData = {
       content: answer,
