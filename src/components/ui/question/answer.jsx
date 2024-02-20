@@ -22,6 +22,7 @@ const AdoptButton = styled.button`
 `;
 
 function AnswerModule({
+  answerId,
   answerer,
   answererTag,
   answerContent,
@@ -56,6 +57,7 @@ function AnswerModule({
 }
 
 AnswerModule.propTypes = {
+  answerId: PropTypes.string.isRequired,
   answerer: PropTypes.string.isRequired,
   answererTag: PropTypes.string.isRequired,
   createAt: PropTypes.string.isRequired,
