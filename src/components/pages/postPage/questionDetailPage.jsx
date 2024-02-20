@@ -147,7 +147,12 @@ function QuestionDetailPage() {
     console.log('답변 제출 중:', requestData);
 
     axios
-      .post(`${BASE_URL}/api/answer/save-answer`, requestData)
+      .post(`${BASE_URL}/api/answer/save-answer`, requestData, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
+        },
+      })
       .then((response) => {
         console.log('답변 제출 응답:', response.data);
         if (response.data && response.data.statusCode === 'OK') {
