@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import '../../../asset/sass/etc/question/question.scss';
 import styled, { css } from 'styled-components';
@@ -60,6 +60,7 @@ function formatDate(fullDate) {
 }
 
 function QuestionModule({
+  questionId,
   questioner,
   questionerTag,
   viewCount,
@@ -70,28 +71,30 @@ function QuestionModule({
 }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
+  const { companyId } = useParams();
 
   const handleLoginClick = () => {
     navigate('/login'); // 로그인 페이지로 이동
   };
 
   const goToDetail = () => {
-    navigate('/question-detail', {
-      state: {
-        questioner,
-        questionerTag,
-        viewCount,
-        answerCount,
-        questionTitle,
-        questionContent,
-        createAt,
-      },
-    });
+    navigate('/company-info/${companyId}/${questionId}', 
+      // state: {
+      //   questionId,
+      //   questioner,
+      //   questionerTag,
+      //   viewCount,
+      //   answerCount,
+      //   questionTitle,
+      //   questionContent,
+      //   createAt,
+      // },
+    );
   };
 
   useEffect(() => {
     const token = localStorage.getItem(ACCESS_TOKEN);
-    setIsLoggedIn(!!token);
+    setIsLoggedIn(!token);
   }, []);
 
   const formattedDate = formatDate(createAt);
