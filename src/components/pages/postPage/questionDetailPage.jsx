@@ -140,7 +140,7 @@ function QuestionDetailPage() {
     // const questionId = questionDetail && questionDetail.questionId;
 
     const requestData = {
-      content: answer,
+      content: answerRef.current.value,
       questionId: questionId,
     };
 
