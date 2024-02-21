@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import '../../../asset/sass/pages/postPage/questionDetailPage.scss';
 import { StyledPage, StyledHeader } from '../../../styledComponent.js';
@@ -59,10 +59,10 @@ const AnswerList = styled.div``;
 
 function QuestionDetailPage() {
   const navigate = useNavigate();
-  const location = useLocation();
-  const [comment, setComment] = useState('');
+  const answerRef = useRef();
+  const [answer, setAnswer] = useState('');
   const [questionDetail, setQuestionDetail] = useState({
-    questionId: null,
+    questionId: '',
     title: '',
     questionContent: '',
     viewCount: 0,
@@ -71,9 +71,10 @@ function QuestionDetailPage() {
     questionNickname: '',
     questionTag: '',
     createAt: '',
-    answers: [],
-    content: [],
+    answers: []
   });
+  const { questionId } = useParams();
+  console.log("id",questionId);
 
   function formatDate(fullDate) {
     const date = new Date(fullDate);
@@ -85,35 +86,34 @@ function QuestionDetailPage() {
   }
 
   useEffect(() => {
-    const questionId = location.state?.questionId;
-    if (questionId) {
-      fetchQuestionDetail(questionId);
-    }
-  }, [location.state]);
-
-  useEffect(() => {
     const token = localStorage.getItem(ACCESS_TOKEN);
 
     if (!token) {
+      alert('로그인이 필요합니다.');
       navigate(-1);
     }
-  }, []);
-
+    if (questionId) {
+      fetchQuestionDetail(questionId);
+    }
+  }, [answer]);
+  
   const fetchQuestionDetail = (questionId) => {
     axios
-      .get(`${BASE_URL}/api/question/find-question`, {
-        params: {
-          questionId: questionId,
-        },
+      .get(`${BASE_URL}/api/question/find-question/${questionId}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
+        }
       })
       .then((response) => {
         if (response.data && response.data.statusCode === 'OK') {
+          console.log(response.data);
           const questionData = response.data.data;
           const updatedQuestionDetail = {
             ...questionData,
-            answers: [...questionData.answers],
-            content: [...questionData.content],
+            answers: [...questionData.answers]
           };
+          console.log(updatedQuestionDetail);
           setQuestionDetail(updatedQuestionDetail);
         }
       })
@@ -126,27 +126,27 @@ function QuestionDetailPage() {
     navigate(-1);
   };
 
-  const {
-    questioner,
-    questionerTag,
-    viewCount,
-    answerCount,
-    questionTitle,
-    questionContent,
-    createAt,
-  } = location.state || {};
+  // const {
+  //   questioner,
+  //   questionerTag,
+  //   viewCount,
+  //   answerCount,
+  //   questionTitle,
+  //   questionContent,
+  //   createAt,
+  // } = location.state || {};
 
-  const handleCommentSubmit = () => {
-    const questionId = questionDetail && questionDetail.questionId;
+  const handleAnswerSubmit = async () => {
+    // const questionId = questionDetail && questionDetail.questionId;
 
     const requestData = {
-      content: comment,
+      content: answerRef.current.value,
       questionId: questionId,
     };
 
     console.log('답변 제출 중:', requestData);
 
-    axios
+    await axios
       .post(`${BASE_URL}/api/answer/save-answer`, requestData, {
         headers: {
           'Content-Type': 'application/json',
@@ -158,9 +158,7 @@ function QuestionDetailPage() {
         if (response.data && response.data.statusCode === 'OK') {
           console.log('답변이 성공적으로 등록되었습니다.');
           alert('답변이 등록되었습니다.');
-
-          setComment('');
-          fetchQuestionDetail(questionId);
+          setAnswer(answerRef.current.value);
         }
       })
       .catch((error) => {
@@ -168,7 +166,7 @@ function QuestionDetailPage() {
       });
   };
 
-  const formattedDate = formatDate(createAt);
+  const formattedDate = formatDate(questionDetail.createAt);
 
   return (
     <StyledPage className="main-page-container">
@@ -179,10 +177,10 @@ function QuestionDetailPage() {
       <div className="question-detail-container">
         <div className="questioner-info">
           <Questioner>
-            {questioner} <span className="middle">•</span>
+            {questionDetail.questionNickname} <span className="middle">•</span>
           </Questioner>
 
-          <QuestionerTag>{questionerTag}</QuestionerTag>
+          <QuestionerTag>{questionDetail.questionTag}</QuestionerTag>
           <span className="question-date">{formattedDate}</span>
         </div>
 
@@ -190,16 +188,16 @@ function QuestionDetailPage() {
 
         <QuestionTitle>
           <span className="Q"> </span>
-          {questionTitle}
+          {questionDetail.title}
         </QuestionTitle>
 
-        <QuestionContent>{questionContent}</QuestionContent>
+        <QuestionContent>{questionDetail.questionContent}</QuestionContent>
 
         <div className="view-info-container">
           <img className="answer-img" src={Chat} />
-          <span className="answer-count">{answerCount}</span>
+          <span className="answer-count">{questionDetail.answerCount}</span>
           <img className="answerview-img" src={View} />
-          <span className="answerview-count">{viewCount}</span>
+          <span className="answerview-count">{questionDetail.viewCount}</span>
         </div>
       </div>
 
@@ -208,10 +206,9 @@ function QuestionDetailPage() {
           placeholder="답변을 입력해주세요.."
           className="comment-input"
           rows="4"
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
+          ref={answerRef}
         ></textarea>
-        <button className="submit-comment" onClick={handleCommentSubmit}>
+        <button className="submit-comment" onClick={handleAnswerSubmit}>
           등록
         </button>
       </div>
@@ -220,9 +217,10 @@ function QuestionDetailPage() {
         {questionDetail.answers.map((answer, index) => (
           <Answer
             key={index}
+            answerId={answer.answerId.toString()}
             answerer={answer.answerNickname}
             answererTag={answer.answerTag}
-            replyCount={answer.replyCount}
+            replyCount={'0'}
             answerContent={answer.content}
             createAt={answer.createAt}
           />

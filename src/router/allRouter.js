@@ -73,7 +73,7 @@ const AllRouter = () => {
           path="/company-info/:companyId/question-write"
           element={<QuestionWritePage />}
         />
-        <Route path="/question-detail" element={<QuestionDetailPage />} />
+        <Route path="/company-info/:companyId/:questionId" element={<QuestionDetailPage />} />
       </Routes>
     </div>
   );

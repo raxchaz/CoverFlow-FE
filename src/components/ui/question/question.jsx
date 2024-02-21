@@ -25,7 +25,22 @@ const LoginButton = styled.button`
   width: 15%;
 `;
 
-const ContentBlur = styled.span`
+// const ContentBlur = styled.span`
+//   ${({ isLoggedIn }) =>
+//     !isLoggedIn &&
+//     css`
+//       display: -webkit-box;
+//       -webkit-box-orient: vertical;
+//       -webkit-line-clamp: 2;
+//       overflow: hidden;
+//       filter: blur(5px);
+//       text-overflow: ellipsis;
+//     `}
+// `;
+
+const ContentBlur = styled.span.attrs(({ isLoggedIn }) => ({
+  isLoggedIn: isLoggedIn,
+}))`
   ${({ isLoggedIn }) =>
     !isLoggedIn &&
     css`
@@ -60,6 +75,8 @@ function formatDate(fullDate) {
 }
 
 function QuestionModule({
+  companyId,
+  questionId,
   questioner,
   questionerTag,
   viewCount,
@@ -76,17 +93,18 @@ function QuestionModule({
   };
 
   const goToDetail = () => {
-    navigate('/question-detail', {
-      state: {
-        questioner,
-        questionerTag,
-        viewCount,
-        answerCount,
-        questionTitle,
-        questionContent,
-        createAt,
-      },
-    });
+    navigate(`/company-info/${companyId}/${questionId}` 
+      // state: {
+      //   questionId,
+      //   questioner,
+      //   questionerTag,
+      //   viewCount,
+      //   answerCount,
+      //   questionTitle,
+      //   questionContent,
+      //   createAt,
+      // },
+    );
   };
 
   useEffect(() => {
@@ -166,6 +184,8 @@ function QuestionModule({
 }
 
 QuestionModule.propTypes = {
+  companyId: PropTypes.string.isRequired,
+  questionId: PropTypes.string.isRequired,
   questioner: PropTypes.string.isRequired,
   questionerTag: PropTypes.string.isRequired,
   viewCount: PropTypes.string.isRequired,
