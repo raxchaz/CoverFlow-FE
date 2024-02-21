@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
@@ -59,7 +59,7 @@ const AnswerList = styled.div``;
 
 function QuestionDetailPage() {
   const navigate = useNavigate();
-  const [submit, setSubmit] = useState('');
+  const answerRef = useRef();
   const [answer, setAnswer] = useState('');
   const [questionDetail, setQuestionDetail] = useState({
     questionId: '',
@@ -95,7 +95,7 @@ function QuestionDetailPage() {
     if (questionId) {
       fetchQuestionDetail(questionId);
     }
-  }, [submit]);
+  }, [answer]);
   
   const fetchQuestionDetail = (questionId) => {
     axios
@@ -158,7 +158,7 @@ function QuestionDetailPage() {
         if (response.data && response.data.statusCode === 'OK') {
           console.log('답변이 성공적으로 등록되었습니다.');
           alert('답변이 등록되었습니다.');
-          setSubmit('');
+          setAnswer(answerRef.current.value);
         }
       })
       .catch((error) => {
@@ -206,9 +206,8 @@ function QuestionDetailPage() {
           placeholder="답변을 입력해주세요.."
           className="comment-input"
           rows="4"
-          value={answer}
+          ref={answerRef}
         ></textarea>
-{/*           onChange={(e) => setAnswer(e.target.value)} */}
         <button className="submit-comment" onClick={handleAnswerSubmit}>
           등록
         </button>
