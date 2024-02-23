@@ -17,16 +17,21 @@
   font-size: 20px;
   margin: 16% 0% 0% 12%;
   letter-spacing: -1px;
-  font-weight: 800;
+  font-family: pretendard-bold;
   align-items: center;
   width: 70%;
-  // padding: 10px;
 
   .title-title {
     margin-left: 1%;
     font-size: 14px;
     font-weight: 100;
   }
+}
+
+.title-intro {
+  letter-spacing: -1px;
+  font-family: pretendard-regular;
+  font-size: 15px;
 }
 
 .title-login {

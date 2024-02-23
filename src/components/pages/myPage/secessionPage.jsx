@@ -23,8 +23,8 @@ function SecessionPage() {
 
   const location = useLocation();
   console.log('Location:', location);
-  const nicknameParam = new URLSearchParams(location.search).get('nickname');
-  const nickname = nicknameParam || '';
+  // const nicknameParam = new URLSearchParams(location.search).get('nickname');
+  // const nickname = nicknameParam || '';
 
   const handleReasonChange = (reason) => {
     setSecessionReason(reason);
@@ -84,7 +84,7 @@ function SecessionPage() {
 
       <div className="user-nick-title">
         <div className="user-nickname">
-          {nickname}
+          까다로운 김치찌개
           <span className="user-nick-cover">님, </span>
         </div>
         <div className="secession-info"> 정말로 탈퇴하시겠습니까? </div>

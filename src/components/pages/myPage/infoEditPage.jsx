@@ -20,7 +20,7 @@ const NickModifyBtn = styled.button`
   padding: 5px 8px;
   font-family: pretendard-light;
   border-radius: 1px;
-  width: 100%;
+  width: 170%;
   margin-bottom: 10%;
 `;
 
@@ -30,7 +30,7 @@ const SecessionBtn = styled.button`
   font-family: pretendard-light;
   border-radius: 1px;
   margin: 2% 0% 0% 0%;
-  width: 100%;
+  width: 110%;
 `;
 
 function InfoEditPage() {
@@ -70,7 +70,7 @@ function InfoEditPage() {
       })
       .catch((error) => console.error('회원 정보 불러오기 실패:', error));
   };
-  
+
   const renderSocialType = (type) => {
     switch (type) {
       case 'GOOGLE':
@@ -110,7 +110,6 @@ function InfoEditPage() {
       console.log(data);
       setNickname(data.nickname);
       alert('닉네임이 성공적으로 변경되었습니다.');
-
     } catch (error) {
       console.error('닉네임 변경 요청 중 오류가 발생했습니다.', error);
       alert('닉네임 변경 중 예상치 못한 오류가 발생했습니다.');
@@ -124,10 +123,12 @@ function InfoEditPage() {
         <UserInfoHeader />
 
         <span className="user-nick-cover">
-          <div className="user-nick-title"> {nickname} </div>님
-          <div className="socialType-ui">
-            {renderSocialType(socialType)}
+          <div className="user-nick-title">
+            {' '}
+            {nickname}
+            <span className="infotitle">님</span>
           </div>
+          <div className="socialType-ui">{renderSocialType(socialType)}</div>
         </span>
 
         <Divider />
