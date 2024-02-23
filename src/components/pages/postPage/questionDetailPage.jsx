@@ -10,26 +10,27 @@ import TabBar from '../../ui/tabBar/tabBar.jsx';
 import Chat from '../../../asset/image/chat.svg';
 import View from '../../../asset/image/view.svg';
 import { BASE_URL, ACCESS_TOKEN } from '../../global/constants/index.js';
+import Questitle from '../../../asset/image/questitle.svg';
+import Report from '../../../asset/image/report.svg';
 
 const Questioner = styled.div`
-  font-family: pretendard-medium;
+  font-family: pretendard-bold;
   letter-spacing: -1px;
   margin-left: 2%;
 `;
 
 const QuestionerTag = styled.div`
   letter-spacing: -1px;
-  margin-left: -49%;
+  margin-left: -44%;
   margin-top: 0.5%;
   font-size: 13px;
 `;
 
 const QuestionTitle = styled.div`
   margin-top: 5%;
-  font-family: pretendard-black;
-  letter-spacing: -0.5px;
-  background-color: #f6f6f6;
-  border-radius: 10px;
+  font-family: pretendard-semibold;
+  letter-spacing: -1px;
+  font-size: 18px;
   padding: 10px;
 `;
 
@@ -39,6 +40,7 @@ const QuestionContent = styled.div`
   margin-bottom: 7%;
   letter-spacing: -1px;
   font-family: pretendard-light;
+  line-height: 1.5;
 `;
 
 const FirstLine = styled.div`
@@ -71,15 +73,15 @@ function QuestionDetailPage() {
     questionNickname: '',
     questionTag: '',
     createAt: '',
-    answers: []
+    answers: [],
   });
   const { questionId } = useParams();
-  console.log("id",questionId);
+  console.log('id', questionId);
 
   function formatDate(fullDate) {
     const date = new Date(fullDate);
     const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
     const day = date.getDate().toString().padStart(2, '0');
 
     return `${year}-${month}-${day}`;
@@ -96,14 +98,14 @@ function QuestionDetailPage() {
       fetchQuestionDetail(questionId);
     }
   }, [answer]);
-  
+
   const fetchQuestionDetail = (questionId) => {
     axios
       .get(`${BASE_URL}/api/question/find-question/${questionId}`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
-        }
+        },
       })
       .then((response) => {
         if (response.data && response.data.statusCode === 'OK') {
@@ -111,7 +113,7 @@ function QuestionDetailPage() {
           const questionData = response.data.data;
           const updatedQuestionDetail = {
             ...questionData,
-            answers: [...questionData.answers]
+            answers: [...questionData.answers],
           };
           console.log(updatedQuestionDetail);
           setQuestionDetail(updatedQuestionDetail);
@@ -126,18 +128,8 @@ function QuestionDetailPage() {
     navigate(-1);
   };
 
-  // const {
-  //   questioner,
-  //   questionerTag,
-  //   viewCount,
-  //   answerCount,
-  //   questionTitle,
-  //   questionContent,
-  //   createAt,
-  // } = location.state || {};
-
   const handleAnswerSubmit = async () => {
-    // const questionId = questionDetail && questionDetail.questionId;
+    const questionId = questionDetail && questionDetail.questionId;
 
     const requestData = {
       content: answerRef.current.value,
@@ -175,19 +167,24 @@ function QuestionDetailPage() {
       </StyledHeader>
 
       <div className="question-detail-container">
+        <div className="company-fish-tag">
+          <div className="detailpage-company">카카오</div>
+          <div className="detailpage-fishbuncount">{questionDetail.reward}</div>
+        </div>
         <div className="questioner-info">
           <Questioner>
             {questionDetail.questionNickname} <span className="middle">•</span>
           </Questioner>
 
           <QuestionerTag>{questionDetail.questionTag}</QuestionerTag>
+
           <span className="question-date">{formattedDate}</span>
         </div>
 
         <FirstLine />
 
         <QuestionTitle>
-          <span className="Q"> </span>
+          <img className="questionicon-img" src={Questitle} />
           {questionDetail.title}
         </QuestionTitle>
 
@@ -196,8 +193,11 @@ function QuestionDetailPage() {
         <div className="view-info-container">
           <img className="answer-img" src={Chat} />
           <span className="answer-count">{questionDetail.answerCount}</span>
+
           <img className="answerview-img" src={View} />
           <span className="answerview-count">{questionDetail.viewCount}</span>
+
+          <img className="answerview-img" src={Report} />
         </div>
       </div>
 

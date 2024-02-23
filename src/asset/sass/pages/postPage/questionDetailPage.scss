@@ -3,22 +3,54 @@
   padding: 35px;
 }
 
+.detailpage-company {
+  font-size: 15px;
+  letter-spacing: -1px;
+  display: inline-block;
+  color: white;
+  background-color: #ff8d1d;
+  padding: 5px;
+  border-radius: 5px;
+  margin-bottom: 4%;
+  margin-left: 1.5%;
+  font-family: pretendard-medium;
+}
+
+.detailpage-fishbuncount {
+  font-size: 15px;
+  letter-spacing: -1px;
+  display: inline-block;
+  color: #ff8d1d;
+  border: 2px solid #ff8d1d;
+  padding: 5px 8px;
+  border-radius: 5px;
+  margin-bottom: 4%;
+  margin-left: 1.5%;
+  font-family: pretendard-bold;
+}
+
 .questioner-info {
   display: flex;
   justify-content: space-between;
   letter-spacing: -1px;
 }
 
+.questionicon-img {
+  margin-right: 1.5%;
+}
+
 .question-date {
   color: #666;
-  font-size: 11px;
+  font-size: 13px;
   letter-spacing: -1px;
   margin-right: 3.5%;
+  margin-top: 1%;
 }
 
 .view-info-container {
   margin-top: 5%;
-  flex-direction: column;
+  position: relative;
+  right: -69%;
 }
 
 .answer-img {
@@ -37,7 +69,13 @@
 
 .answerview-count {
   font-size: 12px;
-  margin-left: 0.5%;
+  margin-left: 1%;
+}
+
+.report-img {
+  margin-bottom: -0.5%;
+  margin-left: 3%;
+  cursor: pointer;
 }
 
 .comment-section {
@@ -73,7 +111,7 @@
   .submit-comment {
     position: absolute;
     right: 2%;
-    top: 65%;
+    top: 60%;
     transform: translateY(-50%);
     padding: 5px 8px;
     border: none;

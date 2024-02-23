@@ -1,0 +1,56 @@
+.carousel {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  margin-left: 10%;
+  width: 81%;
+  padding-bottom: 10px;
+
+  &::-webkit-scrollbar {
+    height: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #ffa54d;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #ffe9d3;
+    border-radius: 10px;
+  }
+
+  .reward-tag {
+    flex: 0 0 auto;
+    width: 50px;
+    letter-spacing: -1px;
+    border-radius: 30px;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    cursor: pointer;
+    padding: 10px;
+    text-align: center;
+    margin-right: 10px;
+
+    &.selected {
+      border: 2px solid #ff8d1d;
+      background-color: #ff8d1d;
+      color: #ffffff;
+    }
+
+    &:not(.selected) {
+      border: 1px solid #d1d5db;
+      background-color: #f8fafc;
+      color: #1f2937;
+    }
+  }
+}
+
+.fish-info {
+  font-family: pretendard-medium;
+  margin-top: 5%;
+  margin-left: 10%;
+  margin-bottom: 3%;
+  letter-spacing: -1px;
+}

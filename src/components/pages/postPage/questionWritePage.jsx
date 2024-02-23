@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { StyledPage, StyledHeader } from '../../../styledComponent.js';
 import TitleHeader from '../../ui/header/titleHeader.jsx';
 import TabBar from '../../ui/tabBar/tabBar.jsx';
+import TagInput from '../../ui/selection/fishTag.jsx';
 import '../../../asset/sass/pages/postPage/questionWritePage.scss';
 import { BASE_URL, ACCESS_TOKEN } from '../../global/constants/index.js';
 
@@ -25,9 +26,9 @@ function QuestionWritePage() {
     setTitle(e.target.value);
   };
 
-  const handleRewardChange = (e) => {
-    setReward(e.target.value);
-  };
+  // const handleRewardChange = (e) => {
+  //   setReward(e.target.value);
+  // };
 
   const handleRegister = async () => {
     console.log(title, companyId, content, reward);
@@ -66,14 +67,6 @@ function QuestionWritePage() {
         <TitleHeader pageTitle="질문 등록" handleGoBack={handleGoBack} />
         <div className="info-questionWrite"></div>
         {/* <div className="compnayID">{companyId}</div> */}
-        <select name="reward" value={reward} onChange={handleRewardChange}>
-          <option value={0}>보상으로 걸 붕어빵의 수를 정하세요 </option>
-          {[10, 20, 30, 40, 50, 60, 70, 80, 90, 100].map((value) => (
-            <option key={value} value={value}>
-              {value} 붕어빵
-            </option>
-          ))}
-        </select>
         <input
           className="question-title-input"
           placeholder="질문 제목 입력.."
@@ -88,6 +81,7 @@ function QuestionWritePage() {
           value={content}
           onChange={handleInputChange}
         ></textarea>
+        <TagInput reward={reward} setReward={setReward} />
         <button className="register-button" onClick={handleRegister}>
           등록
         </button>
