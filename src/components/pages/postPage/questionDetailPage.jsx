@@ -63,6 +63,7 @@ function QuestionDetailPage() {
   const navigate = useNavigate();
   const answerRef = useRef();
   const [answer, setAnswer] = useState('');
+  const [showReportPopup, setShowReportPopup] = useState(false);
   const [questionDetail, setQuestionDetail] = useState({
     questionId: '',
     title: '',
@@ -160,6 +161,14 @@ function QuestionDetailPage() {
 
   const formattedDate = formatDate(questionDetail.createAt);
 
+  const toggleReportPopup = () => {
+    setShowReportPopup(!showReportPopup);
+  };
+
+  const handleReportSubmit = async () => {
+    toggleReportPopup();
+  };
+
   return (
     <StyledPage className="main-page-container">
       <StyledHeader>
@@ -197,8 +206,51 @@ function QuestionDetailPage() {
           <img className="answerview-img" src={View} />
           <span className="answerview-count">{questionDetail.viewCount}</span>
 
-          <img className="answerview-img" src={Report} />
+          <img
+            className="report-img"
+            src={Report}
+            onClick={toggleReportPopup}
+          />
         </div>
+        {showReportPopup && (
+          <div className="report-popup-overlay">
+            <div className="report-popup">
+              <div className="report-title">신고 사유를 선택하세요</div>
+              <label>
+                <input type="checkbox" name="reason" value="reason1" /> 욕설
+                혹은 비방표현이 있어요
+              </label>
+              <label>
+                <input type="checkbox" name="reason" value="reason2" /> 개인정보
+                노출 게시물이에요
+              </label>
+              <label>
+                <input type="checkbox" name="reason" value="reason3" /> 불법
+                정보를 포함하고 있어요
+              </label>
+              <label>
+                <input type="checkbox" name="reason" value="reason4" /> 스팸
+                혹은 홍보성 도배글이에요
+              </label>
+              <label>
+                <input type="checkbox" name="reason" value="reason5" /> 특정
+                이용자가 질문, 답변, 채택을 반복해요
+              </label>
+
+              <div className="reportBtn">
+                <button
+                  className="close-report-popup"
+                  onClick={toggleReportPopup}
+                >
+                  닫기
+                </button>
+                <button className="submit-report" onClick={handleReportSubmit}>
+                  신고하기
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="comment-section">
