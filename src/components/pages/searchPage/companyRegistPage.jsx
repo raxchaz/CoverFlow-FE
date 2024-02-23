@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../../../asset/sass/pages/searchPage/companyRegistPage.scss';
-import { ACCESS_TOKEN, BASE_URL } from '../../global/constants/index.js';
+import { BASE_URL } from '../../global/constants/index.js';
 import { StyledPage, StyledHeader } from '../../../styledComponent.js';
 import TitleHeader from '../../ui/header/titleHeader.jsx';
 import TabBar from '../../ui/tabBar/tabBar.jsx';
@@ -10,23 +10,14 @@ import TabBar from '../../ui/tabBar/tabBar.jsx';
 function CompanyRegistPage() {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const token = localStorage.getItem(ACCESS_TOKEN);
-
-    if (!token) {
-      localStorage.setItem('prevPage', '/company-regist');
-      navigate('/login');
-    }
-  }, [navigate]);
-
   const [companyInfo, setCompanyInfo] = useState({
-    companyName: '',
-    industry: '',
-    stateOrProvince: '',
-    cityOrDistrict: '',
+    name: '',
+    type: '',
+    city: '',
+    district: '',
   });
 
-  const industries = [
+  const type = [
     '서비스업',
     '제조／화학',
     '의료／제약／복지',
@@ -39,7 +30,7 @@ function CompanyRegistPage() {
     '기관 / 협회',
     '미디어 및 엔터테인먼트',
   ];
-  const provinces = [
+  const city = [
     '서울특별시',
     '부산광역시',
     '대구광역시',
@@ -61,6 +52,14 @@ function CompanyRegistPage() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    // if (name === 'name') {
+    //   if (/^[a-zA-Z0-9ㄱ-ㅎㅏ-ㅣ가-힣]{1}$/.test(value)) {
+    //     alert('기업 이름에는 한글, 영문, 숫자로만 이루어져야 합니다.');
+    //     return;
+    //   }
+    // }
+
     setCompanyInfo((prevInfo) => ({
       ...prevInfo,
       [name]: value,
@@ -69,18 +68,27 @@ function CompanyRegistPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Company Information:', companyInfo);
+    console.log('기업 정보 제출 중:', companyInfo);
+
+    if (
+      companyInfo.name === '' ||
+      companyInfo.city === '' ||
+      companyInfo.type === ''
+    ) {
+      alert('필수 필드를 모두 입력해주세요.');
+      return;
+    }
 
     axios
-      .post(`${BASE_URL}/api/company/admin/save-company`, companyInfo, {
+      .post(`${BASE_URL}/api/company/save-company`, companyInfo, {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
         },
       })
       .then((response) => {
-        console.log('Server Response:', response.data);
-        navigate('/');
+        console.log('서버 응답:', response.data);
+        navigate('/search-company');
+        alert('기업 등록이 완료되었어요!');
       })
       .catch((error) => {
         console.error('기업 등록에 실패했어요', error);
@@ -103,8 +111,8 @@ function CompanyRegistPage() {
             type="text"
             className="input-field-regist"
             placeholder="기업 이름을 정확히 작성해 주세요"
-            name="companyName"
-            value={companyInfo.companyName}
+            name="name"
+            value={companyInfo.name}
             onChange={handleChange}
           />
           <div className="regist-company-industry">
@@ -112,14 +120,14 @@ function CompanyRegistPage() {
           </div>
           <select
             className="option-field"
-            name="industry"
-            value={companyInfo.industry}
+            name="type"
+            value={companyInfo.type}
             onChange={handleChange}
           >
             <option value="">업종을 선택해 주세요</option>
-            {industries.map((industry) => (
-              <option key={industry} value={industry}>
-                {industry}
+            {type.map((type) => (
+              <option key={type} value={type}>
+                {type}
               </option>
             ))}
           </select>
@@ -129,14 +137,14 @@ function CompanyRegistPage() {
             </div>
             <select
               className="option-field"
-              name="stateOrProvince"
-              value={companyInfo.stateOrProvince}
+              name="city"
+              value={companyInfo.city}
               onChange={handleChange}
             >
               <option value="">도 / 특별시 / 광역시</option>
-              {provinces.map((province) => (
-                <option key={province} value={province}>
-                  {province}
+              {city.map((city) => (
+                <option key={city} value={city}>
+                  {city}
                 </option>
               ))}
             </select>
@@ -144,12 +152,20 @@ function CompanyRegistPage() {
               type="text"
               className="input-field-regist"
               placeholder="시 /군 /구 (선택)"
-              name="cityOrDistrict"
-              value={companyInfo.cityOrDistrict}
+              name="district"
+              value={companyInfo.district}
               onChange={handleChange}
             />
           </div>
-          <button type="submit" className="submit-regist">
+          <button
+            type="submit"
+            className="submit-regist"
+            disabled={
+              companyInfo.name === '' ||
+              companyInfo.city === '' ||
+              companyInfo.type === ''
+            }
+          >
             등록하기
           </button>
         </form>

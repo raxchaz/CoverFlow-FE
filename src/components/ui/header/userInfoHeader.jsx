@@ -117,8 +117,13 @@ function UserInfoHeader() {
       <div className="userInfo-container">
         {isLoggedIn ? (
           <div className="user-icon-container" ref={dropdownRef}>
-            <div className="reward-fish" onClick={handleRewardClick}>
-              <img className="reward" src={Reward} alt="붕어빵 아이콘" />
+            <div className="reward-fish">
+              <img
+                className="reward"
+                src={Reward}
+                onClick={handleRewardClick}
+                alt="붕어빵 아이콘"
+              />
               <span className="bun-count">{rewardCount}</span>
             </div>
             <img

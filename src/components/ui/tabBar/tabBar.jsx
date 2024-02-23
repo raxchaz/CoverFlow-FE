@@ -15,13 +15,27 @@ const TabBar = () => {
     } else {
       setShowTabBar(true);
     }
-  }, []);
+    switch (location.pathname) {
+      case '/':
+        setActiveNav(1);
+        break;
+      case '/mypage':
+        setActiveNav(2);
+        break;
+      case '/notification':
+        setActiveNav(3);
+        break;
+      default:
+        break;
+    }
+  }, [location]);
+
   if (!showTabBar) {
     return null;
   }
 
   return (
-    <nav className="wrapper" style={{ width: '434px', margin: '0 auto' }}>
+    <nav className="wrapper" style={{ width: '489px', margin: '0 auto' }}>
       <div style={{ width: '33.33%' }}>
         <Link to="/" className="nav-link" onClick={() => setActiveNav(1)}>
           <div className={activeNav === 1 ? 'nav-item active' : 'nav-item'}>

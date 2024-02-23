@@ -1,0 +1,124 @@
+.question-container {
+  margin-top: 5%;
+  cursor: pointer;
+}
+
+// 유저 닉네임 + 태그 부분 scss
+.questioner-container {
+  letter-spacing: -1px;
+  display: flex;
+  justify-content: space-between;
+  margin: 5% 0% -5% 10%;
+}
+
+.questioner-info {
+  white-space: nowrap;
+}
+
+.questioner {
+  font-weight: 900;
+  color: #000;
+  margin-left: 10%;
+}
+
+.middle {
+  margin-left: 5%;
+}
+
+.questioner-tag {
+  margin-left: 4%;
+  margin-top: 2%;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  color: #666;
+}
+
+/* =========================================================== */
+
+// 조회수 + 답변 개수 scss
+.view-container {
+  display: flex;
+  position: relative;
+  white-space: nowrap;
+  margin: 0% 0% -5% 73%;
+}
+
+.chat-img {
+  margin-right: 0%;
+  margin-top: 5%;
+}
+
+.chat-count {
+  white-space: nowrap;
+  margin-right: 15%;
+  font-size: 12px;
+  margin-top: 7%;
+}
+
+.view-img {
+  white-space: nowrap;
+  margin-right: 4.5%;
+  margin-left: -4%;
+  margin-top: 4%;
+}
+
+.view-count {
+  font-size: 12px;
+  margin-top: 7%;
+  margin-left: -3%;
+}
+
+// 답변 내용 부분 scss
+
+.no-login-user {
+  letter-spacing: -1px;
+  font-size: 12px;
+  font-family: 'Pretendard-Bold';
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: auto;
+  margin-top: 1%;
+  margin-left: 13%;
+}
+
+.question-title {
+  display: flex;
+  align-items: left;
+  justify-content: flex-start;
+  font-family: 'Pretendard-Bold';
+  letter-spacing: -1.5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 20px;
+  white-space: nowrap;
+  margin: 8% 0% 0% 13%;
+}
+
+.question-content {
+  width: 90%;
+  margin: 5% 0% 0% 13%;
+  font-family: pretendard-extraLight;
+  font-size: 15px;
+}
+
+.question-answer-day {
+  display: flex;
+  color: #666;
+  letter-spacing: -1px;
+  font-size: 12px;
+  justify-content: right;
+  margin-right: 5%;
+  margin-bottom: 5%;
+  margin-top: 5%;
+  align-items: right;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  margin: 3% 0% 2.5% 10%;
+  width: 81%;
+}

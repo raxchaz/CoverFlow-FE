@@ -1,0 +1,78 @@
+.secession-info {
+  letter-spacing: -1px;
+  margin: 0.5% 0% 0% 12%;
+  font-size: 22px;
+  font-family: pretendard-bold;
+}
+
+.warningicon {
+  margin: 8% 0% 0% 6%;
+}
+
+.warning-info {
+  letter-spacing: -1px;
+  font-size: 14px;
+  margin-top: -5.8%;
+  margin-left: 12%;
+}
+
+.warning-info2 {
+  letter-spacing: -1px;
+  font-size: 14px;
+  margin-top: -4.8%;
+  margin-left: 12%;
+}
+
+.agreement-section {
+  margin: 10% 0% 0% 6%;
+}
+
+.agreeSecession {
+  letter-spacing: -1px;
+  margin: 5% 0% 0% 1%;
+  font-family: pretendard-medium;
+  color: #474646;
+}
+
+button.secession-cancel-btn {
+  width: 40%;
+  border-radius: 1px;
+  border: 1px solid #ccc;
+  margin-left: 7%;
+  background-color: transparent;
+  color: black;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.confirm-secession-btn {
+  width: 40%;
+  border-radius: 1px;
+  margin-bottom: 10%;
+  margin-left: 0%;
+  background-color: #ff8d1d;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-top: 20px;
+
+  &:hover {
+    background-color: #ff8d1d;
+    color: white;
+  }
+
+  &.disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+}
+
+.secession-reason {
+  font-size: 19px;
+  margin: 10% 24% 0% 0%;
+  letter-spacing: -1px;
+  font-family: pretendard-bold;
+  display: flex;
+  justify-content: center;
+}

@@ -1,0 +1,41 @@
+.sidebar {
+  background-color: #fff;
+  width: 210px;
+  height: 100vh;
+  margin-left: -1%;
+  margin-top: -17.5%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar-info {
+  margin-top: 50%;
+  margin-left: 10%;
+  letter-spacing: -1px;
+}
+
+.sideitem {
+  position: relative;
+  margin-top: 1%;
+  margin-right: 5%;
+}
+
+.sidebar-menu {
+  list-style: none;
+  margin-top: 35%;
+  margin-left: 10%;
+  font-size: 16px;
+  letter-spacing: -1px;
+  font-family: pretendard-medium;
+}
+
+.menu-item {
+  position: relative;
+  margin-bottom: 10%;
+  margin-left: 2%;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.link:hover {
+  color: #ff8d1d;
+}

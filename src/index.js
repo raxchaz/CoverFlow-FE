@@ -11,13 +11,13 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <RecoilRoot>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </RecoilRoot>
-  </React.StrictMode>,
+  // <React.StrictMode>
+  <RecoilRoot>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </RecoilRoot>,
+  // </React.StrictMode>
 );
 
 reportWebVitals();

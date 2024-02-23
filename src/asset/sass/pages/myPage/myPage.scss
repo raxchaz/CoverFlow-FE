@@ -1,10 +1,82 @@
+.title-container {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+
+.mypage-select-menu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  gap: 10.5%;
+  margin-top: 10%;
+}
+
 .title {
-  margin: 15% 0% 0% 12%;
+  font-size: 20px;
+  margin: 16% 0% 0% 12%;
   letter-spacing: -1px;
-  background: #f2f2f2;
+  font-weight: 800;
   align-items: center;
   width: 70%;
-  padding: 10px;
+  // padding: 10px;
+
+  .title-title {
+    margin-left: 1%;
+    font-size: 14px;
+    font-weight: 100;
+  }
+}
+
+.title-login {
+}
+
+.menu-contact,
+.menu-event,
+.menu-edit,
+.menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.3s ease; /* 변환 효과가 0.3초 동안 일어나도록 설정 */
+}
+
+.menu-contact:hover,
+.menu-event:hover,
+.menu-edit:hover,
+.menu:hover {
+  color: #ff8d1d;
+  transform: scale(1.05);
+}
+.menu {
+  gap: 11px;
+}
+
+.menu-contact {
+  gap: 12px;
+}
+
+.menu-event {
+  gap: 10px;
+}
+
+.menu-edit {
+  gap: 12.5px;
+}
+
+.letter {
+  letter-spacing: -1px;
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.title-info-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
 .bun-title {

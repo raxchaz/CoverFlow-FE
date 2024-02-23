@@ -1,17 +1,12 @@
-.main-page-container {
-  width: 420px;
-  margin: 0 auto;
-  padding: 0.5%;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  font-size: 16px;
-  display: block;
+.main-page-deco {
+  background: linear-gradient(to bottom, #ffffff, #fff3e7);
 }
 
 .coverflow {
   font-size: 2rem;
   font-weight: 800;
-  margin: 35% 0% -44% 26%;
-  // letter-spacing: 1px;
+  text-align: center;
+  margin: 35% 0% -44% 0%;
   color: #ff8d1d;
 }
 

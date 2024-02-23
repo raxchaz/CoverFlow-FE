@@ -59,6 +59,14 @@
   margin-top: 13%;
   margin-left: 2%;
   border-radius: 0px;
+  background-color: #ff8d1d;
+
+  &:disabled {
+    background-color: #ccc;
+    color: #fff;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
 }
 
 .regist-company-name,
