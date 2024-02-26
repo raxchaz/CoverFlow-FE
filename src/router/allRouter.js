@@ -32,6 +32,9 @@ import QuestionDetailPage from '../components/pages/postPage/questionDetailPage.
 /* 그 외 유틸  */
 import TokenManagement from '../components/global/token/tokenManagement';
 
+/* 관리자 페이지  */
+import AdminMainPage from '../components/pages/adminPage/adminMainPage.jsx';
+
 /* ===================================================================  */
 
 const AllRouter = () => {
@@ -77,6 +80,8 @@ const AllRouter = () => {
           path="/company-info/:companyId/:questionId"
           element={<QuestionDetailPage />}
         />
+
+        <Route path="/minad" element={<AdminMainPage />} />
       </Routes>
     </div>
   );
