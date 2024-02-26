@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import '../../../asset/sass/etc/selection/secessionSelection.scss';
 
 function SecessionSelection({ onReasonChange }) {
   const [selectedReason, setSelectedReason] = useState('');
+
+  const StyledSelect = styled.select`
+    padding: 10px;
+    letter-spacing: -1px;
+  `;
 
   const handleChange = (event) => {
     const newReason = event.target.value;
@@ -16,7 +22,7 @@ function SecessionSelection({ onReasonChange }) {
 
   return (
     <div className="secession-reason-dropdown">
-      <select
+      <StyledSelect
         id="secession-reason"
         value={selectedReason}
         onChange={handleChange}
@@ -29,7 +35,7 @@ function SecessionSelection({ onReasonChange }) {
           서비스를 이용하기가 불편해요
         </option>
         <option value="other">기타 / 직접 입력</option>
-      </select>
+      </StyledSelect>
     </div>
   );
 }

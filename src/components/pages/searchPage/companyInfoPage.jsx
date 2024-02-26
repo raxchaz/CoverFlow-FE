@@ -24,15 +24,13 @@ const CompanyName = styled.div`
   font-size: 20px;
   letter-spacing: -1px;
   font-weight: 800;
-  padding-left: 50px;
 `;
 
 const CompanyType = styled.div`
   font-size: 13px;
   color: cecece;
   letter-spacing: -1px;
-  margin-right: 20px;
-  padding-left: 50px;
+  margin-top: 3%;
 `;
 
 const Line = styled.div`
@@ -43,12 +41,10 @@ const Line = styled.div`
 `;
 
 const CompanyAddress = styled.div`
-  padding-right: 50px;
+  margin-right: 12%;
 `;
 
-const CompanyEstablishment = styled.div`
-  padding-left: 50px;
-`;
+const CompanyEstablishment = styled.div``;
 
 const QuestionButton = styled.button`
   letter-spacing: -0.7px;
@@ -120,7 +116,7 @@ function CompanyInfoPage() {
 
     if (token) {
       navigate(`/company-info/${companyId}/question-write`);
-    } else if(confirm('로그인이 필요합니다. 로그인 하시겠습니까?') === true){
+    } else if (confirm('로그인이 필요합니다. 로그인 하시겠습니까?') === true) {
       navigate(`/login`);
     }
   };
@@ -167,20 +163,19 @@ function CompanyInfoPage() {
 
           <QuestionList>
             {companyData.questions.map((question, index) => (
-                <Question
-                  key={index}
-                  companyId={companyId}
-                  questionId={question.questionId.toString()}
-                  questioner={question.nickname}
-                  questionerTag={question.tag}
-                  viewCount={question.viewCount.toString()}
-                  answerCount={question.answerCount.toString()}
-                  questionTitle={question.title}
-                  questionContent={question.content}
-                  createAt={question.createAt}
-                />
-              ))
-            }
+              <Question
+                key={index}
+                companyId={companyId}
+                questionId={question.questionId.toString()}
+                questioner={question.nickname}
+                questionerTag={question.tag}
+                viewCount={question.viewCount.toString()}
+                answerCount={question.answerCount.toString()}
+                questionTitle={question.title}
+                questionContent={question.content}
+                createAt={question.createAt}
+              />
+            ))}
           </QuestionList>
         </>
       )}

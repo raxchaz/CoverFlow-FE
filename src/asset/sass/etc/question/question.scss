@@ -33,6 +33,10 @@
   color: #666;
 }
 
+.question-img {
+  margin-right: 1%;
+}
+
 /* =========================================================== */
 
 // 조회수 + 답변 개수 scss
@@ -40,7 +44,7 @@
   display: flex;
   position: relative;
   white-space: nowrap;
-  margin: 0% 0% -5% 73%;
+  margin: 0% 0% -5% 65%;
 }
 
 .chat-img {
@@ -100,8 +104,10 @@
 .question-content {
   width: 90%;
   margin: 5% 0% 0% 13%;
-  font-family: pretendard-extraLight;
+  font-family: pretendard-Light;
   font-size: 15px;
+  letter-spacing: -0.5px;
+  line-height: 1.2;
 }
 
 .question-answer-day {
@@ -110,7 +116,7 @@
   letter-spacing: -1px;
   font-size: 12px;
   justify-content: right;
-  margin-right: 5%;
+  margin-right: -2%;
   margin-bottom: 5%;
   margin-top: 5%;
   align-items: right;

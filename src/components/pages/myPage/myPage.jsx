@@ -36,11 +36,33 @@ const PremiunButton = styled.button`
   padding: 7px;
   width: auto;
   font-size: 12px;
-  border-radius: 5px;
-  margin: 13% 10% 0% 0%;
+  border-radius: 1px;
+  margin: 2% 0% 0% 12%;
   &:hover {
     cursor: pointer;
   }
+`;
+
+const StatusBar = styled.div`
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid gray;
+  margin-top: 10%;
+  font-family: pretendard-semibold;
+`;
+
+const StatusTab = styled.div`
+  width: 50%;
+  letter-spacing: -1px;
+  text-align: center;
+  padding: 10px 0;
+  cursor: pointer;
+  color: gray;
+  border-bottom: 2px solid transparent;
+  transition:
+    border-bottom 0.3s ease-in-out,
+    color 0.3s ease-in-out;
+  ${(props) => props.current && 'color: black; border-bottom: 2px solid black;'}
 `;
 
 const handlePremiumButtonClick = () => {
@@ -50,6 +72,7 @@ const handlePremiumButtonClick = () => {
 /* ========================================================= */
 
 function Mypage() {
+  const [currentCategory, setCurrentCategory] = useState('comments');
   const [nickname, setNickname] = useState('');
   const navigate = useNavigate();
 
@@ -147,18 +170,16 @@ function Mypage() {
           <TitleHeader pageTitle="마이 페이지" handleGoBack={handleGoBack} />
 
           <div className="title-container">
-            <span className="title-title">
-              {' '}
-              <div className="title">{nickname}</div>님, 안녕하세요
-            </span>
-
-            <PremiunButton
-              className="premium-button"
-              onClick={handlePremiumButtonClick}
-            >
-              프리미엄 이용하기
-            </PremiunButton>
+            <div className="title">
+              {nickname} <span className="title-intro">님, 안녕하세요</span>
+            </div>
           </div>
+          <PremiunButton
+            className="premium-button"
+            onClick={handlePremiumButtonClick}
+          >
+            프리미엄 이용하기
+          </PremiunButton>
           <div className="mypage-select-menu">
             <div className="menu" onClick={goToNotice}>
               <NoticeIcon />
@@ -180,6 +201,23 @@ function Mypage() {
               <div className="letter">내 정보 수정</div>
             </div>
           </div>
+
+          <StatusBar>
+            <StatusTab
+              current={currentCategory === 'comments'}
+              onClick={() => setCurrentCategory('comments')}
+            >
+              내가 작성한 댓글
+            </StatusTab>
+            <StatusTab
+              current={currentCategory === 'posts'}
+              onClick={() => setCurrentCategory('posts')}
+            >
+              내가 작성한 글
+            </StatusTab>
+          </StatusBar>
+
+          {currentCategory === 'comments' ? <div></div> : <div></div>}
           <LogoutButton className="logout-button" onClick={handleLogout}>
             로그아웃
           </LogoutButton>

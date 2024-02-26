@@ -2,26 +2,48 @@
   letter-spacing: -0.5px;
   font-size: 20px;
   width: 90%;
-  font-family: 'Pretendard-SemiBold', sans-serif;
-  margin: 5% 0 2% 5%;
+  font-family: Pretendard-SemiBoldf;
+  margin: 5% 0% 10% 5%;
   color: #334155;
 }
 
-.question-title-input,
-.question-input,
-select {
+.question-title-input {
   width: 80%;
+  margin-left: 10%;
+  margin-bottom: 5%;
+  padding: 10px 0;
+  font-size: 16px;
+  border: none;
+  border-bottom: 1px solid #d1d5db;
+  background-color: transparent;
+  color: #1f2937;
+
+  &:focus {
+    outline: none;
+    border-bottom-color: #ff8d1d;
+  }
+
+  &::placeholder {
+    letter-spacing: -1px;
+  }
+}
+
+.question-input {
+  width: 75%;
   margin: 0 auto;
   padding: 10px 15px;
   font-size: 16px;
   border: 1px solid #d1d5db;
   border-radius: 8px;
-  background-color: #f8fafc;
   color: #1f2937;
 
   &:focus {
-    outline: 2px solid #2563eb;
+    outline: 2px solid #ff8d1d;
     border-color: transparent;
+  }
+
+  &::placeholder {
+    letter-spacing: -1px;
   }
 }
 
@@ -50,12 +72,13 @@ select {
 .register-button {
   width: 80%;
   padding: 12px 0;
-  margin: 20px auto 0;
+  margin-top: 15%;
+  margin-left: 10%;
   font-size: 16px;
   color: #ffffff;
-  background-color: #2563eb;
+  background-color: #ff8d1d;
   border: none;
-  border-radius: 1px;
+  border-radius: 10px;
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -66,22 +89,10 @@ select {
     transform 0.2s ease;
 
   &:hover {
-    background-color: #1d4ed8;
+    background-color: #ff8d1d;
     transform: translateY(-2px);
     box-shadow:
       0 10px 15px -3px rgba(0, 0, 0, 0.1),
       0 4px 6px -4px rgba(0, 0, 0, 0.1);
   }
-}
-
-select {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  appearance: none;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>');
-  background-repeat: no-repeat;
-  background-position: right 10px center;
-  background-size: 1.25em 1.25em;
 }

@@ -5,6 +5,7 @@ import '../../../asset/sass/etc/question/question.scss';
 import styled, { css } from 'styled-components';
 import Chat from '../../../asset/image/chat.svg';
 import View from '../../../asset/image/view.svg';
+import Questitle from '../../../asset/image/questitle.svg';
 import { ACCESS_TOKEN } from '../../global/constants/index.js';
 
 const Line = styled.div`
@@ -68,7 +69,7 @@ function truncateContent(questionContent, maxLength = 30) {
 function formatDate(fullDate) {
   const date = new Date(fullDate);
   const year = date.getFullYear();
-  const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
   const day = date.getDate().toString().padStart(2, '0');
 
   return `${year}-${month}-${day}`;
@@ -93,7 +94,8 @@ function QuestionModule({
   };
 
   const goToDetail = () => {
-    navigate(`/company-info/${companyId}/${questionId}` 
+    navigate(
+      `/company-info/${companyId}/${questionId}`,
       // state: {
       //   questionId,
       //   questioner,
@@ -130,16 +132,20 @@ function QuestionModule({
           <div className="view-container">
             <img className="chat-img" src={Chat} />
             <span className="chat-count">{answerCount}</span>
+
             <img className="view-img" src={View} />
             <span className="view-count">{viewCount}</span>
           </div>
           <div className="field">
             <span className="question-title">
+              <img className="question-img" src={Questitle} />{' '}
               {truncateTitle(questionTitle)}
             </span>
+
             <span className="question-content">
               {truncateContent(questionContent)}
             </span>
+
             <span className="question-answer-day">{formattedDate}</span>
           </div>
         </div>
@@ -156,12 +162,13 @@ function QuestionModule({
           <div className="view-container">
             <img className="chat-img" src={Chat} />
             <span className="chat-count">{answerCount}</span>
+
             <img className="view-img" src={View} />
             <span className="view-count">{viewCount}</span>
           </div>
           <div className="field">
             <span className="question-title">
-              Q. {truncateTitle(questionTitle)}
+              {truncateTitle(questionTitle)}
             </span>
 
             <ContentBlur isLoggedIn={isLoggedIn}>

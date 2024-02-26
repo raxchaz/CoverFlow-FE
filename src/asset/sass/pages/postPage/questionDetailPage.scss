@@ -3,22 +3,54 @@
   padding: 35px;
 }
 
+.detailpage-company {
+  font-size: 15px;
+  letter-spacing: -1px;
+  display: inline-block;
+  color: white;
+  background-color: #ff8d1d;
+  padding: 5px;
+  border-radius: 5px;
+  margin-bottom: 4%;
+  margin-left: 1.5%;
+  font-family: pretendard-medium;
+}
+
+.detailpage-fishbuncount {
+  font-size: 15px;
+  letter-spacing: -1px;
+  display: inline-block;
+  color: #ff8d1d;
+  border: 2px solid #ff8d1d;
+  padding: 5px 8px;
+  border-radius: 5px;
+  margin-bottom: 4%;
+  margin-left: 1.5%;
+  font-family: pretendard-bold;
+}
+
 .questioner-info {
   display: flex;
   justify-content: space-between;
   letter-spacing: -1px;
 }
 
+.questionicon-img {
+  margin-right: 1.5%;
+}
+
 .question-date {
   color: #666;
-  font-size: 11px;
+  font-size: 13px;
   letter-spacing: -1px;
   margin-right: 3.5%;
+  margin-top: 1%;
 }
 
 .view-info-container {
   margin-top: 5%;
-  flex-direction: column;
+  position: relative;
+  right: -69%;
 }
 
 .answer-img {
@@ -37,7 +69,13 @@
 
 .answerview-count {
   font-size: 12px;
-  margin-left: 0.5%;
+  margin-left: 1%;
+}
+
+.report-img {
+  margin-bottom: -0.5%;
+  margin-left: 3%;
+  cursor: pointer;
 }
 
 .comment-section {
@@ -73,7 +111,7 @@
   .submit-comment {
     position: absolute;
     right: 2%;
-    top: 65%;
+    top: 60%;
     transform: translateY(-50%);
     padding: 5px 8px;
     border: none;
@@ -82,5 +120,60 @@
     border-radius: 4px;
     cursor: pointer;
     font-size: 10px;
+  }
+}
+
+.report-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+}
+
+.report-popup {
+  z-index: 999;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  .report-title {
+    letter-spacing: -1px;
+    margin-top: 5%;
+    margin-bottom: 10%;
+    text-align: center;
+    font-size: 20px;
+    font-family: pretendard-semibold;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 5%;
+    letter-spacing: -1px;
+  }
+
+  .reportBtn {
+    display: flex;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    margin-left: 48%;
+  }
+
+  .report-input {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .submit-report,
+  .close-report-popup {
+    border-radius: 1px;
   }
 }
