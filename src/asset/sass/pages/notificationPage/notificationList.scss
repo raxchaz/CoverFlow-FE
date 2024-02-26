@@ -1,0 +1,54 @@
+.notification-list {
+  margin-bottom: 10%;
+  width: 105%;
+  margin-left: -2%;
+
+  .notification-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    background-color: #ffffff;
+    border-top: 0.5px solid #ccc;
+
+    &.checked {
+      background-color: white;
+    }
+
+    &.unchecked {
+      background-color: #ebf2f2;
+    }
+
+    .notification-icon {
+      margin-left: 5%;
+    }
+
+    .notification-title {
+      letter-spacing: -1px;
+      flex-grow: 1;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    .notification-time {
+      letter-spacing: -1px;
+      margin-right: 10px;
+      color: #888888;
+      font-size: 15px;
+    }
+
+    .title-time {
+      display: flex;
+      margin-left: -40%;
+      flex-direction: column;
+      letter-spacing: -1px;
+    }
+
+    .notification-company {
+      letter-spacing: -1px;
+      font-family: pretendard-black;
+      color: #333333;
+      margin-right: 5%;
+    }
+  }
+}

@@ -1,0 +1,32 @@
+.notification-list {
+  margin-top: 5%;
+}
+
+.no-read {
+  letter-spacing: -1px;
+  font-weight: 800;
+  display: flex;
+  gap: 5px;
+  margin-top: 12%;
+  margin-left: 10%;
+}
+
+.no-read-count {
+  color: #ff8d1d;
+}
+
+.all-read-btn {
+  border-radius: 3px;
+  margin-top: 11%;
+  margin-right: 8%;
+  border: 1px solid #000;
+  background-color: transparent !important;
+  color: black !important;
+}
+
+.notification-controls {
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
