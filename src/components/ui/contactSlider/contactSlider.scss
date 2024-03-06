@@ -1,0 +1,114 @@
+.slider-container {
+  width: 70%;
+  margin: 0 auto;
+}
+
+.contact-container {
+  border: 1px solid gray;
+  margin: 2rem 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.contact-item {
+  border: 1px solid gray;
+  height: 6rem;
+  color: gray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  letter-spacing: -1px;
+  font-size: small;
+}
+
+.contact-count {
+  padding-bottom: 0.5rem;
+  font-size: x-large;
+}
+.disclaimer {
+  font-size: 0.7rem;
+  letter-spacing: -1px;
+}
+
+.input-field-contact,
+.option-field {
+  letter-spacing: -1px;
+  font-size: 0.9rem;
+  border: none;
+  border-bottom: 2px solid #ddd;
+  margin-top: 20px;
+  width: 100%;
+  background-color: rgba(199, 199, 199, 0.422);
+  transition: background-color 0.3s;
+  padding: 8px 0;
+  text-indent: 0.5rem;
+  height: 1.5rem;
+}
+
+.input-field-contact::placeholder,
+.option-field::placeholder {
+  color: #474646;
+  opacity: 1;
+  text-indent: 0.5rem;
+}
+
+.input-field-contact:focus,
+.option-field:focus {
+  outline: none;
+}
+
+.input-field-contact:hover,
+.option-field:hover {
+  background-color: rgba(199, 199, 199, 0.822);
+}
+
+.textarea-field-contact,
+.option-field {
+  letter-spacing: -1px;
+  font-size: 0.9rem;
+  border: none;
+  border-bottom: 2px solid #ddd;
+  margin: 20px 0;
+  width: 100%;
+  background-color: rgba(199, 199, 199, 0.422);
+  transition: background-color 0.3s;
+  padding: 8px 0;
+  text-indent: 0.5rem;
+  height: 10rem;
+  resize: none;
+}
+
+.textarea-field-contact::placeholder,
+.option-field::placeholder {
+  color: #474646;
+  opacity: 1;
+  text-indent: 0.5rem;
+}
+
+.textarea-field-contact:focus,
+.option-field:focus {
+  outline: none;
+}
+
+.textarea-field-contact:hover,
+.option-field:hover {
+  background-color: rgba(199, 199, 199, 0.822);
+}
+
+.submit-contact {
+  font-weight: 100;
+  font-size: 16px;
+  letter-spacing: 0px;
+  width: 100%;
+  margin-top: 5%;
+  border-radius: 0px;
+  background-color: #ff8d1d;
+
+  &:disabled {
+    background-color: #ccc;
+    color: #fff;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+}
