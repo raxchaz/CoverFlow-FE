@@ -8,7 +8,7 @@ import TabBar from '../../ui/tabBar/tabBar.jsx';
 function NoticePage() {
   const [activePanelIndex, setActivePanelIndex] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 19;
+  const itemsPerPage = 10;
 
   const navigate = useNavigate();
 
