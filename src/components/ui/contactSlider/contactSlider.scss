@@ -45,23 +45,20 @@
   padding: 8px 0;
   text-indent: 0.5rem;
   height: 1.5rem;
-}
 
-.input-field-contact::placeholder,
-.option-field::placeholder {
-  color: #474646;
-  opacity: 1;
-  text-indent: 0.5rem;
-}
+  &::placeholder {
+    color: #474646;
+    opacity: 1;
+    text-indent: 0.5rem;
+  }
 
-.input-field-contact:focus,
-.option-field:focus {
-  outline: none;
-}
+  &:hover {
+    background-color: rgba(199, 199, 199, 0.822);
+  }
 
-.input-field-contact:hover,
-.option-field:hover {
-  background-color: rgba(199, 199, 199, 0.822);
+  &:focus {
+    outline: none;
+  }
 }
 
 .textarea-field-contact,
@@ -78,23 +75,20 @@
   text-indent: 0.5rem;
   height: 10rem;
   resize: none;
-}
 
-.textarea-field-contact::placeholder,
-.option-field::placeholder {
-  color: #474646;
-  opacity: 1;
-  text-indent: 0.5rem;
-}
+  &::placeholder {
+    color: #474646;
+    opacity: 1;
+    text-indent: 0.5rem;
+  }
 
-.textarea-field-contact:focus,
-.option-field:focus {
-  outline: none;
-}
+  &:focus {
+    outline: none;
+  }
 
-.textarea-field-contact:hover,
-.option-field:hover {
-  background-color: rgba(199, 199, 199, 0.822);
+  &:hover {
+    background-color: rgba(199, 199, 199, 0.822);
+  }
 }
 
 .submit-contact {
