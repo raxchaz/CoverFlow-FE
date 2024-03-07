@@ -9,7 +9,6 @@ const GlobalStyles = createGlobalStyle`
   * {
     padding: 0;
     font-family: 'Pretendard-Regular';
-    
   }
   
   html {

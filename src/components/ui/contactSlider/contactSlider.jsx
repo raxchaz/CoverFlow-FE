@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import './contactSlider.scss';
 import Disclamier from './disclamier.jsx';
 import { ACCESS_TOKEN, BASE_URL } from '../../global/constants/index.js';
-
+import ContactList from './contactList.jsx';
 // ======================= 스타일드 컴포넌트
 const StatusBar = styled.div`
   display: flex;
@@ -36,20 +36,14 @@ export default function ContactSlider() {
     title: '',
     content: '',
   });
-  const [contactList, setContactList] = useState([
-    {
-      inquiryId: 1234,
-      inquiryContent: '여기 사이트 접근이 어려워요',
-      inquiryStatus: '답변완료',
-      inquirerNickname: '무거운 피자',
-    },
-    {
-      inquiryId: 567,
-      inquiryContent: '기업 검색이 안 됩니다',
-      inquiryStatus: '답변대기',
-      inquirerNickname: '무거운 피자',
-    },
-  ]);
+  // const [contactList, setContactList] = useState([ ]);
+
+  const contactList = [...Array(50)].map((_, index) => ({
+    inquiryId: 1234,
+    inquiryContent: '여기 사이트 접근이 어려워요',
+    inquiryStatus: '답변완료',
+    inquirerNickname: '무거운 피자',
+  }));
 
   useEffect(() => {
     const token = localStorage.getItem(ACCESS_TOKEN);
@@ -74,7 +68,7 @@ export default function ContactSlider() {
       .then((response) => response.json())
       .then((data) => {
         console.log('내 문의 내역:', data);
-        setContactList(data.data);
+        // setContactList(data.data);
       })
       .catch((error) => console.error('회원 정보 불러오기 실패:', error));
   };
@@ -152,11 +146,7 @@ export default function ContactSlider() {
       )}
       {currentSection === 'contactList' && (
         <div>
-          {contactList.map((contact) => (
-            <div key={contact.inquiryId} className="box">
-              {contact.inquiryContent}
-            </div>
-          ))}
+          <ContactList contactList={contactList} />
         </div>
       )}
     </div>

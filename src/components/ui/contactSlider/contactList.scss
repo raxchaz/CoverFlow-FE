@@ -1,0 +1,53 @@
+.inquiry-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  border-bottom: 1px solid rgba(125, 125, 125, 0.193);
+  cursor: pointer;
+  outline: none;
+  line-height: 1.5;
+}
+
+.notice-content {
+  background-color: #fafafa;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: max-height 0.4s ease-in-out;
+  max-height: 0;
+  font-size: 12px;
+  width: 100%;
+  box-sizing: border-box;
+  display: block;
+}
+
+.inquiry-title {
+  height: auto;
+  width: 100%;
+}
+
+.inquiry-tag-container {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0;
+}
+
+.inquiry-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.inquiry-type-tag {
+  border: 1px solid rgba(151, 151, 151, 1);
+  border-radius: 30px;
+  font-size: x-small;
+  padding: 2px 8px;
+  color: rgba(151, 151, 151, 1);
+}
+.inquiry-date-tag {
+  padding-left: 0.5rem;
+  font-size: x-small;
+  color: rgba(151, 151, 151, 1);
+}
