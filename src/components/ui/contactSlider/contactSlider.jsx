@@ -40,7 +40,7 @@ export default function ContactSlider() {
 
   const contactList = [...Array(50)].map((_, index) => ({
     inquiryId: 1234,
-    inquiryContent: '여기 사이트 접근이 어려워요',
+    inquiryContent: '여기 사이트 접근이 어려워요' + index,
     inquiryStatus: '답변완료',
     inquirerNickname: '무거운 피자',
   }));
@@ -145,9 +145,7 @@ export default function ContactSlider() {
         </div>
       )}
       {currentSection === 'contactList' && (
-        <div>
-          <ContactList contactList={contactList} />
-        </div>
+        <ContactList contactList={contactList} />
       )}
     </div>
   );
