@@ -1,0 +1,52 @@
+.notice-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  font-family: 'Pretendard-Regular';
+  gap: 10px;
+  border-bottom: 1px solid black;
+  cursor: pointer;
+  outline: none;
+  line-height: 1.5;
+
+  h3 {
+    font-size: 12px;
+    margin-top: 13px;
+  }
+
+  h2 {
+    font-size: 16px;
+  }
+}
+
+.panel {
+  background-color: #fafafa;
+
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: max-height 0.4s ease-in-out;
+  max-height: 0;
+  font-size: 12px;
+  width: 100%;
+  box-sizing: border-box;
+
+  display: block;
+}
+
+.notice-list.active .panel {
+  max-height: 326px;
+  font-size: 12px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: sticky;
+  inset: 0;
+  button {
+    border-radius: 50%;
+  }
+}
