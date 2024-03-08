@@ -1,0 +1,111 @@
+.inquiry-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  border-bottom: 1px solid rgba(125, 125, 125, 0.193);
+  cursor: pointer;
+  outline: none;
+  line-height: 1.5;
+  height: fit-content;
+}
+.inquiry-container {
+  position: relative;
+  max-height: 68vh;
+  padding: 30px 0;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.inquiry-container::-webkit-scrollbar {
+  display: none;
+}
+.inquiry-title {
+  height: 7rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.inquiry-tag-container {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0;
+}
+
+.inquiry-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.inquiry-type-tag {
+  border: 1px solid rgba(151, 151, 151, 1);
+  border-radius: 30px;
+  font-size: x-small;
+  padding: 2px 8px;
+  color: rgba(151, 151, 151, 1);
+}
+.inquiry-date-tag {
+  padding-left: 0.5rem;
+  font-size: x-small;
+  color: rgba(151, 151, 151, 1);
+}
+
+.contact-inquiry-title {
+  font-size: small;
+  font-family: 'Pretendard-SemiBold';
+}
+
+.inquiry-content {
+  background-color: rgba(241, 241, 241, 1);
+  width: 100%;
+  min-height: 3rem;
+  text-indent: 0.3rem;
+  padding: 0.3rem 0.5rem;
+  margin-bottom: 1rem;
+  font-size: small;
+  border-radius: 15px;
+}
+
+.inquiry-button-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 1.5rem;
+  position: absolute;
+  bottom: 10;
+  left: 10%;
+  width: 80%;
+}
+
+.inquiry-index-btn {
+  border-radius: 100%;
+  width: 1.5rem;
+  height: 1.5rem;
+  font-size: small;
+  text-align: center;
+  padding-top: auto;
+  border: solid 1px #cacaca;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition:
+    background-color 0.3s,
+    color 0.3s,
+    box-shadow 0.3s;
+}
+
+.inquiry-index-btn.selected {
+  background-color: #ff8d1d;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.inquiry-index-btn:hover {
+  background-color: #ff8d1d;
+  color: #ffffff;
+}
