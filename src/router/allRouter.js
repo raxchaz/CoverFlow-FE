@@ -34,6 +34,7 @@ import TokenManagement from '../components/global/token/tokenManagement';
 
 /* 관리자 페이지  */
 import AdminMainPage from '../components/pages/adminPage/adminMainPage.jsx';
+import PremiumTicket from '../components/pages/premiumPage/premiumTicket.jsx';
 
 /* ===================================================================  */
 
@@ -58,6 +59,7 @@ const AllRouter = () => {
 
         <Route path="/store" element={<Store />} />
         <Route path="/mypage" element={<MyPage />} />
+        <Route path="/premium" element={<PremiumTicket />} />
         <Route path="/notification" element={<NotificationPage />} />
         <Route path="/company-regist" element={<CompanyRegistPage />} />
 
