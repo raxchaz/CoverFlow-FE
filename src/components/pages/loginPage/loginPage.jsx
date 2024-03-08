@@ -113,6 +113,7 @@ function LoginPage() {
           </LoginButton>
 
           <LoginButton href={`${BASE_URL}/oauth2/authorization/google`}>
+
             <img src={Google} alt="Google 로그인" className="google-login" />
           </LoginButton>
         </LoginButtonsContainer>
