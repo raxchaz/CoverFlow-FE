@@ -57,44 +57,40 @@ function NoticePage() {
 
         {paginatedList.map((item, index) => (
           <div
-            className={`notice-list ${activePanelIndex === index ? 'active' : ''}`}
+            className={`notice-list ${activePanelIndex === index ? 'active' : ''} `}
             key={index}
             onClick={() => handlePanelToggle(index)}
           >
             <h3>{item.date}</h3>
             <h2>{item.title}</h2>
             <div className="panel">
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  marginBottom: '12px',
-                }}
-              >
-                <div> 안녕하세요.</div>
-                <div>기업 정보 QNA 서비스 코버플로우입니다.</div>
+              <div>
+                <span> 안녕하세요.</span>
+                <span>기업 정보 QNA 서비스 코버플로우입니다.</span>
               </div>
-              <div style={{ marginBottom: '20px' }}>
-                <div>
+              <div>
+                <span>
                   코버 플로우를 이용해주시는 회원님께 더 나은 서비스를 제공할 수
                   있도록
-                </div>
-                <div>
+                </span>
+                <span>
                   개인정보 처리 방침 문서를 변경할 예정임을 알려드립니다.
-                </div>
+                </span>
               </div>
-              <h3 style={{ fontWeight: 'semibold' }}>변경 내용(v.2.4.1)</h3>
+              <h3>변경 내용(v.2.4.1)</h3>
               <div>
-                <div>고객 지원을 위한 개인정보 수탁사가 변경됩니다.</div>
-                <div>
+                <span>고객 지원을 위한 개인정보 수탁사가 변경됩니다.</span>
+                <span>
                   개인정보 파기 절차와 파기 예외 대상에 대한 내용을
                   보강하였습니다.
-                </div>
-                <div>개인정보 보호 책임자가 변경됩니다.</div>
+                </span>
+                <span>개인정보 보호 책임자가 변경됩니다.</span>
               </div>
-              <h3 style={{ fontWeight: 'semibold' }}>변경 시기</h3>
-              <div>변경된 개인정보 처리방침은 시행일인 2024년 3월 30일부터</div>
-              <div>효력이 발생합니다.</div>
+              <h3>변경 시기</h3>
+              <span>
+                변경된 개인정보 처리방침은 시행일인 2024년 3월 30일부터
+              </span>
+              <span>효력이 발생합니다.</span>
             </div>
           </div>
         ))}
