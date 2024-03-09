@@ -26,14 +26,13 @@ const StatusTab = styled.div`
   transition:
     border-bottom 0.3s ease-in-out,
     color 0.3s ease-in-out;
-  ${(props) => props.current && 'color: black; border-bottom: 3px solid black;'}
+  ${(props) => props.current && 'color: black; border-bottom: 4px solid black;'}
 `;
 
 const PremiumTicket = () => {
   const [currentSection, setCurrentSection] = useState('buy');
   const navigate = useNavigate();
   const handleBuyClick = () => {
-    console.log('nma');
     navigate('/buyer-info');
   };
 
