@@ -21,6 +21,11 @@
   display: flex;
   align-items: center;
   justify-content: space-around;
+  img {
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }
 
 .button {
@@ -54,6 +59,16 @@
   flex-direction: column;
   align-self: start;
   color: #424242;
+}
+
+.detail {
+  text-decoration: underline;
+  color: #bdbdbd;
+  font-weight: lighter;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.5;
+  }
 }
 
 .company {

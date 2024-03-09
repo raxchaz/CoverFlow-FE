@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import '../../../asset/sass/pages/myPage/premiumPage.scss';
 import VectorIcon from '../../../asset/image/vector.svg';
 import CheckIcon from '../../../asset/image/check.svg';
+import CheckIconRectangle from '../../../asset/image/check_orange.svg';
 import TabBar from '../../ui/tabBar/tabBar';
 import BannerImage from '../../ui/banner/bannerImage';
 import { useNavigate } from 'react-router-dom';
@@ -34,9 +35,13 @@ const StatusTab = styled.div`
 
 const PremiumPage = () => {
   const [currentSection, setCurrentSection] = useState('buy');
+  const [isChecked, setIsChecked] = useState(false);
   const navigate = useNavigate();
   const handlePaymentClick = () => {
     navigate('/not-found');
+  };
+  const handleCheckClick = () => {
+    setIsChecked((check) => !check);
   };
 
   return (
@@ -74,9 +79,14 @@ const PremiumPage = () => {
             <img loading="lazy" src={VectorIcon} />
           </div>
           <div className="pay-agreement">
-            <img src={CheckIcon} alt="check" />
+            <img
+              src={isChecked ? CheckIconRectangle : CheckIcon}
+              alt="check"
+              onClick={handleCheckClick}
+            />
+
             <span>결제 정보 확인 및 정보 제공 동의</span>
-            <span>자세히</span>
+            <span className="detail">자세히</span>
           </div>
           <button onClick={handlePaymentClick} className="button">
             동의하고 결제하기
