@@ -97,9 +97,13 @@ function NoticePage() {
 
         <div className="button-container">
           {[...Array(totalPages)].map((_, index) => (
-            <button key={index} onClick={() => handlePageClick(index + 1)}>
+            <div
+              className="notice-button"
+              key={index}
+              onClick={() => handlePageClick(index + 1)}
+            >
               {index + 1}
-            </button>
+            </div>
           ))}
         </div>
       </StyledHeader>
