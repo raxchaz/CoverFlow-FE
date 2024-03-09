@@ -4,7 +4,7 @@
   justify-content: center;
   align-items: flex-start;
   font-family: 'Pretendard-Regular';
-  gap: 10px;
+  gap: 8px;
   border-bottom: 1px solid rgba(125, 125, 125, 0.193);
   cursor: pointer;
   outline: none;
@@ -60,7 +60,6 @@
 
   justify-content: space-between;
   align-items: center;
-  margin-top: 3%;
   padding: 0 10px;
   position: sticky;
   inset: 0;
@@ -83,10 +82,13 @@
     background-color 0.3s,
     color 0.3s,
     box-shadow 0.3s;
+  &:hover {
+    background-color: #ff8d1d;
+    color: #ffffff;
+    font-weight: bold;
+  }
 }
 
-.notice-button:hover {
-  background-color: #ff8d1d;
-  color: #ffffff;
-  font-weight: bold;
+.active-page {
+  background-color: orange;
 }
