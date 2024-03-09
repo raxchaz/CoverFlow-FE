@@ -34,7 +34,6 @@ import TokenManagement from '../components/global/token/tokenManagement';
 
 /* 관리자 페이지  */
 import AdminMainPage from '../components/pages/adminPage/adminMainPage.jsx';
-// import PremiumTicket from '../components/pages/premiumPage/premiumTicket.jsx';
 
 /* ===================================================================  */
 
@@ -56,10 +55,8 @@ const AllRouter = () => {
 
         <Route path="/login" element={<LoginPage />} />
         <Route path="/login/member-info" element={<NicknamePage />} />
-
         <Route path="/store" element={<Store />} />
         <Route path="/mypage" element={<MyPage />} />
-        {/* <Route path="/premium" element={<PremiumTicket />} /> */}
         <Route path="/notification" element={<NotificationPage />} />
         <Route path="/company-regist" element={<CompanyRegistPage />} />
 
@@ -69,7 +66,6 @@ const AllRouter = () => {
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/feedback" element={<FeedbackPage />} />
         <Route path="/secession-page" element={<SecessionPage />} />
-
         <Route path="/search-company" element={<SearchPage />} />
         <Route path="/search-result" element={<SearchResultPage />} />
         <Route path="/company-info/:companyId" element={<CompanyInfoPage />} />
