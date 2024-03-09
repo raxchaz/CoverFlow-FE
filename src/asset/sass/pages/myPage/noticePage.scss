@@ -9,7 +9,7 @@
   cursor: pointer;
   outline: none;
   line-height: 1.5;
-  padding: 0.625rem 1.25rem;
+  padding: 0 1.25rem;
 
   h3 {
     font-size: 12px;
@@ -57,10 +57,14 @@
 
 .button-container {
   display: flex;
-  justify-content: center;
+
+  justify-content: space-between;
   align-items: center;
+  margin-top: 3%;
+  padding: 0 10px;
   position: sticky;
   inset: 0;
+  // width: 100%;
 }
 
 .notice-button {
@@ -79,4 +83,10 @@
     background-color 0.3s,
     color 0.3s,
     box-shadow 0.3s;
+}
+
+.notice-button:hover {
+  background-color: #ff8d1d;
+  color: #ffffff;
+  font-weight: bold;
 }

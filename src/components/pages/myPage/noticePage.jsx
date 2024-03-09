@@ -8,6 +8,10 @@ import TabBar from '../../ui/tabBar/tabBar.jsx';
 function NoticePage() {
   const [activePanelIndex, setActivePanelIndex] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
+  // const [currentGroup, setCurrentGroup] = useState(0);
+
+  const [startNoticeIndex, setStartNoticeIndex] = useState(0);
+
   const itemsPerPage = 10;
 
   const navigate = useNavigate();
@@ -24,9 +28,23 @@ function NoticePage() {
     setCurrentPage(page);
   };
 
+  const handlePreviousGroup = () => {
+    const previousGroupStart = Math.max(0, startNoticeIndex - itemsPerPage);
+    const previousGroupPage = Math.ceil(previousGroupStart / itemsPerPage) + 1;
+    setStartNoticeIndex(previousGroupStart);
+    setCurrentPage(previousGroupPage);
+  };
+
+  const handleNextGroup = () => {
+    const nextGroupStart = Math.min(
+      totalNotice - itemsPerPage,
+      startNoticeIndex + itemsPerPage,
+    );
+    setStartNoticeIndex(nextGroupStart);
+  };
+
   const noticeList = [...Array(itemsPerPage * 5)].map((_, index) => ({
-    // 총 57개의 리스트
-    date: '2024-01-01',
+    date: `2024-01-0${index}`,
     title: `[공지] 개인정보 처리방침 변경 사전 안내`,
     content: `안녕하세요,
 기업 정보 QNA 서비스 코버플로우 입니다.
@@ -41,14 +59,30 @@ function NoticePage() {
 효력이 발생합니다.`,
   }));
 
-  const getPaginatedList = (list, page) => {
-    const startIndex = (page - 1) * itemsPerPage;
+  const totalNotice = noticeList.length;
+
+  // const getPaginatedList = (list, page) => {
+  //   const startIndex = (page - 1) * itemsPerPage;
+  //   const endIndex = startIndex + itemsPerPage;
+  //   return list.slice(startIndex, endIndex);
+  // };
+
+  // const paginatedList = getPaginatedList(noticeList, currentPage);
+
+  const getPaginatedList = (list, page, startIndex) => {
     const endIndex = startIndex + itemsPerPage;
     return list.slice(startIndex, endIndex);
   };
 
-  const paginatedList = getPaginatedList(noticeList, currentPage);
+  const paginatedList = getPaginatedList(
+    noticeList,
+    currentPage,
+    startNoticeIndex,
+  );
+
   const totalPages = Math.ceil(noticeList.length / itemsPerPage);
+
+  // const totalGroup = Math.ceil(totalPages / itemsPerPage);
 
   return (
     <StyledPage className="main-page-container">
@@ -96,6 +130,27 @@ function NoticePage() {
         ))}
 
         <div className="button-container">
+          <div
+            onClick={handlePreviousGroup}
+            // disabled={currentGroup === 0}
+            style={{ cursor: 'pointer' }}
+          >
+            <svg
+              width="8"
+              height="15"
+              viewBox="0 0 6 10"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M5 9L1 5L5 1"
+                stroke="#1D1D1F"
+                strokeWidth="0.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </div>
           {[...Array(totalPages)].map((_, index) => (
             <div
               className="notice-button"
@@ -105,6 +160,27 @@ function NoticePage() {
               {index + 1}
             </div>
           ))}
+          <div
+            style={{ cursor: 'pointer' }}
+            onClick={handleNextGroup}
+            // disabled={currentGroup === totalGroup - 1}
+          >
+            <svg
+              width="8"
+              height="15"
+              viewBox="0 0 6 10"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M1 9L5 5L1 1"
+                stroke="#1D1D1F"
+                strokeWidth="0.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </div>
         </div>
       </StyledHeader>
       <TabBar />
