@@ -4,12 +4,12 @@
   justify-content: center;
   align-items: flex-start;
   font-family: 'Pretendard-Regular';
-  gap: 10px;
+  gap: 8px;
   border-bottom: 1px solid rgba(125, 125, 125, 0.193);
   cursor: pointer;
   outline: none;
   line-height: 1.5;
-  padding: 0.625rem 1.25rem;
+  padding: 0 1.25rem;
 
   h3 {
     font-size: 12px;
@@ -57,11 +57,38 @@
 
 .button-container {
   display: flex;
-  justify-content: center;
+
+  justify-content: space-between;
   align-items: center;
+  padding: 0 10px;
   position: sticky;
   inset: 0;
-  button {
-    border-radius: 50%;
+  // width: 100%;
+}
+
+.notice-button {
+  border-radius: 100%;
+  width: 1.5rem;
+  height: 1.5rem;
+  font-size: small;
+  text-align: center;
+  padding-top: auto;
+  border: solid 1px #cacaca;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition:
+    background-color 0.3s,
+    color 0.3s,
+    box-shadow 0.3s;
+  &:hover {
+    background-color: #ff8d1d;
+    color: #ffffff;
+    font-weight: bold;
   }
+}
+
+.active-page {
+  background-color: orange;
 }
