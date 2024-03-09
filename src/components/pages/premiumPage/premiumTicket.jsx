@@ -61,8 +61,8 @@ const PremiumTicket = () => {
         <div className="content-wrapper">
           <div className="unlimited-pass">무제한 패스권</div>
           <div className="button-group">
-            <button>질문 열람 무제한</button>
-            <button>질문 열람 무제한</button>
+            <div className="tag">질문 열람 무제한</div>
+            <div className="tag">질문 열람 무제한</div>
           </div>
           <div className="premium-info-wrapper">
             <div className="premium-info">
