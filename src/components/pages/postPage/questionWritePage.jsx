@@ -34,15 +34,15 @@ function QuestionWritePage() {
     console.log(title, companyId, content, reward);
 
     try {
-      const response = await fetch(`${BASE_URL}/api/question/save-question`, {
+      const response = await fetch(`${BASE_URL}/api/question/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
         },
         body: JSON.stringify({
-          title: title,
-          content: content,
+          title,
+          content,
           companyId: parseInt(companyId),
           reward: parseInt(reward),
         }),
