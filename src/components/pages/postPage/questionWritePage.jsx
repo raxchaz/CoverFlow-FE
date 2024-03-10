@@ -34,7 +34,7 @@ function QuestionWritePage() {
     console.log(title, companyId, content, reward);
 
     try {
-      const response = await fetch(`${BASE_URL}/api/question/`, {
+      const response = await fetch(`${BASE_URL}/api/question`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

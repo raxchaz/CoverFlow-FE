@@ -65,7 +65,7 @@ export default function ContactSlider() {
   }, [navigate]);
 
   const loadUserData = () => {
-    fetch(`${BASE_URL}/api/inquiry?pageNo=0&criterion=createdAt`, {
+    fetch(`${BASE_URL}/api/inquiry?pageNo=0`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

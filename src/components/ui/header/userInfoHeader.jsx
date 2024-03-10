@@ -35,7 +35,7 @@ function UserInfoHeader() {
     dispatch(setLoggedIn(loggedInStatus));
 
     if (loggedInStatus) {
-      fetch(`${BASE_URL}/api/member/`, {
+      fetch(`${BASE_URL}/api/member`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

@@ -81,7 +81,7 @@ function CompanyRegistPage() {
     }
 
     axios
-      .post(`${BASE_URL}/api/company/`, companyInfo, {
+      .post(`${BASE_URL}/api/company`, companyInfo, {
         headers: {
           'Content-Type': 'application/json',
         },

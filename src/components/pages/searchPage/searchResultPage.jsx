@@ -123,7 +123,7 @@ function SearchResultPage() {
     async function fetchData() {
       try {
         const response = await fetch(
-          `${BASE_URL}/api/company/?pageNo=1&name=${keyword}`,
+          `${BASE_URL}/api/company?pageNo=1&name=${keyword}`,
           {
             method: 'GET',
             headers: {
