@@ -5,7 +5,7 @@ import './contactSlider.scss';
 import Disclamier from './disclamier.jsx';
 import { ACCESS_TOKEN, BASE_URL } from '../../global/constants/index.js';
 import ContactList from './contactList.jsx';
-// ======================= 스타일드 컴포넌트
+
 const StatusBar = styled.div`
   display: flex;
   justify-content: space-between;
@@ -27,6 +27,7 @@ const StatusTab = styled.div`
     color 0.3s ease-in-out;
   ${(props) => props.current && 'color: black; border-bottom: 2px solid black;'}
 `;
+// ======================= 스타일드 컴포넌트
 
 export default function ContactSlider() {
   const navigate = useNavigate();
@@ -39,10 +40,12 @@ export default function ContactSlider() {
   const [contactList, setContactList] = useState([]);
 
   // const contactList = [...Array(3)].map((_, index) => ({
-  //   inquiryId: 1234,
-  //   inquiryContent: '여기 사이트 접근이 어려워요' + index,
-  //   inquiryStatus: '답변완료',
-  //   inquirerNickname: '무거운 피자',
+  //  inquiryId: 1234,
+  // inquiryContent: '여기 사이트 접근이 어려워요' + index,
+  // inquiryAnswer: '어쩔티비',
+  // inquiryStatus: 'COMPLETE',
+  // inquirerNickname: '무거운 피자',
+  // createdAt: '2024-05-90',
   // }));
 
   useEffect(() => {
@@ -58,7 +61,7 @@ export default function ContactSlider() {
   }, [navigate]);
 
   const loadUserData = () => {
-    fetch(`${BASE_URL}/api/inquiry/inquiry`, {
+    fetch(`${BASE_URL}/api/inquiry/`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -71,6 +74,29 @@ export default function ContactSlider() {
         setContactList(data.data);
       })
       .catch((error) => console.error('회원 정보 불러오기 실패:', error));
+  };
+
+  const submitContact = () => {
+    fetch(`${BASE_URL}/api/inquiry/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
+      },
+      body: JSON.stringify(contact),
+    })
+      .then((data) => {
+        console.log(data.statusCode, '성공적으로 저장되었습니다');
+        loadUserData();
+      })
+      .then(
+        setCurrentSection('contactList'),
+        setcontact({
+          title: '',
+          content: '',
+        }),
+      )
+      .catch((error) => console.error('문의 등록 실패:', error));
   };
 
   const handleChange = (e) => {
@@ -137,7 +163,7 @@ export default function ContactSlider() {
               type="submit"
               className="submit-contact"
               disabled={contact.title === '' || contact.content === ''}
-              onClick={() => alert('제출 완료')}
+              onClick={submitContact}
             >
               제출
             </button>

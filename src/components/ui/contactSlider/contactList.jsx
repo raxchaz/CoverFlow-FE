@@ -50,12 +50,11 @@ export default function ContactList(props) {
               <div className="inquiry-title">
                 <div className="inquiry-tag-container">
                   <div className="inquiry-type-tag">{item.inquiryStatus}</div>
-                  <div className="inquiry-date-tag">2024-03-05</div>
+                  <div className="inquiry-date-tag">{item.createdAt}</div>
                 </div>
+                {item.inquiryContent}
                 <div className="inquiry-header">
-                  <span className="contact-inquiry-title">
-                    {item.inquiryContent}
-                  </span>
+                  <span className="contact-inquiry-title"></span>
 
                   <svg
                     width="16"
@@ -79,7 +78,15 @@ export default function ContactList(props) {
                 </div>
               </div>
               {activeToggleIndex === index && (
-                <div className="inquiry-content">{item.inquiryContent}</div>
+                <div>
+                  <div className="inquiry-content-question">
+                    {item.inquiryContent}
+                  </div>
+                  <div className="inquiry-content-answer">
+                    <div className="inquiry-content-answer-tag">코버플로우</div>
+                    {item.inquiryAnswer}
+                  </div>
+                </div>
               )}
             </div>
           ))
