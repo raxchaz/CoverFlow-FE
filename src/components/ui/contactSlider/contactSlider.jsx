@@ -41,16 +41,16 @@ export default function ContactSlider() {
     title: '',
     content: '',
   });
-  // const [contactList, setContactList] = useState([]);
+  const [contactList, setContactList] = useState([]);
 
-  const contactList = [...Array(3)].map((_, index) => ({
-    inquiryId: 1234,
-    inquiryContent: '여기 사이트 접근이 어려워요' + index,
-    inquiryAnswer: '어쩔티비',
-    inquiryStatus: 'COMPLETE',
-    inquirerNickname: '무거운 피자',
-    createdAt: '2024-05-90',
-  }));
+  // const contactList = [...Array(3)].map((_, index) => ({
+  //   inquiryId: 1234,
+  //   inquiryContent: '여기 사이트 접근이 어려워요' + index,
+  //   inquiryAnswer: '그렇군요',
+  //   inquiryStatus: 'COMPLETE',
+  //   inquirerNickname: '무거운 피자',
+  //   createdAt: '2024-05-90',
+  // }));
 
   useEffect(() => {
     const token = localStorage.getItem(ACCESS_TOKEN);
@@ -76,7 +76,7 @@ export default function ContactSlider() {
       .then((response) => response.json())
       .then((data) => {
         console.log('내 문의 내역:', data);
-        // setContactList(data.data);
+        setContactList(data.data);
       })
       .catch((error) => console.error('문의 내역 불러오기 실패:', error));
   };
