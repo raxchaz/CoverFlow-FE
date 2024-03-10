@@ -55,7 +55,7 @@ function InfoEditPage() {
 
   /* 사용자의 닉네임과 붕어빵 개수를 불러옵니다. */
   const loadUserData = () => {
-    fetch(`${BASE_URL}/api/member/find-member`, {
+    fetch(`${BASE_URL}/api/member/`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

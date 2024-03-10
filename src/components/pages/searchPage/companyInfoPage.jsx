@@ -76,15 +76,12 @@ function CompanyInfoPage() {
     console.log('회사 companyId: ', companyId);
     async function fetchCompanyData() {
       try {
-        const response = await fetch(
-          `${BASE_URL}/api/company/find-company/${companyId}`,
-          {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json; charset=UTF-8',
-            },
+        const response = await fetch(`${BASE_URL}/api/company/${companyId}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json; charset=UTF-8',
           },
-        );
+        });
         const data = await response.json();
 
         if (response.ok && data.data) {

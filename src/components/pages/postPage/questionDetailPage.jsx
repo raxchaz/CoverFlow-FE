@@ -102,7 +102,7 @@ function QuestionDetailPage() {
 
   const fetchQuestionDetail = (questionId) => {
     axios
-      .get(`${BASE_URL}/api/question/find-question/${questionId}`, {
+      .get(`${BASE_URL}/api/question/${questionId}`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
@@ -134,13 +134,13 @@ function QuestionDetailPage() {
 
     const requestData = {
       content: answerRef.current.value,
-      questionId: questionId,
+      questionId,
     };
 
     console.log('답변 제출 중:', requestData);
 
     await axios
-      .post(`${BASE_URL}/api/answer/save-answer`, requestData, {
+      .post(`${BASE_URL}/api/answer`, requestData, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
