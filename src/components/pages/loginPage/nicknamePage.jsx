@@ -147,7 +147,7 @@ const NicknamePage = () => {
         tagData = '현직자';
       }
 
-      const response = await fetch(`${BASE_URL}/api/member/save-member-info`, {
+      const response = await fetch(`${BASE_URL}/api/member/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
