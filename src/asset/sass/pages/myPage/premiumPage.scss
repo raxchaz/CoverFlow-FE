@@ -37,7 +37,7 @@
 .tag {
   border: 1px solid black;
   padding: 5px;
-  width: 88px;
+  width: 6.5rem;
   border-radius: 5px;
   font-size: 12px;
   margin-top: 4px;
@@ -150,6 +150,7 @@
   align-self: start;
   display: flex;
   gap: 6px;
+  text-align: center;
   color: #000;
   font-weight: 300;
   white-space: nowrap;
