@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import './contactList.scss';
+import Plus from '../../../asset/image/plus.svg';
+import Warning from '../../../asset/image/warning.svg';
 
 export default function ContactList(props) {
   const [activeToggleIndex, setActiveToggleIndex] = useState(null);
@@ -38,48 +40,72 @@ export default function ContactList(props) {
   return (
     <>
       <div className="inquiry-container">
-        {paginatedList.map((item, index) => (
-          <div
-            className={`inquiry-item ${activeToggleIndex === index ? 'active' : ''}`}
-            key={item.inquiryId}
-            onClick={() => toggleFunction(index)}
-          >
-            <div className="inquiry-title">
-              <div className="inquiry-tag-container">
-                <div className="inquiry-type-tag">{item.inquiryStatus}</div>
-                <div className="inquiry-date-tag">2024-03-05</div>
-              </div>
-              <div className="inquiry-header">
-                <span className="contact-inquiry-title">
-                  {item.inquiryContent}
-                </span>
+        {paginatedList.length > 0 ? (
+          paginatedList.map((item, index) => (
+            <div
+              className={`inquiry-item ${activeToggleIndex === index ? 'active' : ''}`}
+              key={item.inquiryId}
+              onClick={() => toggleFunction(index)}
+            >
+              <div className="inquiry-title">
+                <div className="inquiry-tag-container">
+                  <div className="inquiry-type-tag">{item.inquiryStatus}</div>
+                  <div className="inquiry-date-tag">2024-03-05</div>
+                </div>
+                <div className="inquiry-header">
+                  <span className="contact-inquiry-title">
+                    {item.inquiryContent}
+                  </span>
 
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 14 14"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d={
-                      activeToggleIndex === index
-                        ? 'M11.0837 8.75L7.00033 4.66667L2.91699 8.75'
-                        : 'M11.0837 5.25L7.00033 9.33333L2.91699 5.25'
-                    }
-                    stroke="#1D1D1F"
-                    strokeWidth="0.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 14 14"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d={
+                        activeToggleIndex === index
+                          ? 'M11.0837 8.75L7.00033 4.66667L2.91699 8.75'
+                          : 'M11.0837 5.25L7.00033 9.33333L2.91699 5.25'
+                      }
+                      stroke="#1D1D1F"
+                      strokeWidth="0.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </div>
               </div>
+              {activeToggleIndex === index && (
+                <div className="inquiry-content">{item.inquiryContent}</div>
+              )}
             </div>
-            {activeToggleIndex === index && (
-              <div className="inquiry-content">{item.inquiryContent}</div>
-            )}
+          ))
+        ) : (
+          <div className="inquiry-regist-section-wrapper">
+            <img
+              className="inquiry-regist-section-img"
+              src={Warning}
+              alt="Warning Icon"
+            />
+            <div className="failed-text">문의 내역이 없습니다</div>
+            <div className="failed-text2">
+              코버플로우에게 궁금한 내용을 문의해주세요.
+            </div>
+
+            <div className="registContainer">
+              <img className="plus-icon" src={Plus} alt="Plus Icon" />
+              <span
+                className="contact-inquiry-registration"
+                onClick={() => props.setCurrentSection('contact')}
+              >
+                문의 작성하기
+              </span>
+            </div>
           </div>
-        ))}
+        )}
       </div>
       <div className="inquiry-button-container">
         <div
@@ -105,7 +131,7 @@ export default function ContactList(props) {
         </div>
         {[...Array(endPage - startPage + 1)].map((_, index) => (
           <div
-            className="inquiry-index-btn"
+            className={`inquiry-index-btn ${currentPage === startPage + index ? 'selected' : ''}`}
             key={index}
             onClick={() => handlePageClick(startPage + index)}
           >
@@ -140,6 +166,7 @@ export default function ContactList(props) {
 
 ContactList.propTypes = {
   itemsPerPage: PropTypes.number.isRequired,
+  setCurrentSection: PropTypes.func.isRequired,
   contactList: PropTypes.arrayOf(
     PropTypes.shape({
       inquiryId: PropTypes.number.isRequired,
