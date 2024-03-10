@@ -90,7 +90,7 @@ function SearchInput() {
   // 자동완성 데이터 요청
   const fetchAutoCompleteData = (name) => {
     axios
-      .get(`${BASE_URL}/api/company/?pageNo=0&name=${name}`)
+      .get(`${BASE_URL}/api/company?pageNo=0&name=${name}`)
       .then((response) => {
         setAutoCompleteValue(response.data.data);
       })
