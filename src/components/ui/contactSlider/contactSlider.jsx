@@ -41,16 +41,16 @@ export default function ContactSlider() {
     title: '',
     content: '',
   });
-  const [contactList, setContactList] = useState([]);
+  // const [contactList, setContactList] = useState([]);
 
-  // const contactList = [...Array(3)].map((_, index) => ({
-  //  inquiryId: 1234,
-  // inquiryContent: '여기 사이트 접근이 어려워요' + index,
-  // inquiryAnswer: '어쩔티비',
-  // inquiryStatus: 'COMPLETE',
-  // inquirerNickname: '무거운 피자',
-  // createdAt: '2024-05-90',
-  // }));
+  const contactList = [...Array(3)].map((_, index) => ({
+    inquiryId: 1234,
+    inquiryContent: '여기 사이트 접근이 어려워요' + index,
+    inquiryAnswer: '어쩔티비',
+    inquiryStatus: 'COMPLETE',
+    inquirerNickname: '무거운 피자',
+    createdAt: '2024-05-90',
+  }));
 
   useEffect(() => {
     const token = localStorage.getItem(ACCESS_TOKEN);
@@ -65,23 +65,24 @@ export default function ContactSlider() {
   }, [navigate]);
 
   const loadUserData = () => {
-    fetch(`${BASE_URL}/api/inquiry/`, {
+    fetch(`${BASE_URL}/api/inquiry?pageNo=0&criterion=createdAt`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
+        'Authorization-refresh': `Bearer ${localStorage.getItem(REFRESH_TOKEN)}`,
       },
     })
       .then((response) => response.json())
       .then((data) => {
         console.log('내 문의 내역:', data);
-        setContactList(data.data);
+        // setContactList(data.data);
       })
-      .catch((error) => console.error('회원 정보 불러오기 실패:', error));
+      .catch((error) => console.error('문의 내역 불러오기 실패:', error));
   };
 
   const submitContact = () => {
-    fetch(`${BASE_URL}/api/inquiry/`, {
+    fetch(`${BASE_URL}/api/inquiry`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -111,6 +112,7 @@ export default function ContactSlider() {
       ...prevInfo,
       [name]: value,
     }));
+    console.log(contact);
   };
   // ======================= fetch 관련 기능
 
@@ -121,7 +123,7 @@ export default function ContactSlider() {
           current={currentSection === 'contact'}
           onClick={() => setCurrentSection('contact')}
         >
-          문의 하기
+          ` 문의 하기
         </StatusTab>
         <StatusTab
           current={currentSection === 'contactList'}
