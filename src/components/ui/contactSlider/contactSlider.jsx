@@ -3,7 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import './contactSlider.scss';
 import Disclamier from './disclamier.jsx';
-import { ACCESS_TOKEN, BASE_URL } from '../../global/constants/index.js';
+import {
+  ACCESS_TOKEN,
+  BASE_URL,
+  REFRESH_TOKEN,
+} from '../../global/constants/index.js';
 import ContactList from './contactList.jsx';
 
 const StatusBar = styled.div`
@@ -82,11 +86,12 @@ export default function ContactSlider() {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
+        'Authorization-refresh': `Bearer ${localStorage.getItem(REFRESH_TOKEN)}`,
       },
       body: JSON.stringify(contact),
     })
-      .then((data) => {
-        console.log(data.statusCode, '성공적으로 저장되었습니다');
+      .then((res) => {
+        console.log(res, '성공적으로 저장되었습니다');
         loadUserData();
       })
       .then(
@@ -107,6 +112,7 @@ export default function ContactSlider() {
       [name]: value,
     }));
   };
+  // ======================= fetch 관련 기능
 
   return (
     <div className="slider-container">
