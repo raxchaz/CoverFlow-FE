@@ -72,7 +72,7 @@ const PremiumTicket = () => {
               </div>
               <div className="duration-info">
                 <div className="label">이용 기간</div>
-                <div className="value">무제한 </div>
+                <div className="value">무제한</div>
               </div>
             </div>
             <img onClick={handleBuyClick} loading="lazy" src={VectorIcon} />
@@ -82,8 +82,8 @@ const PremiumTicket = () => {
         <div className="content-wrapper">
           <div className="unlimited-pass">무제한 패스권</div>
           <div className="button-group">
-            <button>사용 중</button>
-            <button>결제일 2023-05-29</button>
+            <div className="tag">사용 중</div>
+            <div className="tag">결제일 2023-05-29</div>
           </div>
           <div className="premium-info-wrapper">
             <div className="premium-info">
