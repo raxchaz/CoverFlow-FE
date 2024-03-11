@@ -55,7 +55,7 @@ function InfoEditPage() {
 
   /* 사용자의 닉네임과 붕어빵 개수를 불러옵니다. */
   const loadUserData = () => {
-    fetch(`${BASE_URL}/api/member/find-member`, {
+    fetch(`${BASE_URL}/api/member`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -96,8 +96,8 @@ function InfoEditPage() {
   const handleModifyNickname = async () => {
     try {
       console.log('닉네임 변경 요청 중...');
-      const response = await fetch(`${BASE_URL}/api/member/update-nickname`, {
-        method: 'POST',
+      const response = await fetch(`${BASE_URL}/api/member`, {
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,

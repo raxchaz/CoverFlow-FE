@@ -3,9 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import './contactSlider.scss';
 import Disclamier from './disclamier.jsx';
-import { ACCESS_TOKEN, BASE_URL } from '../../global/constants/index.js';
+import {
+  ACCESS_TOKEN,
+  BASE_URL,
+  REFRESH_TOKEN,
+} from '../../global/constants/index.js';
 import ContactList from './contactList.jsx';
-// ======================= 스타일드 컴포넌트
+
 const StatusBar = styled.div`
   display: flex;
   justify-content: space-between;
@@ -27,6 +31,7 @@ const StatusTab = styled.div`
     color 0.3s ease-in-out;
   ${(props) => props.current && 'color: black; border-bottom: 2px solid black;'}
 `;
+// ======================= 스타일드 컴포넌트
 
 export default function ContactSlider() {
   const navigate = useNavigate();
@@ -36,14 +41,16 @@ export default function ContactSlider() {
     title: '',
     content: '',
   });
-  // const [contactList, setContactList] = useState([ ]);
+  const [contactList, setContactList] = useState([]);
 
-  const contactList = [...Array(50)].map((_, index) => ({
-    inquiryId: 1234,
-    inquiryContent: '여기 사이트 접근이 어려워요' + index,
-    inquiryStatus: '답변완료',
-    inquirerNickname: '무거운 피자',
-  }));
+  // const contactList = [...Array(3)].map((_, index) => ({
+  //   inquiryId: 1234,
+  //   inquiryContent: '여기 사이트 접근이 어려워요' + index,
+  //   inquiryAnswer: '그렇군요',
+  //   inquiryStatus: 'COMPLETE',
+  //   inquirerNickname: '무거운 피자',
+  //   createdAt: '2024-05-90',
+  // }));
 
   useEffect(() => {
     const token = localStorage.getItem(ACCESS_TOKEN);
@@ -58,19 +65,44 @@ export default function ContactSlider() {
   }, [navigate]);
 
   const loadUserData = () => {
-    fetch(`${BASE_URL}/api/inquiry/inquiry`, {
+    fetch(`${BASE_URL}/api/inquiry?pageNo=0`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
+        'Authorization-refresh': `Bearer ${localStorage.getItem(REFRESH_TOKEN)}`,
       },
     })
       .then((response) => response.json())
       .then((data) => {
         console.log('내 문의 내역:', data);
-        // setContactList(data.data);
+        setContactList(data.data);
       })
-      .catch((error) => console.error('회원 정보 불러오기 실패:', error));
+      .catch((error) => console.error('문의 내역 불러오기 실패:', error));
+  };
+
+  const submitContact = () => {
+    fetch(`${BASE_URL}/api/inquiry`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
+        'Authorization-refresh': `Bearer ${localStorage.getItem(REFRESH_TOKEN)}`,
+      },
+      body: JSON.stringify(contact),
+    })
+      .then((res) => {
+        console.log(res, '성공적으로 저장되었습니다');
+        loadUserData();
+      })
+      .then(
+        setCurrentSection('contactList'),
+        setcontact({
+          title: '',
+          content: '',
+        }),
+      )
+      .catch((error) => console.error('문의 등록 실패:', error));
   };
 
   const handleChange = (e) => {
@@ -80,7 +112,9 @@ export default function ContactSlider() {
       ...prevInfo,
       [name]: value,
     }));
+    console.log(contact);
   };
+  // ======================= fetch 관련 기능
 
   return (
     <div className="slider-container">
@@ -89,7 +123,7 @@ export default function ContactSlider() {
           current={currentSection === 'contact'}
           onClick={() => setCurrentSection('contact')}
         >
-          문의 하기
+          ` 문의 하기
         </StatusTab>
         <StatusTab
           current={currentSection === 'contactList'}
@@ -137,7 +171,7 @@ export default function ContactSlider() {
               type="submit"
               className="submit-contact"
               disabled={contact.title === '' || contact.content === ''}
-              onClick={() => alert('제출 완료')}
+              onClick={submitContact}
             >
               제출
             </button>
@@ -145,7 +179,10 @@ export default function ContactSlider() {
         </div>
       )}
       {currentSection === 'contactList' && (
-        <ContactList contactList={contactList} />
+        <ContactList
+          contactList={contactList}
+          setCurrentSection={setCurrentSection}
+        />
       )}
     </div>
   );

@@ -12,6 +12,7 @@
 .inquiry-container {
   position: relative;
   max-height: 68vh;
+  min-height: 68vh;
   padding: 30px 0;
   overflow-y: scroll;
   -ms-overflow-style: none;
@@ -59,15 +60,24 @@
   font-family: 'Pretendard-SemiBold';
 }
 
-.inquiry-content {
+.inquiry-content-answer {
   background-color: rgba(241, 241, 241, 1);
   width: 100%;
+  min-width: 20rem;
   min-height: 3rem;
   text-indent: 0.3rem;
-  padding: 0.3rem 0.5rem;
+  padding: 0.3rem 0.8rem;
   margin-bottom: 1rem;
   font-size: small;
   border-radius: 15px;
+}
+
+.inquiry-content-question {
+  width: 19rem;
+  min-height: 1rem;
+  text-indent: 0.3rem;
+  padding: 0.3rem 0.5rem 0.5rem;
+  font-size: small;
 }
 
 .inquiry-button-container {
@@ -108,4 +118,43 @@
 .inquiry-index-btn:hover {
   background-color: #ff8d1d;
   color: #ffffff;
+}
+
+.contact-inquiry-registration {
+  display: flex;
+  color: #ff8d1d;
+  font-size: 14px;
+  letter-spacing: -1px;
+  font-family: pretendard-medium;
+  cursor: pointer;
+}
+
+.inquiry-regist-section-wrapper {
+  width: 100%;
+  height: 68vh;
+  place-items: center;
+  place-content: center;
+  display: grid;
+  gap: 0.3rem;
+}
+
+.inquiry-regist-section-img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 55px;
+  width: 55px;
+  margin-bottom: 0.3rem;
+}
+
+.inquiry-content-answer-tag {
+  background-color: rgba(151, 151, 151, 1);
+  border-radius: 30px;
+  font-size: x-small;
+  font-family: pretendard-bold;
+  padding: 3px 0.3rem;
+  margin: 0.5rem 0px;
+  color: black;
+  width: 5rem;
+  text-align: center;
 }

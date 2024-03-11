@@ -15,6 +15,7 @@ function CompanyRegistPage() {
     type: '',
     city: '',
     district: '',
+    establishment: '',
   });
 
   const type = [
@@ -80,7 +81,7 @@ function CompanyRegistPage() {
     }
 
     axios
-      .post(`${BASE_URL}/api/company/save-company`, companyInfo, {
+      .post(`${BASE_URL}/api/company`, companyInfo, {
         headers: {
           'Content-Type': 'application/json',
         },

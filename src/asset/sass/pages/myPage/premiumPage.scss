@@ -1,0 +1,202 @@
+.banner {
+  display: flex;
+  width: 70%;
+}
+
+.banner-text {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  padding: 40px;
+  line-height: 1.4;
+  width: 100%;
+  &:nth-child(0) span,
+  &:nth-child(1) span {
+    font-weight: bolder;
+  }
+}
+
+.pay-agreement {
+  margin-top: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  img {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  margin-right: 0;
+}
+
+.tag {
+  border: 1px solid black;
+  padding: 5px;
+  width: 6.5rem;
+  border-radius: 5px;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.premium-container {
+  display: flex;
+  margin-top: 56px;
+  width: 100%;
+  flex-direction: column;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.75px;
+  padding: 0 67px;
+}
+
+.premium-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-self: start;
+  color: #424242;
+}
+
+.detail {
+  text-decoration: underline;
+  color: #bdbdbd;
+  font-weight: lighter;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.5;
+  }
+}
+
+.company {
+  color: #5b5b5b;
+  letter-spacing: -1.5px;
+  margin-top: 4px;
+  justify-content: flex-start;
+  font:
+    18px/128% Pretendard,
+    sans-serif;
+}
+
+.price {
+  color: #5b5b5b;
+  letter-spacing: -1.5px;
+  margin-top: 4px;
+  font:
+    800 30px/128% Pretendard,
+    sans-serif;
+}
+
+.point {
+  font-family: Pretendard, sans-serif;
+  line-height: 128%;
+  margin-top: 45px;
+}
+
+.benefit {
+  font-family: Pretendard, sans-serif;
+  line-height: 128%;
+  margin-top: 27px;
+}
+
+.using-container {
+  align-self: end;
+  z-index: 10;
+  display: flex;
+  margin-top: -4rem;
+  width: 52px;
+  flex-direction: column;
+  color: #646464;
+  white-space: nowrap;
+  line-height: 128%;
+  span {
+    font-family: Pretendard, sans-serif;
+  }
+  img {
+    aspect-ratio: 0.5;
+    object-fit: auto;
+    object-position: center;
+    width: 7px;
+    cursor: pointer;
+    border-width: 1px;
+    align-self: end;
+    margin-top: 27px;
+  }
+}
+
+.content-wrapper {
+  display: flex;
+  margin-top: 51px;
+  width: 100%;
+  flex-direction: column;
+  font-size: 9px;
+  letter-spacing: -0.72px;
+  line-height: 128%;
+  padding: 0 57px;
+}
+
+.unlimited-pass {
+  color: #000;
+  letter-spacing: -1.36px;
+  font:
+    600 17px Pretendard,
+    sans-serif;
+}
+
+.button-group {
+  align-self: start;
+  display: flex;
+  gap: 6px;
+  text-align: center;
+  color: #000;
+  font-weight: 300;
+  white-space: nowrap;
+}
+
+.premium-info-wrapper {
+  display: flex;
+  margin-top: 36px;
+  justify-content: space-between;
+  gap: 20px;
+  font-weight: 400;
+  img {
+    cursor: pointer;
+  }
+}
+
+.premium-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.price-info {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.label {
+  color: #909090;
+  font-family: Pretendard, sans-serif;
+  font-size: 12px;
+}
+
+.value {
+  color: #595656;
+  font-family: Pretendard, sans-serif;
+  font-size: 12px;
+}
+
+.duration-info {
+  display: flex;
+  margin-top: 8px;
+  justify-content: space-evenly;
+}
+
+.icon-wrapper {
+  display: flex;
+  margin-top: 8px;
+}
