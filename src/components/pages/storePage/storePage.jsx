@@ -5,8 +5,10 @@ import { ACCESS_TOKEN } from '../../global/constants/index.js';
 import { StyledPage, StyledHeader } from '../../../styledComponent.js';
 import TitleHeader from '../../ui/header/titleHeader.jsx';
 import TabBar from '../../ui/tabBar/tabBar.jsx';
-import UserInfoHeader from '../../ui/header/userInfoHeader.jsx';
-
+import SelectSlider from '../../ui/selectSlider/selectSlider.jsx';
+import { CurrentFishBanner } from '../../ui/banner/currentFishBanner.jsx';
+import FishListItem from '../../ui/selection/fishListItem.jsx';
+import FaceIcon from '../../../asset/image/faceicon.svg';
 function StorePage() {
   const navigate = useNavigate();
 
@@ -26,8 +28,33 @@ function StorePage() {
     <StyledPage className="main-page-container">
       <StyledHeader>
         <TitleHeader pageTitle="상점" handleGoBack={handleGoBack} />
-        <UserInfoHeader />
+
         <TabBar />
+        <SelectSlider sectionA="붕어빵 구매하기" sectionB="나의 구매내역">
+          <div className="store-wrapper">
+            <CurrentFishBanner />
+            <div className="fish-list-container">
+              <FishListItem payEvent={() => alert('준비 중')} price="1,900원">
+                붕어빵 100개
+              </FishListItem>
+              <FishListItem payEvent={() => alert('준비 중')} price="4,900원">
+                붕어빵 300개
+              </FishListItem>
+              <FishListItem payEvent={() => alert('준비 중')} price="9,900원">
+                붕어빵 700개
+              </FishListItem>
+            </div>
+          </div>
+          <div className="store-wrapper">
+            <CurrentFishBanner />
+            <div className="no-fish-purchase">
+              <img src={FaceIcon} alt="구매 내역 없음" className="no-result" />
+              <span className="fish-disclaimer">
+                붕어빵 구매 내역이 없습니다.
+              </span>
+            </div>
+          </div>
+        </SelectSlider>
       </StyledHeader>
     </StyledPage>
   );
