@@ -31,6 +31,7 @@ export default function ContactList(props) {
     return list.slice(startIndex, endIndex);
   };
 
+  console.log(props.contactList);
   const paginatedList = getPaginatedList(props.contactList, currentPage);
   const totalPages = Math.ceil(props.contactList.length / itemsPerPage);
   const totalGroups = Math.ceil(totalPages / itemsPerPage);
@@ -52,7 +53,7 @@ export default function ContactList(props) {
                   <div className="inquiry-type-tag">{item.inquiryStatus}</div>
                   <div className="inquiry-date-tag">{item.createdAt}</div>
                 </div>
-                {item.inquiryContent}
+                {item.inquiryTitle}
                 <div className="inquiry-header">
                   <span className="contact-inquiry-title"></span>
 
