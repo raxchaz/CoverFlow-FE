@@ -1,0 +1,23 @@
+.current-fish-container {
+  border-radius: 0.3rem;
+  background-color: rgba(245, 245, 245, 1);
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  padding-left: 0.6rem;
+}
+
+.fish-bread-title {
+  padding-left: 1rem;
+  font-size: smaller;
+  font-family: pretendard-bold;
+  letter-spacing: -1px;
+}
+
+.fish-bread-title-orange {
+  padding-left: 0.3rem;
+  font-size: smaller;
+  font-family: pretendard-bold;
+  color: rgba(255, 141, 29, 1);
+  letter-spacing: -1px;
+}
