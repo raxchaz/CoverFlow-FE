@@ -8,8 +8,6 @@ import TabBar from '../../ui/tabBar/tabBar.jsx';
 function NoticePage() {
   const [activePanelIndex, setActivePanelIndex] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  // const [currentGroup, setCurrentGroup] = useState(0);
-
   const [startNoticeIndex, setStartNoticeIndex] = useState(0);
 
   const itemsPerPage = 10;
@@ -26,6 +24,7 @@ function NoticePage() {
 
   const handlePageClick = (page) => {
     setCurrentPage(page);
+    setStartNoticeIndex((page - 1) * itemsPerPage);
   };
 
   const handlePreviousGroup = () => {
@@ -40,7 +39,9 @@ function NoticePage() {
       totalNotice - itemsPerPage,
       startNoticeIndex + itemsPerPage,
     );
+    const nextGroupPage = Math.ceil(nextGroupStart / itemsPerPage) + 1;
     setStartNoticeIndex(nextGroupStart);
+    setCurrentPage(nextGroupPage);
   };
 
   const noticeList = [...Array(itemsPerPage * 5)].map((_, index) => ({
@@ -61,14 +62,6 @@ function NoticePage() {
 
   const totalNotice = noticeList.length;
 
-  // const getPaginatedList = (list, page) => {
-  //   const startIndex = (page - 1) * itemsPerPage;
-  //   const endIndex = startIndex + itemsPerPage;
-  //   return list.slice(startIndex, endIndex);
-  // };
-
-  // const paginatedList = getPaginatedList(noticeList, currentPage);
-
   const getPaginatedList = (list, page, startIndex) => {
     const endIndex = startIndex + itemsPerPage;
     return list.slice(startIndex, endIndex);
@@ -81,8 +74,6 @@ function NoticePage() {
   );
 
   const totalPages = Math.ceil(noticeList.length / itemsPerPage);
-
-  // const totalGroup = Math.ceil(totalPages / itemsPerPage);
 
   return (
     <StyledPage className="main-page-container">
@@ -99,7 +90,7 @@ function NoticePage() {
             <h2>{item.title}</h2>
             <div className="panel">
               <div>
-                <span> 안녕하세요.</span>
+                <span>안녕하세요.</span>
                 <span>기업 정보 QNA 서비스 코버플로우입니다.</span>
               </div>
               <div>
@@ -153,7 +144,7 @@ function NoticePage() {
           </div>
           {[...Array(totalPages)].map((_, index) => (
             <div
-              className="notice-button"
+              className={`notice-button ${currentPage === index + 1 ? 'active-item' : ''}`}
               key={index}
               onClick={() => handlePageClick(index + 1)}
             >
