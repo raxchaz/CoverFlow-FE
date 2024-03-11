@@ -3,11 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import './contactSlider.scss';
 import Disclamier from './disclamier.jsx';
-import {
-  ACCESS_TOKEN,
-  BASE_URL,
-  REFRESH_TOKEN,
-} from '../../global/constants/index.js';
+import { ACCESS_TOKEN, BASE_URL } from '../../global/constants/index.js';
 import ContactList from './contactList.jsx';
 
 const StatusBar = styled.div`
@@ -64,21 +60,25 @@ export default function ContactSlider() {
     }
   }, [navigate]);
 
-  const loadUserData = () => {
-    fetch(`${BASE_URL}/api/inquiry?pageNo=0`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
-        'Authorization-refresh': `Bearer ${localStorage.getItem(REFRESH_TOKEN)}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('내 문의 내역:', data);
-        setContactList(data.data);
-      })
-      .catch((error) => console.error('문의 내역 불러오기 실패:', error));
+  const loadUserData = async () => {
+    try {
+      const response = await fetch(`${BASE_URL}/api/inquiry?pageNo=0`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
+        },
+      });
+      if (!response.ok) {
+        throw new Error(` ${response.status}: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      console.log('내 문의 내역:', data);
+      setContactList(data.data);
+    } catch (error) {
+      console.error('문의 내역 불러오기 실패:', error);
+    }
   };
 
   const submitContact = () => {
@@ -87,7 +87,6 @@ export default function ContactSlider() {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
-        'Authorization-refresh': `Bearer ${localStorage.getItem(REFRESH_TOKEN)}`,
       },
       body: JSON.stringify(contact),
     })
@@ -123,7 +122,7 @@ export default function ContactSlider() {
           current={currentSection === 'contact'}
           onClick={() => setCurrentSection('contact')}
         >
-          ` 문의 하기
+          문의 하기
         </StatusTab>
         <StatusTab
           current={currentSection === 'contactList'}
