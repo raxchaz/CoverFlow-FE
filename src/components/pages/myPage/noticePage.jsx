@@ -39,7 +39,9 @@ function NoticePage() {
       totalNotice - itemsPerPage,
       startNoticeIndex + itemsPerPage,
     );
+    const nextGroupPage = Math.ceil(nextGroupStart / itemsPerPage) + 1;
     setStartNoticeIndex(nextGroupStart);
+    setCurrentPage(nextGroupPage);
   };
 
   const noticeList = [...Array(itemsPerPage * 5)].map((_, index) => ({
