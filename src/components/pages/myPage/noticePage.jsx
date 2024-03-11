@@ -144,7 +144,7 @@ function NoticePage() {
           </div>
           {[...Array(totalPages)].map((_, index) => (
             <div
-              className={`notice-button ${currentPage === index + 1 ? 'active' : ''}`}
+              className={`notice-button ${currentPage === index + 1 ? 'active-item' : ''}`}
               key={index}
               onClick={() => handlePageClick(index + 1)}
             >
