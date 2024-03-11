@@ -31,7 +31,6 @@ export default function ContactList(props) {
     return list.slice(startIndex, endIndex);
   };
 
-  console.log(props.contactList);
   const paginatedList = getPaginatedList(props.contactList, currentPage);
   const totalPages = Math.ceil(props.contactList.length / itemsPerPage);
   const totalGroups = Math.ceil(totalPages / itemsPerPage);
@@ -50,8 +49,24 @@ export default function ContactList(props) {
             >
               <div className="inquiry-title">
                 <div className="inquiry-tag-container">
-                  <div className="inquiry-type-tag">{item.inquiryStatus}</div>
-                  <div className="inquiry-date-tag">{item.createdAt}</div>
+                  <div
+                    className={`inquiry-type-tag ${
+                      item.inquiryStatus === 'WAIT'
+                        ? 'yellow'
+                        : item.inquiryStatus === 'COMPLETE'
+                          ? 'green'
+                          : ''
+                    }`}
+                  >
+                    {item.inquiryStatus === 'WAIT'
+                      ? '답변 대기'
+                      : item.inquiryStatus === 'COMPLETE'
+                        ? '답변 완료'
+                        : ''}
+                  </div>
+                  <div className="inquiry-date-tag">
+                    {item.createdAt.slice(0, 11)}
+                  </div>
                 </div>
                 {item.inquiryTitle}
                 <div className="inquiry-header">
@@ -115,59 +130,61 @@ export default function ContactList(props) {
           </div>
         )}
       </div>
-      <div className="inquiry-button-container">
-        <div
-          onClick={handlePreviousGroup}
-          disabled={currentGroup === 0}
-          style={{ cursor: 'pointer' }}
-        >
-          <svg
-            width="6"
-            height="10"
-            viewBox="0 0 6 10"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M5 9L1 5L5 1"
-              stroke="#1D1D1F"
-              strokeWidth="0.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </div>
-        {[...Array(endPage - startPage + 1)].map((_, index) => (
+      {paginatedList.length >= 1 && (
+        <div className="inquiry-button-container">
           <div
-            className={`inquiry-index-btn ${currentPage === startPage + index ? 'selected' : ''}`}
-            key={index}
-            onClick={() => handlePageClick(startPage + index)}
+            onClick={handlePreviousGroup}
+            disabled={currentGroup === 0}
+            style={{ cursor: 'pointer' }}
           >
-            {startPage + index}
+            <svg
+              width="6"
+              height="10"
+              viewBox="0 0 6 10"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M5 9L1 5L5 1"
+                stroke="#1D1D1F"
+                strokeWidth="0.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
           </div>
-        ))}
-        <div
-          style={{ cursor: 'pointer' }}
-          onClick={handleNextGroup}
-          disabled={currentGroup === totalGroups - 1}
-        >
-          <svg
-            width="6"
-            height="10"
-            viewBox="0 0 6 10"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
+          {[...Array(endPage - startPage + 1)].map((_, index) => (
+            <div
+              className={`inquiry-index-btn ${currentPage === startPage + index ? 'selected' : ''}`}
+              key={index}
+              onClick={() => handlePageClick(startPage + index)}
+            >
+              {startPage + index}
+            </div>
+          ))}
+          <div
+            style={{ cursor: 'pointer' }}
+            onClick={handleNextGroup}
+            disabled={currentGroup === totalGroups - 1}
           >
-            <path
-              d="M1 9L5 5L1 1"
-              stroke="#1D1D1F"
-              strokeWidth="0.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+            <svg
+              width="6"
+              height="10"
+              viewBox="0 0 6 10"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M1 9L5 5L1 1"
+                stroke="#1D1D1F"
+                strokeWidth="0.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 }
