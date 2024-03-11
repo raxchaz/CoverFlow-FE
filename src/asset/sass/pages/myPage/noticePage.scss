@@ -72,7 +72,6 @@
   height: 1.5rem;
   font-size: small;
   text-align: center;
-  padding-top: auto;
   border: solid 1px #cacaca;
   display: flex;
   justify-content: center;
@@ -82,6 +81,7 @@
     background-color 0.3s,
     color 0.3s,
     box-shadow 0.3s;
+
   &:hover {
     background-color: #ff8d1d;
     color: #ffffff;
