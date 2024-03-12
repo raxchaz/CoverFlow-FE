@@ -206,7 +206,7 @@ function SearchInput() {
                 index === activeIndex ? { backgroundColor: '#f2f2f2' } : {}
               }
             >
-              {value.name}
+              {value.companyName}
             </AutoCompleteItem>
           ))}
         </AutoCompleteContainer>
