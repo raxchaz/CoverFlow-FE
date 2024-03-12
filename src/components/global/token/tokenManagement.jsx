@@ -31,6 +31,9 @@ const TokenManagement = () => {
     const code = query.get('code');
     const role = query.get('role');
 
+    console.log('code:', code);
+    console.log('role:', role);
+
     if (!code || !role) {
       console.error('코드 또는 역할이 URL에 포함되어 있지 않습니다.');
       navigate('/login');
@@ -39,8 +42,8 @@ const TokenManagement = () => {
 
     fetchToken(code, role)
       .then((headers) => {
-        const accessToken = headers.get('Authorization');
-        const refreshToken = headers.get('Authorization-refresh');
+        const accessToken = headers.get('authorization');
+        const refreshToken = headers.get('authorization-refresh');
 
         if (!accessToken || !refreshToken) {
           alert('토큰을 받아오는 데 실패하였습니다. 다시 시도해주세요.');
@@ -54,6 +57,8 @@ const TokenManagement = () => {
         const decoded = decodeToken(accessToken);
         const userRole = decoded.role;
 
+        console.log('userRole:', userRole);
+        console.log('decoded:', decoded);
         if (userRole === 'GUEST') {
           console.log('약관 동의 페이지로 이동합니다.');
           navigate('/login/terms', { state: { code } });
