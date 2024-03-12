@@ -120,11 +120,12 @@ function SearchInput() {
   const specificItemSeach = (item) => {
     const params = new URLSearchParams();
     params.append('keyword', item);
+
     navigate(`/search-result?${params.toString()}`);
   };
 
   // 검색 함수
-  const handleSearch = () => {
+  const handleCompanySearch = () => {
     try {
       if (activeIndex === -1) fullDataSearch(keyword);
       else if (activeIndex >= 0 && autoCompleteValue[activeIndex])
@@ -155,7 +156,7 @@ function SearchInput() {
   const selectAutoCompleteValue = (value) => {
     setKeyword(value);
     setAutoCompleteValue([]);
-    handleSearch();
+    handleCompanySearch();
   };
 
   const enteredKey = (event) => {
@@ -173,7 +174,7 @@ function SearchInput() {
       if (activeIndex >= 0 && autoCompleteValue[activeIndex]) {
         selectAutoCompleteValue(autoCompleteValue[activeIndex].name);
       } else {
-        handleSearch();
+        handleCompanySearch();
       }
     }
   };
@@ -192,7 +193,7 @@ function SearchInput() {
       <img
         className="search"
         src={Searchicon}
-        onClick={handleSearch}
+        onClick={handleCompanySearch}
         alt="Search"
       />
 
