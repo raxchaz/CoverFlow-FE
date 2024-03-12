@@ -81,28 +81,28 @@ export default function ContactSlider() {
     }
   };
 
-  // const submitContact = () => {
-  //   fetch(`${BASE_URL}/api/inquiry`, {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
-  //     },
-  //     body: JSON.stringify(contact),
-  //   })
-  //     .then((res) => {
-  //       console.log(res, '성공적으로 저장되었습니다');
-  //       loadUserData();
-  //     })
-  //     .then(
-  //       setCurrentSection('contactList'),
-  //       setcontact({
-  //         title: '',
-  //         content: '',
-  //       }),
-  //     )
-  //     .catch((error) => console.error('문의 등록 실패:', error));
-  // };
+  const submitContact = () => {
+    fetch(`${BASE_URL}/api/inquiry`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
+      },
+      body: JSON.stringify(contact),
+    })
+      .then((res) => {
+        console.log(res, '성공적으로 저장되었습니다');
+        loadUserData();
+      })
+      .then(
+        setCurrentSection('contactList'),
+        setcontact({
+          title: '',
+          content: '',
+        }),
+      )
+      .catch((error) => console.error('문의 등록 실패:', error));
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -114,11 +114,11 @@ export default function ContactSlider() {
     console.log(contact);
   };
   // ======================= fetch 관련 기능
-  const paymentResult = {
-    amount: '10,000원',
-    created_at: '2023-03-15 12:34:56',
-    method: '신용카드',
-  };
+  // const paymentResult = {
+  //   amount: '10,000원',
+  //   created_at: '2023-03-15 12:34:56',
+  //   method: '신용카드',
+  // };
 
   return (
     <div className="slider-container">
@@ -173,12 +173,7 @@ export default function ContactSlider() {
             />
 
             <Button
-              // onClick={submitContact}
-              onClick={() =>
-                navigate('/complete-payment', {
-                  state: { data: paymentResult },
-                })
-              }
+              onClick={submitContact}
               disabled={contact.title === '' || contact.content === ''}
             >
               제출
