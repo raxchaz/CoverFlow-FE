@@ -37,75 +37,90 @@ export default function ContactList(props) {
   const startPage = currentGroup * itemsPerPage + 1;
   const endPage = Math.min(startPage + itemsPerPage - 1, totalPages);
 
+  const renderInquiryStatusTag = (status) => {
+    let className = '';
+    let text = '';
+    switch (status) {
+      case 'WAIT':
+        className = 'yellow';
+        text = '답변 대기';
+        break;
+      case 'COMPLETE':
+        className = 'green';
+        text = '답변 완료';
+        break;
+
+      default:
+        className = '';
+        text = '';
+    }
+    return { className, text };
+  };
+
   return (
     <>
       <div className="inquiry-container">
         {paginatedList.length > 0 ? (
-          paginatedList.map((item, index) => (
-            <div
-              className={`inquiry-item ${activeToggleIndex === index ? 'active' : ''}`}
-              key={item.inquiryId}
-              onClick={() => toggleFunction(index)}
-            >
-              <div className="inquiry-title">
-                <div className="inquiry-tag-container">
-                  <div
-                    className={`inquiry-type-tag ${
-                      item.inquiryStatus === 'WAIT'
-                        ? 'yellow'
-                        : item.inquiryStatus === 'COMPLETE'
-                          ? 'green'
-                          : ''
-                    }`}
-                  >
-                    {item.inquiryStatus === 'WAIT'
-                      ? '답변 대기'
-                      : item.inquiryStatus === 'COMPLETE'
-                        ? '답변 완료'
-                        : ''}
+          paginatedList.map((item, index) => {
+            const { className, text } = renderInquiryStatusTag(
+              item.inquiryStatus,
+            );
+            return (
+              <div
+                className={`inquiry-item ${activeToggleIndex === index ? 'active' : ''}`}
+                key={item.inquiryId}
+                onClick={() => toggleFunction(index)}
+              >
+                <div className="inquiry-title">
+                  <div className="inquiry-tag-container">
+                    <div className={`inquiry-type-tag ${className}`}>
+                      {text}
+                    </div>
+                    <div className="inquiry-date-tag">
+                      {item.createdAt.slice(0, 11)}
+                    </div>
                   </div>
-                  <div className="inquiry-date-tag">
-                    {item.createdAt.slice(0, 11)}
-                  </div>
-                </div>
-                {item.inquiryTitle}
-                <div className="inquiry-header">
-                  <span className="contact-inquiry-title"></span>
+                  {item.inquiryTitle}
+                  <div className="inquiry-header">
+                    <span className="contact-inquiry-title"></span>
 
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 14 14"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d={
-                        activeToggleIndex === index
-                          ? 'M11.0837 8.75L7.00033 4.66667L2.91699 8.75'
-                          : 'M11.0837 5.25L7.00033 9.33333L2.91699 5.25'
-                      }
-                      stroke="#1D1D1F"
-                      strokeWidth="0.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 14 14"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d={
+                          activeToggleIndex === index
+                            ? 'M11.0837 8.75L7.00033 4.66667L2.91699 8.75'
+                            : 'M11.0837 5.25L7.00033 9.33333L2.91699 5.25'
+                        }
+                        stroke="#1D1D1F"
+                        strokeWidth="0.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </div>
                 </div>
+                {activeToggleIndex === index && (
+                  <div>
+                    <div className="inquiry-content-question">
+                      {item.inquiryContent}
+                    </div>
+                    <div className="inquiry-content-answer">
+                      <div className="inquiry-content-answer-tag">
+                        코버플로우
+                      </div>
+                      {item.inquiryAnswer}
+                    </div>
+                  </div>
+                )}
               </div>
-              {activeToggleIndex === index && (
-                <div>
-                  <div className="inquiry-content-question">
-                    {item.inquiryContent}
-                  </div>
-                  <div className="inquiry-content-answer">
-                    <div className="inquiry-content-answer-tag">코버플로우</div>
-                    {item.inquiryAnswer}
-                  </div>
-                </div>
-              )}
-            </div>
-          ))
+            );
+          })
         ) : (
           <div className="inquiry-regist-section-wrapper">
             <img

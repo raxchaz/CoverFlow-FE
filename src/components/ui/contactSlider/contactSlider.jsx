@@ -140,19 +140,21 @@ export default function ContactSlider() {
           <div className="contact-container">
             <div className="contact-item">
               <span className="contact-count">
-                {contactList[0].allInquiriesCount}
+                {contactList.length > 0 ? contactList[0].allInquiriesCount : 0}
               </span>
               전체 문의
             </div>
             <div className="contact-item">
               <span className="contact-count">
-                {contactList[0].completeInquiriesCount}{' '}
+                {contactList.length > 0
+                  ? contactList[0].completeInquiriesCount
+                  : 0}
               </span>
               답변 완료
             </div>
             <div className="contact-item">
               <span className="contact-count">
-                {contactList[0].waitInquiriesCount}{' '}
+                {contactList.length > 0 ? contactList[0].waitInquiriesCount : 0}
               </span>
               답변 대기
             </div>
