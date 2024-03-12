@@ -17,7 +17,6 @@ export default function TermsPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const { code } = location.state || {};
-  const prevPage = localStorage.getItem('prevPage');
 
   // =========================================================== 약관 동의 확인을 위한 부분
   const [allAgreed, setAllAgreed] = useState(false);
@@ -96,7 +95,7 @@ export default function TermsPage() {
 
       localStorage.setItem(ACCESS_TOKEN, accessToken);
       localStorage.setItem(REFRESH_TOKEN, refreshToken);
-      navigate(prevPage);
+      navigate('/login/member-info');
     } catch (error) {
       console.error(error);
       alert('토큰 요청 중 오류가 발생했습니다. 로그인 페이지로 이동합니다.');
