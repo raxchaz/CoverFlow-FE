@@ -86,9 +86,9 @@ export default function TermsPage() {
   const agreeToTerms = async () => {
     try {
       const headers = await fetchToken(code);
-      const accessToken = headers.get('access_token');
-      const refreshToken = headers.get('refresh_token');
-
+      const accessToken = headers.get('Authorization');
+      const refreshToken = headers.get('Authorization-refresh');
+      console.log(headers);
       if (!accessToken || !refreshToken) {
         throw new Error('토큰을 받아오는 데 실패하였습니다.');
       }
