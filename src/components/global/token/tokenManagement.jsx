@@ -39,8 +39,8 @@ const TokenManagement = () => {
 
     fetchToken(code, role)
       .then((headers) => {
-        const accessToken = headers.get('access_token');
-        const refreshToken = headers.get('refresh_token');
+        const accessToken = headers.get('Authorization');
+        const refreshToken = headers.get('Authorization-refresh');
 
         if (!accessToken || !refreshToken) {
           alert('토큰을 받아오는 데 실패하였습니다. 다시 시도해주세요.');
