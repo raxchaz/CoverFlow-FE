@@ -59,6 +59,7 @@ const TokenManagement = () => {
 
         console.log('userRole:', userRole);
         console.log('decoded:', decoded);
+
         if (userRole === 'GUEST') {
           console.log('약관 동의 페이지로 이동합니다.');
           navigate('/login/terms', { state: { code } });
