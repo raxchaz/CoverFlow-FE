@@ -72,7 +72,7 @@ function SearchInput() {
   }, []);
 
   useEffect(() => {
-    if (debouncedKeyword.trim().length > 0) {
+    if (debouncedKeyword !== '') {
       fetchAutoCompleteData(debouncedKeyword);
     } else {
       setAutoCompleteValue([]);
@@ -185,7 +185,7 @@ function SearchInput() {
         type="text"
         className="search-input-text"
         placeholder="기업 명을 검색하세요"
-        value={keyword}
+        value={keyword || ''}
         onChange={handleInputChange}
         onKeyDown={enteredKey}
       />
