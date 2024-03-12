@@ -58,7 +58,7 @@ const AllRouter = () => {
 
         <Route path="/login" element={<LoginPage />} />
         <Route path="/login/member-info" element={<NicknamePage />} />
-        <Route path="/login/terms" element={<TermsPage />} />
+        <Route path="/terms" element={<TermsPage />} />
 
         <Route path="/store" element={<Store />} />
         <Route path="/mypage" element={<MyPage />} />
