@@ -5,7 +5,7 @@ import './contactSlider.scss';
 import Disclamier from './disclamier.jsx';
 import { ACCESS_TOKEN, BASE_URL } from '../../global/constants/index.js';
 import ContactList from './contactList.jsx';
-
+import Button from '../button/Button/Button.jsx';
 const StatusBar = styled.div`
   display: flex;
   justify-content: space-between;
@@ -41,11 +41,15 @@ export default function ContactSlider() {
 
   // const contactList = [...Array(3)].map((_, index) => ({
   //   inquiryId: 1234,
+  //   inquiryTitle: '저기요',
   //   inquiryContent: '여기 사이트 접근이 어려워요' + index,
   //   inquiryAnswer: '그렇군요',
   //   inquiryStatus: 'COMPLETE',
   //   inquirerNickname: '무거운 피자',
   //   createdAt: '2024-05-90',
+  //   allInquiriesCount: 7,
+  //   waitInquiriesCount: 3,
+  //   completeInquiriesCount: 4,
   // }));
 
   useEffect(() => {
@@ -114,6 +118,11 @@ export default function ContactSlider() {
     console.log(contact);
   };
   // ======================= fetch 관련 기능
+  // const paymentResult = {
+  //   amount: '10,000원',
+  //   created_at: '2023-03-15 12:34:56',
+  //   method: '신용카드',
+  // };
 
   return (
     <div className="slider-container">
@@ -135,15 +144,23 @@ export default function ContactSlider() {
         <div>
           <div className="contact-container">
             <div className="contact-item">
-              <span className="contact-count">1</span>
+              <span className="contact-count">
+                {contactList.length > 0 ? contactList[0].allInquiriesCount : 0}
+              </span>
               전체 문의
             </div>
             <div className="contact-item">
-              <span className="contact-count">1</span>
+              <span className="contact-count">
+                {contactList.length > 0
+                  ? contactList[0].completeInquiriesCount
+                  : 0}
+              </span>
               답변 완료
             </div>
             <div className="contact-item">
-              <span className="contact-count">1</span>
+              <span className="contact-count">
+                {contactList.length > 0 ? contactList[0].waitInquiriesCount : 0}
+              </span>
               답변 대기
             </div>
           </div>
@@ -166,14 +183,13 @@ export default function ContactSlider() {
               value={contact.content}
               onChange={handleChange}
             />
-            <button
-              type="submit"
-              className="submit-contact"
-              disabled={contact.title === '' || contact.content === ''}
+
+            <Button
               onClick={submitContact}
+              disabled={contact.title === '' || contact.content === ''}
             >
               제출
-            </button>
+            </Button>
           </div>
         </div>
       )}
