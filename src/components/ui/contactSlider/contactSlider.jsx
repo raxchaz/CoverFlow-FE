@@ -5,7 +5,7 @@ import './contactSlider.scss';
 import Disclamier from './disclamier.jsx';
 import { ACCESS_TOKEN, BASE_URL } from '../../global/constants/index.js';
 import ContactList from './contactList.jsx';
-
+import Button from '../button/Button/Button.jsx';
 const StatusBar = styled.div`
   display: flex;
   justify-content: space-between;
@@ -118,6 +118,11 @@ export default function ContactSlider() {
     console.log(contact);
   };
   // ======================= fetch 관련 기능
+  // const paymentResult = {
+  //   amount: '10,000원',
+  //   created_at: '2023-03-15 12:34:56',
+  //   method: '신용카드',
+  // };
 
   return (
     <div className="slider-container">
@@ -178,14 +183,13 @@ export default function ContactSlider() {
               value={contact.content}
               onChange={handleChange}
             />
-            <button
-              type="submit"
-              className="submit-contact"
-              disabled={contact.title === '' || contact.content === ''}
+
+            <Button
               onClick={submitContact}
+              disabled={contact.title === '' || contact.content === ''}
             >
               제출
-            </button>
+            </Button>
           </div>
         </div>
       )}

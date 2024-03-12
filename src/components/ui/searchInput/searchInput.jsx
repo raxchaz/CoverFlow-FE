@@ -5,6 +5,7 @@ import '../../../asset/sass/etc/searchInput/searchInput.scss';
 import styled from 'styled-components';
 import Searchicon from '../../../asset/image/searchicon.svg';
 import { BASE_URL } from '../../global/constants/index.js';
+import useDebounce from '../../../hooks/useDebounce.js';
 
 const StyledSearchInput = styled.input`
   width: 350px;
@@ -57,16 +58,26 @@ function SearchInput() {
   const [showAutoComplete, setShowAutoComplete] = useState(false);
   const autoCompleteContainerRef = useRef(null);
 
+  const debouncedKeyword = useDebounce(keyword, 300);
+
+  // 유효한 문자열 검사 (한글, 영문, 숫자)
+  // const isSyllable = (character) => {
+  //   const syllableRegex = /^[가-힣a-zA-Z0-9]$/;
+
+  //   return syllableRegex.test(character);
+  // };
+
   useEffect(() => {
     inputRef.current.focus();
   }, []);
 
-  // 유효한 문자열 검사 (한글, 영문, 숫자)
-  const isSyllable = (character) => {
-    const syllableRegex = /^[가-힣a-zA-Z0-9]$/;
-
-    return syllableRegex.test(character);
-  };
+  useEffect(() => {
+    if (debouncedKeyword.trim().length > 0) {
+      fetchAutoCompleteData(debouncedKeyword);
+    } else {
+      setAutoCompleteValue([]);
+    }
+  }, [debouncedKeyword]);
 
   // 입력값 변경 핸들러
   const handleInputChange = (event) => {
@@ -75,16 +86,16 @@ function SearchInput() {
     setKeyword(newInputValue);
     setActiveIndex(-1);
 
-    if (newInputValue.length > 0) {
-      const lastCharacter = newInputValue.slice(-1);
-      if (isSyllable(lastCharacter)) {
-        fetchAutoCompleteData(newInputValue);
-      } else {
-        setAutoCompleteValue([]);
-      }
-    } else {
-      setAutoCompleteValue([]);
-    }
+    // if (newInputValue.length > 0) {
+    //   const lastCharacter = newInputValue.slice(-1);
+    //   if (isSyllable(lastCharacter)) {
+    //     fetchAutoCompleteData(newInputValue);
+    //   } else {
+    //     setAutoCompleteValue([]);
+    //   }
+    // } else {
+    //   setAutoCompleteValue([]);
+    // }
   };
 
   // 자동완성 데이터 요청
@@ -145,6 +156,26 @@ function SearchInput() {
     handleSearch();
   };
 
+  const enteredKey = (event) => {
+    if (
+      event.key === 'ArrowDown' &&
+      activeIndex < autoCompleteValue.length - 1
+    ) {
+      event.preventDefault();
+      setActiveIndex(activeIndex + 1);
+    } else if (event.key === 'ArrowUp' && activeIndex > 0) {
+      event.preventDefault();
+      setActiveIndex(activeIndex - 1);
+    } else if (event.key === 'Enter') {
+      event.preventDefault();
+      if (activeIndex >= 0 && autoCompleteValue[activeIndex]) {
+        selectAutoCompleteValue(autoCompleteValue[activeIndex].name);
+      } else {
+        handleSearch();
+      }
+    }
+  };
+
   return (
     <>
       <StyledSearchInput
@@ -154,25 +185,7 @@ function SearchInput() {
         placeholder="기업 명을 검색하세요"
         value={keyword}
         onChange={handleInputChange}
-        onKeyDown={(e) => {
-          if (
-            e.key === 'ArrowDown' &&
-            activeIndex < autoCompleteValue.length - 1
-          ) {
-            e.preventDefault();
-            setActiveIndex(activeIndex + 1);
-          } else if (e.key === 'ArrowUp' && activeIndex > 0) {
-            e.preventDefault();
-            setActiveIndex(activeIndex - 1);
-          } else if (e.key === 'Enter') {
-            e.preventDefault();
-            if (activeIndex >= 0 && autoCompleteValue[activeIndex]) {
-              selectAutoCompleteValue(autoCompleteValue[activeIndex].name);
-            } else {
-              handleSearch();
-            }
-          }
-        }}
+        onKeyDown={enteredKey}
       />
       <img
         className="search"
