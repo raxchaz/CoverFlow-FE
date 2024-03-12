@@ -34,6 +34,16 @@ const TokenManagement = () => {
 
   useEffect(() => {
     const query = new URLSearchParams(location.search);
+
+    // const code = query.get('code');
+    // const role = query.get('role');
+    // if (!code) {
+    //   alert('코드가 포함되어 있지 않습니다.');
+    //   return;
+    // } else {
+    //   console.log('코드', code, '상태', role);
+    // }
+
     const accessToken = query.get(ACCESS_TOKEN);
     const refreshToken = query.get(REFRESH_TOKEN);
 

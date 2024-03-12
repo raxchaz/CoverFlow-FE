@@ -31,66 +31,96 @@ export default function ContactList(props) {
     return list.slice(startIndex, endIndex);
   };
 
-  console.log(props.contactList);
   const paginatedList = getPaginatedList(props.contactList, currentPage);
   const totalPages = Math.ceil(props.contactList.length / itemsPerPage);
   const totalGroups = Math.ceil(totalPages / itemsPerPage);
   const startPage = currentGroup * itemsPerPage + 1;
   const endPage = Math.min(startPage + itemsPerPage - 1, totalPages);
 
+  const renderInquiryStatusTag = (status) => {
+    let className = '';
+    let text = '';
+    switch (status) {
+      case 'WAIT':
+        className = 'yellow';
+        text = '답변 대기';
+        break;
+      case 'COMPLETE':
+        className = 'green';
+        text = '답변 완료';
+        break;
+
+      default:
+        className = '';
+        text = '';
+    }
+    return { className, text };
+  };
+
   return (
     <>
       <div className="inquiry-container">
         {paginatedList.length > 0 ? (
-          paginatedList.map((item, index) => (
-            <div
-              className={`inquiry-item ${activeToggleIndex === index ? 'active' : ''}`}
-              key={item.inquiryId}
-              onClick={() => toggleFunction(index)}
-            >
-              <div className="inquiry-title">
-                <div className="inquiry-tag-container">
-                  <div className="inquiry-type-tag">{item.inquiryStatus}</div>
-                  <div className="inquiry-date-tag">{item.createdAt}</div>
-                </div>
-                {item.inquiryTitle}
-                <div className="inquiry-header">
-                  <span className="contact-inquiry-title"></span>
+          paginatedList.map((item, index) => {
+            const { className, text } = renderInquiryStatusTag(
+              item.inquiryStatus,
+            );
+            return (
+              <div
+                className={`inquiry-item ${activeToggleIndex === index ? 'active' : ''}`}
+                key={item.inquiryId}
+                onClick={() => toggleFunction(index)}
+              >
+                <div className="inquiry-title">
+                  <div className="inquiry-tag-container">
+                    <div className={`inquiry-type-tag ${className}`}>
+                      {text}
+                    </div>
+                    <div className="inquiry-date-tag">
+                      {item.createdAt.slice(0, 11)}
+                    </div>
+                  </div>
+                  {item.inquiryTitle}
+                  <div className="inquiry-header">
+                    <span className="contact-inquiry-title"></span>
 
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 14 14"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d={
-                        activeToggleIndex === index
-                          ? 'M11.0837 8.75L7.00033 4.66667L2.91699 8.75'
-                          : 'M11.0837 5.25L7.00033 9.33333L2.91699 5.25'
-                      }
-                      stroke="#1D1D1F"
-                      strokeWidth="0.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 14 14"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d={
+                          activeToggleIndex === index
+                            ? 'M11.0837 8.75L7.00033 4.66667L2.91699 8.75'
+                            : 'M11.0837 5.25L7.00033 9.33333L2.91699 5.25'
+                        }
+                        stroke="#1D1D1F"
+                        strokeWidth="0.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </div>
                 </div>
+                {activeToggleIndex === index && (
+                  <div>
+                    <div className="inquiry-content-question">
+                      {item.inquiryContent}
+                    </div>
+                    <div className="inquiry-content-answer">
+                      <div className="inquiry-content-answer-tag">
+                        코버플로우
+                      </div>
+                      {item.inquiryAnswer}
+                    </div>
+                  </div>
+                )}
               </div>
-              {activeToggleIndex === index && (
-                <div>
-                  <div className="inquiry-content-question">
-                    {item.inquiryContent}
-                  </div>
-                  <div className="inquiry-content-answer">
-                    <div className="inquiry-content-answer-tag">코버플로우</div>
-                    {item.inquiryAnswer}
-                  </div>
-                </div>
-              )}
-            </div>
-          ))
+            );
+          })
         ) : (
           <div className="inquiry-regist-section-wrapper">
             <img
@@ -115,59 +145,61 @@ export default function ContactList(props) {
           </div>
         )}
       </div>
-      <div className="inquiry-button-container">
-        <div
-          onClick={handlePreviousGroup}
-          disabled={currentGroup === 0}
-          style={{ cursor: 'pointer' }}
-        >
-          <svg
-            width="6"
-            height="10"
-            viewBox="0 0 6 10"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M5 9L1 5L5 1"
-              stroke="#1D1D1F"
-              strokeWidth="0.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </div>
-        {[...Array(endPage - startPage + 1)].map((_, index) => (
+      {paginatedList.length >= 1 && (
+        <div className="inquiry-button-container">
           <div
-            className={`inquiry-index-btn ${currentPage === startPage + index ? 'selected' : ''}`}
-            key={index}
-            onClick={() => handlePageClick(startPage + index)}
+            onClick={handlePreviousGroup}
+            disabled={currentGroup === 0}
+            style={{ cursor: 'pointer' }}
           >
-            {startPage + index}
+            <svg
+              width="6"
+              height="10"
+              viewBox="0 0 6 10"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M5 9L1 5L5 1"
+                stroke="#1D1D1F"
+                strokeWidth="0.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
           </div>
-        ))}
-        <div
-          style={{ cursor: 'pointer' }}
-          onClick={handleNextGroup}
-          disabled={currentGroup === totalGroups - 1}
-        >
-          <svg
-            width="6"
-            height="10"
-            viewBox="0 0 6 10"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
+          {[...Array(endPage - startPage + 1)].map((_, index) => (
+            <div
+              className={`inquiry-index-btn ${currentPage === startPage + index ? 'selected' : ''}`}
+              key={index}
+              onClick={() => handlePageClick(startPage + index)}
+            >
+              {startPage + index}
+            </div>
+          ))}
+          <div
+            style={{ cursor: 'pointer' }}
+            onClick={handleNextGroup}
+            disabled={currentGroup === totalGroups - 1}
           >
-            <path
-              d="M1 9L5 5L1 1"
-              stroke="#1D1D1F"
-              strokeWidth="0.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+            <svg
+              width="6"
+              height="10"
+              viewBox="0 0 6 10"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M1 9L5 5L1 1"
+                stroke="#1D1D1F"
+                strokeWidth="0.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 }
