@@ -8,5 +8,5 @@ export const tryCatch = (f, errorHandler) => {
 
 export const IfElse = (then, test, ELSE) => {
   if (test) return then();
-  else return ELSE();
+  return ELSE();
 };
