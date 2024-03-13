@@ -72,7 +72,7 @@ function SearchInput() {
   }, []);
 
   useEffect(() => {
-    if (debouncedKeyword.trim().length > 0) {
+    if (debouncedKeyword !== '') {
       fetchAutoCompleteData(debouncedKeyword);
     } else {
       setAutoCompleteValue([]);
@@ -99,34 +99,37 @@ function SearchInput() {
   };
 
   // 자동완성 데이터 요청
-  const fetchAutoCompleteData = (name) => {
-    axios
-      .get(`${BASE_URL}/api/company?pageNo=0&name=${name}`)
-      .then((response) => {
-        setAutoCompleteValue(response.data.data);
-      })
-      .catch((error) => {
-        console.error('자동완성 데이터 요청 실패', error);
-        setAutoCompleteValue([]);
-      });
+  const fetchAutoCompleteData = async (name) => {
+    try {
+      const res = await axios.get(
+        `${BASE_URL}/api/company?pageNo=0&name=${name}`,
+      );
+      setAutoCompleteValue(res.data.data);
+    } catch (error) {
+      console.error('자동완성 데이터 요청 실패', error);
+      setAutoCompleteValue([]);
+    }
+  };
+
+  const fullDataSearch = (keyword) => {
+    const params = new URLSearchParams();
+    params.append('keyword', keyword);
+    navigate(`/search-result?${params.toString()}`);
+  };
+
+  const specificItemSeach = (item) => {
+    const params = new URLSearchParams();
+    params.append('keyword', item);
+
+    navigate(`/search-result?${params.toString()}`);
   };
 
   // 검색 함수
-  const handleSearch = () => {
+  const handleCompanySearch = () => {
     try {
-      // 사용자가 방향키로 특정 자동완성 항목을 선택하지 않고,
-      // 자동완성 목록이 있을 경우엔 전체 데이터를 결과 페이지로 전달합니다.
-      if (activeIndex === -1) {
-        const params = new URLSearchParams();
-        params.append('keyword', keyword);
-        navigate(`/search-result?${params.toString()}`);
-      }
-      // 사용자가 방향키로 특정 자동완성 항목을 선택한 경우에 특정 항목만 결과 페이지로 전달합니다.
-      else if (activeIndex >= 0 && autoCompleteValue[activeIndex]) {
-        const params = new URLSearchParams();
-        params.append('keyword', autoCompleteValue[activeIndex].name);
-        navigate(`/search-result?${params.toString()}`);
-      }
+      if (activeIndex === -1) fullDataSearch(keyword);
+      else if (activeIndex >= 0 && autoCompleteValue[activeIndex])
+        specificItemSeach(autoCompleteValue[activeIndex].name);
     } catch (error) {
       console.error('검색 중 오류 발생', error);
     }
@@ -153,7 +156,7 @@ function SearchInput() {
   const selectAutoCompleteValue = (value) => {
     setKeyword(value);
     setAutoCompleteValue([]);
-    handleSearch();
+    handleCompanySearch();
   };
 
   const enteredKey = (event) => {
@@ -171,7 +174,7 @@ function SearchInput() {
       if (activeIndex >= 0 && autoCompleteValue[activeIndex]) {
         selectAutoCompleteValue(autoCompleteValue[activeIndex].name);
       } else {
-        handleSearch();
+        handleCompanySearch();
       }
     }
   };
@@ -183,14 +186,14 @@ function SearchInput() {
         type="text"
         className="search-input-text"
         placeholder="기업 명을 검색하세요"
-        value={keyword}
+        value={keyword || ''}
         onChange={handleInputChange}
         onKeyDown={enteredKey}
       />
       <img
         className="search"
         src={Searchicon}
-        onClick={handleSearch}
+        onClick={handleCompanySearch}
         alt="Search"
       />
 
@@ -204,7 +207,7 @@ function SearchInput() {
                 index === activeIndex ? { backgroundColor: '#f2f2f2' } : {}
               }
             >
-              {value.name}
+              {value.companyName}
             </AutoCompleteItem>
           ))}
         </AutoCompleteContainer>
