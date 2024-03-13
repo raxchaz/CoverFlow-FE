@@ -43,8 +43,8 @@ const TokenManagement = () => {
 
     fetchToken(code, role)
       .then((headers) => {
-        const accessToken = headers.get('authorization');
-        const refreshToken = headers.get('authorization-refresh');
+        const accessToken = headers.get('Authorization');
+        const refreshToken = headers.get('Authorization-refresh');
 
         console.log('accessToken:', accessToken);
         console.log('refreshToken:', refreshToken);
