@@ -18,6 +18,7 @@ const fetchToken = async (code) => {
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
   }
+  console.log('fetchToken:', response);
   return response.headers;
 };
 const prevPage = localStorage.getItem('prevPage');
@@ -45,6 +46,8 @@ const TokenManagement = () => {
         const accessToken = headers.get('authorization');
         const refreshToken = headers.get('authorization-refresh');
 
+        console.log('accessToken:', accessToken);
+        console.log('refreshToken:', refreshToken);
         if (!accessToken || !refreshToken) {
           alert('토큰을 받아오는 데 실패하였습니다. 다시 시도해주세요.');
           navigate('/login');
