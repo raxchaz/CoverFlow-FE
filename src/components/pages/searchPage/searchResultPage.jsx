@@ -165,8 +165,8 @@ function SearchResultPage() {
             {searchResult.length > 0 ? (
               searchResult.map((data, index) => (
                 <ResultItem
-                  key={data.id}
-                  onClick={() => goToResultDetailPage(data.id)}
+                  key={data.companyId}
+                  onClick={() => goToResultDetailPage(data.companyId)}
                 >
                   <div
                     style={{
@@ -174,8 +174,8 @@ function SearchResultPage() {
                       flexDirection: 'column',
                     }}
                   >
-                    <span>{data.name}</span>
-                    <IndustryTag>{data.type}</IndustryTag>
+                    <span>{data.companyName}</span>
+                    <IndustryTag>업종 : {data.companyType}</IndustryTag>
                   </div>
                   <QuestionCount>{data.questionCount}</QuestionCount>
                 </ResultItem>

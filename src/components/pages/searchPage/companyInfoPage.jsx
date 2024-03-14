@@ -73,20 +73,22 @@ function CompanyInfoPage() {
   localStorage.setItem('prevPage', window.location.pathname);
 
   useEffect(() => {
-    console.log('회사 companyId: ', companyId);
     async function fetchCompanyData() {
       try {
-        const response = await fetch(`${BASE_URL}/api/company/${companyId}`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json; charset=UTF-8',
+        const response = await fetch(
+          `${BASE_URL}/api/company/${companyId}?pageNo=0&criterion=createdAt`,
+          {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json; charset=UTF-8',
+            },
           },
-        });
-        const data = await response.json();
+        );
 
-        if (response.ok && data.data) {
-          setCompanyData(data.data);
-          console.log('회사 데이터:', data.data);
+        const { data } = await response.json();
+
+        if (response.ok && data) {
+          setCompanyData(data);
         } else {
           throw new Error('데이터가 존재하지 않습니다.');
         }
@@ -143,7 +145,7 @@ function CompanyInfoPage() {
               <div className="sub-info">
                 <CompanyAddress>{companyData.address}</CompanyAddress>
                 <CompanyEstablishment>
-                  {companyData.establishment}
+                  {companyData.companyEstablishment}
                 </CompanyEstablishment>
               </div>
             </div>
