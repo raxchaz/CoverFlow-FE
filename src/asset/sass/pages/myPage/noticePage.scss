@@ -1,3 +1,8 @@
+@mixin interact-color {
+  background-color: #ff8d1d;
+  color: #ffffff;
+}
+
 .notice-list {
   display: flex;
   flex-direction: column;
@@ -83,13 +88,11 @@
     box-shadow 0.3s;
 
   &:hover {
-    background-color: #ff8d1d;
-    color: #ffffff;
+    @include interact-color;
     font-weight: bold;
   }
 }
 
 .active-item {
-  background-color: orange;
-  color: #ffffff;
+  @include interact-color;
 }
