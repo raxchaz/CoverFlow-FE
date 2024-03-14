@@ -1,5 +1,5 @@
 // reducers/authReducer.js
-import { SET_TOKENS, CLEAR_TOKENS } from '../actions/authActions';
+import { SET_TOKENS, CLEAR_TOKENS } from './actions/type.js';
 
 const initialState = {
   accessToken: null,
