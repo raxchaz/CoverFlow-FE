@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import Searchicon from '../../../asset/image/searchicon.svg';
 import { BASE_URL } from '../../global/constants/index.js';
 import useDebounce from '../../../hooks/useDebounce.js';
+import { conditionalExecution } from '../../../utils/utils.js';
 
 const StyledSearchInput = styled.input`
   width: 350px;
@@ -160,23 +161,61 @@ function SearchInput() {
   };
 
   const enteredKey = (event) => {
-    if (
-      event.key === 'ArrowDown' &&
-      activeIndex < autoCompleteValue.length - 1
-    ) {
-      event.preventDefault();
-      setActiveIndex(activeIndex + 1);
-    } else if (event.key === 'ArrowUp' && activeIndex > 0) {
-      event.preventDefault();
-      setActiveIndex(activeIndex - 1);
-    } else if (event.key === 'Enter') {
-      event.preventDefault();
-      if (activeIndex >= 0 && autoCompleteValue[activeIndex]) {
-        selectAutoCompleteValue(autoCompleteValue[activeIndex].name);
-      } else {
-        handleCompanySearch();
-      }
-    }
+    const condition = [
+      {
+        test: () =>
+          event.key === 'ArrowDown' &&
+          activeIndex < autoCompleteValue.length - 1,
+        execute: () => {
+          setActiveIndex(activeIndex + 1);
+        },
+      },
+      {
+        test: () => event.key === 'ArrowUp' && activeIndex > 0,
+        execute: () => {
+          setActiveIndex(activeIndex - 1);
+        },
+      },
+      {
+        test: () => event.key === 'Enter',
+        execute: () => {
+          activeIndex >= 0 && autoCompleteValue[activeIndex]
+            ? selectAutoCompleteValue(autoCompleteValue[activeIndex].name)
+            : handleCompanySearch();
+        },
+      },
+    ];
+
+    // conditionalExecution([
+    //   {
+    //     test: () =>
+    //       event.key === 'ArrowDown' &&
+    //       activeIndex < autoCompleteValue.length - 1,
+    //     execute: () => {
+    //       // event.preventDefault();
+    //       setActiveIndex(activeIndex + 1);
+    //     },
+    //   },
+    //   {
+    //     test: () => event.key === 'ArrowUp' && activeIndex > 0,
+    //     execute: () => {
+    //       // event.preventDefault();
+    //       setActiveIndex(activeIndex - 1);
+    //     },
+    //   },
+    //   {
+    //     test: () => event.key === 'Enter',
+    //     execute: () => {
+    //       event.preventDefault();
+    //       if (activeIndex >= 0 && autoCompleteValue[activeIndex]) {
+    //         selectAutoCompleteValue(autoCompleteValue[activeIndex].name);
+    //       } else {
+    //         handleCompanySearch();
+    //       }
+    //     },
+    //   },
+    // ]);
+    conditionalExecution(condition);
   };
 
   return (

@@ -1,3 +1,16 @@
+@mixin pretendard-font {
+  font-family: Pretenard, sans-serif;
+}
+
+@mixin line-height-128 {
+  line-height: 128%;
+}
+
+@mixin flex-margin-8 {
+  display: flex;
+  margin-top: 8px;
+}
+
 .banner {
   display: flex;
   width: 70%;
@@ -91,14 +104,14 @@
 }
 
 .point {
-  font-family: Pretendard, sans-serif;
-  line-height: 128%;
+  @include pretendard-font;
+  @include line-height-128;
   margin-top: 45px;
 }
 
 .benefit {
-  font-family: Pretendard, sans-serif;
-  line-height: 128%;
+  @include pretendard-font;
+  @include line-height-128;
   margin-top: 27px;
 }
 
@@ -111,9 +124,9 @@
   flex-direction: column;
   color: #646464;
   white-space: nowrap;
-  line-height: 128%;
+  @include line-height-128;
   span {
-    font-family: Pretendard, sans-serif;
+    @include pretendard-font;
   }
   img {
     aspect-ratio: 0.5;
@@ -134,7 +147,7 @@
   flex-direction: column;
   font-size: 9px;
   letter-spacing: -0.72px;
-  line-height: 128%;
+  @include line-height-128;
   padding: 0 57px;
 }
 
@@ -180,23 +193,21 @@
 
 .label {
   color: #909090;
-  font-family: Pretendard, sans-serif;
+  @include pretendard-font;
   font-size: 12px;
 }
 
 .value {
   color: #595656;
-  font-family: Pretendard, sans-serif;
+  @include pretendard-font;
   font-size: 12px;
 }
 
 .duration-info {
-  display: flex;
-  margin-top: 8px;
+  @include flex-margin-8;
   justify-content: space-evenly;
 }
 
 .icon-wrapper {
-  display: flex;
-  margin-top: 8px;
+  @include flex-margin-8;
 }
