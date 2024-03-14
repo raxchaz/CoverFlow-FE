@@ -6,9 +6,9 @@ import '../../../asset/sass/pages/myPage/myPage.scss';
 import { StyledPage, StyledHeader } from '../../../styledComponent.js';
 import TitleHeader from '../../ui/header/titleHeader.jsx';
 import TabBar from '../../ui/tabBar/tabBar.jsx';
-import { ReactComponent as ContactIcon } from '../../../asset/image/Contact.svg';
+import { ReactComponent as StoreIcon } from '../../../asset/image/store.svg';
 import { ReactComponent as EditIcon } from '../../../asset/image/edit.svg';
-import { ReactComponent as EventIcon } from '../../../asset/image/event.svg';
+import { ReactComponent as PremiumIcon } from '../../../asset/image/premium.svg';
 import { ReactComponent as NoticeIcon } from '../../../asset/image/notice.svg';
 import {
   ACCESS_TOKEN,
@@ -148,14 +148,14 @@ function Mypage() {
     navigate(-1);
   };
 
-  const goToNotice = () => {
-    navigate('/notice');
-  };
-  const goToEvent = () => {
-    navigate('/event');
-  };
   const goToContact = () => {
     navigate('/contact');
+  };
+  const goToPremium = () => {
+    navigate('/premium');
+  };
+  const goToStore = () => {
+    navigate('/store');
   };
   const goToEdit = () => {
     navigate('/info-edit', { state: { nickname } });
@@ -181,19 +181,19 @@ function Mypage() {
             프리미엄 이용하기
           </PremiunButton>
           <div className="mypage-select-menu">
-            <div className="menu" onClick={goToNotice}>
+            <div className="menu" onClick={goToContact}>
               <NoticeIcon />
-              <div className="letter">공지사항</div>
-            </div>
-
-            <div className="menu-contact" onClick={goToContact}>
-              <ContactIcon />
               <div className="letter">문의하기</div>
             </div>
 
-            <div className="menu-event" onClick={goToEvent}>
-              <EventIcon />
-              <div className="letter">이벤트</div>
+            <div className="menu-contact" onClick={goToStore}>
+              <StoreIcon />
+              <div className="letter">상점</div>
+            </div>
+
+            <div className="menu-event" onClick={goToPremium}>
+              <PremiumIcon />
+              <div className="letter">프리미엄</div>
             </div>
 
             <div className="menu-edit" onClick={goToEdit}>

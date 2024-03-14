@@ -4,40 +4,51 @@ import '../../../asset/sass/etc/header/sideBar.scss';
 import Sidenotice from '../../../asset/image/sidenotice.svg';
 import Feedback from '../../../asset/image/feedback.svg';
 import Sideevent from '../../../asset/image/sideevent.svg';
+import { ReactComponent as Logo } from '../../../asset/image/tab_logo.svg';
+import PropTypes from 'prop-types';
 
-function SideBar() {
+function SideBar({ setIsSideBarOpen }) {
+  const handleContentClick = (event) => {
+    event.stopPropagation();
+  };
+
   return (
-    <div className="sidebar">
-      <div className="sidebar-info">
-        안녕하세요
-        <br /> 기업 정보 QNA 서비스 <br />
-        코버플로우입니다
+    <div className="sidebar" onMouseDown={() => setIsSideBarOpen(false)}>
+      <div className="sidebar-content" onMouseDown={handleContentClick}>
+        <div className="sidebar-info">
+          <Logo />
+        </div>
+        <ul className="sidebar-menu">
+          <li className="menu-item">
+            {' '}
+            <Link to="/notice" className="menu-link">
+              <img className="sideitem" src={Sidenotice} />
+              공지사항
+            </Link>
+          </li>
+          <li className="menu-item" onClick={() => alert('준비중입니다.')}>
+            {' '}
+            {/* <Link to="/event"> */}
+            <div className="menu-link">
+              <img className="sideitem" src={Sideevent} />
+              이벤트
+            </div>
+            {/* </Link> */}
+          </li>
+          <li className="menu-item">
+            {' '}
+            <Link to="/feedback" className="menu-link">
+              <img className="sideitem" src={Feedback} />
+              피드백 남기기
+            </Link>
+          </li>
+        </ul>
       </div>
-      <ul className="sidebar-menu">
-        <li className="menu-item">
-          {' '}
-          <Link to="/notice">
-            <img className="sideitem" src={Sidenotice} />
-            공지사항
-          </Link>
-        </li>
-        <li className="menu-item">
-          {' '}
-          <Link to="/feedback">
-            <img className="sideitem" src={Feedback} />
-            피드백 남기기
-          </Link>
-        </li>
-        <li className="menu-item">
-          {' '}
-          <Link to="/event">
-            <img className="sideitem" src={Sideevent} />
-            이벤트
-          </Link>
-        </li>
-      </ul>
     </div>
   );
 }
+SideBar.propTypes = {
+  setIsSideBarOpen: PropTypes.func.isRequired,
+};
 
 export default SideBar;

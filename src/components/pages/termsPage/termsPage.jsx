@@ -4,14 +4,14 @@ import {
   BASE_URL,
   ACCESS_TOKEN,
   REFRESH_TOKEN,
-} from '../../../../components/global/constants/index';
-import Button from '../../../../components/ui/button/Button/Button';
-import { StyledPage, StyledHeader } from '../../../../styledComponent';
-import './termsPage.scss';
-import greyCheck from '../../../image/greyCheck.svg';
-import greenCheck from '../../../image/greenCheck.svg';
-import allCheckGrey from '../../../image/allCheck_grey.svg';
-import allCheckGreen from '../../../image/allCheck_green.svg';
+} from '../../global/constants/index';
+import Button from '../../ui/button/Button/Button';
+import { StyledPage, StyledHeader } from '../../../styledComponent';
+import '../../../asset/sass/pages/termsPage/termsPage.scss';
+import greyCheck from '../../../asset/image/greyCheck.svg';
+import greenCheck from '../../../asset/image/greenCheck.svg';
+import allCheckGrey from '../../../asset/image/allCheck_grey.svg';
+import allCheckGreen from '../../../asset/image/allCheck_green.svg';
 
 export default function TermsPage() {
   const navigate = useNavigate();

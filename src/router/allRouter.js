@@ -9,7 +9,7 @@ import MainPage from '../components/pages/mainPage/mainPage';
 /* 사용자 등록 페이지 관련  */
 import LoginPage from '../components/pages/loginPage/loginPage';
 import NicknamePage from '../components/pages/loginPage/nicknamePage';
-import TermsPage from '../asset/sass/pages/termsPage/termsPage.jsx';
+import TermsPage from '../components/pages/termsPage/termsPage.jsx';
 
 /* 사용자 참여 페이지 관련 */
 import Store from '../components/pages/storePage/storePage';
