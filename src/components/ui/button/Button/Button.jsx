@@ -17,6 +17,9 @@ export default function Button({ onClick, disabled, children, variant }) {
     case 'noEffect':
       variantClass = 'no-effect-button';
       break;
+    case 'round':
+      variantClass = 'Button round-btn';
+      break;
   }
 
   return (

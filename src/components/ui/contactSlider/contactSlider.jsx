@@ -54,15 +54,7 @@ export default function ContactSlider() {
   // }));
 
   useEffect(() => {
-    const token = localStorage.getItem(ACCESS_TOKEN);
-
-    if (!token) {
-      localStorage.setItem('contactpageURL', '/contact');
-      navigate('/login');
-    } else {
-      console.log('사용자 정보 로딩 시작');
-      loadUserData();
-    }
+    loadUserData();
   }, [navigate]);
 
   const loadUserData = async () => {
