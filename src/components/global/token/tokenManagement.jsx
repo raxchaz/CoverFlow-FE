@@ -3,7 +3,6 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { Base64 } from 'js-base64';
 import { BASE_URL, ACCESS_TOKEN, REFRESH_TOKEN } from '../constants/index';
 import { useDispatch } from 'react-redux';
-import { setCredentials } from '../../../store/actions/userActions';
 
 const decodeToken = (token) => {
   const payload = token.split('.')[1];
@@ -51,7 +50,6 @@ const TokenManagement = () => {
 
         console.log('accessToken:', accessToken);
         console.log('refreshToken:', refreshToken);
-        dispatch(setCredentials(accessToken, refreshToken));
 
         if (!accessToken || !refreshToken) {
           alert('토큰을 받아오는 데 실패하였습니다. 다시 시도해주세요.');
