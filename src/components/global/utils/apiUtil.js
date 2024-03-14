@@ -1,4 +1,7 @@
-import { BASE_URL, ACCESS_TOKEN } from '../constants/index';
+import { BASE_URL, ACCESS_TOKEN, TOKEN_EXPIRES_IN } from '../constants/index';
+import store from '../../../store';
+import { setTokens } from '../../../store/actions/authActions';
+import { useNavigate } from 'react-router-dom';
 
 const request = async (options) => {
   const headers = new Headers({
@@ -40,3 +43,55 @@ export function LoggedinUser() {
     throw new Error('사용자 정보를 가져오는데 실패했습니다.');
   });
 }
+
+const isTokenExpired = () => {
+  const { expiresAt } = store.getState().auth;
+  return new Date().getTime() > expiresAt;
+};
+
+// API 요청을 위한 범용 함수
+// 사용예시
+
+// 1. GET, DELETE : fetchAPI('/API 주소', 'GET').then(response => {데이터처리 로직}
+// 2. POST, PUTfetchAPI('/API 주소', 'POST', postData).then(response => {데이터처리 로직}
+
+export const fetchAPI = async (endpoint, method, body = null) => {
+  const navigate = useNavigate();
+  const { accessToken, refreshToken } = store.getState().auth;
+  const headers = new Headers({
+    'Content-Type': 'application/json',
+  });
+
+  const token = localStorage.getItem(ACCESS_TOKEN);
+
+  if (!token) {
+    localStorage.setItem('contactpageURL', '/contact');
+    navigate('/login');
+  }
+
+  // 토큰이 만료되었다면 리프레시 토큰도 헤더에 추가
+  if (isTokenExpired() && refreshToken) {
+    headers.append('Authorization', accessToken);
+    headers.append('Authorization-refresh', refreshToken);
+  } else if (accessToken) {
+    headers.append('Authorization', accessToken);
+  }
+
+  const response = await fetch(`${BASE_URL}${endpoint}`, {
+    method,
+    headers,
+    body: body ? JSON.stringify(body) : null,
+  });
+
+  // 응답 헤더에서 새로운 액세스 토큰과 리프레시 토큰을 확인하고 저장
+  const newAccessToken = response.headers.get('Authorization');
+  const newRefreshToken = response.headers.get('Authorization-refresh');
+  if (newAccessToken && newRefreshToken) {
+    localStorage.setItem('ACCESS_TOKEN', newAccessToken);
+    localStorage.setItem('REFRESH_TOKEN', newRefreshToken);
+    const expiresAt = new Date().getTime() + TOKEN_EXPIRES_IN * 1000;
+    store.dispatch(setTokens(newAccessToken, newRefreshToken, expiresAt));
+  }
+  console.log('토큰 다시 발급됨', localStorage.getItem('ACCESS_TOKEN'));
+  return response;
+};

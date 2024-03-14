@@ -6,6 +6,7 @@ import Disclamier from './disclamier.jsx';
 import { ACCESS_TOKEN, BASE_URL } from '../../global/constants/index.js';
 import ContactList from './contactList.jsx';
 import Button from '../button/Button/Button.jsx';
+import { fetchAPI } from '../../global/utils/apiUtil.js';
 const StatusBar = styled.div`
   display: flex;
   justify-content: space-between;
@@ -66,7 +67,7 @@ export default function ContactSlider() {
 
   const loadUserData = async () => {
     try {
-      const response = await fetch(`${BASE_URL}/api/inquiry?pageNo=0`, {
+      const response = await fetchAPI(`${BASE_URL}/api/inquiry?pageNo=0`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -86,13 +87,14 @@ export default function ContactSlider() {
   };
 
   const submitContact = () => {
-    fetch(`${BASE_URL}/api/inquiry`, {
+    const submitContactData = JSON.stringify(contact);
+    fetchAPI(`${BASE_URL}/api/inquiry`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
       },
-      body: JSON.stringify(contact),
+      submitContactData,
     })
       .then((res) => {
         console.log(res, '성공적으로 저장되었습니다');
