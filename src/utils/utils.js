@@ -6,7 +6,7 @@ export const tryCatch = (f, errorHandler) => {
   }
 };
 
-export const conditionalExecution = (then, test, ELSE) => {
+export const conditionalExecution = (test, then, ELSE) => {
   if (test) return then();
-  return ELSE();
+  else return ELSE();
 };
