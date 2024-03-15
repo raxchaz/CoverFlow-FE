@@ -6,6 +6,8 @@ import Disclamier from './disclamier.jsx';
 import ContactList from './contactList.jsx';
 import Button from '../button/Button/Button.jsx';
 import { fetchAPI } from '../../global/utils/apiUtil.js';
+import { store } from '../../../store/index.js';
+// import { BASE_URL, ACCESS_TOKEN } from '../../global/constants/index.js';
 const StatusBar = styled.div`
   display: flex;
   justify-content: space-between;
@@ -34,6 +36,7 @@ export default function ContactSlider() {
   useEffect(() => {
     loadUserData();
   }, [navigate]);
+  console.log(store.getState());
 
   const [currentSection, setCurrentSection] = useState('contact');
   const [contact, setcontact] = useState({
@@ -50,13 +53,37 @@ export default function ContactSlider() {
         `/api/inquiry?pageNo=${currentPageAPI}`,
         'GET',
       );
-      console.log('내 문의 내역:', data.json());
-      setContactList(data.inquiryList);
-      setTotalPage(data.totalPage);
+      console.log('내 문의 내역:', data);
+      setContactList(data.data.inquiryList);
+      setTotalPage(data.data.totalPage);
     } catch (error) {
       console.error('문의 내역 불러오기 실패:', error);
     }
   };
+
+  //   try {
+  //     const response = await fetch(
+  //       `${BASE_URL}/api/inquiry?pageNo=${currentPageAPI}`,
+  //       {
+  //         method: 'GET',
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //           Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
+  //         },
+  //       },
+  //     );
+  //     if (!response.ok) {
+  //       throw new Error(` ${response.status}: ${response.statusText}`);
+  //     }
+
+  //     const data = await response.json();
+  //     console.log('내 문의 내역:', data);
+  //     setContactList(data.data.inquiryList);
+  //     setTotalPage(data.data.totalPage);
+  //   } catch (error) {
+  //     console.error('문의 내역 불러오기 실패:', error);
+  //   }
+  // };
 
   const submitContact = () => {
     const submitContactData = JSON.stringify(contact);

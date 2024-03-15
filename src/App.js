@@ -2,15 +2,18 @@ import './App.css';
 import React from 'react';
 import '../src/font/font.css';
 import { Provider } from 'react-redux';
-import store from './store';
+import { PersistGate } from 'redux-persist/integration/react';
+import { store, persistor } from './store';
 import GlobalStyles from './globalStyles';
 import AllRouter from '../src/router/allRouter.js';
 
 function App() {
   return (
     <Provider store={store}>
-      <GlobalStyles />
-      <AllRouter />
+      <PersistGate loading={null} persistor={persistor}>
+        <GlobalStyles />
+        <AllRouter />
+      </PersistGate>
     </Provider>
   );
 }
