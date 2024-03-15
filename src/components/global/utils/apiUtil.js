@@ -1,4 +1,9 @@
-import { BASE_URL, ACCESS_TOKEN, TOKEN_EXPIRES_IN } from '../constants/index';
+import {
+  BASE_URL,
+  ACCESS_TOKEN,
+  REFRESH_TOKEN,
+  TOKEN_EXPIRES_IN,
+} from '../constants/index';
 import store from '../../../store';
 import { setTokens } from '../../../store/actions/authActions';
 
@@ -56,8 +61,8 @@ const isTokenExpired = () => {
 
 export const fetchAPI = async (endpoint, method, body = null) => {
   // const { accessToken, refreshToken } = store.getState().auth;
-  const accessToken = localStorage.getItem('ACCESS_TOKEN');
-  const refreshToken = localStorage.getItem('REFRESH_TOKEN');
+  const accessToken = localStorage.getItem(ACCESS_TOKEN);
+  const refreshToken = localStorage.getItem(REFRESH_TOKEN);
   const headers = new Headers({
     'Content-Type': 'application/json',
   });
