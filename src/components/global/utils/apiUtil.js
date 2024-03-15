@@ -1,7 +1,6 @@
 import { BASE_URL, ACCESS_TOKEN, TOKEN_EXPIRES_IN } from '../constants/index';
 import store from '../../../store';
 import { setTokens } from '../../../store/actions/authActions';
-import { useNavigate } from 'react-router-dom';
 
 const request = async (options) => {
   const headers = new Headers({
@@ -56,7 +55,6 @@ const isTokenExpired = () => {
 // 2. POST, PUTfetchAPI('/API 주소', 'POST', postData).then(response => {데이터처리 로직}
 
 export const fetchAPI = async (endpoint, method, body = null) => {
-  const navigate = useNavigate();
   const { accessToken, refreshToken } = store.getState().auth;
   const headers = new Headers({
     'Content-Type': 'application/json',
@@ -65,8 +63,7 @@ export const fetchAPI = async (endpoint, method, body = null) => {
   const token = localStorage.getItem(ACCESS_TOKEN);
 
   if (!token) {
-    localStorage.setItem('contactpageURL', '/contact');
-    navigate('/login');
+    throw new Error('토큰이 존재하지 않습니다.');
   }
 
   // 토큰이 만료되었다면 리프레시 토큰도 헤더에 추가
