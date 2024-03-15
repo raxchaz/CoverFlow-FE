@@ -41,30 +41,18 @@ export default function ContactSlider() {
     content: '',
   });
   const [contactList, setContactList] = useState([]);
-
-  // const contactList = [...Array(3)].map((_, index) => ({
-  //   inquiryId: 1234,
-  //   inquiryTitle: '저기요',
-  //   inquiryContent: '여기 사이트 접근이 어려워요' + index,
-  //   inquiryAnswer: '그렇군요',
-  //   inquiryStatus: 'COMPLETE',
-  //   inquirerNickname: '무거운 피자',
-  //   createdAt: '2024-05-90',
-  //   allInquiriesCount: 7,
-  //   waitInquiriesCount: 3,
-  //   completeInquiriesCount: 4,
-  // }));
+  const [totalPage, setTotalPage] = useState(1);
+  const [currentPageAPI, setCurrentPageAPI] = useState(0);
 
   const loadUserData = async () => {
     try {
-      const response = await fetchAPI('/api/inquiry?pageNo=0', 'GET');
-      if (!response.ok) {
-        throw new Error(` ${response.status}: ${response.statusText}`);
-      }
-
-      const data = await response.json();
+      const data = await fetchAPI(
+        `/api/inquiry?pageNo=${currentPageAPI}`,
+        'GET',
+      );
       console.log('내 문의 내역:', data);
       setContactList(data.data);
+      setTotalPage(data.totalPage);
     } catch (error) {
       console.error('문의 내역 불러오기 실패:', error);
     }
@@ -175,7 +163,9 @@ export default function ContactSlider() {
       {currentSection === 'contactList' && (
         <ContactList
           contactList={contactList}
+          totalPages={totalPage}
           setCurrentSection={setCurrentSection}
+          setCurrentPage={setCurrentPageAPI}
         />
       )}
     </div>
