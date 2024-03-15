@@ -50,7 +50,7 @@ export default function ContactSlider() {
         `/api/inquiry?pageNo=${currentPageAPI}`,
         'GET',
       );
-      console.log('내 문의 내역:', data);
+      console.log('내 문의 내역:', data.json());
       setContactList(data.inquiryList);
       setTotalPage(data.totalPage);
     } catch (error) {

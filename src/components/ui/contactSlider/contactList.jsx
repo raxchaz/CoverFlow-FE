@@ -21,14 +21,7 @@ export default function ContactList({
 
   // 페이지 그룹별 시작 및 끝 페이지 계산
   const totalGroups = Math.ceil(totalPages / groupSize);
-  console.log('리덕스 값 확인', reduxData);
-  console.log(
-    'props확인',
-    contactList,
-    setCurrentSection,
-    setCurrentPageAPI,
-    totalPages,
-  );
+  console.log('리덕스 확인', reduxData);
   const startPage = currentGroup * groupSize + 1;
   const endPage = Math.min(startPage + groupSize - 1, totalPages);
 
