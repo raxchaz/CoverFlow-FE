@@ -51,7 +51,7 @@ function QuestionWritePage() {
         throw new Error('서버 에러');
       }
     } catch (error) {
-      console.error('등록 실패:', error);
+      toast.error('등록 실패:', error);
     }
   };
 
