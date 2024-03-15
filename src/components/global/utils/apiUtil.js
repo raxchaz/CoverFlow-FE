@@ -59,7 +59,7 @@ export const fetchAPI = async (endpoint, method, body = null) => {
   const headers = new Headers({
     'Content-Type': 'application/json',
   });
-
+  const apiLink = `${BASE_URL}${endpoint}`;
   const token = localStorage.getItem(ACCESS_TOKEN);
 
   if (!token) {
@@ -72,23 +72,27 @@ export const fetchAPI = async (endpoint, method, body = null) => {
     headers.append('Authorization-refresh', `Bearer ${refreshToken}`);
   } else if (accessToken) {
     headers.append('Authorization', `Bearer ${accessToken}`);
+    console.log('헤더 확인', headers);
+    console.log('요청 주소 확인', apiLink);
   }
 
-  const response = await fetch(`${BASE_URL}${endpoint}`, {
+  const response = await fetch(apiLink, {
     method,
     headers,
     body: body ? JSON.stringify(body) : null,
   });
 
   // 응답 헤더에서 새로운 액세스 토큰과 리프레시 토큰을 확인하고 저장
-  const newAccessToken = response.headers.get('Authorization');
-  const newRefreshToken = response.headers.get('Authorization-refresh');
-  if (newAccessToken && newRefreshToken) {
-    localStorage.setItem('ACCESS_TOKEN', newAccessToken);
-    localStorage.setItem('REFRESH_TOKEN', newRefreshToken);
-    const expiresAt = new Date().getTime() + TOKEN_EXPIRES_IN * 1000;
-    store.dispatch(setTokens(newAccessToken, newRefreshToken, expiresAt));
+  if (isTokenExpired()) {
+    const newAccessToken = response.headers.get('Authorization');
+    const newRefreshToken = response.headers.get('Authorization-refresh');
+    if (newAccessToken && newRefreshToken) {
+      localStorage.setItem('ACCESS_TOKEN', newAccessToken);
+      localStorage.setItem('REFRESH_TOKEN', newRefreshToken);
+      const expiresAt = new Date().getTime() + TOKEN_EXPIRES_IN * 1000;
+      store.dispatch(setTokens(newAccessToken, newRefreshToken, expiresAt));
+    }
+    console.log('토큰 다시 발급됨', localStorage.getItem('ACCESS_TOKEN'));
   }
-  console.log('토큰 다시 발급됨', localStorage.getItem('ACCESS_TOKEN'));
   return response;
 };
