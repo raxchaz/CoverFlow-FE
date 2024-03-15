@@ -55,7 +55,9 @@ const isTokenExpired = () => {
 // 2. POST, PUTfetchAPI('/API 주소', 'POST', postData).then(response => {데이터처리 로직}
 
 export const fetchAPI = async (endpoint, method, body = null) => {
-  const { accessToken, refreshToken } = store.getState().auth;
+  // const { accessToken, refreshToken } = store.getState().auth;
+  const accessToken = localStorage.getItem('ACCESS_TOKEN');
+  const refreshToken = localStorage.getItem('REFRESH_TOKEN');
   const headers = new Headers({
     'Content-Type': 'application/json',
   });
@@ -81,6 +83,11 @@ export const fetchAPI = async (endpoint, method, body = null) => {
     body: body ? JSON.stringify(body) : null,
   });
 
+  const responseData = await response.json();
+  if (!response.ok) {
+    throw new Error(responseData.message || '요청 처리 실패');
+  }
+
   // 응답 헤더에서 새로운 액세스 토큰과 리프레시 토큰을 확인하고 저장
   if (isTokenExpired()) {
     const newAccessToken = response.headers.get('Authorization');
@@ -93,5 +100,5 @@ export const fetchAPI = async (endpoint, method, body = null) => {
     }
     console.log('토큰 다시 발급됨', localStorage.getItem('ACCESS_TOKEN'));
   }
-  return response;
+  return responseData;
 };

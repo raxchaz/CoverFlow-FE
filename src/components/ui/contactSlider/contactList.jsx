@@ -3,39 +3,77 @@ import PropTypes from 'prop-types';
 import './contactList.scss';
 import Plus from '../../../asset/image/plus.svg';
 import Warning from '../../../asset/image/warning.svg';
+import { ReactComponent as LeftArrow } from '../../../asset/image/left_arrow.svg';
+import { ReactComponent as RightArrow } from '../../../asset/image/right_arrow.svg';
 
-export default function ContactList(props) {
+export default function ContactList({
+  contactList,
+  setCurrentSection,
+  setCurrentPageAPI,
+  totalPages,
+}) {
   const [activeToggleIndex, setActiveToggleIndex] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [currentGroup, setCurrentGroup] = useState(0);
+  const groupSize = 5; // 한 그룹당 최대 페이지 수
+  const [currentGroup, setCurrentGroup] = useState(0); // 현재 페이지 그룹 인덱스
+
+  // 페이지 그룹별 시작 및 끝 페이지 계산
+  const totalGroups = Math.ceil(totalPages / groupSize);
+
+  const startPage = currentGroup * groupSize + 1;
+  const endPage = Math.min(startPage + groupSize - 1, totalPages);
 
   const toggleFunction = (index) => {
     setActiveToggleIndex(activeToggleIndex === index ? null : index);
   };
 
-  const itemsPerPage = 5;
   const handlePageClick = (page) => {
     setCurrentPage(page);
+    setCurrentPageAPI(page - 1);
   };
+
   const handlePreviousGroup = () => {
-    setCurrentGroup(Math.max(0, currentGroup - 1));
+    if (currentGroup > 0) {
+      setCurrentGroup(currentGroup - 1);
+    }
   };
 
   const handleNextGroup = () => {
-    setCurrentGroup(Math.min(totalGroups - 1, currentGroup + 1));
+    if (currentGroup < totalGroups - 1) {
+      setCurrentGroup(currentGroup + 1);
+    }
   };
 
-  const getPaginatedList = (list, page) => {
-    const startIndex = (page - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    return list.slice(startIndex, endIndex);
+  // 현재 페이지 그룹에 따라 페이지네이션 렌더링
+  const renderPageNumbers = () => {
+    const pages = [];
+    for (let i = startPage; i <= endPage; i++) {
+      pages.push(
+        <div
+          className={`inquiry-index-btn ${currentPage === i ? 'selected' : ''}`}
+          key={i}
+          onClick={() => handlePageClick(i)}
+        >
+          {i}
+        </div>,
+      );
+    }
+    // 페이지 번호가 없는 경우 (totalPages가 1인 경우 포함) 여기서 처리할 수 있습니다.
+    if (pages.length === 0) {
+      pages.push(
+        <div
+          className="inquiry-index-btn selected"
+          key={1}
+          onClick={() => handlePageClick(1)}
+        >
+          1
+        </div>,
+      );
+    }
+    console.log(`totalPages: ${totalPages}`);
+    console.log(`startPage: ${startPage}, endPage: ${endPage}`);
+    return pages;
   };
-
-  const paginatedList = getPaginatedList(props.contactList, currentPage);
-  const totalPages = Math.ceil(props.contactList.length / itemsPerPage);
-  const totalGroups = Math.ceil(totalPages / itemsPerPage);
-  const startPage = currentGroup * itemsPerPage + 1;
-  const endPage = Math.min(startPage + itemsPerPage - 1, totalPages);
 
   const renderInquiryStatusTag = (status) => {
     let className = '';
@@ -60,8 +98,8 @@ export default function ContactList(props) {
   return (
     <>
       <div className="inquiry-container">
-        {paginatedList.length > 0 ? (
-          paginatedList.map((item, index) => {
+        {contactList.length > 0 ? (
+          contactList.map((item, index) => {
             const { className, text } = renderInquiryStatusTag(
               item.inquiryStatus,
             );
@@ -137,7 +175,7 @@ export default function ContactList(props) {
               <img className="plus-icon" src={Plus} alt="Plus Icon" />
               <span
                 className="contact-inquiry-registration"
-                onClick={() => props.setCurrentSection('contact')}
+                onClick={() => setCurrentSection('contact')}
               >
                 문의 작성하기
               </span>
@@ -145,59 +183,11 @@ export default function ContactList(props) {
           </div>
         )}
       </div>
-      {paginatedList.length >= 1 && (
+      {contactList.length > 1 && (
         <div className="inquiry-button-container">
-          <div
-            onClick={handlePreviousGroup}
-            disabled={currentGroup === 0}
-            style={{ cursor: 'pointer' }}
-          >
-            <svg
-              width="6"
-              height="10"
-              viewBox="0 0 6 10"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M5 9L1 5L5 1"
-                stroke="#1D1D1F"
-                strokeWidth="0.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </div>
-          {[...Array(endPage - startPage + 1)].map((_, index) => (
-            <div
-              className={`inquiry-index-btn ${currentPage === startPage + index ? 'selected' : ''}`}
-              key={index}
-              onClick={() => handlePageClick(startPage + index)}
-            >
-              {startPage + index}
-            </div>
-          ))}
-          <div
-            style={{ cursor: 'pointer' }}
-            onClick={handleNextGroup}
-            disabled={currentGroup === totalGroups - 1}
-          >
-            <svg
-              width="6"
-              height="10"
-              viewBox="0 0 6 10"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M1 9L5 5L1 1"
-                stroke="#1D1D1F"
-                strokeWidth="0.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </div>
+          <LeftArrow onClick={handlePreviousGroup} />
+          {renderPageNumbers()}
+          <RightArrow onClick={handleNextGroup} />
         </div>
       )}
     </>
@@ -207,11 +197,15 @@ export default function ContactList(props) {
 ContactList.propTypes = {
   itemsPerPage: PropTypes.number.isRequired,
   setCurrentSection: PropTypes.func.isRequired,
+  totalPages: PropTypes.number.isRequired,
+  setCurrentPageAPI: PropTypes.func.isRequired,
   contactList: PropTypes.arrayOf(
     PropTypes.shape({
       inquiryId: PropTypes.number.isRequired,
       inquiryContent: PropTypes.string.isRequired,
+      inquiryTitle: PropTypes.string.isRequired,
       inquiryStatus: PropTypes.string.isRequired,
+      createdAt: PropTypes.string,
     }),
   ).isRequired,
 };
