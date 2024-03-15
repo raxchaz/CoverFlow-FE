@@ -60,9 +60,8 @@ export const fetchAPI = async (endpoint, method, body = null) => {
     'Content-Type': 'application/json',
   });
   const apiLink = `${BASE_URL}${endpoint}`;
-  const token = localStorage.getItem(ACCESS_TOKEN);
 
-  if (!token) {
+  if (!accessToken) {
     throw new Error('토큰이 존재하지 않습니다.');
   }
 
