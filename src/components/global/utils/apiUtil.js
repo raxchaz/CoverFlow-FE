@@ -86,11 +86,20 @@ export const fetchAPI = async (endpoint, method, body = null) => {
     method,
     headers,
     body: body ? JSON.stringify(body) : null,
+  }).then((res) => {
+    res.json().then((json) => {
+      if (!response.ok) {
+        const error = new Error(json.message || 'FETCH API 요청 처리 실패.');
+        error.response = response;
+        throw error;
+      }
+      console.log('APIFETCH', res);
+      return res;
+    });
   });
 
-  const responseData = await response.json();
   if (!response.ok) {
-    throw new Error(responseData.message || '요청 처리 실패');
+    throw new Error(response.message || '요청 처리 실패');
   }
 
   // 응답 헤더에서 새로운 액세스 토큰과 리프레시 토큰을 확인하고 저장
@@ -102,8 +111,8 @@ export const fetchAPI = async (endpoint, method, body = null) => {
       localStorage.setItem('REFRESH_TOKEN', newRefreshToken);
       const expiresAt = new Date().getTime() + TOKEN_EXPIRES_IN * 1000;
       store.dispatch(setTokens(newAccessToken, newRefreshToken, expiresAt));
+      console.log('토큰 다시 발급됨', localStorage.getItem('ACCESS_TOKEN'));
     }
-    console.log('토큰 다시 발급됨', localStorage.getItem('ACCESS_TOKEN'));
   }
-  return responseData;
+  return response;
 };

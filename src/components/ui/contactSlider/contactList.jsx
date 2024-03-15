@@ -5,6 +5,7 @@ import Plus from '../../../asset/image/plus.svg';
 import Warning from '../../../asset/image/warning.svg';
 import { ReactComponent as LeftArrow } from '../../../asset/image/left_arrow.svg';
 import { ReactComponent as RightArrow } from '../../../asset/image/right_arrow.svg';
+import store from '../../../store';
 
 export default function ContactList({
   contactList,
@@ -12,6 +13,7 @@ export default function ContactList({
   setCurrentPageAPI,
   totalPages,
 }) {
+  const reduxData = store.getState().auth;
   const [activeToggleIndex, setActiveToggleIndex] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const groupSize = 5; // 한 그룹당 최대 페이지 수
@@ -19,7 +21,7 @@ export default function ContactList({
 
   // 페이지 그룹별 시작 및 끝 페이지 계산
   const totalGroups = Math.ceil(totalPages / groupSize);
-
+  console.log('리덕스 값 확인', reduxData);
   const startPage = currentGroup * groupSize + 1;
   const endPage = Math.min(startPage + groupSize - 1, totalPages);
 
@@ -70,8 +72,8 @@ export default function ContactList({
         </div>,
       );
     }
-    console.log(`totalPages: ${totalPages}`);
-    console.log(`startPage: ${startPage}, endPage: ${endPage}`);
+    // console.log(`totalPages: ${totalPages}`);
+    // console.log(`startPage: ${startPage}, endPage: ${endPage}`);
     return pages;
   };
 
