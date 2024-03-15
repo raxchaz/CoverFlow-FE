@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+// import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import './contactSlider.scss';
 import Disclamier from './disclamier.jsx';
-import { ACCESS_TOKEN, BASE_URL } from '../../global/constants/index.js';
 import ContactList from './contactList.jsx';
 import Button from '../button/Button/Button.jsx';
 import { fetchAPI } from '../../global/utils/apiUtil.js';
@@ -31,7 +30,7 @@ const StatusTab = styled.div`
 // ======================= 스타일드 컴포넌트
 
 export default function ContactSlider() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const [currentSection, setCurrentSection] = useState('contact');
   const [contact, setcontact] = useState({
@@ -53,18 +52,14 @@ export default function ContactSlider() {
   //   completeInquiriesCount: 4,
   // }));
 
-  useEffect(() => {
-    loadUserData();
-  }, [navigate]);
+  // useEffect(() => {
+  //   loadUserData();
+  // }, [navigate]);
 
   const loadUserData = async () => {
     try {
-      const response = await fetchAPI(`${BASE_URL}/api/inquiry?pageNo=0`, {
+      const response = await fetchAPI('/api/inquiry?pageNo=0', {
         method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
-        },
       });
       if (!response.ok) {
         throw new Error(` ${response.status}: ${response.statusText}`);
@@ -80,12 +75,8 @@ export default function ContactSlider() {
 
   const submitContact = () => {
     const submitContactData = JSON.stringify(contact);
-    fetchAPI(`${BASE_URL}/api/inquiry`, {
+    fetchAPI('/api/inquiry', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
-      },
       submitContactData,
     })
       .then((res) => {

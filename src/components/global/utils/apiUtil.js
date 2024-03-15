@@ -71,8 +71,8 @@ export const fetchAPI = async (endpoint, method, body = null) => {
 
   // 토큰이 만료되었다면 리프레시 토큰도 헤더에 추가
   if (isTokenExpired() && refreshToken) {
-    headers.append('Authorization', accessToken);
-    headers.append('Authorization-refresh', refreshToken);
+    headers.append('Authorization', `Bearer ${accessToken}`);
+    headers.append('Authorization-refresh', `Bearer ${refreshToken}`);
   } else if (accessToken) {
     headers.append('Authorization', accessToken);
   }
