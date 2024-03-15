@@ -4,7 +4,7 @@ import { Base64 } from 'js-base64';
 import { BASE_URL, ACCESS_TOKEN, REFRESH_TOKEN } from '../constants/index';
 import { useDispatch } from 'react-redux';
 import { setTokens } from '../../../store/actions/authActions';
-import store from '../../../store';
+import { store } from '../../../store';
 
 const decodeToken = (token) => {
   const payload = token.split('.')[1];

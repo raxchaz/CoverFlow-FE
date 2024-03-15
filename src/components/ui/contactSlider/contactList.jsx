@@ -5,7 +5,7 @@ import Plus from '../../../asset/image/plus.svg';
 import Warning from '../../../asset/image/warning.svg';
 import { ReactComponent as LeftArrow } from '../../../asset/image/left_arrow.svg';
 import { ReactComponent as RightArrow } from '../../../asset/image/right_arrow.svg';
-import store from '../../../store';
+import { store } from '../../../store';
 
 export default function ContactList({
   contactList,
