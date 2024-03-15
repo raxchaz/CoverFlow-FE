@@ -39,11 +39,11 @@ const LoginButton = styled.button`
 //     `}
 // `;
 
-const ContentBlur = styled.span.attrs(({ isLoggedIn }) => ({
-  isLoggedIn: isLoggedIn,
+const ContentBlur = styled.span.attrs(({ $isLoggedIn }) => ({
+  $isLoggedIn,
 }))`
-  ${({ isLoggedIn }) =>
-    !isLoggedIn &&
+  ${({ $isLoggedIn }) =>
+    !$isLoggedIn &&
     css`
       display: -webkit-box;
       -webkit-box-orient: vertical;
@@ -55,8 +55,8 @@ const ContentBlur = styled.span.attrs(({ isLoggedIn }) => ({
 `;
 
 function truncateTitle(title, maxLength = 25) {
-  return title.length > maxLength
-    ? title.substring(0, maxLength - 3) + '...'
+  return title?.length > maxLength
+    ? title?.substring(0, maxLength - 3) + '...'
     : title;
 }
 
@@ -80,7 +80,6 @@ function QuestionModule({
   questionId,
   questioner,
   questionerTag,
-  viewCount,
   answerCount,
   questionTitle,
   questionContent,
@@ -132,9 +131,7 @@ function QuestionModule({
           <div className="view-container">
             <img className="chat-img" src={Chat} />
             <span className="chat-count">{answerCount}</span>
-
             <img className="view-img" src={View} />
-            <span className="view-count">{viewCount}</span>
           </div>
           <div className="field">
             <span className="question-title">
@@ -164,14 +161,13 @@ function QuestionModule({
             <span className="chat-count">{answerCount}</span>
 
             <img className="view-img" src={View} />
-            <span className="view-count">{viewCount}</span>
           </div>
           <div className="field">
             <span className="question-title">
               {truncateTitle(questionTitle)}
             </span>
 
-            <ContentBlur isLoggedIn={isLoggedIn}>
+            <ContentBlur $isLoggedIn={isLoggedIn}>
               <span className="question-content">{questionContent}</span>
             </ContentBlur>
 
@@ -195,8 +191,7 @@ QuestionModule.propTypes = {
   questionId: PropTypes.string.isRequired,
   questioner: PropTypes.string.isRequired,
   questionerTag: PropTypes.string.isRequired,
-  viewCount: PropTypes.string.isRequired,
-  answerCount: PropTypes.string.isRequired,
+  answerCount: PropTypes.number.isRequired,
   createAt: PropTypes.string.isRequired,
   questionContent: PropTypes.string.isRequired,
   questionTitle: PropTypes.string.isRequired,
