@@ -57,9 +57,7 @@ export default function ContactSlider() {
 
   const loadUserData = async () => {
     try {
-      const response = await fetchAPI('/api/inquiry?pageNo=0', {
-        method: 'GET',
-      });
+      const response = await fetchAPI('/api/inquiry?pageNo=0', 'GET');
       if (!response.ok) {
         throw new Error(` ${response.status}: ${response.statusText}`);
       }
@@ -74,10 +72,7 @@ export default function ContactSlider() {
 
   const submitContact = () => {
     const submitContactData = JSON.stringify(contact);
-    fetchAPI('/api/inquiry', {
-      method: 'POST',
-      submitContactData,
-    })
+    fetchAPI('/api/inquiry', 'POST', submitContactData)
       .then((res) => {
         console.log(res, '성공적으로 저장되었습니다');
         loadUserData();
