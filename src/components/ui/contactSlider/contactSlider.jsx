@@ -85,9 +85,9 @@ export default function ContactSlider() {
   //   }
   // };
 
-  const submitContact = () => {
+  const submitContact = async () => {
     const submitContactData = JSON.stringify(contact);
-    fetchAPI('/api/inquiry', 'POST', submitContactData)
+    await fetchAPI('/api/inquiry', 'POST', submitContactData)
       .then((res) => {
         console.log(res, '성공적으로 저장되었습니다');
         loadUserData();
