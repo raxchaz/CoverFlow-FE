@@ -116,13 +116,16 @@ function SearchResultPage() {
   const queryParams = new URLSearchParams(location.search);
   const keyword = queryParams.get('keyword');
   const [searchResult, setSearchResult] = useState([]);
-
+  console.log('s', searchResult);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10; // Change this according to your preference
+  const itemsPerPage = 10;
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = searchResult.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = Array.from(searchResult)?.slice(
+    indexOfFirstItem,
+    indexOfLastItem,
+  );
 
   const totalPages = Math.ceil(searchResult.length / itemsPerPage);
 
@@ -134,7 +137,7 @@ function SearchResultPage() {
     async function fetchData() {
       try {
         const response = await fetch(
-          `${BASE_URL}/api/company?pageNo=0&name=${keyword}`,
+          `${BASE_URL}/api/company?pageNo=1&name=${keyword}`,
           {
             method: 'GET',
             headers: {
@@ -144,7 +147,7 @@ function SearchResultPage() {
         );
         const { data } = await response.json();
         if (response.ok) {
-          setSearchResult(data);
+          setSearchResult(data.companyList);
         }
       } catch (error) {
         toast.error(error);
@@ -175,11 +178,11 @@ function SearchResultPage() {
           <Line />
           <ResultCount>
             기업 검색 결과{' '}
-            <span className="result-count"> {searchResult.length}</span>
+            <span className="result-count">{searchResult.length}</span>
           </ResultCount>
           <ResultsList>
             {currentItems.length > 0 ? (
-              currentItems.map((data, index) => (
+              currentItems.map((data) => (
                 <ResultItem
                   key={data.companyId}
                   onClick={() => goToResultDetailPage(data.companyId)}
@@ -217,7 +220,7 @@ function SearchResultPage() {
               </span>
             )}
           </ResultsList>
-          {totalPages > 1 && (
+          {totalPages >= 1 && (
             <div className="button-container">
               <div
                 // disabled={currentGroup === 0}

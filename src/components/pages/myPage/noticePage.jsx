@@ -4,6 +4,7 @@ import '../../../asset/sass/pages/myPage/noticePage.scss';
 import { StyledPage, StyledHeader } from '../../../styledComponent.js';
 import TitleHeader from '../../ui/header/titleHeader.jsx';
 import TabBar from '../../ui/tabBar/tabBar.jsx';
+import Pagination from '../../ui/Pagination.jsx';
 
 function NoticePage() {
   const [activePanelIndex, setActivePanelIndex] = useState(null);
@@ -22,26 +23,39 @@ function NoticePage() {
     navigate(-1);
   };
 
-  const handlePageClick = (page) => {
-    setCurrentPage(page);
-    setStartNoticeIndex((page - 1) * itemsPerPage);
-  };
+  // const handlePageClick = (page) => {
+  //   setCurrentPage(page);
+  //   setStartNoticeIndex((page - 1) * itemsPerPage);
+  // };
 
-  const handlePreviousGroup = () => {
-    const previousGroupStart = Math.max(0, startNoticeIndex - itemsPerPage);
-    const previousGroupPage = Math.ceil(previousGroupStart / itemsPerPage) + 1;
-    setStartNoticeIndex(previousGroupStart);
-    setCurrentPage(previousGroupPage);
-  };
+  // const handlePreviousGroup = () => {
+  //   const previousGroupStart = Math.max(0, startNoticeIndex - itemsPerPage);
+  //   const previousGroupPage = Math.ceil(previousGroupStart / itemsPerPage) + 1;
+  //   setStartNoticeIndex(previousGroupStart);
+  //   setCurrentPage(previousGroupPage);
+  // };
 
-  const handleNextGroup = () => {
-    const nextGroupStart = Math.min(
-      totalNotice - itemsPerPage,
-      startNoticeIndex + itemsPerPage,
-    );
-    const nextGroupPage = Math.ceil(nextGroupStart / itemsPerPage) + 1;
-    setStartNoticeIndex(nextGroupStart);
-    setCurrentPage(nextGroupPage);
+  // const handleNextGroup = () => {
+  //   const nextGroupStart = Math.min(
+  //     totalNotice - itemsPerPage,
+  //     startNoticeIndex + itemsPerPage,
+  //   );
+  //   const nextGroupPage = Math.ceil(nextGroupStart / itemsPerPage) + 1;
+  //   setStartNoticeIndex(nextGroupStart);
+  //   setCurrentPage(nextGroupPage);
+  // };
+  const handlePagination = (type) => {
+    if (type === 'prev') {
+      if (currentPage > 1) {
+        setCurrentPage(currentPage - 1);
+        setStartNoticeIndex((currentPage - 2) * itemsPerPage);
+      }
+    } else if (type === 'next') {
+      if (currentPage < totalPages) {
+        setCurrentPage(currentPage + 1);
+        setStartNoticeIndex(currentPage * itemsPerPage);
+      }
+    }
   };
 
   const noticeList = [...Array(itemsPerPage * 5)].map((_, index) => ({
@@ -60,7 +74,7 @@ function NoticePage() {
 효력이 발생합니다.`,
   }));
 
-  const totalNotice = noticeList.length;
+  // const totalNotice = noticeList.length;
 
   const getPaginatedList = (list, page, startIndex) => {
     const endIndex = startIndex + itemsPerPage;
@@ -120,59 +134,11 @@ function NoticePage() {
           </div>
         ))}
 
-        <div className="button-container">
-          <div
-            onClick={handlePreviousGroup}
-            // disabled={currentGroup === 0}
-            style={{ cursor: 'pointer' }}
-          >
-            <svg
-              width="8"
-              height="15"
-              viewBox="0 0 6 10"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M5 9L1 5L5 1"
-                stroke="#1D1D1F"
-                strokeWidth="0.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </div>
-          {[...Array(totalPages)].map((_, index) => (
-            <div
-              className={`notice-button ${currentPage === index + 1 ? 'active-item' : ''}`}
-              key={index}
-              onClick={() => handlePageClick(index + 1)}
-            >
-              {index + 1}
-            </div>
-          ))}
-          <div
-            style={{ cursor: 'pointer' }}
-            onClick={handleNextGroup}
-            // disabled={currentGroup === totalGroup - 1}
-          >
-            <svg
-              width="8"
-              height="15"
-              viewBox="0 0 6 10"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M1 9L5 5L1 1"
-                stroke="#1D1D1F"
-                strokeWidth="0.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </div>
-        </div>
+        <Pagination
+          totalPages={totalPages}
+          currentPage={currentPage}
+          handlePagination={handlePagination}
+        />
       </StyledHeader>
       <TabBar />
     </StyledPage>
