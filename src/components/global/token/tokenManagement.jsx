@@ -4,6 +4,8 @@ import { Base64 } from 'js-base64';
 import { BASE_URL, ACCESS_TOKEN, REFRESH_TOKEN } from '../constants/index';
 import { useDispatch } from 'react-redux';
 import { setTokens } from '../../../store/actions/authActions';
+import store from '../../../store';
+
 const decodeToken = (token) => {
   const payload = token.split('.')[1];
   const decodedPayload = Base64.decode(payload);
@@ -59,6 +61,7 @@ const TokenManagement = () => {
         dispatch(setTokens(accessToken, refreshToken));
         localStorage.setItem(ACCESS_TOKEN, accessToken);
         localStorage.setItem(REFRESH_TOKEN, refreshToken);
+        console.log('redux 저장 상태', store.getState());
 
         const decoded = decodeToken(accessToken);
         const userRole = decoded.role;
