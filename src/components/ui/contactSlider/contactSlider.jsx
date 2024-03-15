@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import './contactSlider.scss';
 import Disclamier from './disclamier.jsx';
@@ -30,7 +30,7 @@ const StatusTab = styled.div`
 // ======================= 스타일드 컴포넌트
 
 export default function ContactSlider() {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [currentSection, setCurrentSection] = useState('contact');
   const [contact, setcontact] = useState({
@@ -52,9 +52,9 @@ export default function ContactSlider() {
   //   completeInquiriesCount: 4,
   // }));
 
-  // useEffect(() => {
-  //   loadUserData();
-  // }, [navigate]);
+  useEffect(() => {
+    loadUserData();
+  }, [navigate]);
 
   const loadUserData = async () => {
     try {

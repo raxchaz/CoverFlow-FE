@@ -74,7 +74,7 @@ export const fetchAPI = async (endpoint, method, body = null) => {
     headers.append('Authorization', `Bearer ${accessToken}`);
     headers.append('Authorization-refresh', `Bearer ${refreshToken}`);
   } else if (accessToken) {
-    headers.append('Authorization', accessToken);
+    headers.append('Authorization', `Bearer ${accessToken}`);
   }
 
   const response = await fetch(`${BASE_URL}${endpoint}`, {
