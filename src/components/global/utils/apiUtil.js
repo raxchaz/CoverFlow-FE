@@ -60,9 +60,9 @@ const isTokenExpired = () => {
 // 2. POST, PUTfetchAPI('/API 주소', 'POST', postData).then(response => {데이터처리 로직}
 
 export const fetchAPI = async (endpoint, method, body = null) => {
-  const { accessToken, refreshToken } = store.getState().auth;
-  // const accessToken = localStorage.getItem(ACCESS_TOKEN);
-  // const refreshToken = localStorage.getItem(REFRESH_TOKEN);
+  // const { accessToken, refreshToken } = store.getState().auth;
+  const accessToken = localStorage.getItem(ACCESS_TOKEN);
+  const refreshToken = localStorage.getItem(REFRESH_TOKEN);
   const headers = new Headers({
     'Content-Type': 'application/json',
   });
