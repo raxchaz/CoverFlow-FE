@@ -31,6 +31,9 @@ const StatusTab = styled.div`
 
 export default function ContactSlider() {
   const navigate = useNavigate();
+  useEffect(() => {
+    loadUserData();
+  }, [navigate]);
 
   const [currentSection, setCurrentSection] = useState('contact');
   const [contact, setcontact] = useState({
@@ -51,10 +54,6 @@ export default function ContactSlider() {
   //   waitInquiriesCount: 3,
   //   completeInquiriesCount: 4,
   // }));
-
-  useEffect(() => {
-    loadUserData();
-  }, [navigate]);
 
   const loadUserData = async () => {
     try {
