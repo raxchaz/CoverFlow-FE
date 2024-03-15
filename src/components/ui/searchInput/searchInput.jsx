@@ -105,7 +105,7 @@ function SearchInput() {
       const res = await axios.get(
         `${BASE_URL}/api/company?pageNo=0&name=${name}`,
       );
-      setAutoCompleteValue(res.data.data);
+      setAutoCompleteValue(res.data.data.companyList);
     } catch (error) {
       console.error('자동완성 데이터 요청 실패', error);
       setAutoCompleteValue([]);
@@ -186,35 +186,6 @@ function SearchInput() {
       },
     ];
 
-    // conditionalExecution([
-    //   {
-    //     test: () =>
-    //       event.key === 'ArrowDown' &&
-    //       activeIndex < autoCompleteValue.length - 1,
-    //     execute: () => {
-    //       // event.preventDefault();
-    //       setActiveIndex(activeIndex + 1);
-    //     },
-    //   },
-    //   {
-    //     test: () => event.key === 'ArrowUp' && activeIndex > 0,
-    //     execute: () => {
-    //       // event.preventDefault();
-    //       setActiveIndex(activeIndex - 1);
-    //     },
-    //   },
-    //   {
-    //     test: () => event.key === 'Enter',
-    //     execute: () => {
-    //       event.preventDefault();
-    //       if (activeIndex >= 0 && autoCompleteValue[activeIndex]) {
-    //         selectAutoCompleteValue(autoCompleteValue[activeIndex].name);
-    //       } else {
-    //         handleCompanySearch();
-    //       }
-    //     },
-    //   },
-    // ]);
     conditionalExecution(condition);
   };
 
