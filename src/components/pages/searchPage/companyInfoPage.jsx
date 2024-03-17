@@ -76,7 +76,7 @@ function CompanyInfoPage() {
     async function fetchCompanyData() {
       try {
         const response = await fetch(
-          `${BASE_URL}/api/company/${companyId}?pageNo=0&criterion=createdAt`,
+          `${BASE_URL}/api/company/${companyId}?pageNo=0`,
           {
             method: 'GET',
             headers: {
@@ -138,8 +138,8 @@ function CompanyInfoPage() {
           <CompanyContainer>
             <div className="company">
               <div className="main-company-info">
-                <CompanyName>{companyData.companyName}</CompanyName>
-                <CompanyType>{companyData.type}</CompanyType>
+                <CompanyName>{companyData?.companyName}</CompanyName>
+                <CompanyType>{companyData?.type}</CompanyType>
               </div>
 
               <div className="sub-info">
@@ -161,17 +161,16 @@ function CompanyInfoPage() {
           </div>
 
           <QuestionList>
-            {companyData.questions.map((question, index) => (
+            {companyData?.questions.map((question, index) => (
               <Question
                 key={index}
                 companyId={companyId}
-                questionId={question.questionId.toString()}
-                questioner={question.nickname}
-                questionerTag={question.tag}
-                viewCount={question.viewCount.toString()}
-                answerCount={question.answerCount.toString()}
-                questionTitle={question.title}
-                questionContent={question.content}
+                questionId={question.questionId}
+                questioner={question.questionerNickname}
+                questionerTag={question.questionerTag}
+                answerCount={question.answerCount}
+                questionTitle={question.questionTitle}
+                questionContent={question.questionContent}
                 createAt={question.createAt}
               />
             ))}
