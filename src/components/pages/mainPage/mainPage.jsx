@@ -5,7 +5,6 @@ import TabBar from '../../ui/tabBar/tabBar.jsx';
 import Header from '../../ui/header/header.jsx';
 import Searchicon from '../../../asset/image/searchicon.svg';
 import UserInfoHeader from '../../ui/header/userInfoHeader.jsx';
-// import Modal from '../../ui/modal/modal.jsx';
 import '../../../asset/sass/pages/mainPage/mainPage.scss';
 import { StyledPage, StyledHeader } from '../../../styledComponent.js';
 import { EventSourcePolyfill } from 'event-source-polyfill';
@@ -67,7 +66,6 @@ function MainPage() {
       <StyledHeader />
       <UserInfoHeader />
       <Header />
-
       <div className="coverflow">COVERFLOW</div>
       <div className="main-info">
         <span className="main-info-bold">원하는 기업에 대한 질문과 답변</span>
@@ -79,7 +77,6 @@ function MainPage() {
         placeholder="기업 명을 검색하세요"
         onClick={handleChange}
       />
-
       <img className="search" src={Searchicon} />
       <TabBar />
       <button onClick={handleConnect}>connect 요청</button>
