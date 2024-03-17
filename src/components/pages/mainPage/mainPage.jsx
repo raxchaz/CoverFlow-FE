@@ -5,10 +5,10 @@ import TabBar from '../../ui/tabBar/tabBar.jsx';
 import Header from '../../ui/header/header.jsx';
 import Searchicon from '../../../asset/image/searchicon.svg';
 import UserInfoHeader from '../../ui/header/userInfoHeader.jsx';
-// import Modal from '../../ui/modal/modal.jsx';
 import '../../../asset/sass/pages/mainPage/mainPage.scss';
 import { StyledPage, StyledHeader } from '../../../styledComponent.js';
-
+import { EventSourcePolyfill } from 'event-source-polyfill';
+import { ACCESS_TOKEN, BASE_URL } from '../../global/constants/index.js';
 const SearchInput = styled.input`
   width: 300px;
   height: 20px;
@@ -33,6 +33,30 @@ function MainPage() {
   const navigate = useNavigate();
   localStorage.setItem('prevPage', '/');
 
+  const handleConnect = async () => {
+    const res = await fetch(`${BASE_URL}/api/notification/connect`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'text/event-stream; charset=utf-8',
+        Authorization: `Bearer ${ACCESS_TOKEN}`,
+      },
+    });
+    console.log('res', res);
+  };
+
+  const sse = new EventSourcePolyfill(`${BASE_URL}/api/notification/connect`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'text/event-stream; charset=utf-8',
+      Authorization: `Bearer ${ACCESS_TOKEN}`,
+    },
+  });
+
+  sse.addEventListener('connect', (event) => {
+    const data = event;
+    console.log(data);
+  });
+
   const handleChange = () => {
     navigate('/search-company');
   };
@@ -55,6 +79,7 @@ function MainPage() {
       />
       <img className="search" src={Searchicon} />
       <TabBar />
+      <button onClick={handleConnect}>connect 요청</button>
     </StyledPage>
   );
 }
