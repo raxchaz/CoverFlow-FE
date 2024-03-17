@@ -68,7 +68,6 @@ function QuestionDetailPage() {
     questionId: '',
     title: '',
     questionContent: '',
-    viewCount: 0,
     answerCount: 0,
     reward: 0,
     questionNickname: '',
@@ -204,7 +203,6 @@ function QuestionDetailPage() {
           <span className="answer-count">{questionDetail.answerCount}</span>
 
           <img className="answerview-img" src={View} />
-          <span className="answerview-count">{questionDetail.viewCount}</span>
 
           <img
             className="report-img"

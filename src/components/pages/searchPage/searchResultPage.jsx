@@ -116,7 +116,6 @@ function SearchResultPage() {
   const queryParams = new URLSearchParams(location.search);
   const keyword = queryParams.get('keyword');
   const [searchResult, setSearchResult] = useState([]);
-  console.log('s', searchResult);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
