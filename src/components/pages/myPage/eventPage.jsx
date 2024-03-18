@@ -1,9 +1,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { StyledPage, StyledHeader } from '../../../styledComponent.js';
-import TitleHeader from '../../ui/header/titleHeader.jsx';
+
 import TabBar from '../../ui/tabBar/tabBar.jsx';
 import '../../../asset/sass/pages/myPage/eventPage.scss';
+import TitleHeader from '../../ui/header/titleHeader';
 
 function EventPage() {
   const navigate = useNavigate();

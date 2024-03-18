@@ -4,9 +4,9 @@ import '../../../asset/sass/pages/postPage/questionWritePage.scss';
 import { BASE_URL, ACCESS_TOKEN } from '../../global/constants/index.js';
 import { toast } from 'react-toastify';
 import TagInput from '../../ui/selection/fishTag';
-import { StyledHeader, StyledPage } from '../../../styledComponent';
 import TitleHeader from '../../ui/header/titleHeader';
 import TabBar from '../../ui/tabBar/tabBar';
+import { StyledHeader, StyledPage } from '../../../styledComponent';
 
 function QuestionWritePage() {
   const navigate = useNavigate();

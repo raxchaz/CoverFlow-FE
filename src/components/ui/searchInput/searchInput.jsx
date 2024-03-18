@@ -4,9 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import '../../../asset/sass/etc/searchInput/searchInput.scss';
 import styled from 'styled-components';
 import Searchicon from '../../../asset/image/searchicon.svg';
-import { BASE_URL } from '../../global/constants/index.js';
 import useDebounce from '../../../hooks/useDebounce.js';
 import { conditionalExecution } from '../../../utils/utils.js';
+import { BASE_URL } from '../../global/constants';
 
 const StyledSearchInput = styled.input`
   width: 350px;
@@ -69,7 +69,7 @@ function SearchInput() {
   // };
 
   useEffect(() => {
-    inputRef.current.focus();
+    if (inputRef.current) inputRef.current.focus();
   }, []);
 
   useEffect(() => {
@@ -105,6 +105,7 @@ function SearchInput() {
       const res = await axios.get(
         `${BASE_URL}/api/company?pageNo=0&name=${name}`,
       );
+      console.log('res', res);
       setAutoCompleteValue(res.data.data.companyList);
     } catch (error) {
       console.error('자동완성 데이터 요청 실패', error);

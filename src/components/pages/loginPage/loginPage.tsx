@@ -5,10 +5,10 @@ import Google from '../../../asset/image/google.svg';
 import Kakao from '../../../asset/image/kakao.svg';
 import Fastlogin from '../../../asset/image/fastlogin.svg';
 import '../../../asset/sass/pages/loginPage/loginPage.scss';
-import { StyledPage, StyledHeader } from '../../../styledComponent.js';
-import TitleHeader from '../../ui/header/titleHeader.jsx';
+import TitleHeader from '../../ui/header/titleHeader';
 import { useNavigate } from 'react-router-dom';
-import { ACCESS_TOKEN, BASE_URL } from '../../global/constants/index.js';
+import { StyledHeader, StyledPage } from '../../../styledComponent';
+import { ACCESS_TOKEN, BASE_URL } from '../../global/constants';
 
 const WelcomeMessage = styled.p`
   margin: 20% 0% 0% 15%;

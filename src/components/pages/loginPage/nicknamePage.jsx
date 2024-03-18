@@ -6,9 +6,9 @@ import GenderSelection from '../../ui/genderSelection/genderSelection';
 import '../../../asset/sass/pages/loginPage/nicknamePage.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
-import { ACCESS_TOKEN, BASE_URL } from '../../global/constants/index.js';
-import TitleHeader from '../../ui/header/titleHeader.jsx';
-import { StyledPage, StyledHeader } from '../../../styledComponent.js';
+import { ACCESS_TOKEN, BASE_URL } from '../../global/constants';
+import { StyledHeader, StyledPage } from '../../../styledComponent';
+import TitleHeader from '../../ui/header/titleHeader';
 
 const CheckboxContainer = styled.div`
   display: flex;
@@ -99,7 +99,7 @@ const NicknamePage = () => {
   };
 
   /*
-  해당 페이지에 진입하자마자 사용자의 로그인 상태를 확인합니다. 
+  해당 페이지에 진입하자마자 사용자의 로그인 상태를 확인합니다.
   토큰을 가지고 있는 사용자라면, 잘못된 접근임을 명시하고, 다시 로그인 페이지로 리다이렉트 합니다.
   */
   useEffect(() => {
@@ -113,9 +113,9 @@ const NicknamePage = () => {
     // checkLoginStatus();
   }, [navigate]);
 
-  /* 
-사용자가  데이터를 선택하고, 시작하기 버튼을 눌렀을 때, 
-데이터가 서버로 전송될 수 있도록 하는 로직입니다. 
+  /*
+사용자가  데이터를 선택하고, 시작하기 버튼을 눌렀을 때,
+데이터가 서버로 전송될 수 있도록 하는 로직입니다.
  */
   const sendDataToServer = async () => {
     try {

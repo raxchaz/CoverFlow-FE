@@ -1,9 +1,10 @@
 import React from 'react';
 import Back from '../../../asset/image/back.svg';
-import { Heading } from '../../../styledComponent';
 import '../../../asset/sass/etc/header/titleHeader.scss';
+import { Heading } from '../../../styledComponent';
 
 interface TitleHeaderProps {
+  className?: string;
   pageTitle: string;
   handleGoBack: () => void;
 }

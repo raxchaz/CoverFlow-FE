@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../../asset/sass/pages/myPage/noticePage.scss';
-import { StyledPage, StyledHeader } from '../../../styledComponent.js';
-import TitleHeader from '../../ui/header/titleHeader.jsx';
-import TabBar from '../../ui/tabBar/tabBar.jsx';
-import Pagination from '../../ui/Pagination.jsx';
+import { StyledHeader, StyledPage } from '../../../styledComponent';
+import TitleHeader from '../../ui/header/titleHeader';
+import TabBar from '../../ui/tabBar/tabBar';
+import Pagination from '../../ui/Pagination';
 
 function NoticePage() {
   const [activePanelIndex, setActivePanelIndex] = useState(null);
