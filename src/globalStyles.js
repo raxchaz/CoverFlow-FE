@@ -43,6 +43,7 @@ const GlobalStyles = createGlobalStyle`
   ${Heading} {
     display: flex;
     justify-content: center;
+    align-items: center;
     font-size: 1rem;
     margin-top: 7%;
     letter-spacing: -1px;

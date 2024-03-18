@@ -17,7 +17,7 @@ function TitleHeader({ pageTitle, handleGoBack }: TitleHeaderProps) {
         src={Back}
         onClick={handleGoBack}
         alt="뒤로 가기"
-        style={{ cursor: 'pointer' }}
+        style={{ cursor: 'pointer', marginBottom: '5px' }}
       />
       <span className="page-title">{pageTitle}</span>
     </Heading>
