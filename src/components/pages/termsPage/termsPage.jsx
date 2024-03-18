@@ -12,6 +12,7 @@ import greyCheck from '../../../asset/image/greyCheck.svg';
 import greenCheck from '../../../asset/image/greenCheck.svg';
 import allCheckGrey from '../../../asset/image/allCheck_grey.svg';
 import allCheckGreen from '../../../asset/image/allCheck_green.svg';
+import { toast } from 'react-toastify';
 
 export default function TermsPage() {
   const navigate = useNavigate();
@@ -77,6 +78,7 @@ export default function TermsPage() {
 
   useEffect(() => {
     if (!code) {
+      toast.error('죄송합니다. 오류가 발생했습니다.');
       console.log('code 값이 없습니다. 로그인 페이지로 이동합니다.');
       navigate('/login');
     }
@@ -85,11 +87,20 @@ export default function TermsPage() {
 
   const agreeToTerms = async () => {
     try {
+      if (
+        !termsAgreement.term1 ||
+        !termsAgreement.term2 ||
+        !termsAgreement.term3 ||
+        !termsAgreement.term4
+      ) {
+        toast.error('필수 약관에 동의해주세요.');
+      }
       const headers = await fetchToken(code);
       const accessToken = headers.get('Authorization');
       const refreshToken = headers.get('Authorization-refresh');
       console.log(headers);
       if (!accessToken || !refreshToken) {
+        toast.error('토큰을 받아오는 데 실패하였습니다.');
         throw new Error('토큰을 받아오는 데 실패하였습니다.');
       }
 
@@ -98,7 +109,7 @@ export default function TermsPage() {
       navigate('/login/member-info');
     } catch (error) {
       console.error(error);
-      alert('토큰 요청 중 오류가 발생했습니다. 로그인 페이지로 이동합니다.');
+      toast.error('토큰을 받아오는 중 오류가 발생했습니다.');
       navigate('/login');
     }
   };

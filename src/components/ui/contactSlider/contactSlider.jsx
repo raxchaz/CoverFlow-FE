@@ -7,6 +7,7 @@ import ContactList from './contactList.jsx';
 import Button from '../button/Button/Button.jsx';
 import { fetchAPI } from '../../global/utils/apiUtil.js';
 import { store } from '../../../store/index.js';
+import { toast } from 'react-toastify';
 // import { BASE_URL, ACCESS_TOKEN } from '../../global/constants/index.js';
 const StatusBar = styled.div`
   display: flex;
@@ -86,19 +87,22 @@ export default function ContactSlider() {
   // };
 
   const submitContact = async () => {
-    await fetchAPI('/api/inquiry', 'POST', contact)
-      .then((res) => {
-        console.log(res, '성공적으로 저장되었습니다');
-        loadUserData();
-      })
-      .then(
-        setCurrentSection('contactList'),
+    try {
+      const res = await fetchAPI('/api/inquiry', 'POST', contact);
+      console.log(res, 'post 결과');
+      if (res.status === 200) {
+        setCurrentSection('contactList');
         setcontact({
           title: '',
           content: '',
-        }),
-      )
-      .catch((error) => console.error('문의 등록 실패:', error));
+        });
+        loadUserData();
+        toast.success('문의 등록이 완료되었습니다!');
+      }
+    } catch (error) {
+      // alert('문의 등록 실패:', error);
+      toast.error('문의 등록에 실패했습니다.', error);
+    }
   };
 
   const handleChange = (e) => {
