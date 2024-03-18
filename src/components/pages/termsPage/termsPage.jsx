@@ -4,7 +4,7 @@ import {
   BASE_URL,
   ACCESS_TOKEN,
   REFRESH_TOKEN,
-} from '../../global/constants/index';
+} from '../../global/constants/index.ts';
 import Button from '../../ui/button/Button/Button';
 import { StyledPage, StyledHeader } from '../../../styledComponent';
 import '../../../asset/sass/pages/termsPage/termsPage.scss';

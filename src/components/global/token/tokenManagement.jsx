@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Base64 } from 'js-base64';
-import { BASE_URL, ACCESS_TOKEN, REFRESH_TOKEN } from '../constants/index';
+import { BASE_URL, ACCESS_TOKEN, REFRESH_TOKEN } from '../constants/index.ts';
 import { useDispatch } from 'react-redux';
 import { setTokens } from '../../../store/actions/authActions';
 import { store } from '../../../store';
@@ -36,8 +36,8 @@ const TokenManagement = () => {
     const code = query.get('code');
     const role = query.get('role');
 
-    console.log('code:', code);
-    console.log('role:', role);
+    // console.log('code:', code);
+    // console.log('role:', role);
 
     if (!code || !role) {
       console.error('코드 또는 역할이 URL에 포함되어 있지 않습니다.');
@@ -50,8 +50,8 @@ const TokenManagement = () => {
         const accessToken = headers.get('Authorization');
         const refreshToken = headers.get('Authorization-refresh');
 
-        console.log('accessToken:', accessToken);
-        console.log('refreshToken:', refreshToken);
+        // console.log('accessToken:', accessToken);
+        // console.log('refreshToken:', refreshToken);
 
         if (!accessToken || !refreshToken) {
           alert('토큰을 받아오는 데 실패하였습니다. 다시 시도해주세요.');
@@ -66,8 +66,8 @@ const TokenManagement = () => {
         const decoded = decodeToken(accessToken);
         const userRole = decoded.role;
 
-        console.log('userRole:', userRole);
-        console.log('decoded:', decoded);
+        // console.log('userRole:', userRole);
+        // console.log('decoded:', decoded);
 
         if (userRole === 'GUEST') {
           console.log('약관 동의 페이지로 이동합니다.');

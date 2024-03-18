@@ -21,15 +21,7 @@ const AdoptButton = styled.button`
   font-family: pretendard-extraLight;
 `;
 
-function AnswerModule({
-  answerId,
-  answerer,
-  answererTag,
-  answerContent,
-  createAt,
-  replyCount,
-  onAdopt,
-}) {
+function AnswerModule({ createAt, onAdopt }) {
   return (
     <>
       <div className="answer-container">

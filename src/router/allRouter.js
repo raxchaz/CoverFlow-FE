@@ -7,12 +7,12 @@ import { Route, Routes } from 'react-router-dom';
 import MainPage from '../components/pages/mainPage/mainPage.jsx';
 
 /* 사용자 등록 페이지 관련  */
-import LoginPage from '../components/pages/loginPage/loginPage.jsx';
+import LoginPage from '../components/pages/loginPage/loginPage.tsx';
 import NicknamePage from '../components/pages/loginPage/nicknamePage.jsx';
 import TermsPage from '../components/pages/termsPage/termsPage.jsx';
 
 /* 사용자 참여 페이지 관련 */
-import Store from '../components/pages/storePage/storePage.js';
+import Store from '../components/pages/storePage/storePage.tsx';
 import MyPage from '../components/pages/myPage/myPage.jsx';
 import NotificationPage from '../components/pages/notificationPage/notificationPage.jsx';
 import NoticePage from '../components/pages/myPage/noticePage.jsx';
@@ -24,11 +24,11 @@ import SecessionPage from '../components/pages/myPage/secessionPage.jsx';
 import CompletePaymentPage from '../components/pages/completePaymentPage/completePaymentPage.jsx';
 
 /* 질문 페이지 관련 */
-import SearchPage from '../components/pages/searchPage/searchPage.jsx';
+import SearchPage from '../components/pages/searchPage/searchPage.tsx';
 import CompanyRegistPage from '../components/pages/searchPage/companyRegistPage.jsx';
 import SearchResultPage from '../components/pages/searchPage/searchResultPage.jsx';
 import CompanyInfoPage from '../components/pages/searchPage/companyInfoPage.jsx';
-import QuestionWritePage from '../components/pages/postPage/questionWritePage.js';
+import QuestionWritePage from '../components/pages/postPage/questionWritePage.tsx';
 import QuestionDetailPage from '../components/pages/postPage/questionDetailPage.jsx';
 
 /* 그 외 유틸  */

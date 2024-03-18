@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import '../../../asset/sass/etc/tabBar/tabBar.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHouse, faBell, faUser } from '@fortawesome/free-solid-svg-icons';
-import { ACCESS_TOKEN } from '../../global/constants';
+import { ACCESS_TOKEN } from '../../global/constants/index.ts';
 
 const TabBar = () => {
   const [activeNav, setActiveNav] = useState(1);

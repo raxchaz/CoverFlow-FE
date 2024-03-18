@@ -8,7 +8,7 @@ import UserInfoHeader from '../../ui/header/userInfoHeader.jsx';
 import '../../../asset/sass/pages/mainPage/mainPage.scss';
 import { StyledPage, StyledHeader } from '../../../styledComponent';
 import { EventSourcePolyfill } from 'event-source-polyfill';
-import { ACCESS_TOKEN, BASE_URL } from '../../global/constants';
+import { ACCESS_TOKEN, BASE_URL } from '../../global/constants/index.ts';
 const SearchInput = styled.input`
   width: 300px;
   height: 20px;

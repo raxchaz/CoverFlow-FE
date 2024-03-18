@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import Searchicon from '../../../asset/image/searchicon.svg';
 import useDebounce from '../../../hooks/useDebounce.js';
 import { conditionalExecution } from '../../../utils/utils.js';
-import { BASE_URL } from '../../global/constants';
+import { BASE_URL } from '../../global/constants/index.ts';
 
 const StyledSearchInput = styled.input`
   width: 350px;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import '../../../asset/sass/pages/postPage/questionWritePage.scss';
-import { BASE_URL, ACCESS_TOKEN } from '../../global/constants/index.js';
+import { BASE_URL, ACCESS_TOKEN } from '../../global/constants/index.ts';
 import { toast } from 'react-toastify';
 import TagInput from '../../ui/selection/fishTag';
 import TitleHeader from '../../ui/header/titleHeader';
