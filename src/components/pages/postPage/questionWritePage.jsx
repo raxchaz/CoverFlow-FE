@@ -6,6 +6,7 @@ import TabBar from '../../ui/tabBar/tabBar.jsx';
 import TagInput from '../../ui/selection/fishTag.jsx';
 import '../../../asset/sass/pages/postPage/questionWritePage.scss';
 import { BASE_URL, ACCESS_TOKEN } from '../../global/constants/index.js';
+import { toast } from 'react-toastify';
 
 function QuestionWritePage() {
   const navigate = useNavigate();
@@ -26,38 +27,31 @@ function QuestionWritePage() {
     setTitle(e.target.value);
   };
 
-  // const handleRewardChange = (e) => {
-  //   setReward(e.target.value);
-  // };
-
   const handleRegister = async () => {
-    console.log(title, companyId, content, reward);
-
     try {
-      const response = await fetch(`${BASE_URL}/api/question/save-question`, {
+      const response = await fetch(`${BASE_URL}/api/question`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
         },
         body: JSON.stringify({
-          title: title,
-          content: content,
-          companyId: parseInt(companyId),
-          reward: parseInt(reward),
+          title,
+          content,
+          companyId: Number(companyId),
+          reward: Number(reward),
         }),
       });
 
       if (response.ok) {
-        const result = await response.json();
-        console.log('등록 성공:', result);
-        alert('질문이 등록되었습니다');
+        await response.json();
+        toast.success('질문이 등록되었습니다');
         navigate('/company-info/:companyId');
       } else {
         throw new Error('서버 에러');
       }
     } catch (error) {
-      console.error('등록 실패:', error);
+      toast.error('등록 실패:', error);
     }
   };
 
@@ -66,7 +60,6 @@ function QuestionWritePage() {
       <StyledHeader>
         <TitleHeader pageTitle="질문 등록" handleGoBack={handleGoBack} />
         <div className="info-questionWrite"></div>
-        {/* <div className="compnayID">{companyId}</div> */}
         <input
           className="question-title-input"
           placeholder="질문 제목 입력.."

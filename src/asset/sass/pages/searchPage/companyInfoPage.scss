@@ -1,19 +1,20 @@
-.company-result-title {
+@mixin company-title {
   letter-spacing: -1px;
   margin: 10% 0% 0% 13%;
-  font-family: 'Pretendard-Black';
   font-size: 18px;
   color: #ff8d1d;
+  font-family: 'Pretendard-Black';
+}
+
+.company-result-title {
+  @include company-title;
+  font-family: 'Pretendard-Black';
 }
 
 .company-question-title {
   display: flex;
   position: relative;
-  letter-spacing: -1px;
-  margin: 10% 0% 0% 13%;
-  font-size: 18px;
-  color: #ff8d1d;
-  font-family: 'Pretendard-Black';
+  @include company-title;
 }
 
 .question-info-container {

@@ -6,9 +6,9 @@ import '../../../asset/sass/pages/myPage/myPage.scss';
 import { StyledPage, StyledHeader } from '../../../styledComponent.js';
 import TitleHeader from '../../ui/header/titleHeader.jsx';
 import TabBar from '../../ui/tabBar/tabBar.jsx';
-import { ReactComponent as ContactIcon } from '../../../asset/image/Contact.svg';
+import { ReactComponent as StoreIcon } from '../../../asset/image/store.svg';
 import { ReactComponent as EditIcon } from '../../../asset/image/edit.svg';
-import { ReactComponent as EventIcon } from '../../../asset/image/event.svg';
+import { ReactComponent as PremiumIcon } from '../../../asset/image/premium.svg';
 import { ReactComponent as NoticeIcon } from '../../../asset/image/notice.svg';
 import {
   ACCESS_TOKEN,
@@ -65,16 +65,16 @@ const StatusTab = styled.div`
   ${(props) => props.current && 'color: black; border-bottom: 2px solid black;'}
 `;
 
-const handlePremiumButtonClick = () => {
-  alert('준비 중인 페이지입니다.');
-};
-
 /* ========================================================= */
 
 function Mypage() {
   const [currentCategory, setCurrentCategory] = useState('comments');
   const [nickname, setNickname] = useState('');
   const navigate = useNavigate();
+
+  const handlePremiumButtonClick = () => {
+    navigate('/premium');
+  };
 
   /* 사용자의 토큰이 존재한다면, 사용자의 정보를 가져옵니다. */
   useEffect(() => {
@@ -92,7 +92,7 @@ function Mypage() {
 
   /* 사용자의 닉네임과 붕어빵 개수를 불러옵니다. */
   const loadUserData = () => {
-    fetch(`${BASE_URL}/api/member/find-member`, {
+    fetch(`${BASE_URL}/api/member`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -107,7 +107,7 @@ function Mypage() {
       .catch((error) => console.error('회원 정보 불러오기 실패:', error));
   };
 
-  /* 로그아웃 버튼을 클릭했을 경우, 서버로 로그아웃 API를 요청한 후, 
+  /* 로그아웃 버튼을 클릭했을 경우, 서버로 로그아웃 API를 요청한 후,
       클라이언트 측에서 리프레쉬 토큰과 엑세스 토큰을 삭제하고 메인 페이지로 돌아갑니다. */
   const handleLogout = () => {
     console.log('로그아웃 요청 시작');
@@ -148,17 +148,17 @@ function Mypage() {
     navigate(-1);
   };
 
-  const goToNotice = () => {
-    navigate('/notice');
-  };
-  const goToEvent = () => {
-    navigate('/event');
-  };
   const goToContact = () => {
     navigate('/contact');
   };
+  const goToPremium = () => {
+    navigate('/premium');
+  };
+  const goToStore = () => {
+    navigate('/store');
+  };
   const goToEdit = () => {
-    navigate('/info-edit', { state: { nickname: nickname } });
+    navigate('/info-edit', { state: { nickname } });
   };
 
   /* ========================================================= */
@@ -181,19 +181,19 @@ function Mypage() {
             프리미엄 이용하기
           </PremiunButton>
           <div className="mypage-select-menu">
-            <div className="menu" onClick={goToNotice}>
+            <div className="menu" onClick={goToContact}>
               <NoticeIcon />
-              <div className="letter">공지사항</div>
-            </div>
-
-            <div className="menu-contact" onClick={goToContact}>
-              <ContactIcon />
               <div className="letter">문의하기</div>
             </div>
 
-            <div className="menu-event" onClick={goToEvent}>
-              <EventIcon />
-              <div className="letter">이벤트</div>
+            <div className="menu-contact" onClick={goToStore}>
+              <StoreIcon />
+              <div className="letter">상점</div>
+            </div>
+
+            <div className="menu-event" onClick={goToPremium}>
+              <PremiumIcon />
+              <div className="letter">프리미엄</div>
             </div>
 
             <div className="menu-edit" onClick={goToEdit}>

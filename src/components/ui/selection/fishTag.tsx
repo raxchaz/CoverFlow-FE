@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import '../../../asset/sass/etc/selection/fishTag.scss';
+import PropTypes from 'prop-types';
 
 interface RewardProps {
   reward: number;
@@ -33,3 +34,8 @@ function TagInput({ reward, setReward }: RewardProps) {
 }
 
 export default TagInput;
+
+TagInput.propTypes = {
+  reward: PropTypes.number.isRequired,
+  setReward: PropTypes.func.isRequired,
+};

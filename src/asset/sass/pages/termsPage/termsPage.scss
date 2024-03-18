@@ -1,0 +1,45 @@
+.terms-container {
+  width: 80%;
+  height: 50rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 10%;
+}
+.terms-title-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  padding-bottom: 2rem;
+}
+
+.terms-title {
+  font-family: pretendard-bold;
+  font-size: x-large;
+  padding-bottom: 0.2rem;
+  letter-spacing: -1px;
+}
+
+.terms-item-container {
+  width: 100%;
+}
+.term-check-img {
+  padding: 0 0.5rem;
+}
+.term-contents {
+  font-family: pretendard-regular;
+  letter-spacing: -1px;
+}
+.term-all-contents {
+  font-family: pretendard-bold;
+  letter-spacing: -1px;
+  font-size: large;
+  padding-left: 0.5rem;
+}
+.term-all-container {
+  display: flex;
+  align-items: center;
+  padding-bottom: 1rem;
+}

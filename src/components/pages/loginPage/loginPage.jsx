@@ -91,9 +91,7 @@ function LoginPage() {
           코버플로우에 <br /> 오신 것을 환영합니다
         </WelcomeMessage>
 
-        <SecondaryMessage>
-          <p className="welcome-login2">{`로그인을 진행해 주세요 :)`}</p>
-        </SecondaryMessage>
+        <SecondaryMessage>로그인을 진행해 주세요 :)</SecondaryMessage>
 
         <FastLoginImage
           src={Fastlogin}

@@ -9,6 +9,8 @@ import '../../../asset/sass/pages/searchPage/searchResultPage.scss';
 import { BASE_URL } from '../../global/constants/index.js';
 import Plus from '../../../asset/image/plus.svg';
 import Warning from '../../../asset/image/warning.svg';
+import { toast } from 'react-toastify';
+import '../../../asset/sass/pages/notificationPage/notificationPage.scss';
 
 const ResultsContainer = styled.div`
   position: relative;
@@ -114,6 +116,17 @@ function SearchResultPage() {
   const queryParams = new URLSearchParams(location.search);
   const keyword = queryParams.get('keyword');
   const [searchResult, setSearchResult] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = Array.from(searchResult)?.slice(
+    indexOfFirstItem,
+    indexOfLastItem,
+  );
+
+  const totalPages = Math.ceil(searchResult.length / itemsPerPage);
 
   const handleGoBack = () => {
     navigate(-1);
@@ -123,7 +136,7 @@ function SearchResultPage() {
     async function fetchData() {
       try {
         const response = await fetch(
-          `${BASE_URL}/api/company/search-companies?name=${keyword}`,
+          `${BASE_URL}/api/company?pageNo=1&name=${keyword}`,
           {
             method: 'GET',
             headers: {
@@ -133,13 +146,10 @@ function SearchResultPage() {
         );
         const { data } = await response.json();
         if (response.ok) {
-          console.log(data);
-          setSearchResult(data);
-        } else {
-          alert('데이터를 불러오는 데 실패했습니다.');
+          setSearchResult(data.companyList);
         }
       } catch (error) {
-        console.error('데이터 요청 중 오류 발생:', error);
+        toast.error(error);
       }
     }
 
@@ -148,6 +158,14 @@ function SearchResultPage() {
 
   const goToResultDetailPage = (companyId) => {
     navigate(`/company-info/${companyId}`);
+  };
+
+  const handlePagination = (type) => {
+    if (type === 'prev') {
+      setCurrentPage(currentPage - 1);
+    } else if (type === 'next') {
+      setCurrentPage(currentPage + 1);
+    }
   };
 
   return (
@@ -159,14 +177,14 @@ function SearchResultPage() {
           <Line />
           <ResultCount>
             기업 검색 결과{' '}
-            <span className="result-count"> {searchResult.length}</span>
+            <span className="result-count">{searchResult.length}</span>
           </ResultCount>
           <ResultsList>
-            {searchResult.length > 0 ? (
-              searchResult.map((data, index) => (
+            {currentItems.length > 0 ? (
+              currentItems.map((data) => (
                 <ResultItem
-                  key={data.id}
-                  onClick={() => goToResultDetailPage(data.id)}
+                  key={data.companyId}
+                  onClick={() => goToResultDetailPage(data.companyId)}
                 >
                   <div
                     style={{
@@ -174,8 +192,8 @@ function SearchResultPage() {
                       flexDirection: 'column',
                     }}
                   >
-                    <span>{data.name}</span>
-                    <IndustryTag>{data.type}</IndustryTag>
+                    <span>{data.companyName}</span>
+                    <IndustryTag>업종 : {data.companyType}</IndustryTag>
                   </div>
                   <QuestionCount>{data.questionCount}</QuestionCount>
                 </ResultItem>
@@ -201,6 +219,60 @@ function SearchResultPage() {
               </span>
             )}
           </ResultsList>
+          {totalPages >= 1 && (
+            <div className="button-container">
+              <div
+                // disabled={currentGroup === 0}
+                style={{ cursor: 'pointer' }}
+                onClick={() => handlePagination('prev')}
+              >
+                <svg
+                  width="8"
+                  height="15"
+                  viewBox="0 0 6 10"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M5 9L1 5L5 1"
+                    stroke="#1D1D1F"
+                    strokeWidth="0.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </div>
+              {[...Array(totalPages)].map((_, index) => (
+                <div
+                  className={`notice-button ${currentPage === index + 1 ? 'active-item' : ''}`}
+                  key={index}
+                >
+                  {index + 1}
+                </div>
+              ))}
+              <div
+                style={{ cursor: 'pointer' }}
+                onClick={() => handlePagination('next')}
+                // disabled={currentGroup === totalGroup - 1}
+              >
+                <svg
+                  width="8"
+                  height="15"
+                  viewBox="0 0 6 10"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M1 9L5 5L1 1"
+                    stroke="#1D1D1F"
+                    strokeWidth="0.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </div>
+            </div>
+          )}
         </ResultsContainer>
         <TabBar />
       </StyledHeader>

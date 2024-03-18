@@ -1,0 +1,33 @@
+.textarea-field-contact,
+.option-field {
+  letter-spacing: -1px;
+  font-size: 0.9rem;
+  border: none;
+  border-bottom: 2px solid #ddd;
+  margin: 20px 0;
+  width: 100%;
+  background-color: rgba(199, 199, 199, 0.422);
+  transition: background-color 0.3s;
+  padding: 1rem 0.3rem;
+  text-indent: 0.5rem;
+  height: 15rem;
+  resize: none;
+
+  &::placeholder {
+    color: #474646;
+    opacity: 1;
+    text-indent: 0.5rem;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:hover {
+    background-color: rgba(199, 199, 199, 0.822);
+  }
+}
+
+.round {
+  border-radius: 1rem;
+}

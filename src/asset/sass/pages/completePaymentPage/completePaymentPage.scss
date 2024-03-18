@@ -1,0 +1,45 @@
+.check-container {
+  width: 100%;
+  height: 50rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.check-payment-icon {
+  width: 5rem;
+  padding-bottom: 1rem;
+}
+
+.check-payment-title {
+  font-family: pretendard-bold;
+  font-size: x-large;
+  padding-bottom: 0.3rem;
+}
+
+.check-payment-content {
+  font-family: pretendard-regular;
+  font-size: small;
+  letter-spacing: -1px;
+  padding-bottom: 0.2rem;
+}
+.payResult-container {
+  margin-top: 1rem;
+  width: 78%;
+  border-top: 1px rgba(197, 197, 197, 0.551) solid;
+  border-bottom: 1px rgba(197, 197, 197, 0.551) solid;
+  padding: 1rem 0;
+}
+
+.payResult-item {
+  font-family: pretendard-regular;
+  font-size: small;
+  color: rgb(197, 197, 197);
+  letter-spacing: -1px;
+}
+
+.payResult-item-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.31rem 0;
+}

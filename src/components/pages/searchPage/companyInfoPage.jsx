@@ -73,11 +73,10 @@ function CompanyInfoPage() {
   localStorage.setItem('prevPage', window.location.pathname);
 
   useEffect(() => {
-    console.log('회사 companyId: ', companyId);
     async function fetchCompanyData() {
       try {
         const response = await fetch(
-          `${BASE_URL}/api/company/find-company/${companyId}`,
+          `${BASE_URL}/api/company/${companyId}?pageNo=0`,
           {
             method: 'GET',
             headers: {
@@ -85,11 +84,11 @@ function CompanyInfoPage() {
             },
           },
         );
-        const data = await response.json();
 
-        if (response.ok && data.data) {
-          setCompanyData(data.data);
-          console.log('회사 데이터:', data.data);
+        const { data } = await response.json();
+
+        if (response.ok && data) {
+          setCompanyData(data);
         } else {
           throw new Error('데이터가 존재하지 않습니다.');
         }
@@ -139,14 +138,14 @@ function CompanyInfoPage() {
           <CompanyContainer>
             <div className="company">
               <div className="main-company-info">
-                <CompanyName>{companyData.companyName}</CompanyName>
-                <CompanyType>{companyData.type}</CompanyType>
+                <CompanyName>{companyData?.companyName}</CompanyName>
+                <CompanyType>{companyData?.type}</CompanyType>
               </div>
 
               <div className="sub-info">
                 <CompanyAddress>{companyData.address}</CompanyAddress>
                 <CompanyEstablishment>
-                  {companyData.establishment}
+                  {companyData.companyEstablishment}
                 </CompanyEstablishment>
               </div>
             </div>
@@ -162,17 +161,16 @@ function CompanyInfoPage() {
           </div>
 
           <QuestionList>
-            {companyData.questions.map((question, index) => (
+            {companyData?.questions.map((question, index) => (
               <Question
                 key={index}
                 companyId={companyId}
-                questionId={question.questionId.toString()}
-                questioner={question.nickname}
-                questionerTag={question.tag}
-                viewCount={question.viewCount.toString()}
-                answerCount={question.answerCount.toString()}
-                questionTitle={question.title}
-                questionContent={question.content}
+                questionId={question.questionId}
+                questioner={question.questionerNickname}
+                questionerTag={question.questionerTag}
+                answerCount={question.answerCount}
+                questionTitle={question.questionTitle}
+                questionContent={question.questionContent}
                 createAt={question.createAt}
               />
             ))}

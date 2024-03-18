@@ -1,0 +1,22 @@
+.store-wrapper {
+  width: 100%;
+  height: 100%;
+  padding: 1rem 0;
+}
+
+.no-fish-purchase {
+  width: 100%;
+  height: 30rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.fish-disclaimer {
+  font-family: pretendard-bold;
+  font-size: large;
+  color: rgba(129, 129, 129, 1);
+  padding-top: 1rem;
+  letter-spacing: -1px;
+}

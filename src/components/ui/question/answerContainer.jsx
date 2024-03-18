@@ -8,8 +8,8 @@ function AnswersContainer() {
 
   const adoptAnswer = async (answerId) => {
     try {
-      await axios.post(`${BASE_URL}/api/answer/update-selection`, {
-        answerId: answerId,
+      await axios.post(`${BASE_URL}/api/answer/selection`, {
+        answerId,
         selection: true,
       });
       // 성공적으로 채택 처리된 후, 프론트엔드에서 상태 업데이트
