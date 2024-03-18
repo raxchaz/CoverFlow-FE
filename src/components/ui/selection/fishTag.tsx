@@ -2,10 +2,16 @@ import React from 'react';
 import '../../../asset/sass/etc/selection/fishTag.scss';
 import PropTypes from 'prop-types';
 
-function TagInput({ reward, setReward }) {
+interface RewardProps {
+  reward: number;
+  setReward: React.Dispatch<React.SetStateAction<number>>;
+}
+
+function TagInput({ reward, setReward }: RewardProps) {
+  // const [reward, setReward] = useState(0);
   const rewards = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
 
-  const handleRewardChange = (value) => {
+  const handleRewardChange = (value: number) => {
     setReward(value);
   };
 
@@ -28,8 +34,3 @@ function TagInput({ reward, setReward }) {
 }
 
 export default TagInput;
-
-TagInput.propTypes = {
-  reward: PropTypes.number.isRequired,
-  setReward: PropTypes.func.isRequired,
-};

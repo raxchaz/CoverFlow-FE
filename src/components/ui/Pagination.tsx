@@ -1,7 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-const Pagination = ({ totalPages, currentPage, handlePagination }) => {
+interface PaginationProps {
+  totalPages: number;
+  currentPage: number;
+  handlePagination: (direction: string) => void;
+}
+
+const Pagination = ({
+  totalPages,
+  currentPage,
+  handlePagination,
+}: PaginationProps) => {
   return (
     <div className="button-container">
       <div
@@ -59,9 +68,3 @@ const Pagination = ({ totalPages, currentPage, handlePagination }) => {
 };
 
 export default Pagination;
-
-Pagination.propTypes = {
-  totalPages: PropTypes.number.isRequired,
-  currentPage: PropTypes.number.isRequired,
-  handlePagination: PropTypes.func.isRequired,
-};

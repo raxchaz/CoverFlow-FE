@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import { useNavigate, useLocation } from 'react-router-dom';
 import SecessionSelection from '../../ui/selection/secessionSelection.jsx';
 import '../../../asset/sass/pages/myPage/secessionPage.scss';
-import { StyledPage, StyledHeader } from '../../../styledComponent.js';
-import TitleHeader from '../../ui/header/titleHeader.jsx';
-import TabBar from '../../ui/tabBar/tabBar.jsx';
+import { StyledPage, StyledHeader } from '../../../styledComponent';
+import TitleHeader from '../../ui/header/titleHeader';
+import TabBar from '../../ui/tabBar/tabBar';
 import SecessionWarning from '../../../asset/image/secessionWarning.svg';
-import { BASE_URL } from '../../global/constants/index.js';
+import { BASE_URL } from '../../global/constants';
 
 const Divider = styled.div`
   height: 1px;

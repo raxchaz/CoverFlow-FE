@@ -6,9 +6,9 @@ import Header from '../../ui/header/header.jsx';
 import Searchicon from '../../../asset/image/searchicon.svg';
 import UserInfoHeader from '../../ui/header/userInfoHeader.jsx';
 import '../../../asset/sass/pages/mainPage/mainPage.scss';
-import { StyledPage, StyledHeader } from '../../../styledComponent.js';
+import { StyledPage, StyledHeader } from '../../../styledComponent';
 import { EventSourcePolyfill } from 'event-source-polyfill';
-import { ACCESS_TOKEN, BASE_URL } from '../../global/constants/index.js';
+import { ACCESS_TOKEN, BASE_URL } from '../../global/constants';
 const SearchInput = styled.input`
   width: 300px;
   height: 20px;

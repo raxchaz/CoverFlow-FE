@@ -2,7 +2,17 @@ import React from 'react';
 import '../../../asset/sass/etc/selection/fishListItem.scss';
 import PropTypes from 'prop-types';
 
-export default function FishListItem({ children, price, payEvent }) {
+interface FishItemProps {
+  children: React.ReactNode;
+  price: string;
+  payEvent: () => void;
+}
+
+export default function FishListItem({
+  children,
+  price,
+  payEvent,
+}: FishItemProps) {
   return (
     <div className="fish-item-container">
       <div className="fish-count-wrapper">

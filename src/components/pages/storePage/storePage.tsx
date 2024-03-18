@@ -1,14 +1,16 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../../asset/sass/pages/storePage/storePage.scss';
-import { ACCESS_TOKEN } from '../../global/constants/index.js';
-import { StyledPage, StyledHeader } from '../../../styledComponent.js';
-import TitleHeader from '../../ui/header/titleHeader.jsx';
-import TabBar from '../../ui/tabBar/tabBar.jsx';
-import SelectSlider from '../../ui/selectSlider/selectSlider.jsx';
-import { CurrentFishBanner } from '../../ui/banner/currentFishBanner.jsx';
-import FishListItem from '../../ui/selection/fishListItem.jsx';
+
 import FaceIcon from '../../../asset/image/faceicon.svg';
+import { StyledHeader, StyledPage } from '../../../styledComponent';
+import TitleHeader from '../../ui/header/titleHeader';
+import TabBar from '../../ui/tabBar/tabBar';
+import SelectSlider from '../../ui/selectSlider/selectSlider';
+import { CurrentFishBanner } from '../../ui/banner/currentFishBanner';
+import { ACCESS_TOKEN } from '../../global/constants';
+import FishListItem from '../../ui/selection/fishListItem';
+
 function StorePage() {
   const navigate = useNavigate();
 

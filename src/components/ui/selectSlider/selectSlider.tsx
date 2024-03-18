@@ -10,7 +10,7 @@ const StatusBar = styled.div`
   font-family: pretendard-semibold;
 `;
 
-const StatusTab = styled.div`
+const StatusTab = styled.div<{ current: boolean }>`
   width: 50%;
   letter-spacing: -1px;
   text-align: center;
@@ -30,7 +30,17 @@ const StatusTab = styled.div`
 // section A, sectionB는 각 탭의 제목오로, string을 전달 받습니다.
 // children은 section A, sectionB 순서대로 내부에 들어갈 내용을 순차적으로 작성합니다.
 
-export default function SelectSlider({ sectionA, sectionB, children }) {
+interface SelectSliderProps {
+  sectionA: string;
+  sectionB: string;
+  children: React.ReactNode[];
+}
+
+export default function SelectSlider({
+  sectionA,
+  sectionB,
+  children,
+}: SelectSliderProps) {
   const [currentSection, setCurrentSection] = useState('A');
 
   return (
@@ -54,9 +64,3 @@ export default function SelectSlider({ sectionA, sectionB, children }) {
     </div>
   );
 }
-
-SelectSlider.propTypes = {
-  sectionA: PropTypes.string.isRequired,
-  sectionB: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired,
-};

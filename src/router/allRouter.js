@@ -4,17 +4,17 @@ import { Route, Routes } from 'react-router-dom';
 // import { ACCESS_TOKEN } from '../components/global/constants/index.js';
 
 /* 메인 페이지 관련 impot */
-import MainPage from '../components/pages/mainPage/mainPage';
+import MainPage from '../components/pages/mainPage/mainPage.jsx';
 
 /* 사용자 등록 페이지 관련  */
-import LoginPage from '../components/pages/loginPage/loginPage';
-import NicknamePage from '../components/pages/loginPage/nicknamePage';
+import LoginPage from '../components/pages/loginPage/loginPage.jsx';
+import NicknamePage from '../components/pages/loginPage/nicknamePage.jsx';
 import TermsPage from '../components/pages/termsPage/termsPage.jsx';
 
 /* 사용자 참여 페이지 관련 */
-import Store from '../components/pages/storePage/storePage';
-import MyPage from '../components/pages/myPage/myPage';
-import NotificationPage from '../components/pages/notificationPage/notificationPage';
+import Store from '../components/pages/storePage/storePage.js';
+import MyPage from '../components/pages/myPage/myPage.jsx';
+import NotificationPage from '../components/pages/notificationPage/notificationPage.jsx';
 import NoticePage from '../components/pages/myPage/noticePage.jsx';
 import EventPage from '../components/pages/myPage/eventPage.jsx';
 import InfoEditPage from '../components/pages/myPage/infoEditPage.jsx';
@@ -28,11 +28,11 @@ import SearchPage from '../components/pages/searchPage/searchPage.jsx';
 import CompanyRegistPage from '../components/pages/searchPage/companyRegistPage.jsx';
 import SearchResultPage from '../components/pages/searchPage/searchResultPage.jsx';
 import CompanyInfoPage from '../components/pages/searchPage/companyInfoPage.jsx';
-import QuestionWritePage from '../components/pages/postPage/questionWritePage.jsx';
+import QuestionWritePage from '../components/pages/postPage/questionWritePage.js';
 import QuestionDetailPage from '../components/pages/postPage/questionDetailPage.jsx';
 
 /* 그 외 유틸  */
-import TokenManagement from '../components/global/token/tokenManagement';
+import TokenManagement from '../components/global/token/tokenManagement.jsx';
 
 /* 관리자 페이지  */
 import AdminMainPage from '../components/pages/adminPage/adminMainPage.jsx';

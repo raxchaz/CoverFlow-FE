@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { StyledPage, StyledHeader } from '../../../styledComponent.js';
-import TitleHeader from '../../ui/header/titleHeader.jsx';
+import { StyledPage, StyledHeader } from '../../../styledComponent';
+import TitleHeader from '../../ui/header/titleHeader';
 import styled from 'styled-components';
-import TabBar from '../../ui/tabBar/tabBar.jsx';
+import TabBar from '../../ui/tabBar/tabBar';
 import SearchInput from '../../ui/searchInput/searchInput.jsx';
 import '../../../asset/sass/pages/searchPage/searchResultPage.scss';
-import { BASE_URL } from '../../global/constants/index.js';
+import { BASE_URL } from '../../global/constants';
 import Plus from '../../../asset/image/plus.svg';
 import Warning from '../../../asset/image/warning.svg';
 import { toast } from 'react-toastify';

@@ -4,12 +4,12 @@ import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import '../../../asset/sass/pages/postPage/questionDetailPage.scss';
 import { StyledPage, StyledHeader } from '../../../styledComponent.js';
-import TitleHeader from '../../ui/header/titleHeader.jsx';
-import Answer from '../../ui/question/answer.jsx';
-import TabBar from '../../ui/tabBar/tabBar.jsx';
+import TitleHeader from '../../ui/header/titleHeader';
+import Answer from '../../ui/question/answer';
+import TabBar from '../../ui/tabBar/tabBar';
 import Chat from '../../../asset/image/chat.svg';
 import View from '../../../asset/image/view.svg';
-import { BASE_URL, ACCESS_TOKEN } from '../../global/constants/index.js';
+import { BASE_URL, ACCESS_TOKEN } from '../../global/constants';
 import Questitle from '../../../asset/image/questitle.svg';
 import Report from '../../../asset/image/report.svg';
 
