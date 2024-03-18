@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-
 import '../../../asset/sass/pages/postPage/questionWritePage.scss';
 import { BASE_URL, ACCESS_TOKEN } from '../../global/constants/index.js';
 import { toast } from 'react-toastify';
