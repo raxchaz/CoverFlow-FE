@@ -4,9 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import '../../../asset/sass/etc/searchInput/searchInput.scss';
 import styled from 'styled-components';
 import Searchicon from '../../../asset/image/searchicon.svg';
-import useDebounce from '../../../hooks/useDebounce.js';
-import { conditionalExecution } from '../../../utils/utils.js';
+
 import { BASE_URL } from '../../global/constants';
+import useDebounce from '../../../hooks/useDebounce';
+import { conditionalExecution } from '../../../utils/utils';
 
 const StyledSearchInput = styled.input`
   width: 350px;
@@ -50,14 +51,21 @@ const AutoCompleteItem = styled.div`
   }
 `;
 
+interface CompanyProps {
+  name: string;
+  companyName: string;
+}
+
 function SearchInput() {
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
   const navigate = useNavigate();
   const [keyword, setKeyword] = useState('');
-  const [autoCompleteValue, setAutoCompleteValue] = useState([]);
+  const [autoCompleteValue, setAutoCompleteValue] = useState<CompanyProps[]>(
+    [],
+  );
   const [activeIndex, setActiveIndex] = useState(-1);
   const [showAutoComplete, setShowAutoComplete] = useState(false);
-  const autoCompleteContainerRef = useRef(null);
+  const autoCompleteContainerRef = useRef<HTMLDivElement | null>(null);
 
   const debouncedKeyword = useDebounce(keyword, 300);
 
@@ -69,7 +77,7 @@ function SearchInput() {
   // };
 
   useEffect(() => {
-    if (inputRef.current) inputRef.current.focus();
+    inputRef.current?.focus();
   }, []);
 
   useEffect(() => {
@@ -81,7 +89,7 @@ function SearchInput() {
   }, [debouncedKeyword]);
 
   // 입력값 변경 핸들러
-  const handleInputChange = (event) => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newInputValue = event.target.value.trim();
     setShowAutoComplete(true);
     setKeyword(newInputValue);
@@ -100,9 +108,9 @@ function SearchInput() {
   };
 
   // 자동완성 데이터 요청
-  const fetchAutoCompleteData = async (name) => {
+  const fetchAutoCompleteData = async (name: string) => {
     try {
-      const res = await axios.get(
+      const res = await axios.get<{ data: { companyList: CompanyProps[] } }>(
         `${BASE_URL}/api/company?pageNo=0&name=${name}`,
       );
       console.log('res', res);
@@ -113,13 +121,13 @@ function SearchInput() {
     }
   };
 
-  const fullDataSearch = (keyword) => {
+  const fullDataSearch = (keyword: string) => {
     const params = new URLSearchParams();
     params.append('keyword', keyword);
     navigate(`/search-result?${params.toString()}`);
   };
 
-  const specificItemSeach = (item) => {
+  const specificItemSeach = (item: string) => {
     const params = new URLSearchParams();
     params.append('keyword', item);
 
@@ -138,10 +146,10 @@ function SearchInput() {
   };
 
   useEffect(() => {
-    const handleOutsideClick = (e) => {
+    const handleOutsideClick = (e: MouseEvent) => {
       if (
         autoCompleteContainerRef.current &&
-        !autoCompleteContainerRef.current.contains(e.target)
+        !autoCompleteContainerRef.current.contains(e.target as Node)
       ) {
         setShowAutoComplete(false);
       }
@@ -155,13 +163,13 @@ function SearchInput() {
   }, []);
 
   // 자동완성 선택 함수
-  const selectAutoCompleteValue = (value) => {
+  const selectAutoCompleteValue = (value: string) => {
     setKeyword(value);
     setAutoCompleteValue([]);
     handleCompanySearch();
   };
 
-  const enteredKey = (event) => {
+  const enteredKey = (event: React.KeyboardEvent<HTMLInputElement>) => {
     const condition = [
       {
         test: () =>
