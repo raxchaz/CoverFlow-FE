@@ -34,8 +34,3 @@ function TagInput({ reward, setReward }: RewardProps) {
 }
 
 export default TagInput;
-
-TagInput.propTypes = {
-  reward: PropTypes.number.isRequired,
-  setReward: PropTypes.func.isRequired,
-};
