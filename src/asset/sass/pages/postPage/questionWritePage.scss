@@ -1,3 +1,28 @@
+@mixin button-style {
+  width: 80%;
+  padding: 12px 0;
+  margin-left: 10%;
+  font-size: 16px;
+  color: #ffffff;
+  background-color: #ff8d1d;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Pretendard-Medium', sans-serif;
+  transition:
+    background-color 0.3s ease,
+    transform 0.2s ease;
+
+  &:hover {
+    background-color: #ff8d1d;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  }
+}
+
 .info-questionWrite {
   letter-spacing: -0.5px;
   font-size: 20px;
@@ -95,4 +120,163 @@ select {
       0 10px 15px -3px rgba(0, 0, 0, 0.1),
       0 4px 6px -4px rgba(0, 0, 0, 0.1);
   }
+}
+
+.company-name {
+  margin: 51px 21.9rem 47px 52px;
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 168px;
+  height: 48px;
+
+  span {
+    overflow-wrap: break-word;
+    font-weight: 900;
+    font-size: 30px;
+  }
+}
+
+.tag-container {
+  margin: -1.8rem 21.9rem 2.3rem 3.2rem;
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  box-sizing: border-box;
+  letter-spacing: -1.2px;
+  span {
+    overflow-wrap: break-word;
+    font-family: Pretendard;
+    font-weight: 600;
+    font-size: 1.3rem;
+    width: 14rem;
+    letter-spacing: -0.1rem;
+    color: #000000;
+  }
+}
+
+.tag-wrapper {
+  margin: 0.2rem 0.6rem 0.1rem 0;
+  display: flex;
+  justify-content: center;
+  width: 0.9rem;
+  height: 1.2rem;
+  box-sizing: border-box;
+}
+
+.finger-image {
+  width: 0.9rem;
+  height: 1.2rem;
+}
+
+.tag-select {
+  border-radius: 1.3rem;
+  position: relative;
+  margin-right: 0.6rem;
+  display: flex;
+  justify-content: center;
+  padding: 0.6rem 1.2rem 0.6rem 0;
+  width: 12rem;
+  box-sizing: border-box;
+  border: 1px solid #bcbcbc;
+  img {
+    margin: 0.1rem 0.6rem 0.2rem 0;
+    width: 1rem;
+    height: 0.6rem;
+  }
+  span {
+    overflow-wrap: break-word;
+    font-family: Pretendard;
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: -0.1rem;
+    color: #000000;
+  }
+  button {
+    width: 3rem;
+  }
+}
+
+.category-container {
+  margin: 1.2rem 21.9rem 1.3rem 3.2rem;
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  box-sizing: border-box;
+  span {
+    overflow-wrap: break-word;
+    font-family: Pretendard;
+    font-weight: 600;
+    font-size: 1.3rem;
+    width: 14rem;
+    letter-spacing: -0.1rem;
+    color: #000000;
+    margin-bottom: 14px;
+  }
+}
+
+.category-wrapper {
+  margin: 0.2rem 0.6rem 0.1rem 0;
+  display: flex;
+  justify-content: center;
+  width: 0.9rem;
+  height: 1.2rem;
+  box-sizing: border-box;
+}
+
+.category-select-wrapper {
+  margin: -1.1rem 1.1rem 1.1rem 0;
+  display: flex;
+  justify-content: flex-start;
+  gap: 14px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+
+  margin-left: 10%;
+  width: 81%;
+  padding-bottom: 10px;
+
+  &::-webkit-scrollbar {
+    height: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #ffa54d;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #ffe9d3;
+    border-radius: 10px;
+  }
+}
+
+.category-select {
+  border-radius: 1.3rem;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  padding: 0.6rem 1rem 0.6rem 1rem;
+  box-sizing: border-box;
+  border: 1px solid #bcbcbc;
+  span {
+    overflow-wrap: break-word;
+    font-family: Pretendard;
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: -0.1rem;
+    color: #000000;
+    display: flex;
+    justify-content: center;
+
+    width: 6rem;
+  }
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.register-question-button {
+  @include button-style;
+  margin-top: 7%;
 }
