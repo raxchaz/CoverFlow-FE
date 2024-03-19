@@ -13,6 +13,9 @@ module.exports = {
       },
       parser: 'babel-parser',
       files: ['.eslintrc.{js,cjs}'],
+      rules: {
+        'no-undef': 'off',
+      },
       parserOptions: {
         sourceType: 'script',
         jsx: 'true',
