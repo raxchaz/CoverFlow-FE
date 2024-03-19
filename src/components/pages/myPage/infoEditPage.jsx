@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import '../../../asset/sass/pages/myPage/infoEditPage.scss';
 import { StyledPage, StyledHeader } from '../../../styledComponent.js';
-import TitleHeader from '../../ui/header/titleHeader.jsx';
+import TitleHeader from '../../ui/header/titleHeader';
 import UserInfoHeader from '../../ui/header/userInfoHeader.jsx';
 import TabBar from '../../ui/tabBar/tabBar.jsx';
-import { BASE_URL, ACCESS_TOKEN } from '../../global/constants/index.js';
+import { BASE_URL, ACCESS_TOKEN } from '../../global/constants';
 
 const Divider = styled.div`
   height: 1px;

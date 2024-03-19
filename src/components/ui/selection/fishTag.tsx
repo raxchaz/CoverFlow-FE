@@ -1,6 +1,5 @@
 import React from 'react';
 import '../../../asset/sass/etc/selection/fishTag.scss';
-import PropTypes from 'prop-types';
 
 interface RewardProps {
   reward: number;

@@ -11,8 +11,11 @@ module.exports = {
       env: {
         node: true,
       },
-      parser: 'babel-parser',
-      files: ['.eslintrc.{js,cjs}'],
+      parser: '@typescript-eslint/parser',
+      files: ['.eslintrc.{js,cjs}', '**/*.{js,jsx,ts,tsx}'],
+      // rules: {
+      //   '@typescript-eslint/no-unused-vars': [2, { args: 'none' }],
+      // },
       parserOptions: {
         sourceType: 'script',
         jsx: 'true',
