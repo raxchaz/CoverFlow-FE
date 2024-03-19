@@ -2,9 +2,9 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../../asset/sass/pages/searchPage/searchPage.scss';
 import { StyledPage, StyledHeader } from '../../../styledComponent.js';
-import TitleHeader from '../../ui/header/titleHeader.tsx';
-import TabBar from '../../ui/tabBar/tabBar.tsx';
-import SearchInput from '../../ui/searchInput/searchInput.jsx';
+import TitleHeader from '../../ui/header/titleHeader';
+import TabBar from '../../ui/tabBar/tabBar';
+import SearchInput from '../../ui/searchInput/searchInput';
 
 function SearchPage() {
   const navigate = useNavigate();

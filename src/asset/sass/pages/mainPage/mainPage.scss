@@ -1,5 +1,6 @@
 .main-page-deco {
-  background: linear-gradient(to bottom, #ffffff, #fff3e7);
+  // background: linear-gradient(to bottom, #ffffff, #fff3e7);
+  background: linear-gradient(to bottom, #ff8d1d 37.5%, #ffffff 0%);
 }
 
 .coverflow {
@@ -17,10 +18,16 @@
   letter-spacing: -1px;
   color: #000;
   font-weight: 500;
+  line-height: 1.2;
 }
 
 .main-info-bold {
   font-weight: 600;
+}
+
+.white-bold {
+  font-weight: 600;
+  color: #ffffff;
 }
 
 .main-logo {

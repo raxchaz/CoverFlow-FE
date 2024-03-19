@@ -9,8 +9,8 @@
   display: inline-block;
   color: white;
   background-color: #ff8d1d;
-  padding: 5px;
-  border-radius: 5px;
+  padding: 5px 15px;
+  border-radius: 20px;
   margin-bottom: 4%;
   margin-left: 1.5%;
   font-family: pretendard-medium;
@@ -23,7 +23,7 @@
   color: #ff8d1d;
   border: 2px solid #ff8d1d;
   padding: 5px 8px;
-  border-radius: 5px;
+  border-radius: 20px;
   margin-bottom: 4%;
   margin-left: 1.5%;
   font-family: pretendard-bold;
@@ -56,6 +56,17 @@
 .answer-img {
   margin-left: 2%;
   margin-bottom: -1.5%;
+}
+
+.answer-title {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 600;
+  width: 88%;
+  margin-left: 7%;
+  margin-top: 5%;
 }
 
 .answer-count {
@@ -175,5 +186,15 @@
   .submit-report,
   .close-report-popup {
     border-radius: 1px;
+  }
+}
+
+.job-info {
+  font-weight: 600;
+  margin-left: 2%;
+  display: flex;
+  align-items: center;
+  img {
+    margin-right: 7px;
   }
 }
