@@ -15,6 +15,7 @@
     "@testing-library/user-event": "^14.5.2",
     "axios": "^1.6.5",
     "babel-eslint": "^10.1.0",
+    "event-source-polyfill": "^1.0.31",
     "js-base64": "^3.7.6",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",

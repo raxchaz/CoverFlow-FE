@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../../asset/sass/pages/myPage/feedbackPage.scss';
 import { StyledPage, StyledHeader } from '../../../styledComponent.js';
-import TitleHeader from '../../ui/header/titleHeader.jsx';
+import TitleHeader from '../../ui/header/titleHeader.tsx';
 import TabBar from '../../ui/tabBar/tabBar.jsx';
 import Button from '../../ui/button/Button/Button.jsx';
 import TextArea from '../../ui/inputbox/TextArea.jsx';
+import { fetchAPI } from '../../global/utils/apiUtil.js';
+import { toast } from 'react-toastify';
 
 function FeedbackPage() {
   const navigate = useNavigate();
@@ -20,6 +22,18 @@ function FeedbackPage() {
     setcontact(value);
   };
 
+  const submitFeedback = async () => {
+    try {
+      const res = await fetchAPI('/api/feedback', 'POST', contact);
+      console.log(res, 'post 결과');
+      if (res.status === 200) {
+        toast.success('피드백 등록이 완료되었습니다!');
+      }
+    } catch (error) {
+      // alert('문의 등록 실패:', error);
+      toast.error('피드백 등록에 실패했습니다.', error);
+    }
+  };
   return (
     <StyledPage className="main-page-container">
       <StyledHeader>
@@ -41,7 +55,11 @@ function FeedbackPage() {
           variant={'round'}
         />
 
-        <Button variant={'round'} onClick={() => alert('준비 중')}>
+        <Button
+          variant={'round'}
+          disabled={contact === ''}
+          onClick={submitFeedback}
+        >
           제출하기
         </Button>
       </div>

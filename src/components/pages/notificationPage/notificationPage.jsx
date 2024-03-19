@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { StyledPage, StyledHeader } from '../../../styledComponent';
-import TitleHeader from '../../ui/header/titleHeader';
+import TitleHeader from '../../ui/header/titleHeader.tsx';
 import TabBar from '../../ui/tabBar/tabBar';
 import NotificationList from './notificationList.jsx';
 import '../../../asset/sass/pages/notificationPage/notificationPage.scss';

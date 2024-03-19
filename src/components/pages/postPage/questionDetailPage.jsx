@@ -7,11 +7,12 @@ import { StyledPage, StyledHeader } from '../../../styledComponent.js';
 import TitleHeader from '../../ui/header/titleHeader';
 import Answer from '../../ui/question/answer';
 import TabBar from '../../ui/tabBar/tabBar';
-import Chat from '../../../asset/image/chat.svg';
-import View from '../../../asset/image/view.svg';
+// import Chat from '../../../asset/image/chat.svg';
+// import View from '../../../asset/image/view.svg';
 import { BASE_URL, ACCESS_TOKEN } from '../../global/constants';
-import Questitle from '../../../asset/image/questitle.svg';
-import Report from '../../../asset/image/report.svg';
+// import Questitle from '../../../asset/image/questitle.svg';
+// import Report from '../../../asset/image/report.svg';
+import Tree from '../../../asset/image/nature-ecology-tree-3--tree-plant-cloud-shape-park.svg';
 
 const Questioner = styled.div`
   font-family: pretendard-bold;
@@ -50,12 +51,12 @@ const FirstLine = styled.div`
   margin: 5% 0% 0% 0%;
 `;
 
-const LastLine = styled.div`
-  height: 0.5px;
-  background-color: #cecece;
-  width: 85%;
-  margin: 10% 0% 0% 9%;
-`;
+// const LastLine = styled.div`
+//   height: 0.5px;
+//   background-color: #cecece;
+//   width: 85%;
+//   margin: 10% 0% 0% 9%;
+// `;
 
 const AnswerList = styled.div``;
 
@@ -65,16 +66,17 @@ function QuestionDetailPage() {
   const [answer, setAnswer] = useState('');
   const [showReportPopup, setShowReportPopup] = useState(false);
   const [questionDetail, setQuestionDetail] = useState({
-    questionId: '',
-    title: '',
-    questionContent: '',
+    questionId: '3',
+    title: '질문 제목',
+    questionContent: 'Lorem ipsum dolor sit amet, consectetur adip',
     answerCount: 0,
     reward: 0,
-    questionNickname: '',
-    questionTag: '',
-    createAt: '',
+    questionNickname: '붕어빵',
+    questionTag: 'JavaScript',
+    createAt: '3',
     answers: [],
   });
+
   const { questionId } = useParams();
   console.log('id', questionId);
 
@@ -175,40 +177,41 @@ function QuestionDetailPage() {
       </StyledHeader>
 
       <div className="question-detail-container">
+        <div className="job-info">
+          <img src={Tree} alt="" />
+          현직자가 남긴 글이에요
+        </div>
+        <QuestionTitle>
+          {/* <img className="questionicon-img" src={Questitle} /> */}
+          {questionDetail.title}
+        </QuestionTitle>
+        <div className="questioner-info">
+          <Questioner>
+            {questionDetail.questionNickname || 'Anonymous'}{' '}
+            {/* <span className="middle">•</span> */}
+            <span className="question-date">{formattedDate}</span>
+          </Questioner>
+
+          <QuestionerTag>{questionDetail.questionTag}</QuestionerTag>
+        </div>
+
+        <QuestionContent>{questionDetail.questionContent}</QuestionContent>
         <div className="company-fish-tag">
           <div className="detailpage-company">카카오</div>
           <div className="detailpage-fishbuncount">{questionDetail.reward}</div>
         </div>
-        <div className="questioner-info">
-          <Questioner>
-            {questionDetail.questionNickname} <span className="middle">•</span>
-          </Questioner>
-
-          <QuestionerTag>{questionDetail.questionTag}</QuestionerTag>
-
-          <span className="question-date">{formattedDate}</span>
-        </div>
-
         <FirstLine />
-
-        <QuestionTitle>
-          <img className="questionicon-img" src={Questitle} />
-          {questionDetail.title}
-        </QuestionTitle>
-
-        <QuestionContent>{questionDetail.questionContent}</QuestionContent>
-
         <div className="view-info-container">
-          <img className="answer-img" src={Chat} />
+          {/* <img className="answer-img" src={Chat} />
           <span className="answer-count">{questionDetail.answerCount}</span>
 
-          <img className="answerview-img" src={View} />
+          <img className="answerview-img" src={View} /> */}
 
-          <img
+          {/* <img
             className="report-img"
             src={Report}
             onClick={toggleReportPopup}
-          />
+          /> */}
         </div>
         {showReportPopup && (
           <div className="report-popup-overlay">
@@ -262,8 +265,10 @@ function QuestionDetailPage() {
           등록
         </button>
       </div>
-      <LastLine />
+      {/* <LastLine /> */}
+
       <AnswerList>
+        <div className="answer-title">답변</div>
         {questionDetail.answers.map((answer, index) => (
           <Answer
             key={index}

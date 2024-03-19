@@ -13,7 +13,7 @@ import {
   BASE_URL,
   ACCESS_TOKEN,
   REFRESH_TOKEN,
-} from '../../global/constants/index';
+} from '../../global/constants/index.ts';
 
 function UserInfoHeader() {
   const { isLoggedIn, rewardCount, isDropdownOpen } = useSelector(

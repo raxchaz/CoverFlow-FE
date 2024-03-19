@@ -6,6 +6,7 @@ import { BASE_URL } from '../../global/constants';
 import { StyledPage, StyledHeader } from '../../../styledComponent.js';
 import TitleHeader from '../../ui/header/titleHeader';
 import TabBar from '../../ui/tabBar/tabBar.jsx';
+import { toast } from 'react-toastify';
 
 function CompanyRegistPage() {
   const navigate = useNavigate();
@@ -69,14 +70,14 @@ function CompanyRegistPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('기업 정보 제출 중:', companyInfo);
+    // console.log('기업 정보 제출 중:', companyInfo);
 
     if (
       companyInfo.name === '' ||
       companyInfo.city === '' ||
       companyInfo.type === ''
     ) {
-      alert('필수 필드를 모두 입력해주세요.');
+      toast.error('필수 필드를 모두 입력해주세요.');
       return;
     }
 
@@ -89,7 +90,7 @@ function CompanyRegistPage() {
       .then((response) => {
         console.log('서버 응답:', response.data);
         navigate('/search-company');
-        alert('기업 등록이 완료되었어요!');
+        toast.success('기업 등록이 완료되었어요!');
       })
       .catch((error) => {
         console.error('기업 등록에 실패했어요', error);

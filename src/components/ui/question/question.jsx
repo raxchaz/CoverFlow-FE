@@ -6,7 +6,7 @@ import styled, { css } from 'styled-components';
 import Chat from '../../../asset/image/chat.svg';
 import View from '../../../asset/image/view.svg';
 import Questitle from '../../../asset/image/questitle.svg';
-import { ACCESS_TOKEN } from '../../global/constants';
+import { ACCESS_TOKEN } from '../../global/constants/index.ts';
 
 const Line = styled.div`
   height: 1px;

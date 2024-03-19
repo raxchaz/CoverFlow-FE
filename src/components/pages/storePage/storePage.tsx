@@ -9,7 +9,7 @@ import TabBar from '../../ui/tabBar/tabBar';
 import SelectSlider from '../../ui/selectSlider/selectSlider';
 import { CurrentFishBanner } from '../../ui/banner/currentFishBanner';
 import { ACCESS_TOKEN } from '../../global/constants';
-import FishListItem from '../../ui/selection/fishListItem';
+import FishListItem from '../../ui/selection/fishListItem.tsx';
 
 function StorePage() {
   const navigate = useNavigate();
