@@ -10,10 +10,10 @@ import { ReactComponent as PremiumIcon } from '../../../asset/image/premium.svg'
 import { ReactComponent as NoticeIcon } from '../../../asset/image/notice.svg';
 
 import { StyledHeader, StyledPage } from '../../../styledComponent';
-import TitleHeader from '../../ui/header/titleHeader';
 
 import { ACCESS_TOKEN, REFRESH_TOKEN, BASE_URL } from '../../global/constants';
 import TabBar from '../../ui/tabBar/tabBar';
+import TitleHeader from '../../ui/header/titleHeader';
 
 /* 스타일 컴포넌트 정의 */
 const LogoutButton = styled.button`
