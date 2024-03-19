@@ -80,8 +80,8 @@ function UserInfoHeader() {
     navigate('/store');
   };
 
-  /* 
-  사용자 아이콘을 클릭했을 경우, 드롭다운 메뉴의 표시 상태를 토글합니다. 
+  /*
+  사용자 아이콘을 클릭했을 경우, 드롭다운 메뉴의 표시 상태를 토글합니다.
   HandleMenuClick 이벤트 함수를 통해 드롭다운 메뉴의 각 항목을 클릭해서 페이지를 이동시킵니다.
   */
   const handleUserIconClick = () => {
@@ -117,6 +117,7 @@ function UserInfoHeader() {
       <div className="userInfo-container">
         {isLoggedIn ? (
           <div className="user-icon-container" ref={dropdownRef}>
+            {/* 붕어빵 */}
             <div className="reward-fish">
               <img
                 className="reward"
@@ -125,13 +126,15 @@ function UserInfoHeader() {
                 alt="붕어빵 아이콘"
               />
               <span className="bun-count">{rewardCount}</span>
+              <img
+                className="loginuser"
+                src={Loginuser}
+                alt="로그인 유저 아이콘"
+                onClick={handleUserIconClick}
+              />
             </div>
-            <img
-              className="loginuser"
-              src={Loginuser}
-              alt="로그인 유저 아이콘"
-              onClick={handleUserIconClick}
-            />
+            {/* 유저 아이콘 */}
+
             {isDropdownOpen && (
               <div className="dropdown-menu">
                 <ul>
