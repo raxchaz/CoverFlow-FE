@@ -11,12 +11,12 @@ import { conditionalExecution } from '../../../utils/utils';
 
 const StyledSearchInput = styled.input`
   width: 350px;
-  height: 20px;
+  height: 40px;
   padding: 8px;
-  border: 1px solid #f2f2f2;
+  border: 1px solid #ff8d1d;
   background-color: #f2f2f2;
-  border-radius: 10px;
-  margin: 10% 0% 0% 13%;
+  border-radius: 30px;
+  margin: 5% 0% 0% 24%;
   outline: none;
 
   &:focus {
