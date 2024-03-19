@@ -36,7 +36,7 @@ import TokenManagement from '../components/global/token/tokenManagement.jsx';
 
 /* 관리자 페이지  */
 import AdminMainPage from '../components/pages/adminPage/adminMainPage.jsx';
-import PremiumTicket from '../components/pages/premiumPage/premiumTicket.jsx';
+import PremiumTicket from '../components/pages/premiumPage/premiumTicket.tsx';
 import PremiumPage from '../components/pages/premiumPage/premiumPage.jsx';
 import NotFound from '../components/pages/premiumPage/NotFound.jsx';
 

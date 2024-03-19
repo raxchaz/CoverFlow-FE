@@ -10,6 +10,7 @@ import { StyledHeader, StyledPage } from '../../../styledComponent';
 import Finger from '../../../asset/image/fingerprint.svg';
 import Home from '../../../asset/image/group.svg';
 import Money from '../../../asset/image/money.svg';
+import axios from 'axios';
 
 function QuestionWritePage() {
   const navigate = useNavigate();
@@ -35,12 +36,9 @@ function QuestionWritePage() {
     setTitle(event.target.value);
   };
 
-  console.log(localStorage.getItem('access_token'));
-
   const handleRegister = async () => {
     try {
-      const response = await fetch(`${BASE_URL}/api/question`, {
-        method: 'POST',
+      const response: Response = await axios.post(`${BASE_URL}/api/question`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem('access_token')}`,
