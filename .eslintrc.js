@@ -12,9 +12,8 @@ module.exports = {
         node: true,
       },
       parser: 'babel-parser',
-      files: ['.eslintrc.{js,cjs}'],
+      files: ['.eslintrc.{js,cjs}', '**/*.{js,jsx,ts,tsx}'],
       rules: {
-        'no-undef': 'off',
         '@typescript-eslint/no-unused-vars': [2, { args: 'none' }],
       },
       parserOptions: {
