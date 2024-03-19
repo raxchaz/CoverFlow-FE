@@ -51,7 +51,7 @@ export default function ContactSlider() {
   const loadUserData = async () => {
     try {
       const data = await fetchAPI(
-        `/api/inquiry?pageNo=${currentPageAPI}`,
+        `/api/inquiry/me?pageNo=${currentPageAPI}`,
         'GET',
       );
       console.log('내 문의 내역:', data);
@@ -62,35 +62,11 @@ export default function ContactSlider() {
     }
   };
 
-  //   try {
-  //     const response = await fetch(
-  //       `${BASE_URL}/api/inquiry?pageNo=${currentPageAPI}`,
-  //       {
-  //         method: 'GET',
-  //         headers: {
-  //           'Content-Type': 'application/json',
-  //           Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
-  //         },
-  //       },
-  //     );
-  //     if (!response.ok) {
-  //       throw new Error(` ${response.status}: ${response.statusText}`);
-  //     }
-
-  //     const data = await response.json();
-  //     console.log('내 문의 내역:', data);
-  //     setContactList(data.data.inquiryList);
-  //     setTotalPage(data.data.totalPage);
-  //   } catch (error) {
-  //     console.error('문의 내역 불러오기 실패:', error);
-  //   }
-  // };
-
   const submitContact = async () => {
     try {
       const res = await fetchAPI('/api/inquiry', 'POST', contact);
       console.log(res, 'post 결과');
-      if (res.status === 200) {
+      if (res.statusCode === 'CREATED') {
         setCurrentSection('contactList');
         setcontact({
           title: '',
@@ -114,12 +90,6 @@ export default function ContactSlider() {
     }));
     console.log(contact);
   };
-  // ======================= fetch 관련 기능
-  // const paymentResult = {
-  //   amount: '10,000원',
-  //   created_at: '2023-03-15 12:34:56',
-  //   method: '신용카드',
-  // };
 
   return (
     <div className="slider-container">

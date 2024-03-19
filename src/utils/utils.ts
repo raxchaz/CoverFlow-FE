@@ -1,4 +1,7 @@
-export const tryCatch = (f: () => void, errorHandler: (error: any) => void) => {
+export const tryCatch = (
+  f: () => void,
+  errorHandler: (error: unknown) => void,
+) => {
   try {
     return f();
   } catch (error) {
