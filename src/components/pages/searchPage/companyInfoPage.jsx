@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import TitleHeader from '../../ui/header/titleHeader.tsx';
 import UserInfoHeader from '../../ui/header/userInfoHeader.jsx';
-import TabBar from '../../ui/tabBar/tabBar.js';
+import TabBar from '../../ui/tabBar/tabBar.tsx';
 import '../../../asset/sass/pages/searchPage/companyInfoPage.scss';
 import Question from '../../ui/question/question.jsx';
 import { ACCESS_TOKEN, BASE_URL } from '../../global/constants/index.ts';

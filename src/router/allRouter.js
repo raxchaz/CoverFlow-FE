@@ -15,7 +15,7 @@ import TermsPage from '../components/pages/termsPage/termsPage.jsx';
 import Store from '../components/pages/storePage/storePage.tsx';
 import MyPage from '../components/pages/myPage/myPage.tsx';
 import NotificationPage from '../components/pages/notificationPage/notificationPage.jsx';
-import NoticePage from '../components/pages/myPage/noticePage.jsx';
+import NoticePage from '../components/pages/myPage/noticePage.tsx';
 import EventPage from '../components/pages/myPage/eventPage.jsx';
 import InfoEditPage from '../components/pages/myPage/infoEditPage.jsx';
 import ContactPage from '../components/pages/myPage/contactPage.jsx';
@@ -27,7 +27,7 @@ import CompletePaymentPage from '../components/pages/completePaymentPage/complet
 import SearchPage from '../components/pages/searchPage/searchPage.tsx';
 import CompanyRegistPage from '../components/pages/searchPage/companyRegistPage.jsx';
 import SearchResultPage from '../components/pages/searchPage/searchResultPage.jsx';
-import CompanyInfoPage from '../components/pages/searchPage/companyInfoPage.jsx/index.ts';
+import CompanyInfoPage from '../components/pages/searchPage/companyInfoPage.jsx';
 import QuestionWritePage from '../components/pages/postPage/questionWritePage.tsx';
 import QuestionDetailPage from '../components/pages/postPage/questionDetailPage.jsx';
 
