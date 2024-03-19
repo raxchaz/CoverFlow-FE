@@ -50,7 +50,7 @@ const StatusBar = styled.div`
   font-family: pretendard-semibold;
 `;
 
-const StatusTab = styled.div`
+const StatusTab = styled.div<{ current: boolean }>`
   width: 50%;
   letter-spacing: -1px;
   text-align: center;
