@@ -8,10 +8,18 @@ import TitleHeader from '../../ui/header/titleHeader.js';
 import TabBar from '../../ui/tabBar/tabBar.js';
 import { toast } from 'react-toastify';
 
+interface CompanyInfoProps {
+  name: string;
+  type: string;
+  city: string;
+  district: string;
+  establishment: string;
+}
+
 function CompanyRegistPage() {
   const navigate = useNavigate();
 
-  const [companyInfo, setCompanyInfo] = useState({
+  const [companyInfo, setCompanyInfo] = useState<CompanyInfoProps>({
     name: '',
     type: '',
     city: '',
@@ -70,18 +78,18 @@ function CompanyRegistPage() {
     }));
   };
 
+  const isRequiredField = (info: CompanyInfoProps) => {
+    if (info.name === '' || info.city === '' || info.type === '') {
+      toast.error('필수 필드를 모두 입력해주세요.');
+      return;
+    }
+  };
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     // console.log('기업 정보 제출 중:', companyInfo);
 
-    if (
-      companyInfo.name === '' ||
-      companyInfo.city === '' ||
-      companyInfo.type === ''
-    ) {
-      toast.error('필수 필드를 모두 입력해주세요.');
-      return;
-    }
+    isRequiredField(companyInfo);
 
     axios
       .post(`${BASE_URL}/api/company`, companyInfo, {

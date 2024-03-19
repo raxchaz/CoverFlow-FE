@@ -6,6 +6,7 @@ import BannerImage from '../../ui/banner/bannerImage';
 import '../../../asset/sass/pages/myPage/premiumPage.scss';
 import VectorIcon from '../../../asset/image/vector.svg';
 import { useNavigate } from 'react-router-dom';
+import { SectionProps } from '../../../types';
 
 const StatusBar = styled.div`
   display: flex;
@@ -31,7 +32,7 @@ const StatusTab = styled.div<{ $current: boolean }>`
 `;
 
 const PremiumTicket = () => {
-  const [currentSection, setCurrentSection] = useState('buy');
+  const [currentSection, setCurrentSection] = useState<SectionProps>('buy');
   const navigate = useNavigate();
   const handleBuyClick = () => {
     navigate('/buyer-info');

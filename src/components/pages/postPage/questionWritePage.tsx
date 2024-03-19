@@ -19,11 +19,6 @@ function QuestionWritePage() {
   const [reward, setReward] = useState(0);
   const { companyId } = useParams();
 
-  localStorage.setItem(
-    'access_token',
-    'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJBY2Nlc3NUb2tlbiIsImV4cCI6MTcxMDc1MDkxNSwibWVtYmVySWQiOiJlN2E1ZTY3ZC0wZjljLTQ0NWMtODFhMC0yMjA1YTU4ZDBiOWIiLCJyb2xlIjoiTUVNQkVSIn0.DGO__CMcGZ0w0PayZkCw53LwrG5lYrP_80AMBY4qgxyAI397Y9sKfg1LHip9O41bYlegWQRDFCXF8-3iwwBnkg',
-  );
-
   const handleGoBack = () => {
     navigate(-1);
   };

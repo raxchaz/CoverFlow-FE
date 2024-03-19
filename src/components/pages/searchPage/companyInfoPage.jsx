@@ -3,12 +3,12 @@ import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import TitleHeader from '../../ui/header/titleHeader.tsx';
 import UserInfoHeader from '../../ui/header/userInfoHeader.jsx';
-import TabBar from '../../ui/tabBar/tabBar.jsx';
+import TabBar from '../../ui/tabBar/tabBar.js';
 import '../../../asset/sass/pages/searchPage/companyInfoPage.scss';
 import Question from '../../ui/question/question.jsx';
 import { ACCESS_TOKEN, BASE_URL } from '../../global/constants/index.ts';
-import { StyledHeader, StyledPage } from '../../../styledComponent';
-import SearchInput from '../../ui/searchInput/searchInput';
+import { StyledHeader, StyledPage } from '../../../styledComponent.ts';
+import SearchInput from '../../ui/searchInput/searchInput.tsx';
 
 const CompanyContainer = styled.div`
   background-color: #ffffff;

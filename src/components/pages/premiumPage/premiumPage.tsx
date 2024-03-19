@@ -10,6 +10,7 @@ import CheckIconRectangle from '../../../asset/image/check_orange.svg';
 import TabBar from '../../ui/tabBar/tabBar';
 import BannerImage from '../../ui/banner/bannerImage';
 import { useNavigate } from 'react-router-dom';
+import { SectionProps } from '../../../types';
 
 const StatusBar = styled.div`
   display: flex;
@@ -33,8 +34,6 @@ const StatusTab = styled.div<{ $current: boolean }>`
   ${(props) =>
     props.$current && 'color: black; border-bottom: 3px solid black;'}
 `;
-
-type SectionProps = 'buy' | 'myPremium';
 
 const PremiumPage = () => {
   const [currentSection, setCurrentSection] = useState<SectionProps>('buy');

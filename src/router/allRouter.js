@@ -27,7 +27,7 @@ import CompletePaymentPage from '../components/pages/completePaymentPage/complet
 import SearchPage from '../components/pages/searchPage/searchPage.tsx';
 import CompanyRegistPage from '../components/pages/searchPage/companyRegistPage.jsx';
 import SearchResultPage from '../components/pages/searchPage/searchResultPage.jsx';
-import CompanyInfoPage from '../components/pages/searchPage/companyInfoPage.jsx';
+import CompanyInfoPage from '../components/pages/searchPage/companyInfoPage.jsx/index.ts';
 import QuestionWritePage from '../components/pages/postPage/questionWritePage.tsx';
 import QuestionDetailPage from '../components/pages/postPage/questionDetailPage.jsx';
 
