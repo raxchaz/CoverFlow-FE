@@ -7,11 +7,11 @@ import Searchicon from '../../../asset/image/searchicon.svg';
 import UserInfoHeader from '../../ui/header/userInfoHeader.jsx';
 import '../../../asset/sass/pages/mainPage/mainPage.scss';
 import { StyledPage, StyledHeader } from '../../../styledComponent';
-import { EventSourcePolyfill } from 'event-source-polyfill';
-import { ACCESS_TOKEN, BASE_URL } from '../../global/constants/index.ts';
+// import { EventSourcePolyfill } from 'event-source-polyfill';
+// import { ACCESS_TOKEN, BASE_URL } from '../../global/constants';
 const SearchInput = styled.input`
   width: 300px;
-  height: 20px;
+  height: 30px;
   padding: 8px;
   border: 1px solid #ffbd7c;
   border-radius: 10px;
@@ -33,29 +33,31 @@ function MainPage() {
   const navigate = useNavigate();
   localStorage.setItem('prevPage', '/');
 
-  const handleConnect = async () => {
-    const res = await fetch(`${BASE_URL}/api/notification/connect`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'text/event-stream; charset=utf-8',
-        Authorization: `Bearer ${ACCESS_TOKEN}`,
-      },
-    });
-    console.log('res', res);
-  };
+  // const handleConnect = async () => {
+  //   const res = await fetch(`${BASE_URL}/api/notification/connect`, {
+  //     method: 'GET',
+  //     headers: {
+  //       'Content-Type': 'text/event-stream; charset=utf-8',
+  //       Authorization: `Bearer ${ACCESS_TOKEN}`,
+  //     },
+  //   });
+  //   console.log('res', res);
+  // };
 
-  const sse = new EventSourcePolyfill(`${BASE_URL}/api/notification/connect`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'text/event-stream; charset=utf-8',
-      Authorization: `Bearer ${ACCESS_TOKEN}`,
-    },
-  });
+  // const sse = new EventSourcePolyfill(`${BASE_URL}/api/notification/connect`, {
+  //   method: 'GET',
+  //   headers: {
+  //     'Content-Type': 'text/event-stream; charset=utf-8',
+  //     Authorization: `Bearer ${ACCESS_TOKEN}`,
+  //   },
+  // });
 
-  sse.addEventListener('connect', (event) => {
-    const data = event;
-    console.log(data);
-  });
+  // console.log('sse', sse);
+
+  // sse.addEventListener('connect', (event) => {
+  //   const data = event;
+  //   console.log(data);
+  // });
 
   const handleChange = () => {
     navigate('/search-company');
@@ -64,12 +66,19 @@ function MainPage() {
   return (
     <StyledPage className="main-page-deco">
       <StyledHeader />
-      <UserInfoHeader />
+
       <Header />
+      <UserInfoHeader />
       <div className="coverflow">COVERFLOW</div>
       <div className="main-info">
-        <span className="main-info-bold">원하는 기업에 대한 질문과 답변</span>
-        을 <br />더 쉽고 빠르게 찾아보세요
+        <span className="main-info-bold">
+          <strong>기업</strong>
+        </span>
+        에 대해 <strong className="main-info-bold">궁금한점</strong>이 있다면,
+        <br />
+        <strong className="white-bold">코버플로우</strong>에서 모두
+        <strong className="main-info-bold">공유</strong>하고
+        <strong className="main-info-bold">해결</strong>하세요!
       </div>
       <SearchInput
         type="text"
@@ -79,7 +88,6 @@ function MainPage() {
       />
       <img className="search" src={Searchicon} />
       <TabBar />
-      <button onClick={handleConnect}>connect 요청</button>
     </StyledPage>
   );
 }

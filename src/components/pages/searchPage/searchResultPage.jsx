@@ -4,13 +4,14 @@ import { StyledPage, StyledHeader } from '../../../styledComponent';
 import TitleHeader from '../../ui/header/titleHeader.tsx';
 import styled from 'styled-components';
 import TabBar from '../../ui/tabBar/tabBar';
-import SearchInput from '../../ui/searchInput/searchInput.jsx';
+
 import '../../../asset/sass/pages/searchPage/searchResultPage.scss';
 import { BASE_URL } from '../../global/constants';
 import Plus from '../../../asset/image/plus.svg';
 import Warning from '../../../asset/image/warning.svg';
 import { toast } from 'react-toastify';
 import '../../../asset/sass/pages/notificationPage/notificationPage.scss';
+import SearchInput from '../../ui/searchInput/searchInput';
 
 const ResultsContainer = styled.div`
   position: relative;

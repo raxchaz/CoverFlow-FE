@@ -16,8 +16,11 @@ module.exports = {
       env: {
         node: true,
       },
-      parser: '@typescript-eslint/parser', // overrides 섹션의 parser도 업데이트
-      files: ['.eslintrc.{js,cjs,ts,tsx}'], // TypeScript 파일 포함
+      parser: '@typescript-eslint/parser',
+      files: ['.eslintrc.{js,cjs}', '**/*.{js,jsx,ts,tsx}'],
+      // rules: {
+      //   '@typescript-eslint/no-unused-vars': [2, { args: 'none' }],
+      // },
       parserOptions: {
         sourceType: 'module', // script에서 module로 변경
         ecmaFeatures: {
