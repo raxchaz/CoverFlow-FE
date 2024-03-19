@@ -13,7 +13,7 @@ import TermsPage from '../components/pages/termsPage/termsPage.jsx';
 
 /* 사용자 참여 페이지 관련 */
 import Store from '../components/pages/storePage/storePage';
-import MyPage from '../components/pages/myPage/myPage.jsx';
+import MyPage from '../components/pages/myPage/myPage.tsx';
 import NotificationPage from '../components/pages/notificationPage/notificationPage.jsx';
 import NoticePage from '../components/pages/myPage/noticePage.jsx';
 import EventPage from '../components/pages/myPage/eventPage.jsx';
