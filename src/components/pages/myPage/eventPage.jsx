@@ -4,7 +4,7 @@ import { StyledPage, StyledHeader } from '../../../styledComponent.js';
 
 import TabBar from '../../ui/tabBar/tabBar.jsx';
 import '../../../asset/sass/pages/myPage/eventPage.scss';
-import TitleHeader from '../../ui/header/titleHeader';
+import TitleHeader from '../../ui/header/titleHeader.tsx';
 
 function EventPage() {
   const navigate = useNavigate();

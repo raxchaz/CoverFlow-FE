@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 import { ACCESS_TOKEN, BASE_URL } from '../../global/constants';
 import { StyledHeader, StyledPage } from '../../../styledComponent';
-import TitleHeader from '../../ui/header/titleHeader';
+import TitleHeader from '../../ui/header/titleHeader.tsx';
 
 const CheckboxContainer = styled.div`
   display: flex;

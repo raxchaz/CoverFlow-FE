@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { StyledPage, StyledHeader } from '../../../styledComponent';
-import TitleHeader from '../../ui/header/titleHeader';
+import TitleHeader from '../../ui/header/titleHeader.tsx';
 import styled from 'styled-components';
 import TabBar from '../../ui/tabBar/tabBar';
 

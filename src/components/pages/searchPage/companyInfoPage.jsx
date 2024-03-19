@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import TitleHeader from '../../ui/header/titleHeader';
+import TitleHeader from '../../ui/header/titleHeader.tsx';
 import UserInfoHeader from '../../ui/header/userInfoHeader.jsx';
 import TabBar from '../../ui/tabBar/tabBar.jsx';
 import '../../../asset/sass/pages/searchPage/companyInfoPage.scss';
 import Question from '../../ui/question/question.jsx';
-import { ACCESS_TOKEN, BASE_URL } from '../../global/constants';
+import { ACCESS_TOKEN, BASE_URL } from '../../global/constants/index.ts';
 import { StyledHeader, StyledPage } from '../../../styledComponent';
 import SearchInput from '../../ui/searchInput/searchInput';
 

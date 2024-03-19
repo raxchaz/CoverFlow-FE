@@ -30,38 +30,43 @@ const LogoutButton = styled.button`
   cursor: pointer;
 `;
 
-const PremiunButton = styled.button`
-  white-space: nowrap;
-  padding: 7px;
-  width: auto;
-  font-size: 12px;
-  border-radius: 1px;
-  margin: 2% 0% 0% 12%;
-  &:hover {
-    cursor: pointer;
-  }
-`;
+// const PremiunButton = styled.button`
+//   white-space: nowrap;
+//   padding: 7px;
+//   width: auto;
+//   font-size: 12px;
+//   border-radius: 1px;
+//   margin: 2% 0% 0% 12%;
+//   &:hover {
+//     cursor: pointer;
+//   }
+// `;
 
 const StatusBar = styled.div`
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid gray;
-  margin-top: 10%;
+  border-top: 0.5rem solid rgba(255, 249, 244, 1);
+  margin: 10% auto 0 auto;
   font-family: pretendard-semibold;
+  width: 75%;
 `;
 
 const StatusTab = styled.div<{ current: boolean }>`
   width: 50%;
   letter-spacing: -1px;
   text-align: center;
-  padding: 10px 0;
+  padding: 15px 0;
+  margin-top: -0.5rem;
   cursor: pointer;
   color: gray;
-  border-bottom: 2px solid transparent;
+  border-top: 8px solid transparent;
+  font-size: 1.2rem;
   transition:
-    border-bottom 0.3s ease-in-out,
+    border-top 0.3s ease-in-out,
     color 0.3s ease-in-out;
-  ${(props) => props.current && 'color: black; border-bottom: 2px solid black;'}
+  ${(props) =>
+    props.current &&
+    'color: black; border-top: 8px solid rgba(255, 141, 29, 1);'}
 `;
 
 /* ========================================================= */
@@ -70,10 +75,6 @@ function Mypage() {
   const [currentCategory, setCurrentCategory] = useState('comments');
   const [nickname, setNickname] = useState('');
   const navigate = useNavigate();
-
-  const handlePremiumButtonClick = () => {
-    navigate('/premium');
-  };
 
   /* 사용자의 토큰이 존재한다면, 사용자의 정보를 가져옵니다. */
   useEffect(() => {
@@ -170,15 +171,17 @@ function Mypage() {
 
           <div className="title-container">
             <div className="title">
-              {nickname} <span className="title-intro">님, 안녕하세요</span>
+              {nickname}지루한 감자튀김
+              <span className="title-intro">님, 안녕하세요</span>
             </div>
+            <span className="login-status">카카오 로그인 사용 중</span>
           </div>
-          <PremiunButton
+          {/* <PremiunButton
             className="premium-button"
             onClick={handlePremiumButtonClick}
           >
             프리미엄 이용하기
-          </PremiunButton>
+          </PremiunButton> */}
           <div className="mypage-select-menu">
             <div className="menu" onClick={goToContact}>
               <NoticeIcon />
@@ -206,13 +209,13 @@ function Mypage() {
               current={currentCategory === 'comments'}
               onClick={() => setCurrentCategory('comments')}
             >
-              내가 작성한 댓글
+              내가 남긴 질문
             </StatusTab>
             <StatusTab
               current={currentCategory === 'posts'}
               onClick={() => setCurrentCategory('posts')}
             >
-              내가 작성한 글
+              내가 남긴 답변
             </StatusTab>
           </StatusBar>
 

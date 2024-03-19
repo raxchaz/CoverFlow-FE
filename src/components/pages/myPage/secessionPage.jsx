@@ -4,10 +4,10 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import SecessionSelection from '../../ui/selection/secessionSelection.jsx';
 import '../../../asset/sass/pages/myPage/secessionPage.scss';
 import { StyledPage, StyledHeader } from '../../../styledComponent';
-import TitleHeader from '../../ui/header/titleHeader';
+import TitleHeader from '../../ui/header/titleHeader.tsx';
 import TabBar from '../../ui/tabBar/tabBar';
 import SecessionWarning from '../../../asset/image/secessionWarning.svg';
-import { BASE_URL } from '../../global/constants';
+import { BASE_URL } from '../../global/constants/index.ts';
 
 const Divider = styled.div`
   height: 1px;

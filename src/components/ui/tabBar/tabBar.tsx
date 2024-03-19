@@ -35,21 +35,21 @@ const TabBar = () => {
   }
 
   return (
-    <nav className="wrapper" style={{ width: '489px', margin: '0 auto' }}>
-      <div style={{ width: '33.33%' }}>
-        <Link to="/" className="nav-link" onClick={() => setActiveNav(1)}>
-          <div className={activeNav === 1 ? 'nav-item tab-active' : 'nav-item'}>
-            <FontAwesomeIcon icon={faHouse} className="icon" />
-            <div className="text">홈</div>
-          </div>
-        </Link>
-      </div>
-
+    <nav className="wrapper" style={{ width: '700px', margin: '0 auto' }}>
       <div style={{ width: '33.33%' }}>
         <Link to="/mypage" className="nav-link" onClick={() => setActiveNav(2)}>
           <div className={activeNav === 2 ? 'nav-item tab-active' : 'nav-item'}>
             <FontAwesomeIcon icon={faUser} className="icon" />
             <div className="text">마이페이지</div>
+          </div>
+        </Link>
+      </div>
+
+      <div style={{ width: '33.33%' }}>
+        <Link to="/" className="nav-link" onClick={() => setActiveNav(1)}>
+          <div className={activeNav === 1 ? 'nav-item tab-active' : 'nav-item'}>
+            <FontAwesomeIcon icon={faHouse} className="icon" />
+            <div className="text">홈</div>
           </div>
         </Link>
       </div>
