@@ -1,9 +1,4 @@
-interface TryCatchProps {
-  f: () => void;
-  errorHandler: (error: any) => void;
-}
-
-export const tryCatch = ({ f, errorHandler }: TryCatchProps) => {
+export const tryCatch = (f: () => void, errorHandler: (error: any) => void) => {
   try {
     return f();
   } catch (error) {

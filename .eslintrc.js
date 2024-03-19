@@ -15,6 +15,7 @@ module.exports = {
       files: ['.eslintrc.{js,cjs}'],
       rules: {
         'no-undef': 'off',
+        '@typescript-eslint/no-unused-vars': [2, { args: 'none' }],
       },
       parserOptions: {
         sourceType: 'script',
