@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../../asset/sass/pages/myPage/feedbackPage.scss';
 import { StyledPage, StyledHeader } from '../../../styledComponent.js';
-import TitleHeader from '../../ui/header/titleHeader.jsx';
+import TitleHeader from '../../ui/header/titleHeader';
 import TabBar from '../../ui/tabBar/tabBar.jsx';
 import Button from '../../ui/button/Button/Button.jsx';
 import TextArea from '../../ui/inputbox/TextArea.jsx';
