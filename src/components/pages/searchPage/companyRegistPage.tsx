@@ -78,7 +78,7 @@ function CompanyRegistPage() {
     }));
   };
 
-  const isRequiredField = (info: CompanyInfoProps) => {
+  const checkRequiredFields = (info: CompanyInfoProps) => {
     if (info.name === '' || info.city === '' || info.type === '') {
       toast.error('필수 필드를 모두 입력해주세요.');
     }
@@ -88,7 +88,7 @@ function CompanyRegistPage() {
     event.preventDefault();
     // console.log('기업 정보 제출 중:', companyInfo);
 
-    isRequiredField(companyInfo);
+    checkRequiredFields(companyInfo);
 
     axios
       .post(`${BASE_URL}/api/company`, companyInfo, {
