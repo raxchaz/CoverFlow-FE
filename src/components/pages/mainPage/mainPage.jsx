@@ -71,7 +71,6 @@ function MainPage() {
       <Header />
       <UserInfoHeader />
 
-      <div className="coverflow">COVERFLOW</div>
       <div className="main-info">
         <span className="main-info-bold">
           <strong>기업</strong>

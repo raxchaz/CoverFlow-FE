@@ -74,7 +74,7 @@ function QuestionWritePage() {
           <span>질문 태그를 설정해주세요</span>
         </div>
 
-        <div className="category-select-wrapper">
+        <div className="tag-select-wrapper">
           <div className="tag-select">
             <img src={Home} alt="home" />
             <span>사내 문화가 궁금해요</span>
@@ -82,6 +82,18 @@ function QuestionWritePage() {
           <div className="tag-select">
             <img src={Money} alt="money" />
             <span>급여 정보가 궁금해요</span>
+          </div>
+          <div className="tag-select">
+            <img src={Money} alt="money" />
+            <span>업무 방식이 궁금해요</span>
+          </div>
+          <div className="tag-select">
+            <img src={Money} alt="money" />
+            <span>승진이나 커리어가 궁금해요</span>
+          </div>
+          <div className="tag-select">
+            <img src={Money} alt="money" />
+            <span>직무,워라밸이 궁금해요</span>
           </div>
         </div>
 
@@ -94,16 +106,19 @@ function QuestionWritePage() {
 
         <div className="category-select-wrapper ">
           <div className="category-select">
-            <span>경영/사무</span>
+            <span>서비스</span>
           </div>
           <div className="category-select">
-            <span>연구개발/설계</span>
+            <span>개발/데이터</span>
           </div>
           <div className="category-select">
-            <span>연구개발/설계</span>
+            <span>마케팅/광고</span>
           </div>
           <div className="category-select">
-            <span>연구개발/설계</span>
+            <span>생산/제조</span>
+          </div>
+          <div className="category-select">
+            <span>기타</span>
           </div>
         </div>
         <input
@@ -115,16 +130,15 @@ function QuestionWritePage() {
         />
         <textarea
           className="question-input"
-          placeholder="질문 내용을 입력해주세요.
-
-					질문에 답변이 달릴 경우, 삭제가 불가능해집니다.
-
-					질문 작성 시 타인의 명예를 훼손하거나 허위 사실을 유포할 경우 형법 상 명예훼손죄 혐의를 받을 수 있습니다. 따라서 타인에 대한 존중과 배려를 기반으로 질문을 작성해주세요."
+          placeholder="질문 내용을 입력해주세요.&#13;&#10;
+					질문에 답변이 달릴 경우, 삭제가 불가능해집니다.&#13;&#10;
+					질문 작성 시 타인의 명예를 훼손하거나 허위 사실을 유포할 경우 형법 상 명예훼손죄&#13;&#10;
+					혐의를 받을 수 있습니다. 따라서 타인에 대한 존중과 배려를 기반으로 질문을 작성해주세요."
           name="content"
           value={content}
           onChange={handleInputChange}
           rows={30}
-          cols={20}
+          cols={40}
         ></textarea>
         <TagInput reward={reward} setReward={setReward} />
         <button className="register-question-button" onClick={handleRegister}>

@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../../../asset/sass/pages/searchPage/companyRegistPage.scss';
-import { BASE_URL } from '../../global/constants/index.js';
+import { BASE_URL } from '../../global/constants';
 import { StyledPage, StyledHeader } from '../../../styledComponent.js';
-import TitleHeader from '../../ui/header/titleHeader.js';
-import TabBar from '../../ui/tabBar/tabBar.js';
+import TitleHeader from '../../ui/header/titleHeader';
+import TabBar from '../../ui/tabBar/tabBar';
 import { toast } from 'react-toastify';
 
 interface CompanyInfoProps {
@@ -78,10 +78,9 @@ function CompanyRegistPage() {
     }));
   };
 
-  const isRequiredField = (info: CompanyInfoProps) => {
+  const checkRequiredFields = (info: CompanyInfoProps) => {
     if (info.name === '' || info.city === '' || info.type === '') {
       toast.error('필수 필드를 모두 입력해주세요.');
-      return;
     }
   };
 
@@ -89,7 +88,7 @@ function CompanyRegistPage() {
     event.preventDefault();
     // console.log('기업 정보 제출 중:', companyInfo);
 
-    isRequiredField(companyInfo);
+    checkRequiredFields(companyInfo);
 
     axios
       .post(`${BASE_URL}/api/company`, companyInfo, {

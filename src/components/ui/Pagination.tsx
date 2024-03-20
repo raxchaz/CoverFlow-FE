@@ -12,7 +12,7 @@ const Pagination = ({
   handlePagination,
 }: PaginationProps) => {
   return (
-    <div className="button-container">
+    <div className="notice-button-container">
       <div
         // disabled={currentGroup === 0}
         style={{ cursor: 'pointer' }}

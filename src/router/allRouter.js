@@ -26,7 +26,7 @@ import CompletePaymentPage from '../components/pages/completePaymentPage/complet
 
 /* 질문 페이지 관련 */
 import SearchPage from '../components/pages/searchPage/searchPage.tsx';
-import CompanyRegistPage from '../components/pages/searchPage/companyRegistPage.jsx';
+import CompanyRegistPage from '../components/pages/searchPage/companyRegistPage.tsx';
 import SearchResultPage from '../components/pages/searchPage/searchResultPage.jsx';
 import CompanyInfoPage from '../components/pages/searchPage/companyInfoPage.jsx';
 import QuestionWritePage from '../components/pages/postPage/questionWritePage.tsx';
