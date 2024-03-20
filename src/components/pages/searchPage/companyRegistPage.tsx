@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import '../../../asset/sass/pages/searchPage/companyRegistPage.scss';
 import { BASE_URL } from '../../global/constants/index.js';
 import { StyledPage, StyledHeader } from '../../../styledComponent.js';
-import TitleHeader from '../../ui/header/titleHeader.js';
+import TitleHeader from '../../ui/header/titleHeader';
 import TabBar from '../../ui/tabBar/tabBar.js';
 import { toast } from 'react-toastify';
 
