@@ -55,7 +55,7 @@ export default function ContactSlider() {
         'GET',
       );
       console.log('내 문의 내역:', data);
-      setContactList(data.data.inquiryList);
+      setContactList(data.data.inquiries);
       setTotalPage(data.data.totalPage);
     } catch (error) {
       console.error('문의 내역 불러오기 실패:', error);

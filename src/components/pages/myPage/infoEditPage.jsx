@@ -55,7 +55,7 @@ function InfoEditPage() {
 
   /* 사용자의 닉네임과 붕어빵 개수를 불러옵니다. */
   const loadUserData = () => {
-    fetch(`${BASE_URL}/api/member`, {
+    fetch(`${BASE_URL}/api/member/me`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -65,8 +65,8 @@ function InfoEditPage() {
       .then((response) => response.json())
       .then((data) => {
         console.log('사용자 정보:', data);
-        setNickname(data.nickname);
-        setSocialType(data.socialType);
+        setNickname(data.data.nickname);
+        setSocialType(data.data.socialType);
       })
       .catch((error) => console.error('회원 정보 불러오기 실패:', error));
   };
@@ -97,7 +97,7 @@ function InfoEditPage() {
     try {
       console.log('닉네임 변경 요청 중...');
       const response = await fetch(`${BASE_URL}/api/member`, {
-        method: 'PUT',
+        method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,

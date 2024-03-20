@@ -7,7 +7,7 @@ import { StyledPage, StyledHeader } from '../../../styledComponent';
 import TitleHeader from '../../ui/header/titleHeader.tsx';
 import TabBar from '../../ui/tabBar/tabBar';
 import SecessionWarning from '../../../asset/image/secessionWarning.svg';
-import { BASE_URL } from '../../global/constants/index.ts';
+import { BASE_URL, ACCESS_TOKEN } from '../../global/constants/index.ts';
 
 const Divider = styled.div`
   height: 1px;
@@ -53,21 +53,20 @@ function SecessionPage() {
 
     try {
       const response = await fetch(`${BASE_URL}/api/member/leave`, {
-        method: 'POST',
+        method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('ACCESS_TOKEN')}`,
+          Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
         },
       });
 
-      const data = await response.json();
-
-      if (data.statusCode === '200') {
-        console.log(data.message);
+      if (response.ok) {
+        console.log('성공적으로 탈퇴 처리되었습니다.');
         alert('성공적으로 탈퇴 처리되었습니다.');
         navigate('/');
       } else {
-        console.error(data.message);
+        const data = await response.json();
+        console.error(`탈퇴 처리 중 오류가 발생했습니다: ${data.message}`);
         alert(`탈퇴 처리 중 오류가 발생했습니다: ${data.message}`);
       }
     } catch (error) {
