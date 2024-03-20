@@ -4,7 +4,8 @@ import { Base64 } from 'js-base64';
 import { BASE_URL, ACCESS_TOKEN, REFRESH_TOKEN } from '../constants/index.ts';
 import { useDispatch } from 'react-redux';
 import { setTokens } from '../../../store/actions/authActions';
-import { store } from '../../../store';
+// import { store } from '../../../store';
+import { EventSourcePolyfill } from 'event-source-polyfill';
 
 const decodeToken = (token) => {
   const payload = token.split('.')[1];
@@ -61,11 +62,11 @@ const TokenManagement = () => {
         dispatch(setTokens(accessToken, refreshToken));
         localStorage.setItem(ACCESS_TOKEN, accessToken);
         localStorage.setItem(REFRESH_TOKEN, refreshToken);
-        console.log('redux 저장 상태', store.getState());
+        // console.log('redux 저장 상태', store.getState());
 
         const decoded = decodeToken(accessToken);
         const userRole = decoded.role;
-
+        handleConnect();
         // console.log('userRole:', userRole);
         // console.log('decoded:', decoded);
 
@@ -74,6 +75,7 @@ const TokenManagement = () => {
           navigate('/login/terms', { state: { code } });
         } else if (['MEMBER', 'PREMIUM', 'ADMIN'].includes(userRole)) {
           console.log('회원 정보가 존재합니다. 메인 페이지로 이동합니다.');
+
           navigate(prevPage);
         } else {
           alert('로그인에 실패하였습니다. 다시 시도해주세요.');
@@ -86,7 +88,31 @@ const TokenManagement = () => {
         navigate('/login');
       });
   }, [navigate, location, dispatch]);
+  const handleConnect = async () => {
+    const res = await fetch(`${BASE_URL}/api/notification/connect`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'text/event-stream; charset=utf-8',
+        Authorization: `Bearer ${ACCESS_TOKEN}`,
+      },
+    });
+    console.log('res', res);
+  };
 
+  const sse = new EventSourcePolyfill(`${BASE_URL}/api/notification/connect`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'text/event-stream; charset=utf-8',
+      Authorization: `Bearer ${ACCESS_TOKEN}`,
+    },
+  });
+
+  console.log('sse', sse);
+
+  sse.addEventListener('connect', (event) => {
+    const data = event;
+    console.log(data);
+  });
   return null;
 };
 
