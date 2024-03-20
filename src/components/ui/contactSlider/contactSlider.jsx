@@ -7,7 +7,7 @@ import ContactList from './contactList.jsx';
 import Button from '../button/Button/Button.jsx';
 import { fetchAPI } from '../../global/utils/apiUtil.js';
 import { store } from '../../../store/index.js';
-import { showSuccessToast, showErrorToast } from '../toast/toast.js';
+import { showSuccessToast, showErrorToast } from '../toast/toast.tsx';
 // import { BASE_URL, ACCESS_TOKEN } from '../../global/constants/index.js';
 const StatusBar = styled.div`
   display: flex;
