@@ -10,11 +10,12 @@ import { ReactComponent as PremiumIcon } from '../../../asset/image/premium.svg'
 import { ReactComponent as NoticeIcon } from '../../../asset/image/notice.svg';
 
 import { StyledHeader, StyledPage } from '../../../styledComponent';
-
+import { setLoggedIn } from '../../../store/actions/userActions';
 import { ACCESS_TOKEN, REFRESH_TOKEN, BASE_URL } from '../../global/constants';
 import TabBar from '../../ui/tabBar/tabBar';
 import TitleHeader from '../../ui/header/titleHeader';
 import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
 
 /* 스타일 컴포넌트 정의 */
 const LogoutButton = styled.button`
@@ -76,6 +77,7 @@ function Mypage() {
   const [currentCategory, setCurrentCategory] = useState('comments');
   const [nickname, setNickname] = useState('');
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   /* 사용자의 토큰이 존재한다면, 사용자의 정보를 가져옵니다. */
   useEffect(() => {
@@ -93,7 +95,7 @@ function Mypage() {
 
   /* 사용자의 닉네임과 붕어빵 개수를 불러옵니다. */
   const loadUserData = () => {
-    fetch(`${BASE_URL}/api/member`, {
+    fetch(`${BASE_URL}/api/member/me`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -125,6 +127,7 @@ function Mypage() {
           localStorage.removeItem(ACCESS_TOKEN);
           localStorage.removeItem(REFRESH_TOKEN);
           navigate('/');
+          dispatch(setLoggedIn(false));
         } else {
           response
             .json()
