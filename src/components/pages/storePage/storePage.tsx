@@ -26,6 +26,10 @@ function StorePage() {
     navigate(-1);
   };
 
+  const goWIL = () => {
+    navigate('/work-progress');
+  };
+
   return (
     <StyledPage className="main-page-container">
       <StyledHeader>
@@ -36,13 +40,13 @@ function StorePage() {
           <div className="store-wrapper">
             <CurrentFishBanner />
             <div className="fish-list-container">
-              <FishListItem payEvent={() => alert('준비 중')} price="1,900원">
+              <FishListItem payEvent={goWIL} price="1,900원">
                 붕어빵 100개
               </FishListItem>
-              <FishListItem payEvent={() => alert('준비 중')} price="4,900원">
+              <FishListItem payEvent={goWIL} price="4,900원">
                 붕어빵 300개
               </FishListItem>
-              <FishListItem payEvent={() => alert('준비 중')} price="9,900원">
+              <FishListItem payEvent={goWIL} price="9,900원">
                 붕어빵 700개
               </FishListItem>
             </div>

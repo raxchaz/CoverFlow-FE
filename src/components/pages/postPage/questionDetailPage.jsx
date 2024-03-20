@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import '../../../asset/sass/pages/postPage/questionDetailPage.scss';
 import { StyledPage, StyledHeader } from '../../../styledComponent.js';
 import TitleHeader from '../../ui/header/titleHeader';
-import Answer from '../../ui/question/answer';
+import Answer from '../../ui/question/answer.jsx';
 import TabBar from '../../ui/tabBar/tabBar';
 // import Chat from '../../../asset/image/chat.svg';
 // import View from '../../../asset/image/view.svg';
@@ -134,11 +134,11 @@ function QuestionDetailPage() {
     const questionId = questionDetail && questionDetail.questionId;
 
     const requestData = {
-      content: answerRef.current.value,
+      content: answerRef.current ? answerRef.current.value : '',
       questionId,
     };
 
-    console.log('답변 제출 중:', requestData);
+    // console.log('답변 제출 중:', requestData);
 
     await axios
       .post(`${BASE_URL}/api/answer`, requestData, {
@@ -258,7 +258,7 @@ function QuestionDetailPage() {
         <textarea
           placeholder="답변을 입력해주세요.."
           className="comment-input"
-          rows="4"
+          rows={4}
           ref={answerRef}
         ></textarea>
         <button className="submit-comment" onClick={handleAnswerSubmit}>

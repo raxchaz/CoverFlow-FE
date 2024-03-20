@@ -11,12 +11,12 @@ import { conditionalExecution } from '../../../utils/utils';
 
 const StyledSearchInput = styled.input`
   width: 350px;
-  height: 20px;
+  height: 40px;
   padding: 8px;
-  border: 1px solid #f2f2f2;
+  border: 1px solid #ff8d1d;
   background-color: #f2f2f2;
-  border-radius: 10px;
-  margin: 10% 0% 0% 13%;
+  border-radius: 30px;
+  margin: 5% 0% 0% 24%;
   outline: none;
 
   &:focus {
@@ -113,7 +113,7 @@ function SearchInput() {
       const res = await axios.get<{ data: { companyList: CompanyProps[] } }>(
         `${BASE_URL}/api/company?pageNo=0&name=${name}`,
       );
-      console.log('res', res);
+      // console.log('res', res);
       setAutoCompleteValue(res.data.data.companyList);
     } catch (error) {
       console.error('자동완성 데이터 요청 실패', error);
@@ -121,25 +121,26 @@ function SearchInput() {
     }
   };
 
-  const fullDataSearch = (keyword: string) => {
-    const params = new URLSearchParams();
-    params.append('keyword', keyword);
+  const itemSearch = (params: URLSearchParams, value: string) => {
+    params.append('keyword', value);
     navigate(`/search-result?${params.toString()}`);
   };
 
-  const specificItemSeach = (item: string) => {
-    const params = new URLSearchParams();
-    params.append('keyword', item);
+  // const fullDataSearch = (params: URLSearchParams, keyword: string) => {
+  //   itemSearch(params, keyword);
+  // };
 
-    navigate(`/search-result?${params.toString()}`);
-  };
+  // const specificItemSeach = (params: URLSearchParams, item: string) => {
+  //   itemSearch(params, item);
+  // };
 
   // 검색 함수
   const handleCompanySearch = () => {
+    const params = new URLSearchParams();
     try {
-      if (activeIndex === -1) fullDataSearch(keyword);
+      if (activeIndex === -1) itemSearch(params, keyword);
       else if (activeIndex >= 0 && autoCompleteValue[activeIndex])
-        specificItemSeach(autoCompleteValue[activeIndex].name);
+        itemSearch(params, autoCompleteValue[activeIndex].name);
     } catch (error) {
       console.error('검색 중 오류 발생', error);
     }

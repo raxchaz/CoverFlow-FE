@@ -4,12 +4,13 @@ import { StyledPage } from '../../../styledComponent';
 
 import styled from 'styled-components';
 import '../../../asset/sass/pages/myPage/premiumPage.scss';
-// import VectorIcon from '../../../asset/image/vector.svg';
+import VectorIcon from '../../../asset/image/vector.svg';
 import CheckIcon from '../../../asset/image/check.svg';
 import CheckIconRectangle from '../../../asset/image/check_orange.svg';
 import TabBar from '../../ui/tabBar/tabBar';
 import BannerImage from '../../ui/banner/bannerImage';
 import { useNavigate } from 'react-router-dom';
+import { SectionProps } from '../../../types';
 
 const StatusBar = styled.div`
   display: flex;
@@ -19,7 +20,7 @@ const StatusBar = styled.div`
   font-family: pretendard-semibold;
 `;
 
-const StatusTab = styled.div`
+const StatusTab = styled.div<{ $current: boolean }>`
   width: 50%;
   letter-spacing: -1px;
   text-align: center;
@@ -30,11 +31,12 @@ const StatusTab = styled.div`
   transition:
     border-bottom 0.3s ease-in-out,
     color 0.3s ease-in-out;
-  ${(props) => props.current && 'color: black; border-bottom: 3px solid black;'}
+  ${(props) =>
+    props.$current && 'color: black; border-bottom: 3px solid black;'}
 `;
 
 const PremiumPage = () => {
-  const [currentSection, setCurrentSection] = useState('buy');
+  const [currentSection, setCurrentSection] = useState<SectionProps>('buy');
   const [isChecked, setIsChecked] = useState(false);
   const navigate = useNavigate();
   const handlePaymentClick = () => {
@@ -52,13 +54,13 @@ const PremiumPage = () => {
       <TabBar />
       <StatusBar>
         <StatusTab
-          current={currentSection === 'buy'}
+          $current={currentSection === 'buy'}
           onClick={() => setCurrentSection('buy')}
         >
           구매하기
         </StatusTab>
         <StatusTab
-          current={currentSection === 'myPremium'}
+          $current={currentSection === 'myPremium'}
           onClick={() => setCurrentSection('myPremium')}
         >
           마이 프리미엄
@@ -71,13 +73,13 @@ const PremiumPage = () => {
           <div className="premium-wrapper">
             <div className="company">코버플로우</div>
             <div className="price">9,900원</div>
-            {/* <div className="point">포인트</div>
-            <div className="benefit">혜택 보기</div> */}
+            <div className="point">포인트</div>
+            <div className="benefit">혜택 보기</div>
           </div>
-          {/* <div className="using-container">
+          <div className="using-container">
             <span>사용 불가</span>
             <img loading="lazy" src={VectorIcon} />
-          </div> */}
+          </div>
           <div className="pay-agreement">
             <img
               src={isChecked ? CheckIconRectangle : CheckIcon}

@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { StyledPage, StyledHeader } from '../../../styledComponent';
+import { StyledPage, StyledHeader } from '../../../styledComponent.ts';
 import TitleHeader from '../../ui/header/titleHeader.tsx';
 import styled from 'styled-components';
-import TabBar from '../../ui/tabBar/tabBar';
+import TabBar from '../../ui/tabBar/tabBar.tsx';
 
 import '../../../asset/sass/pages/searchPage/searchResultPage.scss';
-import { BASE_URL } from '../../global/constants';
+import { BASE_URL } from '../../global/constants/index.ts';
 import Plus from '../../../asset/image/plus.svg';
 import Warning from '../../../asset/image/warning.svg';
 import { toast } from 'react-toastify';
 import '../../../asset/sass/pages/notificationPage/notificationPage.scss';
-import SearchInput from '../../ui/searchInput/searchInput';
+import SearchInput from '../../ui/searchInput/searchInput.tsx';
 
 const ResultsContainer = styled.div`
   position: relative;
@@ -64,12 +64,12 @@ const IndustryTag = styled.span`
   margin: 10% 0% 0% -1%;
 `;
 
-// const Line = styled.div`
-//   height: 13px;
-//   background-color: #f2f2f2;
-//   width: 103%;
-//   margin: 6% 0% 0% -1.5%;
-// `;
+const Line = styled.div`
+  height: 13px;
+  background-color: #f2f2f2;
+  width: 103%;
+  margin: 6% 0% 0% -1.5%;
+`;
 
 const ResultsList = styled.ul`
   padding: 10;
@@ -111,12 +111,19 @@ const QuestionCount = styled.div`
   }
 `;
 
+interface SearchResultProps {
+  companyId: number;
+  companyName: string;
+  companyType: string;
+  questionCount: number;
+}
+
 function SearchResultPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const keyword = queryParams.get('keyword');
-  const [searchResult, setSearchResult] = useState([]);
+  const [searchResult, setSearchResult] = useState<SearchResultProps[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
@@ -150,18 +157,18 @@ function SearchResultPage() {
           setSearchResult(data.companyList);
         }
       } catch (error) {
-        toast.error(error);
+        if (error instanceof Error) toast.error(error.message);
       }
     }
 
     fetchData();
   }, [location.search]);
 
-  const goToResultDetailPage = (companyId) => {
+  const goToResultDetailPage = (companyId: number) => {
     navigate(`/company-info/${companyId}`);
   };
 
-  const handlePagination = (type) => {
+  const handlePagination = (type: 'prev' | 'next') => {
     if (type === 'prev') {
       setCurrentPage(currentPage - 1);
     } else if (type === 'next') {
@@ -175,7 +182,7 @@ function SearchResultPage() {
         <ResultsContainer>
           <TitleHeader pageTitle="검색 결과" handleGoBack={handleGoBack} />
           <SearchInput />
-          {/* <Line /> */}
+          <Line />
           <ResultCount>
             기업 검색 결과{' '}
             <span className="result-count">{searchResult.length}</span>
