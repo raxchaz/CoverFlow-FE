@@ -14,7 +14,7 @@ import { setLoggedIn } from '../../../store/actions/userActions';
 import { ACCESS_TOKEN, REFRESH_TOKEN, BASE_URL } from '../../global/constants';
 import TabBar from '../../ui/tabBar/tabBar';
 import TitleHeader from '../../ui/header/titleHeader';
-import { toast } from 'react-toastify';
+// import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 
 /* 스타일 컴포넌트 정의 */
