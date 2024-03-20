@@ -107,7 +107,10 @@ function Mypage() {
         console.log('사용자 정보:', data);
         setNickname(data.nickname);
       })
-      .catch((error) => toast.error('회원 정보 불러오기 실패:', error));
+      .catch((error) => {
+        // toast.error('회원 정보 불러오기 실패:', error)
+        console.log(error);
+      });
   };
 
   /* 로그아웃 버튼을 클릭했을 경우, 서버로 로그아웃 API를 요청한 후,
