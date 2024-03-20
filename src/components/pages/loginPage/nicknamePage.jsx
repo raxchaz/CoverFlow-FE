@@ -14,7 +14,7 @@ const CheckboxContainer = styled.div`
   display: flex;
   align-items: center;
   margin: 9% 0% -6.5% 10%;
-  border-bottom: 2px solid #d9d9d9;
+  border-bottom: 1px solid #d9d9d9;
   width: calc(80% - 25px);
   padding: 2%;
 `;

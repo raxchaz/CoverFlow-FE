@@ -87,7 +87,12 @@
   resize: none;
   height: 200px;
   margin-top: 10px;
+  width: 35rem;
   font-family: 'Pretendard-Regular', sans-serif;
+  &::placeholder {
+    width: 33rem;
+    line-height: 2;
+  }
 }
 
 select {
@@ -141,6 +146,7 @@ select {
   margin: -1.8rem 21.9rem 2.3rem 3.2rem;
   display: flex;
   justify-content: flex-start;
+  align-items: flex-end;
   width: 100%;
   box-sizing: border-box;
   letter-spacing: -1.2px;
@@ -169,6 +175,13 @@ select {
   height: 1.2rem;
 }
 
+.tag-select-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  row-gap: 10px;
+}
+
 .tag-select {
   border-radius: 1.3rem;
   position: relative;
@@ -176,7 +189,7 @@ select {
   display: flex;
   justify-content: center;
   padding: 0.6rem 1.2rem 0.6rem 0;
-  width: 12rem;
+  width: 13rem;
   box-sizing: border-box;
   border: 1px solid #bcbcbc;
   img {
