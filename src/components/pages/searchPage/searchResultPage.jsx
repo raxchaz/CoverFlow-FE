@@ -64,12 +64,12 @@ const IndustryTag = styled.span`
   margin: 10% 0% 0% -1%;
 `;
 
-const Line = styled.div`
-  height: 13px;
-  background-color: #f2f2f2;
-  width: 103%;
-  margin: 6% 0% 0% -1.5%;
-`;
+// const Line = styled.div`
+//   height: 13px;
+//   background-color: #f2f2f2;
+//   width: 103%;
+//   margin: 6% 0% 0% -1.5%;
+// `;
 
 const ResultsList = styled.ul`
   padding: 10;
@@ -175,7 +175,7 @@ function SearchResultPage() {
         <ResultsContainer>
           <TitleHeader pageTitle="검색 결과" handleGoBack={handleGoBack} />
           <SearchInput />
-          <Line />
+          {/* <Line /> */}
           <ResultCount>
             기업 검색 결과{' '}
             <span className="result-count">{searchResult.length}</span>

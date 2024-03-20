@@ -10,12 +10,12 @@ import { StyledPage, StyledHeader } from '../../../styledComponent';
 // import { EventSourcePolyfill } from 'event-source-polyfill';
 // import { ACCESS_TOKEN, BASE_URL } from '../../global/constants';
 const SearchInput = styled.input`
-  width: 300px;
-  height: 30px;
+  width: 477px;
+  height: 67px;
   padding: 8px;
   border: 1px solid #ffbd7c;
-  border-radius: 10px;
-  margin: 5% 0% 0% 17%;
+  border-radius: 30px;
+  margin: 3% 0% 0% 17%;
   outline: none;
 
   &:focus {
@@ -24,8 +24,9 @@ const SearchInput = styled.input`
   }
 
   &::placeholder {
-    color: #d9d9d9;
-    font-size: 0.8rem;
+    color: #cacaca;
+    font-size: 1rem;
+    padding-left: 10px;
   }
 `;
 
@@ -69,6 +70,7 @@ function MainPage() {
 
       <Header />
       <UserInfoHeader />
+
       <div className="coverflow">COVERFLOW</div>
       <div className="main-info">
         <span className="main-info-bold">

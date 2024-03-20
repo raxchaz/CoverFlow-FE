@@ -4,7 +4,7 @@ import { StyledPage } from '../../../styledComponent';
 
 import styled from 'styled-components';
 import '../../../asset/sass/pages/myPage/premiumPage.scss';
-import VectorIcon from '../../../asset/image/vector.svg';
+// import VectorIcon from '../../../asset/image/vector.svg';
 import CheckIcon from '../../../asset/image/check.svg';
 import CheckIconRectangle from '../../../asset/image/check_orange.svg';
 import TabBar from '../../ui/tabBar/tabBar';
@@ -71,13 +71,13 @@ const PremiumPage = () => {
           <div className="premium-wrapper">
             <div className="company">코버플로우</div>
             <div className="price">9,900원</div>
-            <div className="point">포인트</div>
-            <div className="benefit">혜택 보기</div>
+            {/* <div className="point">포인트</div>
+            <div className="benefit">혜택 보기</div> */}
           </div>
-          <div className="using-container">
+          {/* <div className="using-container">
             <span>사용 불가</span>
             <img loading="lazy" src={VectorIcon} />
-          </div>
+          </div> */}
           <div className="pay-agreement">
             <img
               src={isChecked ? CheckIconRectangle : CheckIcon}

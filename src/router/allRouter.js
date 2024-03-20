@@ -40,6 +40,9 @@ import PremiumTicket from '../components/pages/premiumPage/premiumTicket.tsx';
 import PremiumPage from '../components/pages/premiumPage/premiumPage.jsx';
 import NotFound from '../components/pages/premiumPage/NotFound.jsx';
 
+import NotFoundPage from '../components/NotFoundPage.tsx';
+import WIL from '../components/WIL.tsx';
+
 const AllRouter = () => {
   // useEffect(() => {
   //   if (!localStorage.getItem(ACCESS_TOKEN)) {
@@ -90,6 +93,8 @@ const AllRouter = () => {
         />
 
         <Route path="/minad" element={<AdminMainPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+        <Route path="/work-progress" element={<WIL />} />
       </Routes>
     </div>
   );
