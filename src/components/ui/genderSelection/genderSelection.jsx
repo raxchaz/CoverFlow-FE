@@ -14,7 +14,7 @@ const GenderSelection = ({ onSelectGender }) => {
   };
 
   return (
-    <div className="button-container">
+    <div className="gender-button-container">
       <button
         className={`gender-button ${selectedGender === '여성' ? 'selected' : ''}`}
         onClick={() => handleGenderButtonClick('여성')}
