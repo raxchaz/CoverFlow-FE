@@ -80,3 +80,18 @@ button.secession-cancel-btn {
   display: flex;
   justify-content: center;
 }
+
+.secession-complete-container {
+  width: 100%;
+  margin: 35% 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.secession-complete-title {
+  font-weight: 600;
+  font-size: x-large;
+  padding-bottom: 0.5rem;
+}

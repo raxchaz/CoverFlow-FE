@@ -6,9 +6,8 @@ import TitleHeader from '../../ui/header/titleHeader.tsx';
 import TabBar from '../../ui/tabBar/tabBar.jsx';
 import Button from '../../ui/button/Button/Button.jsx';
 import TextArea from '../../ui/inputbox/TextArea.jsx';
-import { fetchAPI } from '../../global/utils/apiUtil.js';
-import { toast } from 'react-toastify';
-
+import { BASE_URL, ACCESS_TOKEN } from '../../global/constants/index.ts';
+import { showErrorToast, showSuccessToast } from '../../ui/toast/toast.tsx';
 function FeedbackPage() {
   const navigate = useNavigate();
 
@@ -24,14 +23,26 @@ function FeedbackPage() {
 
   const submitFeedback = async () => {
     try {
-      const res = await fetchAPI('/api/feedback', 'POST', contact);
+      const response = await fetch(`${BASE_URL}/api/feedback`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`, // 필요한 경우 토큰을 포함시킵니다.
+        },
+        body: JSON.stringify({ content: contact }),
+      });
+      const res = await response.json();
       console.log(res, 'post 결과');
-      if (res.status === 200) {
-        toast.success('피드백 등록이 완료되었습니다!');
+
+      if (response.status === 201) {
+        showSuccessToast('피드백 등록이 완료되었습니다!');
+        navigate('/');
+      } else {
+        throw new Error('피드백 제출 실패');
       }
     } catch (error) {
-      // alert('문의 등록 실패:', error);
-      toast.error('피드백 등록에 실패했습니다.', error);
+      console.error('피드백 등록 실패:', error);
+      showErrorToast('피드백 등록에 실패했습니다.');
     }
   };
   return (

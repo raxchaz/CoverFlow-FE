@@ -7,7 +7,7 @@ import ContactList from './contactList.jsx';
 import Button from '../button/Button/Button.jsx';
 import { fetchAPI } from '../../global/utils/apiUtil.js';
 import { store } from '../../../store/index.js';
-import { toast } from 'react-toastify';
+import { showSuccessToast, showErrorToast } from '../toast/toast.tsx';
 // import { BASE_URL, ACCESS_TOKEN } from '../../global/constants/index.js';
 const StatusBar = styled.div`
   display: flex;
@@ -73,11 +73,11 @@ export default function ContactSlider() {
           content: '',
         });
         loadUserData();
-        toast.success('문의 등록이 완료되었습니다!');
+        showSuccessToast('문의 등록이 완료되었습니다!');
       }
     } catch (error) {
       // alert('문의 등록 실패:', error);
-      toast.error('문의 등록에 실패했습니다.', error);
+      showErrorToast('문의 등록에 실패했습니다.', error);
     }
   };
 

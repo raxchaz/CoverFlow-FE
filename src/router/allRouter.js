@@ -21,6 +21,7 @@ import InfoEditPage from '../components/pages/myPage/infoEditPage.jsx';
 import ContactPage from '../components/pages/myPage/contactPage.jsx';
 import FeedbackPage from '../components/pages/myPage/feedbackPage.jsx';
 import SecessionPage from '../components/pages/myPage/secessionPage.jsx';
+import SecessionCompletePage from '../components/pages/myPage/secessionCompletePage.tsx';
 import CompletePaymentPage from '../components/pages/completePaymentPage/completePaymentPage.jsx';
 
 /* 질문 페이지 관련 */
@@ -78,6 +79,10 @@ const AllRouter = () => {
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/feedback" element={<FeedbackPage />} />
         <Route path="/secession-page" element={<SecessionPage />} />
+        <Route
+          path="/secessionComplete-page"
+          element={<SecessionCompletePage />}
+        />
 
         <Route path="/search-company" element={<SearchPage />} />
         <Route path="/search-result" element={<SearchResultPage />} />
