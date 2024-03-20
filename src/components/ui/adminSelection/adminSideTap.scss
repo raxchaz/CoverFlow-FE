@@ -1,0 +1,75 @@
+.admin-sidebar {
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  //   background-color: #000000;
+}
+
+.admin-container {
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  padding: 0 20%;
+  height: 4rem;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.admin-contact-container {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-start;
+  width: 50%;
+  padding: 0 0 0 5.2rem;
+  box-sizing: border-box;
+  cursor: pointer;
+  height: 4rem;
+}
+
+.admin-icon {
+  margin: 2px 0 0 0;
+  width: 23px;
+  height: 21px;
+}
+
+.admin-text {
+  overflow-wrap: break-word;
+  font-weight: 600;
+  font-size: 20px;
+  letter-spacing: -1px;
+  color: #000000;
+}
+
+.admin-sub-text {
+  overflow-wrap: break-word;
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: -1px;
+  color: #000000;
+}
+.admin-sub-text.selected {
+  color: rgba(255, 141, 29, 1);
+}
+
+.admin-text.selected {
+  color: rgba(255, 141, 29, 1);
+}
+
+.admin-router {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.41rem;
+}
+.admin-logout {
+  padding: 10% 40% 0 40%;
+  text-decoration: underline;
+  cursor: pointer;
+}
