@@ -113,7 +113,7 @@ function Mypage() {
   const handleLogout = () => {
     console.log('로그아웃 요청 시작');
     fetch(`${BASE_URL}/api/member/logout`, {
-      method: 'POST',
+      method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
