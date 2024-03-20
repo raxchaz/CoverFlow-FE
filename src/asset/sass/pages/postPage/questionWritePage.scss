@@ -188,7 +188,7 @@ select {
   margin-right: 0.6rem;
   display: flex;
   justify-content: center;
-  padding: 0.6rem 1.2rem 0.6rem 0;
+  padding: 0.6rem 1rem 0.6rem 0;
   width: 13rem;
   box-sizing: border-box;
   border: 1px solid #bcbcbc;
@@ -207,6 +207,16 @@ select {
   }
   button {
     width: 3rem;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &.selected {
+    border: 2px solid #ff8d1d;
+    background-color: #ff8d1d;
+    color: #ffffff;
   }
 }
 
@@ -286,6 +296,12 @@ select {
   }
   &:hover {
     cursor: pointer;
+  }
+
+  &.selected {
+    border: 2px solid #ff8d1d;
+    background-color: #ff8d1d;
+    color: #ffffff;
   }
 }
 

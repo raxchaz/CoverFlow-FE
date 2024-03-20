@@ -8,7 +8,7 @@ import TitleHeader from '../../ui/header/titleHeader';
 import TabBar from '../../ui/tabBar/tabBar';
 import { StyledHeader, StyledPage } from '../../../styledComponent';
 import Finger from '../../../asset/image/fingerprint.svg';
-import Home from '../../../asset/image/group.svg';
+// import Home from '../../../asset/image/group.svg';
 import Money from '../../../asset/image/money.svg';
 import axios from 'axios';
 
@@ -17,13 +17,32 @@ function QuestionWritePage() {
   const [content, setContent] = useState('');
   const [title, setTitle] = useState('');
   const [reward, setReward] = useState(0);
+  const [questionTag, setQuestionTag] = useState('');
+  const [questionCategory, setQuestionCategory] = useState('');
   const { companyId } = useParams();
+
+  const tagName = [
+    '사내 문화가 궁금해요',
+    '급여 정보가 궁금해요',
+    '업무 방식이 궁금해요',
+    '승진이나 커리어가 궁금해요',
+    '직무,워라밸이 궁금해요',
+  ];
+  const categoryName = [
+    '서비스',
+    '개발/데이터',
+    '마케팅/광고',
+    '생산/제조',
+    '기타',
+  ];
 
   const handleGoBack = () => {
     navigate(-1);
   };
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleTextAreaChange = (
+    event: React.ChangeEvent<HTMLTextAreaElement>,
+  ) => {
     setContent(event.target.value);
   };
 
@@ -39,6 +58,8 @@ function QuestionWritePage() {
           Authorization: `Bearer ${localStorage.getItem('access_token')}`,
         },
         body: JSON.stringify({
+          questionTag,
+          questionCategory,
           title,
           content,
           companyId: Number(companyId),
@@ -58,6 +79,14 @@ function QuestionWritePage() {
     }
   };
 
+  const handleTagSelect = (tag: string) => {
+    setQuestionTag(tag);
+  };
+
+  const handleCategorySelect = (category: string) => {
+    setQuestionCategory(category);
+  };
+
   return (
     <StyledPage className="main-page-container">
       <StyledHeader>
@@ -75,11 +104,17 @@ function QuestionWritePage() {
         </div>
 
         <div className="tag-select-wrapper">
-          <div className="tag-select">
-            <img src={Home} alt="home" />
-            <span>사내 문화가 궁금해요</span>
-          </div>
-          <div className="tag-select">
+          {tagName.map((tag, index) => (
+            <div
+              className={`tag-select ${questionTag === tag ? 'selected' : ''} `}
+              key={index}
+              onClick={() => handleTagSelect(tag)}
+            >
+              <img src={Money} alt="money" />
+              <span>{tag}</span>
+            </div>
+          ))}
+          {/* <div className="tag-select">
             <img src={Money} alt="money" />
             <span>급여 정보가 궁금해요</span>
           </div>
@@ -94,7 +129,7 @@ function QuestionWritePage() {
           <div className="tag-select">
             <img src={Money} alt="money" />
             <span>직무,워라밸이 궁금해요</span>
-          </div>
+          </div> */}
         </div>
 
         <div className="category-container">
@@ -105,10 +140,17 @@ function QuestionWritePage() {
         </div>
 
         <div className="category-select-wrapper ">
-          <div className="category-select">
-            <span>서비스</span>
-          </div>
-          <div className="category-select">
+          {categoryName.map((category, index) => (
+            <div
+              className={`category-select ${questionCategory === category ? 'selected' : ''} `}
+              key={index}
+              onClick={() => handleCategorySelect(category)}
+            >
+              <img src={Money} alt="money" />
+              <span>{category}</span>
+            </div>
+          ))}
+          {/* <div className="category-select">
             <span>개발/데이터</span>
           </div>
           <div className="category-select">
@@ -119,7 +161,7 @@ function QuestionWritePage() {
           </div>
           <div className="category-select">
             <span>기타</span>
-          </div>
+          </div> */}
         </div>
         <input
           className="question-title-input"
@@ -136,7 +178,7 @@ function QuestionWritePage() {
 					혐의를 받을 수 있습니다. 따라서 타인에 대한 존중과 배려를 기반으로 질문을 작성해주세요."
           name="content"
           value={content}
-          onChange={handleInputChange}
+          onChange={handleTextAreaChange}
           rows={30}
           cols={40}
         ></textarea>
