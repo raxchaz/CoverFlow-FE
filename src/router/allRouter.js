@@ -15,7 +15,7 @@ import TermsPage from '../components/pages/termsPage/termsPage.jsx';
 import Store from '../components/pages/storePage/storePage.tsx';
 import MyPage from '../components/pages/myPage/myPage.tsx';
 import NotificationPage from '../components/pages/notificationPage/notificationPage.jsx';
-import NoticePage from '../components/pages/myPage/noticePage.jsx';
+import NoticePage from '../components/pages/myPage/noticePage.tsx';
 import EventPage from '../components/pages/myPage/eventPage.jsx';
 import InfoEditPage from '../components/pages/myPage/infoEditPage.jsx';
 import ContactPage from '../components/pages/myPage/contactPage.jsx';
@@ -36,7 +36,7 @@ import TokenManagement from '../components/global/token/tokenManagement.jsx';
 
 /* 관리자 페이지  */
 import AdminMainPage from '../components/pages/adminPage/adminMainPage.jsx';
-import PremiumTicket from '../components/pages/premiumPage/premiumTicket.jsx';
+import PremiumTicket from '../components/pages/premiumPage/premiumTicket.tsx';
 import PremiumPage from '../components/pages/premiumPage/premiumPage.jsx';
 import NotFound from '../components/pages/premiumPage/NotFound.jsx';
 

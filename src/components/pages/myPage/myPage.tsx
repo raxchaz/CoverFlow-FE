@@ -14,6 +14,7 @@ import { StyledHeader, StyledPage } from '../../../styledComponent';
 import { ACCESS_TOKEN, REFRESH_TOKEN, BASE_URL } from '../../global/constants';
 import TabBar from '../../ui/tabBar/tabBar';
 import TitleHeader from '../../ui/header/titleHeader';
+import { toast } from 'react-toastify';
 
 /* 스타일 컴포넌트 정의 */
 const LogoutButton = styled.button`
@@ -104,7 +105,7 @@ function Mypage() {
         console.log('사용자 정보:', data);
         setNickname(data.nickname);
       })
-      .catch((error) => console.error('회원 정보 불러오기 실패:', error));
+      .catch((error) => toast.error('회원 정보 불러오기 실패:', error));
   };
 
   /* 로그아웃 버튼을 클릭했을 경우, 서버로 로그아웃 API를 요청한 후,
