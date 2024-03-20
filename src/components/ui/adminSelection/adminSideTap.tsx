@@ -29,8 +29,12 @@ export default function AdminSideTap({ loadSection }: AdminSideTapProps) {
     setSelectedSection(sectionName);
   };
 
-  const getContainerStyle = (sectionName: string) => {
-    return sectionName === selectedSection
+  const getContainerStyle = (
+    sectionName: string,
+    additionalSectionName?: string,
+  ) => {
+    return sectionName === selectedSection ||
+      additionalSectionName === selectedSection
       ? {
           backgroundColor: 'rgba(255, 244, 233, 1)',
           color: 'rgba(255, 141, 29, 1)',
@@ -111,16 +115,44 @@ export default function AdminSideTap({ loadSection }: AdminSideTapProps) {
           </span>
         </div>
         <div
-          className="admin-container"
-          style={getContainerStyle('contact')}
+          style={getContainerStyle('contact', 'feedback')}
           onClick={() => handleSectionClick('contact')}
         >
-          <AdminContact />
-          <span
-            className={`admin-text ${selectedSection === 'contact' ? 'selected' : ''}`}
-          >
-            문의 관리
-          </span>
+          <div className="admin-container">
+            <AdminContact />
+            <span
+              className={`admin-text ${
+                selectedSection === 'contact' || selectedSection === 'feedback'
+                  ? 'selected'
+                  : ''
+              }`}
+            >
+              문의 관리
+            </span>
+          </div>
+          {(selectedSection === 'contact' ||
+            selectedSection === 'feedback') && (
+            <div className="admin-contact-container">
+              <span
+                className={`admin-sub-text ${selectedSection === 'contact' ? 'selected' : ''}`}
+                onClick={(event) => {
+                  event.stopPropagation();
+                  handleSectionClick('contact');
+                }}
+              >
+                문의 관리
+              </span>
+              <span
+                className={` admin-sub-text ${selectedSection === 'feedback' ? 'selected' : ''}`}
+                onClick={(event) => {
+                  event.stopPropagation();
+                  handleSectionClick('feedback');
+                }}
+              >
+                피드백 관리
+              </span>
+            </div>
+          )}
         </div>
 
         <div

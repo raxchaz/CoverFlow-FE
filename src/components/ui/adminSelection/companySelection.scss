@@ -175,3 +175,49 @@
   font-size: xx-large;
   padding: 3rem;
 }
+
+.ad-feedbackSelection-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ad-feedbackSelection {
+  margin: 5rem 3rem 0 3rem;
+  width: 100%;
+  height: 80%;
+}
+
+.ad-feedback-result {
+  border: 1px solid gray;
+  height: fit-content;
+  min-height: 73%;
+}
+
+.ad-feedbackSelection-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ad-feedbackSelection {
+  margin: 5rem 3rem 0 3rem;
+  width: 100%;
+  height: 80%;
+}
+
+.ad-feedback-result {
+  border: 1px solid gray;
+  height: fit-content;
+  min-height: 73%;
+}
+.ad-feedback-content {
+  width: 50%;
+  min-height: 5rem;
+  margin-left: 50%;
+  padding: 1rem;
+}

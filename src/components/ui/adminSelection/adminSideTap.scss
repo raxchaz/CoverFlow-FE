@@ -20,6 +20,19 @@
   cursor: pointer;
 }
 
+.admin-contact-container {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-start;
+  width: 50%;
+  padding: 0 0 0 5.2rem;
+  box-sizing: border-box;
+  cursor: pointer;
+  height: 4rem;
+}
+
 .admin-icon {
   margin: 2px 0 0 0;
   width: 23px;
@@ -32,6 +45,17 @@
   font-size: 20px;
   letter-spacing: -1px;
   color: #000000;
+}
+
+.admin-sub-text {
+  overflow-wrap: break-word;
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: -1px;
+  color: #000000;
+}
+.admin-sub-text.selected {
+  color: rgba(255, 141, 29, 1);
 }
 
 .admin-text.selected {
