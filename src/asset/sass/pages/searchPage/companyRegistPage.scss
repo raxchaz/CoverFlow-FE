@@ -34,6 +34,7 @@ $color-primary: #ff8d1d;
 .option-field::placeholder {
   color: #474646;
   opacity: 1;
+  padding: 0 8px;
 }
 
 .input-field-regist:focus,
@@ -60,7 +61,7 @@ $color-primary: #ff8d1d;
   width: 82%;
   margin-top: 13%;
   margin-left: 2%;
-  border-radius: 0px;
+  border-radius: 5px;
   background-color: $color-primary;
 
   &:disabled {
@@ -68,6 +69,11 @@ $color-primary: #ff8d1d;
     color: #fff;
     cursor: not-allowed;
     box-shadow: none;
+  }
+
+  &:active,
+  &:hover {
+    background-color: $color-primary;
   }
 }
 
