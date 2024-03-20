@@ -81,7 +81,6 @@ function CompanyRegistPage() {
   const isRequiredField = (info: CompanyInfoProps) => {
     if (info.name === '' || info.city === '' || info.type === '') {
       toast.error('필수 필드를 모두 입력해주세요.');
-      return;
     }
   };
 
