@@ -1,19 +1,23 @@
 .admin-sidebar {
   height: 100vh;
-  width: 20rem;
+
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 4rem;
   //   background-color: #000000;
 }
 
 .admin-container {
-  margin: 0 0 0 1.4px;
+  margin: auto;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  width: 10rem;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  padding: 0 20%;
+  height: 4rem;
   box-sizing: border-box;
+  cursor: pointer;
 }
 
 .admin-icon {
@@ -29,10 +33,19 @@
   letter-spacing: -1px;
   color: #000000;
 }
+
+.admin-text.selected {
+  color: rgba(255, 141, 29, 1);
+}
+
 .admin-router {
-  width: 20%;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
-  padding-left: 3rem;
+  gap: 0.41rem;
+}
+.admin-logout {
+  padding: 10% 40% 0 40%;
+  text-decoration: underline;
+  cursor: pointer;
 }

@@ -1,60 +1,157 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './adminSideTap.scss';
 import { ReactComponent as UserIcon } from '../../../asset/image/admin-user.svg';
 import { ReactComponent as AdminLogo } from '../../../asset/image/admin-logo.svg';
+import { ReactComponent as AdminCompany } from '../../../asset/image/admin-company.svg';
+import { ReactComponent as AdminQuestion } from '../../../asset/image/admin-question.svg';
+import { ReactComponent as AdminAnswer } from '../../../asset/image/admin-answer.svg';
+import { ReactComponent as AdminComment } from '../../../asset/image/admin-comment.svg';
+import { ReactComponent as AdminContact } from '../../../asset/image/admin-contact.svg';
+import { ReactComponent as AdminReport } from '../../../asset/image/admin-report.svg';
+import { ReactComponent as AdminNotice } from '../../../asset/image/admin-notice.svg';
+import { ACCESS_TOKEN, REFRESH_TOKEN } from '../../global/constants/index.ts';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { setLoggedIn } from '../../../store/actions/userActions.js';
 
 interface AdminSideTapProps {
   loadSection: (sectionName: string) => void;
 }
 
 export default function AdminSideTap({ loadSection }: AdminSideTapProps) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [selectedSection, setSelectedSection] = useState<string>('');
+
+  const handleSectionClick = (sectionName: string) => {
+    loadSection(sectionName);
+    setSelectedSection(sectionName);
+  };
+
+  const getContainerStyle = (sectionName: string) => {
+    return sectionName === selectedSection
+      ? {
+          backgroundColor: 'rgba(255, 244, 233, 1)',
+          color: 'rgba(255, 141, 29, 1)',
+        }
+      : {};
+  };
+
+  const logout = () => {
+    localStorage.removeItem(ACCESS_TOKEN);
+    localStorage.removeItem(REFRESH_TOKEN);
+    dispatch(setLoggedIn(false));
+    navigate('/');
+  };
+
   return (
     <div className="admin-sidebar">
       <AdminLogo />
       <div className="admin-router">
-        <div className="admin-container" onClick={() => loadSection('users')}>
+        <div
+          className="admin-container"
+          style={getContainerStyle('users')}
+          onClick={() => handleSectionClick('users')}
+        >
           <UserIcon />
-          <span className="admin-text">회원 관리</span>
-        </div>
-        <div className="admin-container" onClick={() => loadSection('company')}>
-          <UserIcon />
-          <span className="admin-text">기업 관리</span>
+          <span
+            className={`admin-text ${selectedSection === 'users' ? 'selected' : ''}`}
+          >
+            회원 관리
+          </span>
         </div>
         <div
           className="admin-container"
-          onClick={() => loadSection('question')}
+          style={getContainerStyle('company')}
+          onClick={() => handleSectionClick('company')}
         >
-          <UserIcon />
-          <span className="admin-text">질문 관리</span>
-        </div>
-        <div className="admin-container" onClick={() => loadSection('answer')}>
-          <UserIcon />
-          <span className="admin-text">답변 관리</span>
+          <AdminCompany />
+          <span
+            className={`admin-text ${selectedSection === 'company' ? 'selected' : ''}`}
+          >
+            기업 관리
+          </span>
         </div>
         <div
           className="admin-container"
-          onClick={() => loadSection('comments')}
+          style={getContainerStyle('question')}
+          onClick={() => handleSectionClick('question')}
         >
-          <UserIcon />
-          <span className="admin-text">댓글 관리</span>
+          <AdminQuestion />
+          <span
+            className={`admin-text ${selectedSection === 'question' ? 'selected' : ''}`}
+          >
+            질문 관리
+          </span>
         </div>
-        <div className="admin-container" onClick={() => loadSection('contact')}>
-          <UserIcon />
-          <span className="admin-text">문의 관리</span>
+        <div
+          className="admin-container"
+          style={getContainerStyle('answer')}
+          onClick={() => handleSectionClick('answer')}
+        >
+          <AdminAnswer />
+
+          <span
+            className={`admin-text ${selectedSection === 'answer' ? 'selected' : ''}`}
+          >
+            답변 관리
+          </span>
+        </div>
+        <div
+          className="admin-container"
+          style={getContainerStyle('comments')}
+          onClick={() => handleSectionClick('comments')}
+        >
+          <AdminComment />
+          <span
+            className={`admin-text ${selectedSection === 'comments' ? 'selected' : ''}`}
+          >
+            댓글 관리
+          </span>
+        </div>
+        <div
+          className="admin-container"
+          style={getContainerStyle('contact')}
+          onClick={() => handleSectionClick('contact')}
+        >
+          <AdminContact />
+          <span
+            className={`admin-text ${selectedSection === 'contact' ? 'selected' : ''}`}
+          >
+            문의 관리
+          </span>
         </div>
 
-        <div className="admin-container" onClick={() => loadSection('report')}>
-          <UserIcon />
-          <span className="admin-text">신고 관리</span>
+        <div
+          className="admin-container"
+          style={getContainerStyle('report')}
+          onClick={() => handleSectionClick('report')}
+        >
+          <AdminReport />
+
+          <span
+            className={`admin-text ${selectedSection === 'report' ? 'selected' : ''}`}
+          >
+            신고 관리
+          </span>
         </div>
         <div
           className="admin-container"
-          onClick={() => loadSection('notification')}
+          style={getContainerStyle('notification')}
+          onClick={() => handleSectionClick('notification')}
         >
-          <UserIcon />
-          <span className="admin-text">공지 관리</span>
+          <AdminNotice />
+          <span
+            className={`admin-text ${selectedSection === 'notification' ? 'selected' : ''}`}
+          >
+            공지 관리
+          </span>
         </div>
       </div>
+      <span className="admin-logout" onClick={logout}>
+        로그아웃
+      </span>
     </div>
   );
 }
