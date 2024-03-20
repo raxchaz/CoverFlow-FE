@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../../../asset/sass/pages/searchPage/companyRegistPage.scss';
-import { BASE_URL } from '../../global/constants/index.js';
+import { BASE_URL } from '../../global/constants';
 import { StyledPage, StyledHeader } from '../../../styledComponent.js';
 import TitleHeader from '../../ui/header/titleHeader';
-import TabBar from '../../ui/tabBar/tabBar.js';
+import TabBar from '../../ui/tabBar/tabBar';
 import { toast } from 'react-toastify';
 
 interface CompanyInfoProps {
