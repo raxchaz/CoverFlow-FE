@@ -20,6 +20,12 @@ export default function Button({ onClick, disabled, children, variant }) {
     case 'round':
       variantClass = 'Button round-btn';
       break;
+    case 'admin':
+      variantClass = 'admin';
+      break;
+    case 'admin-white':
+      variantClass = 'admin-white';
+      break;
   }
 
   return (

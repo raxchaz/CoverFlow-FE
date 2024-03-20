@@ -39,3 +39,58 @@
 .round-btn {
   border-radius: 0.5rem;
 }
+
+.admin {
+  font-weight: 100;
+  font-size: 16px;
+  letter-spacing: 0px;
+  width: 10rem;
+  height: 3rem;
+  border-radius: 0px;
+  background-color: #ff8d1d;
+  margin: 2rem !important;
+  &:disabled {
+    background-color: #ccc;
+    color: #fff;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  &:not(:disabled) {
+    background-color: #ff8d1d;
+    color: white;
+  }
+  &:not(:disabled):hover {
+    background-color: #ff8d1d;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
+  }
+}
+
+.admin-white {
+  color: rgb(0, 0, 0);
+  background-color: white;
+  border: 0.5px solid rgba(202, 202, 202, 1);
+  font-weight: 100;
+  font-size: 16px;
+  letter-spacing: 0px;
+  width: 10rem;
+  height: 3rem;
+  border-radius: 0px;
+  margin: 0 !important;
+
+  &:disabled {
+    background-color: #ccc;
+    color: #000000;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  &:not(:disabled) {
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+  }
+  &:not(:disabled):hover {
+    background-color: #ffffff;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
+  }
+}
