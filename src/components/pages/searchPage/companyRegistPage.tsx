@@ -5,7 +5,8 @@ import '../../../asset/sass/pages/searchPage/companyRegistPage.scss';
 import { BASE_URL } from '../../global/constants';
 import { StyledPage, StyledHeader } from '../../../styledComponent.js';
 import TitleHeader from '../../ui/header/titleHeader';
-import TabBar from '../../ui/tabBar/tabBar.jsx';
+import TabBar from '../../ui/tabBar/tabBar';
+import { toast } from 'react-toastify';
 
 function CompanyRegistPage() {
   const navigate = useNavigate();
@@ -51,49 +52,40 @@ function CompanyRegistPage() {
     '제주특별자치도',
   ];
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    // if (name === 'name') {
-    //   if (/^[a-zA-Z0-9ㄱ-ㅎㅏ-ㅣ가-힣]{1}$/.test(value)) {
-    //     alert('기업 이름에는 한글, 영문, 숫자로만 이루어져야 합니다.');
-    //     return;
-    //   }
-    // }
-
+  const handleChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
+    const { name, value } = event.target;
     setCompanyInfo((prevInfo) => ({
       ...prevInfo,
       [name]: value,
     }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('기업 정보 제출 중:', companyInfo);
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    // console.log('기업 정보 제출 중:', companyInfo);
 
     if (
       companyInfo.name === '' ||
       companyInfo.city === '' ||
       companyInfo.type === ''
     ) {
-      alert('필수 필드를 모두 입력해주세요.');
+      toast.error('필수 필드를 모두 입력해주세요.');
       return;
     }
 
-    axios
-      .post(`${BASE_URL}/api/company`, companyInfo, {
+    try {
+      await axios.post(`${BASE_URL}/api/company`, companyInfo, {
         headers: {
           'Content-Type': 'application/json',
         },
-      })
-      .then((response) => {
-        console.log('서버 응답:', response.data);
-        navigate('/search-company');
-        alert('기업 등록이 완료되었어요!');
-      })
-      .catch((error) => {
-        console.error('기업 등록에 실패했어요', error);
       });
+      navigate('/search-company');
+      toast.success('기업 등록이 완료되었어요!');
+    } catch (error) {
+      toast.error('기업 등록에 실패했어요');
+    }
   };
 
   const handleGoBack = () => {
