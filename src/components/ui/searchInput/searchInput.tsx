@@ -8,6 +8,7 @@ import Searchicon from '../../../asset/image/searchicon.svg';
 import { BASE_URL } from '../../global/constants';
 import useDebounce from '../../../hooks/useDebounce';
 import { conditionalExecution } from '../../../utils/utils';
+import { toast } from 'react-toastify';
 
 const StyledSearchInput = styled.input`
   width: 350px;
@@ -146,14 +147,12 @@ function SearchInput() {
       if (activeIndex === -1 && autoCompleteValue.length > 0) {
         fullDataSearch(keyword);
       } else if (activeIndex >= 0 && autoCompleteValue[activeIndex]) {
-        console.log('second', autoCompleteValue[activeIndex].name);
-
         specificItemSeach(
           autoCompleteValue.map((value) => value.companyName)[activeIndex],
         );
       }
     } catch (error) {
-      console.error('검색 중 오류 발생', error);
+      toast.error(`검색 중 오류 발생 ${error}`);
     }
   };
 
