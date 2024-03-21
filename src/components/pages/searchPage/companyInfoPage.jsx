@@ -9,6 +9,7 @@ import Question from '../../ui/question/question.jsx';
 import { ACCESS_TOKEN, BASE_URL } from '../../global/constants/index.ts';
 import { StyledHeader, StyledPage } from '../../../styledComponent.ts';
 import SearchInput from '../../ui/searchInput/searchInput.tsx';
+import { showErrorToast } from '../../ui/toast/toast.tsx';
 
 const CompanyContainer = styled.div`
   background-color: #ffffff;
@@ -93,9 +94,9 @@ function CompanyInfoPage() {
           throw new Error('데이터가 존재하지 않습니다.');
         }
       } catch (error) {
-        console.log(error);
-        // setError(error);
-        alert('기업 데이터가 존재하지 않아, 검색 결과 페이지로 돌아갑니다.');
+        showErrorToast(
+          '기업 데이터가 존재하지 않아, 검색 결과 페이지로 돌아갑니다.',
+        );
         navigate(-1);
       }
     }

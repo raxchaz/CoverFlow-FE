@@ -35,7 +35,7 @@
 .question-title-input {
   width: 80%;
   margin-left: 10%;
-  margin-bottom: 5%;
+  margin-bottom: 2%;
   padding: 10px 0;
   font-size: 16px;
   border: none;
@@ -76,7 +76,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 20px;
   font-family: 'Pretendard-Regular', sans-serif;
 }
 
@@ -86,7 +85,6 @@
   align-items: center;
   resize: none;
   height: 200px;
-  margin-top: 10px;
   width: 35rem;
   font-family: 'Pretendard-Regular', sans-serif;
   &::placeholder {
@@ -128,13 +126,14 @@ select {
 }
 
 .company-name {
-  margin: 51px 21.9rem 47px 52px;
   display: flex;
   justify-content: center;
   box-sizing: border-box;
   width: 168px;
   height: 48px;
-
+  position: relative;
+  left: 5rem;
+  margin-top: 5%;
   span {
     overflow-wrap: break-word;
     font-weight: 900;
@@ -143,12 +142,13 @@ select {
 }
 
 .tag-container {
-  margin: -1.8rem 21.9rem 2.3rem 3.2rem;
   display: flex;
   justify-content: flex-start;
+  margin-bottom: 2rem;
   align-items: flex-end;
   width: 100%;
-  box-sizing: border-box;
+  position: relative;
+  left: 5rem;
   letter-spacing: -1.2px;
   span {
     overflow-wrap: break-word;
@@ -177,7 +177,7 @@ select {
 
 .tag-select-wrapper {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: wrap-reverse;
   justify-content: center;
   row-gap: 10px;
 }
@@ -307,5 +307,11 @@ select {
 
 .register-question-button {
   @include button-style;
-  margin-top: 7%;
+  margin-top: 3%;
+
+  &.selected {
+    border: 2px solid #ff8d1d;
+    background-color: #ff8d1d;
+    color: #ffffff;
+  }
 }

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import '../../../asset/sass/pages/postPage/questionWritePage.scss';
-import { BASE_URL } from '../../global/constants';
+import { ACCESS_TOKEN, BASE_URL } from '../../global/constants';
 import { toast } from 'react-toastify';
 import TagInput from '../../ui/selection/fishTag';
 import TitleHeader from '../../ui/header/titleHeader';
@@ -50,12 +50,28 @@ function QuestionWritePage() {
     setTitle(event.target.value);
   };
 
+  const isRequired = (
+    category: string,
+    tag: string,
+    title: string,
+    content: string,
+    reward: number,
+  ): boolean => {
+    return (
+      Boolean(category) &&
+      Boolean(tag) &&
+      Boolean(title) &&
+      Boolean(content) &&
+      Boolean(reward)
+    );
+  };
+
   const handleRegister = async () => {
     try {
       const response: Response = await axios.post(`${BASE_URL}/api/question`, {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+          Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
         },
         body: JSON.stringify({
           questionTag,
@@ -75,7 +91,7 @@ function QuestionWritePage() {
         throw new Error('서버 에러');
       }
     } catch (error) {
-      if (error instanceof Error) toast.error(error.message);
+      toast.error(`에러 발생 ${error}`);
     }
   };
 
@@ -91,7 +107,6 @@ function QuestionWritePage() {
     <StyledPage className="main-page-container">
       <StyledHeader>
         <TitleHeader pageTitle="질문 등록" handleGoBack={handleGoBack} />
-        {/* <div className="info-questionWrite"></div> */}
         <div className="company-name">
           <span>아모레퍼시픽</span>
         </div>
@@ -114,22 +129,6 @@ function QuestionWritePage() {
               <span>{tag}</span>
             </div>
           ))}
-          {/* <div className="tag-select">
-            <img src={Money} alt="money" />
-            <span>급여 정보가 궁금해요</span>
-          </div>
-          <div className="tag-select">
-            <img src={Money} alt="money" />
-            <span>업무 방식이 궁금해요</span>
-          </div>
-          <div className="tag-select">
-            <img src={Money} alt="money" />
-            <span>승진이나 커리어가 궁금해요</span>
-          </div>
-          <div className="tag-select">
-            <img src={Money} alt="money" />
-            <span>직무,워라밸이 궁금해요</span>
-          </div> */}
         </div>
 
         <div className="category-container">
@@ -150,18 +149,6 @@ function QuestionWritePage() {
               <span>{category}</span>
             </div>
           ))}
-          {/* <div className="category-select">
-            <span>개발/데이터</span>
-          </div>
-          <div className="category-select">
-            <span>마케팅/광고</span>
-          </div>
-          <div className="category-select">
-            <span>생산/제조</span>
-          </div>
-          <div className="category-select">
-            <span>기타</span>
-          </div> */}
         </div>
         <input
           className="question-title-input"
@@ -183,7 +170,10 @@ function QuestionWritePage() {
           cols={40}
         ></textarea>
         <TagInput reward={reward} setReward={setReward} />
-        <button className="register-question-button" onClick={handleRegister}>
+        <button
+          className={`register-question-button ${isRequired(questionCategory, questionTag, title, content, reward) ? 'selected' : ''}`}
+          onClick={handleRegister}
+        >
           등록
         </button>
       </StyledHeader>
