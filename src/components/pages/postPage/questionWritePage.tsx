@@ -75,7 +75,7 @@ function QuestionWritePage() {
         throw new Error('서버 에러');
       }
     } catch (error) {
-      if (error instanceof Error) toast.error(error.message);
+      toast.error(`에러 발생 ${error}`);
     }
   };
 
@@ -91,7 +91,6 @@ function QuestionWritePage() {
     <StyledPage className="main-page-container">
       <StyledHeader>
         <TitleHeader pageTitle="질문 등록" handleGoBack={handleGoBack} />
-        {/* <div className="info-questionWrite"></div> */}
         <div className="company-name">
           <span>아모레퍼시픽</span>
         </div>
