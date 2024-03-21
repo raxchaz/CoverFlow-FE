@@ -8,7 +8,7 @@ import TabBar from '../../ui/tabBar/tabBar.tsx';
 import '../../../asset/sass/pages/searchPage/searchResultPage.scss';
 import { BASE_URL } from '../../global/constants/index.ts';
 import Plus from '../../../asset/image/plus.svg';
-import Warning from '../../../asset/image/warning.svg';
+import Warning from '../../../asset/image/warning-triangle.svg';
 import { toast } from 'react-toastify';
 import '../../../asset/sass/pages/notificationPage/notificationPage.scss';
 import SearchInput from '../../ui/searchInput/searchInput.tsx';
@@ -62,13 +62,6 @@ const IndustryTag = styled.span`
   color: #9b9898;
   font-size: 12px;
   margin: 10% 0% 0% -1%;
-`;
-
-const Line = styled.div`
-  height: 13px;
-  background-color: #f2f2f2;
-  width: 103%;
-  margin: 6% 0% 0% -1.5%;
 `;
 
 const ResultsList = styled.ul`
@@ -182,7 +175,6 @@ function SearchResultPage() {
         <ResultsContainer>
           <TitleHeader pageTitle="검색 결과" handleGoBack={handleGoBack} />
           <SearchInput />
-          <Line />
           <ResultCount>
             기업 검색 결과{' '}
             <span className="result-count">{searchResult.length}</span>
@@ -213,7 +205,7 @@ function SearchResultPage() {
                   src={Warning}
                   alt="Warning Icon"
                 />
-                <div className="failed-text">검색 결과가 없습니다</div>
+                <div className="failed-text">검색 결과가 없습니다.</div>
                 <div className="failed-text2">
                   코버플로우에 원하는 기업을 등록해 주세요
                 </div>
