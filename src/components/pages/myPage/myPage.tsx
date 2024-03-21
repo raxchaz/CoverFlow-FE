@@ -229,13 +229,13 @@ function Mypage() {
               current={currentCategory === 'comments'}
               onClick={() => setCurrentCategory('comments')}
             >
-              내가 남긴 질문<span>{questionCnt}</span>
+              내가 남긴 질문<span className="my-cnt">{questionCnt}</span>
             </StatusTab>
             <StatusTab
               current={currentCategory === 'posts'}
               onClick={() => setCurrentCategory('posts')}
             >
-              내가 남긴 답변<span>{answerCnt}</span>
+              내가 남긴 답변<span className="my-cnt">{answerCnt}</span>
             </StatusTab>
           </StatusBar>
 

@@ -7,6 +7,7 @@ import ContactList from './contactList.jsx';
 import Button from '../button/Button/Button.jsx';
 import { fetchAPI } from '../../global/utils/apiUtil.js';
 import { store } from '../../../store/index.js';
+import TextArea from '../inputbox/TextArea.jsx';
 import { showSuccessToast, showErrorToast } from '../toast/toast.tsx';
 // import { BASE_URL, ACCESS_TOKEN } from '../../global/constants/index.js';
 const StatusBar = styled.div`
@@ -92,82 +93,89 @@ export default function ContactSlider() {
   };
 
   return (
-    <div className="slider-container">
-      <StatusBar>
-        <StatusTab
-          current={currentSection === 'contact'}
-          onClick={() => setCurrentSection('contact')}
-        >
-          문의 하기
-        </StatusTab>
-        <StatusTab
-          current={currentSection === 'contactList'}
-          onClick={() => setCurrentSection('contactList')}
-        >
-          문의 내역 확인
-        </StatusTab>
-      </StatusBar>
-      {currentSection === 'contact' && (
-        <div>
-          <div className="contact-container">
-            <div className="contact-item">
-              <span className="contact-count">
-                {contactList.length > 0 ? contactList[0].allInquiriesCount : 0}
-              </span>
-              전체 문의
-            </div>
-            <div className="contact-item">
-              <span className="contact-count">
-                {contactList.length > 0
-                  ? contactList[0].completeInquiriesCount
-                  : 0}
-              </span>
-              답변 완료
-            </div>
-            <div className="contact-item">
-              <span className="contact-count">
-                {contactList.length > 0 ? contactList[0].waitInquiriesCount : 0}
-              </span>
-              답변 대기
-            </div>
-          </div>
-          <Disclamier />
-
+    <div>
+      <div className="contact-border"></div>
+      <div className="slider-container">
+        <StatusBar>
+          <StatusTab
+            current={currentSection === 'contact'}
+            onClick={() => setCurrentSection('contact')}
+          >
+            문의 하기
+          </StatusTab>
+          <StatusTab
+            current={currentSection === 'contactList'}
+            onClick={() => setCurrentSection('contactList')}
+          >
+            문의 내역 확인
+          </StatusTab>
+        </StatusBar>
+        {currentSection === 'contact' && (
           <div>
-            <input
-              type="text"
-              className="input-field-contact"
-              placeholder="제목을 입력해주세요. (20자 이내)"
-              name="title"
-              value={contact.title}
-              onChange={handleChange}
-            />
-            <textarea
-              type="text"
-              className="textarea-field-contact"
-              placeholder="문의 내용을 입력해주세요."
-              name="content"
-              value={contact.content}
-              onChange={handleChange}
-            />
+            <div className="contact-container">
+              <div className="contact-item">
+                <span className="contact-count">
+                  {contactList.length > 0
+                    ? contactList[0].allInquiriesCount
+                    : 0}
+                </span>
+                전체 문의
+              </div>
+              <div className="contact-item">
+                <span className="contact-count">
+                  {contactList.length > 0
+                    ? contactList[0].completeInquiriesCount
+                    : 0}
+                </span>
+                답변 완료
+              </div>
+              <div className="contact-item">
+                <span className="contact-count">
+                  {contactList.length > 0
+                    ? contactList[0].waitInquiriesCount
+                    : 0}
+                </span>
+                답변 대기
+              </div>
+            </div>
 
-            <Button
-              onClick={submitContact}
-              disabled={contact.title === '' || contact.content === ''}
-            >
-              제출
-            </Button>
+            <Disclamier />
+
+            <div>
+              <input
+                type="text"
+                className="input-field-contact"
+                placeholder="제목을 입력해주세요. (20자 이내)"
+                name="title"
+                value={contact.title}
+                onChange={handleChange}
+              />
+              <TextArea
+                variant="default"
+                placeholder="문의 내용을 입력해주세요."
+                name="content"
+                value={contact.content}
+                handleChange={handleChange}
+              />
+
+              <Button
+                onClick={submitContact}
+                disabled={contact.title === '' || contact.content === ''}
+              >
+                제출
+              </Button>
+            </div>
           </div>
-        </div>
-      )}
-      {currentSection === 'contactList' && (
-        <ContactList
-          contactList={contactList}
-          totalPages={totalPage}
-          setCurrentSection={setCurrentSection}
-          setCurrentPage={setCurrentPageAPI}
-        />
-      )}
+        )}
+        {currentSection === 'contactList' && (
+          <ContactList
+            contactList={contactList}
+            totalPages={totalPage}
+            setCurrentSection={setCurrentSection}
+            setCurrentPage={setCurrentPageAPI}
+          />
+        )}
+      </div>
     </div>
   );
 }
