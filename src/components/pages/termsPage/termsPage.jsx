@@ -13,6 +13,7 @@ import greenCheck from '../../../asset/image/greenCheck.svg';
 import allCheckGrey from '../../../asset/image/allCheck_grey.svg';
 import allCheckGreen from '../../../asset/image/allCheck_green.svg';
 import { showErrorToast, showSuccessToast } from '../../ui/toast/toast.tsx';
+import { EventSourcePolyfill } from 'event-source-polyfill';
 
 export default function TermsPage() {
   const navigate = useNavigate();
@@ -107,6 +108,7 @@ export default function TermsPage() {
       localStorage.setItem(ACCESS_TOKEN, accessToken);
       localStorage.setItem(REFRESH_TOKEN, refreshToken);
       navigate('/login/member-info');
+      handleConnect();
       showSuccessToast('회원 가입을 축하드립니다!');
     } catch (error) {
       console.error(error);
@@ -114,6 +116,32 @@ export default function TermsPage() {
       navigate('/login');
     }
   };
+
+  const handleConnect = async () => {
+    const res = await fetch(`${BASE_URL}/api/notification/connect`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'text/event-stream; charset=utf-8',
+        Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
+      },
+    });
+    console.log('res', res);
+  };
+
+  const sse = new EventSourcePolyfill(`${BASE_URL}/api/notification/connect`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'text/event-stream; charset=utf-8',
+      Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
+    },
+  });
+
+  console.log('sse', sse);
+
+  sse.addEventListener('connect', (event) => {
+    const data = event;
+    console.log(data);
+  });
 
   return (
     <StyledPage className="main-page-container">
