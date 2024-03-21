@@ -30,7 +30,8 @@ const StatusTab = styled.div`
   transition:
     border-bottom 0.3s ease-in-out,
     color 0.3s ease-in-out;
-  ${(props) => props.current && 'color: black; border-bottom: 3px solid black;'}
+  ${(props) =>
+    props.$current && 'color: black; border-bottom: 3px solid black;'}
 `;
 
 const PremiumPage = () => {
@@ -52,13 +53,13 @@ const PremiumPage = () => {
       <TabBar />
       <StatusBar>
         <StatusTab
-          current={currentSection === 'buy'}
+          $current={currentSection === 'buy'}
           onClick={() => setCurrentSection('buy')}
         >
           구매하기
         </StatusTab>
         <StatusTab
-          current={currentSection === 'myPremium'}
+          $current={currentSection === 'myPremium'}
           onClick={() => setCurrentSection('myPremium')}
         >
           마이 프리미엄
@@ -88,7 +89,10 @@ const PremiumPage = () => {
             <span>결제 정보 확인 및 정보 제공 동의</span>
             <span className="detail">자세히</span>
           </div>
-          <button onClick={handlePaymentClick} className="button">
+          <button
+            onClick={handlePaymentClick}
+            className={`button ${isChecked ? 'selected' : ''}`}
+          >
             동의하고 결제하기
           </button>
         </div>

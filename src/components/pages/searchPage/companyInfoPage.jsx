@@ -121,7 +121,7 @@ function CompanyInfoPage() {
   };
 
   const handleGoBack = () => {
-    navigate(`/search-result`);
+    navigate(`/search-result`, { state: companyData });
   };
 
   return (
