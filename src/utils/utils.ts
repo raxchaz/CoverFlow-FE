@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 export const tryCatch = (
   f: () => void,
   errorHandler: (error: unknown) => void,
@@ -17,4 +18,14 @@ interface ConditionProps {
 export const conditionalExecution = (conditions: ConditionProps[]) => {
   const condition = conditions.find(({ test }) => test());
   return condition ? condition.execute() : null;
+};
+
+export const goBackToPrev = () => {
+  const navigate = useNavigate();
+  navigate(-1);
+};
+
+export const goBackToMain = () => {
+  const navigate = useNavigate();
+  navigate('/');
 };
