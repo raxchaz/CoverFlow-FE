@@ -66,7 +66,7 @@ const TokenManagement = () => {
 
         const decoded = decodeToken(accessToken);
         const userRole = decoded.role;
-        handleConnect();
+
         // console.log('userRole:', userRole);
         // console.log('decoded:', decoded);
 
@@ -75,7 +75,7 @@ const TokenManagement = () => {
           navigate('/login/terms', { state: { code } });
         } else if (['MEMBER', 'PREMIUM', 'ADMIN'].includes(userRole)) {
           console.log('회원 정보가 존재합니다. 메인 페이지로 이동합니다.');
-
+          handleConnect();
           navigate(prevPage);
         } else {
           alert('로그인에 실패하였습니다. 다시 시도해주세요.');
@@ -93,7 +93,7 @@ const TokenManagement = () => {
       method: 'GET',
       headers: {
         'Content-Type': 'text/event-stream; charset=utf-8',
-        Authorization: `Bearer ${ACCESS_TOKEN}`,
+        Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
       },
     });
     console.log('res', res);
@@ -103,7 +103,7 @@ const TokenManagement = () => {
     method: 'GET',
     headers: {
       'Content-Type': 'text/event-stream; charset=utf-8',
-      Authorization: `Bearer ${ACCESS_TOKEN}`,
+      Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
     },
   });
 
