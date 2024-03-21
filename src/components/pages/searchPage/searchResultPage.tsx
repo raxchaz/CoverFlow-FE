@@ -105,39 +105,45 @@ const QuestionCount = styled.div`
 `;
 
 interface SearchResultProps {
-  companyId: number;
-  companyName: string;
-  companyType: string;
-  questionCount: number;
+  state: {
+    searchResults: {
+      companyId: number;
+      companyName: string;
+      companyType: string;
+      questionCount: number;
+    }[];
+  };
 }
 
 function SearchResultPage() {
   const navigate = useNavigate();
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  const keyword = queryParams.get('keyword');
-  const [searchResult, setSearchResult] = useState<SearchResultProps[]>([]);
+  const {
+    state: { searchResults },
+  } = useLocation() as SearchResultProps;
+  const companyList = searchResults.map((result) => result.companyName);
+  // const keyword = queryParams.get('keyword');
+  // const [searchResult, setSearchResult] = useState<SearchResultProps[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = Array.from(searchResult)?.slice(
+  const currentItems = Array.from(searchResults)?.slice(
     indexOfFirstItem,
     indexOfLastItem,
   );
 
-  const totalPages = Math.ceil(searchResult.length / itemsPerPage);
+  const totalPages = Math.ceil(searchResults.length / itemsPerPage);
 
   const handleGoBack = () => {
-    navigate(-1);
+    navigate('/search-company');
   };
 
   useEffect(() => {
     async function fetchData() {
       try {
         const response = await fetch(
-          `${BASE_URL}/api/company?pageNo=1&name=${keyword}`,
+          `${BASE_URL}/api/company?pageNo=1&name=${companyList}`,
           {
             method: 'GET',
             headers: {
@@ -145,10 +151,10 @@ function SearchResultPage() {
             },
           },
         );
-        const { data } = await response.json();
-        if (response.ok) {
-          setSearchResult(data.companyList);
-        }
+
+        console.log('respons', response);
+
+        await response.json();
       } catch (error) {
         if (error instanceof Error) toast.error(error.message);
       }
@@ -176,8 +182,8 @@ function SearchResultPage() {
           <TitleHeader pageTitle="검색 결과" handleGoBack={handleGoBack} />
           <SearchInput />
           <ResultCount>
-            기업 검색 결과{' '}
-            <span className="result-count">{searchResult.length}</span>
+            기업 검색 결과
+            <span className="result-count">{companyList.length}</span>
           </ResultCount>
           <ResultsList>
             {currentItems.length > 0 ? (
@@ -220,7 +226,7 @@ function SearchResultPage() {
             )}
           </ResultsList>
           {totalPages >= 1 && (
-            <div className="button-container">
+            <div className="pagination-button-container">
               <div
                 // disabled={currentGroup === 0}
                 style={{ cursor: 'pointer' }}
