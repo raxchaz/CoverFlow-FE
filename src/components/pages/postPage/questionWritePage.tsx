@@ -50,6 +50,22 @@ function QuestionWritePage() {
     setTitle(event.target.value);
   };
 
+  const isRequired = (
+    category: string,
+    tag: string,
+    title: string,
+    content: string,
+    reward: number,
+  ): boolean => {
+    return (
+      Boolean(category) &&
+      Boolean(tag) &&
+      Boolean(title) &&
+      Boolean(content) &&
+      Boolean(reward)
+    );
+  };
+
   const handleRegister = async () => {
     try {
       const response: Response = await axios.post(`${BASE_URL}/api/question`, {
@@ -182,7 +198,10 @@ function QuestionWritePage() {
           cols={40}
         ></textarea>
         <TagInput reward={reward} setReward={setReward} />
-        <button className="register-question-button" onClick={handleRegister}>
+        <button
+          className={`register-question-button ${isRequired(questionCategory, questionTag, title, content, reward) ? 'selected' : ''}`}
+          onClick={handleRegister}
+        >
           등록
         </button>
       </StyledHeader>
