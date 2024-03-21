@@ -9,10 +9,10 @@ import '../../../asset/sass/pages/searchPage/searchResultPage.scss';
 import { BASE_URL } from '../../global/constants/index.ts';
 import Plus from '../../../asset/image/plus.svg';
 import Warning from '../../../asset/image/warning-triangle.svg';
-import { toast } from 'react-toastify';
 import '../../../asset/sass/pages/notificationPage/notificationPage.scss';
 import SearchInput from '../../ui/searchInput/searchInput.tsx';
 import axios from 'axios';
+import { showErrorToast } from '../../ui/toast/toast.tsx';
 
 const ResultsContainer = styled.div`
   position: relative;
@@ -157,7 +157,7 @@ function SearchResultPage() {
           },
         );
       } catch (error) {
-        toast.error(`${error}`);
+        showErrorToast(`${error}`);
       }
     };
 
