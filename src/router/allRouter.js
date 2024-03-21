@@ -27,7 +27,7 @@ import CompletePaymentPage from '../components/pages/completePaymentPage/complet
 /* 질문 페이지 관련 */
 import SearchPage from '../components/pages/searchPage/searchPage.tsx';
 import CompanyRegistPage from '../components/pages/searchPage/companyRegistPage.tsx';
-import SearchResultPage from '../components/pages/searchPage/searchResultPage.jsx';
+import SearchResultPage from '../components/pages/searchPage/searchResultPage.tsx';
 import CompanyInfoPage from '../components/pages/searchPage/companyInfoPage.jsx';
 import QuestionWritePage from '../components/pages/postPage/questionWritePage.tsx';
 import QuestionDetailPage from '../components/pages/postPage/questionDetailPage.jsx';
@@ -38,8 +38,8 @@ import TokenManagement from '../components/global/token/tokenManagement.jsx';
 
 /* 관리자 페이지  */
 import AdminMainPage from '../components/pages/adminPage/adminMainPage.tsx';
-import PremiumTicket from '../components/pages/premiumPage/premiumTicket.tsx';
-import PremiumPage from '../components/pages/premiumPage/premiumPage.jsx';
+import PremiumTicket from '../components/pages/premiumPage/premiumTicket.jsx';
+import PremiumPage from '../components/pages/premiumPage/premiumPage.tsx';
 import NotFound from '../components/pages/premiumPage/NotFound.jsx';
 
 import NotFoundPage from '../components/NotFoundPage.tsx';

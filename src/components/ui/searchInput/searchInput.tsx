@@ -14,7 +14,7 @@ const StyledSearchInput = styled.input`
   height: 40px;
   padding: 8px;
   border: 1px solid #ff8d1d;
-  background-color: #f2f2f2;
+  background-color: #fff;
   border-radius: 30px;
   margin: 5% 0% 0% 24%;
   outline: none;
@@ -110,10 +110,9 @@ function SearchInput() {
   // 자동완성 데이터 요청
   const fetchAutoCompleteData = async (name: string) => {
     try {
-      const res = await axios.get<{ data: { companyList: CompanyProps[] } }>(
+      const res = await axios.get(
         `${BASE_URL}/api/company?pageNo=0&name=${name}`,
       );
-      // console.log('res', res);
       setAutoCompleteValue(res.data.data.companyList);
     } catch (error) {
       console.error('자동완성 데이터 요청 실패', error);
@@ -121,26 +120,38 @@ function SearchInput() {
     }
   };
 
-  const itemSearch = (params: URLSearchParams, value: string) => {
-    params.append('keyword', value);
-    navigate(`/search-result?${params.toString()}`);
+  const fullDataSearch = (keyword: string) => {
+    const params = new URLSearchParams();
+    params.append('keyword', keyword);
+    navigate(`/search-result?${params.toString()}`, {
+      state: { searchResults: autoCompleteValue },
+    });
   };
 
-  // const fullDataSearch = (params: URLSearchParams, keyword: string) => {
-  //   itemSearch(params, keyword);
-  // };
+  const specificItemSeach = (item: string) => {
+    const selectedItem = autoCompleteValue[activeIndex];
+    if (selectedItem) {
+      const params = new URLSearchParams();
+      params.append('keyword', item);
 
-  // const specificItemSeach = (params: URLSearchParams, item: string) => {
-  //   itemSearch(params, item);
-  // };
+      navigate(`/search-result?${params.toString()}`, {
+        state: { searchResults: [selectedItem] },
+      });
+    }
+  };
 
   // 검색 함수
   const handleCompanySearch = () => {
-    const params = new URLSearchParams();
     try {
-      if (activeIndex === -1) itemSearch(params, keyword);
-      else if (activeIndex >= 0 && autoCompleteValue[activeIndex])
-        itemSearch(params, autoCompleteValue[activeIndex].name);
+      if (activeIndex === -1 && autoCompleteValue.length > 0) {
+        fullDataSearch(keyword);
+      } else if (activeIndex >= 0 && autoCompleteValue[activeIndex]) {
+        console.log('second', autoCompleteValue[activeIndex].name);
+
+        specificItemSeach(
+          autoCompleteValue.map((value) => value.companyName)[activeIndex],
+        );
+      }
     } catch (error) {
       console.error('검색 중 오류 발생', error);
     }
@@ -188,10 +199,14 @@ function SearchInput() {
       },
       {
         test: () => event.key === 'Enter',
-        execute: () => {
-          activeIndex >= 0 && autoCompleteValue[activeIndex]
-            ? selectAutoCompleteValue(autoCompleteValue[activeIndex].name)
-            : handleCompanySearch();
+        execute: async () => {
+          if (activeIndex >= 0 && autoCompleteValue[activeIndex]) {
+            specificItemSeach(
+              autoCompleteValue.map((value) => value.companyName)[activeIndex],
+            );
+          } else {
+            handleCompanySearch();
+          }
         },
       },
     ];

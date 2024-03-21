@@ -31,8 +31,7 @@ const StatusTab = styled.div<{ $current: boolean }>`
   transition:
     border-bottom 0.3s ease-in-out,
     color 0.3s ease-in-out;
-  ${(props) =>
-    props.$current && 'color: black; border-bottom: 3px solid black;'}
+  ${($current) => $current && 'color: black; border-bottom: 3px solid black;'}
 `;
 
 const PremiumPage = () => {
@@ -88,9 +87,12 @@ const PremiumPage = () => {
             />
 
             <span>결제 정보 확인 및 정보 제공 동의</span>
-            <span className="detail">자세히</span>
+            {/* <span className="detail">자세히</span> */}
           </div>
-          <button onClick={handlePaymentClick} className="button">
+          <button
+            onClick={handlePaymentClick}
+            className={`${isChecked === true ? 'selected' : ''}`}
+          >
             동의하고 결제하기
           </button>
         </div>

@@ -17,6 +17,7 @@ import { ACCESS_TOKEN, REFRESH_TOKEN, BASE_URL } from '../../global/constants';
 import TabBar from '../../ui/tabBar/tabBar';
 import TitleHeader from '../../ui/header/titleHeader';
 import { showErrorToast } from '../../ui/toast/toast';
+
 import { useDispatch } from 'react-redux';
 
 /* 스타일 컴포넌트 정의 */
@@ -127,6 +128,7 @@ function Mypage() {
         setNickname(data.data.nickname);
       })
       .catch(() => showErrorToast('회원 정보 불러오기 실패'));
+
   };
 
   /* 로그아웃 버튼을 클릭했을 경우, 서버로 로그아웃 API를 요청한 후,
