@@ -34,6 +34,7 @@ import QuestionDetailPage from '../components/pages/postPage/questionDetailPage.
 
 /* 그 외 유틸  */
 import TokenManagement from '../components/global/token/tokenManagement.jsx';
+// import PrivateRoute from '../components/global/constants/privateRoute.tsx';
 
 /* 관리자 페이지  */
 import AdminMainPage from '../components/pages/adminPage/adminMainPage.tsx';
@@ -61,11 +62,8 @@ const AllRouter = () => {
         <Route path="/auth/token" element={<TokenManagement />} />
 
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/login/member-info" element={<NicknamePage />} />
-        <Route path="/login/terms" element={<TermsPage />} />
 
         <Route path="/store" element={<Store />} />
-        <Route path="/mypage" element={<MyPage />} />
         <Route path="/premium" element={<PremiumTicket />} />
         <Route path="/buyer-info" element={<PremiumPage />} />
         <Route path="/complete-payment" element={<CompletePaymentPage />} />
@@ -75,14 +73,8 @@ const AllRouter = () => {
 
         <Route path="/notice" element={<NoticePage />} />
         <Route path="/event" element={<EventPage />} />
-        <Route path="/info-edit" element={<InfoEditPage />} />
-        <Route path="/contact" element={<ContactPage />} />
+
         <Route path="/feedback" element={<FeedbackPage />} />
-        <Route path="/secession-page" element={<SecessionPage />} />
-        <Route
-          path="/secessionComplete-page"
-          element={<SecessionCompletePage />}
-        />
 
         <Route path="/search-company" element={<SearchPage />} />
         <Route path="/search-result" element={<SearchResultPage />} />
@@ -97,9 +89,22 @@ const AllRouter = () => {
           element={<QuestionDetailPage />}
         />
 
-        <Route path="/minad" element={<AdminMainPage />} />
         <Route path="*" element={<NotFoundPage />} />
         <Route path="/work-progress" element={<WIL />} />
+
+        {/* <Route element={<PrivateRoute authentication={true} />}> */}
+        <Route path="/mypage" element={<MyPage />} />
+        <Route path="/login/member-info" element={<NicknamePage />} />
+        <Route path="/login/terms" element={<TermsPage />} />
+        <Route path="/minad" element={<AdminMainPage />} />
+        <Route path="/info-edit" element={<InfoEditPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/secession-page" element={<SecessionPage />} />
+        <Route
+          path="/secessionComplete-page"
+          element={<SecessionCompletePage />}
+        />
+        {/* </Route> */}
       </Routes>
     </div>
   );

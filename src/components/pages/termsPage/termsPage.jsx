@@ -108,8 +108,8 @@ export default function TermsPage() {
       localStorage.setItem(ACCESS_TOKEN, accessToken);
       localStorage.setItem(REFRESH_TOKEN, refreshToken);
       navigate('/login/member-info');
-      handleConnect();
       showSuccessToast('회원 가입을 축하드립니다!');
+      handleConnect();
     } catch (error) {
       console.error(error);
       showErrorToast('토큰을 받아오는 중 오류가 발생했습니다.');
