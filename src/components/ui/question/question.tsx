@@ -39,9 +39,7 @@ const LoginButton = styled.button`
 //     `}
 // `;
 
-const ContentBlur = styled.span.attrs(({ $isLoggedIn }) => ({
-  $isLoggedIn,
-}))`
+const ContentBlur = styled.span<{ $isLoggedIn: boolean }>`
   ${({ $isLoggedIn }) =>
     !$isLoggedIn &&
     css`
@@ -61,18 +59,30 @@ function truncateTitle(title, maxLength = 25) {
 }
 
 function truncateContent(questionContent, maxLength = 30) {
+  console.log('questionContent: ', questionContent);
   return questionContent.length > maxLength
     ? questionContent.substring(0, maxLength + 20) + '...'
     : questionContent;
 }
 
-function formatDate(fullDate) {
+function formatDate(fullDate: string) {
   const date = new Date(fullDate);
   const year = date.getFullYear();
   const month = (date.getMonth() + 1).toString().padStart(2, '0');
   const day = date.getDate().toString().padStart(2, '0');
 
   return `${year}-${month}-${day}`;
+}
+
+interface QuestionModulesProps {
+  companyId?: string;
+  questionId: number;
+  questioner: string;
+  questionerTag: string;
+  answerCount: number;
+  questionTitle: string;
+  createAt: string;
+  questionContent: string;
 }
 
 function QuestionModule({
@@ -84,7 +94,7 @@ function QuestionModule({
   questionTitle,
   questionContent,
   createAt,
-}) {
+}: QuestionModulesProps) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
@@ -187,8 +197,8 @@ function QuestionModule({
 }
 
 QuestionModule.propTypes = {
-  companyId: PropTypes.string.isRequired,
-  questionId: PropTypes.string.isRequired,
+  companyId: PropTypes.string,
+  questionId: PropTypes.number.isRequired,
   questioner: PropTypes.string.isRequired,
   questionerTag: PropTypes.string.isRequired,
   answerCount: PropTypes.number.isRequired,
