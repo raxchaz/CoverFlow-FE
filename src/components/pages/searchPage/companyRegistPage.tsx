@@ -51,9 +51,18 @@ function CompanyRegistPage() {
 
   const checkRequiredFields = (info: CompanyInfoProps) => {
     const { name, city, type, district } = info;
-    if (name && city && type && district) {
+    if (name === '' && city === '' && type === '' && district === '') {
       toast.error('필수 필드를 모두 입력해주세요.');
     }
+  };
+
+  const isRequired = (
+    name: string,
+    city: string,
+    type: string,
+    district?: string,
+  ): boolean => {
+    return Boolean(name) && Boolean(city) && Boolean(type) && Boolean(district);
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -133,7 +142,7 @@ function CompanyRegistPage() {
           </div>
           <button
             type="submit"
-            className="submit-regist"
+            className={`submit-regist ${isRequired(companyInfo.name, companyInfo.city, companyInfo.type, companyInfo.district) ? 'selected' : ''}`}
             disabled={
               companyInfo.name === '' ||
               companyInfo.city === '' ||
