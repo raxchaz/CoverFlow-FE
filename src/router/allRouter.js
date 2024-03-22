@@ -28,9 +28,9 @@ import CompletePaymentPage from '../components/pages/completePaymentPage/complet
 import SearchPage from '../components/pages/searchPage/searchPage.tsx';
 import CompanyRegistPage from '../components/pages/searchPage/companyRegistPage.tsx';
 import SearchResultPage from '../components/pages/searchPage/searchResultPage.tsx';
-import CompanyInfoPage from '../components/pages/searchPage/companyInfoPage.jsx';
+import CompanyInfoPage from '../components/pages/searchPage/companyInfoPage.tsx';
 import QuestionWritePage from '../components/pages/postPage/questionWritePage.tsx';
-import QuestionDetailPage from '../components/pages/postPage/questionDetailPage.jsx';
+import QuestionDetailPage from '../components/pages/postPage/questionDetailPage.tsx';
 
 /* 그 외 유틸  */
 import TokenManagement from '../components/global/token/tokenManagement.jsx';

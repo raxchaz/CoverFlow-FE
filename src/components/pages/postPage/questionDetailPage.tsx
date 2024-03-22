@@ -3,18 +3,14 @@ import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import '../../../asset/sass/pages/postPage/questionDetailPage.scss';
-import { StyledPage, StyledHeader } from '../../../styledComponent.js';
+import { StyledPage, StyledHeader } from '../../../styledComponent';
 import TitleHeader from '../../ui/header/titleHeader';
 import Answer from '../../ui/question/answer.jsx';
 import TabBar from '../../ui/tabBar/tabBar';
-// import Chat from '../../../asset/image/chat.svg';
-// import View from '../../../asset/image/view.svg';
 import { BASE_URL, ACCESS_TOKEN } from '../../global/constants';
-// import Questitle from '../../../asset/image/questitle.svg';
-// import Report from '../../../asset/image/report.svg';
 import Tree from '../../../asset/image/nature-ecology-tree-3--tree-plant-cloud-shape-park.svg';
 
-import { showErrorToast, showSuccessToast } from '../../ui/toast/toast';
+import { showErrorToast, showSuccessToast } from '../../ui/toast/toast.tsx';
 
 const Questioner = styled.div`
   font-family: pretendard-bold;
@@ -62,12 +58,36 @@ const FirstLine = styled.div`
 
 const AnswerList = styled.div``;
 
+interface AnswerProps {
+  answerId: string;
+  answerer: string;
+  answerTag: string;
+  createAt: string;
+  replyCount: string;
+  answerContent: string;
+  onAdopt: () => void;
+  answerNickname: string;
+  content: string;
+}
+
+interface QuestionDetailProps {
+  questionId: string;
+  title: string;
+  questionContent: string;
+  answerCount: number;
+  reward: number;
+  questionNickname: string;
+  questionTag: string;
+  createAt: string;
+  answers: AnswerProps[];
+}
+
 function QuestionDetailPage() {
   const navigate = useNavigate();
-  const answerRef = useRef();
+  const answerRef = useRef<HTMLTextAreaElement>(null);
   const [answer, setAnswer] = useState('');
   const [showReportPopup, setShowReportPopup] = useState(false);
-  const [questionDetail, setQuestionDetail] = useState({
+  const [questionDetail, setQuestionDetail] = useState<QuestionDetailProps>({
     questionId: '3',
     title: '질문 제목',
     questionContent: 'Lorem ipsum dolor sit amet, consectetur adip',
@@ -81,7 +101,7 @@ function QuestionDetailPage() {
 
   const { questionId } = useParams();
 
-  function formatDate(fullDate) {
+  function formatDate(fullDate: string) {
     const date = new Date(fullDate);
     const year = date.getFullYear();
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
@@ -102,7 +122,7 @@ function QuestionDetailPage() {
     }
   }, [answer]);
 
-  const fetchQuestionDetail = (questionId) => {
+  const fetchQuestionDetail = (questionId: string) => {
     axios
       .get(`${BASE_URL}/api/question/${questionId}`, {
         headers: {
@@ -150,7 +170,11 @@ function QuestionDetailPage() {
       })
       .then((response) => {
         console.log('답변 제출 응답:', response.data);
-        if (response.data && response.data.statusCode === 'OK') {
+        if (
+          response.data &&
+          response.data.statusCode === 'OK' &&
+          answerRef.current
+        ) {
           showSuccessToast('답변이 등록되었습니다.');
           setAnswer(answerRef.current.value);
         }
@@ -169,6 +193,8 @@ function QuestionDetailPage() {
   const handleReportSubmit = async () => {
     toggleReportPopup();
   };
+
+  console.log(questionDetail);
 
   return (
     <StyledPage className="main-page-container">
