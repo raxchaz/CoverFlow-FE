@@ -8,7 +8,7 @@ import Searchicon from '../../../asset/image/searchicon.svg';
 import { BASE_URL } from '../../global/constants';
 import useDebounce from '../../../hooks/useDebounce';
 import { conditionalExecution } from '../../../utils/utils';
-import { toast } from 'react-toastify';
+import { showErrorToast } from '../toast/toast';
 
 const StyledSearchInput = styled.input`
   width: 350px;
@@ -152,7 +152,7 @@ function SearchInput() {
         );
       }
     } catch (error) {
-      toast.error(`검색 중 오류 발생 ${error}`);
+      showErrorToast(`검색 중 오류 발생 ${error}`);
     }
   };
 
@@ -198,14 +198,14 @@ function SearchInput() {
       },
       {
         test: () => event.key === 'Enter',
-        execute: async () => {
-          if (activeIndex >= 0 && autoCompleteValue[activeIndex]) {
-            specificItemSeach(
-              autoCompleteValue.map((value) => value.companyName)[activeIndex],
-            );
-          } else {
-            handleCompanySearch();
-          }
+        execute: () => {
+          activeIndex >= 0 && autoCompleteValue[activeIndex]
+            ? specificItemSeach(
+                autoCompleteValue.map((value) => value.companyName)[
+                  activeIndex
+                ],
+              )
+            : handleCompanySearch();
         },
       },
     ];

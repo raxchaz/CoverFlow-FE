@@ -6,7 +6,6 @@ import { BASE_URL } from '../../global/constants';
 import { StyledPage, StyledHeader } from '../../../styledComponent.js';
 import TitleHeader from '../../ui/header/titleHeader';
 import TabBar from '../../ui/tabBar/tabBar';
-import { toast } from 'react-toastify';
 import { city, type } from '../../global/constants/companyOption.ts';
 import { setHeaders } from '../../../utils/utils';
 import { showErrorToast, showSuccessToast } from '../../ui/toast/toast.tsx';
@@ -52,7 +51,7 @@ function CompanyRegistPage() {
   const checkRequiredFields = (info: CompanyInfoProps) => {
     const { name, city, type, district } = info;
     if (name === '' && city === '' && type === '' && district === '') {
-      toast.error('필수 필드를 모두 입력해주세요.');
+      showErrorToast('필수 필드를 모두 입력해주세요.');
     }
   };
 

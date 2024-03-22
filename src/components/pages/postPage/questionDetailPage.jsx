@@ -13,8 +13,8 @@ import { BASE_URL, ACCESS_TOKEN } from '../../global/constants';
 // import Questitle from '../../../asset/image/questitle.svg';
 // import Report from '../../../asset/image/report.svg';
 import Tree from '../../../asset/image/nature-ecology-tree-3--tree-plant-cloud-shape-park.svg';
-import { toast } from 'react-toastify';
-import { showErrorToast } from '../../ui/toast/toast';
+
+import { showErrorToast, showSuccessToast } from '../../ui/toast/toast';
 
 const Questioner = styled.div`
   font-family: pretendard-bold;
@@ -94,7 +94,7 @@ function QuestionDetailPage() {
     const token = localStorage.getItem(ACCESS_TOKEN);
 
     if (!token) {
-      toast.error('로그인이 필요합니다.');
+      showErrorToast('로그인이 필요합니다.');
       navigate(-1);
     }
     if (questionId) {
@@ -151,7 +151,7 @@ function QuestionDetailPage() {
       .then((response) => {
         console.log('답변 제출 응답:', response.data);
         if (response.data && response.data.statusCode === 'OK') {
-          toast.success('답변이 등록되었습니다.');
+          showSuccessToast('답변이 등록되었습니다.');
           setAnswer(answerRef.current.value);
         }
       })
