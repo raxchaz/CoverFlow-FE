@@ -161,8 +161,9 @@ function QuestionModule({
           <div className="questioner-container">
             <div className="questioner-info">
               <span className="questioner">{questioner}</span>
-              <span className="middle">•</span>
-              <span className="questioner-tag">{questionerTag}</span>
+              <span className="question-answer-day">{formattedDate}</span>
+              {/* <span className="middle">•</span>
+              <span className="questioner-tag">{questionerTag}</span> */}
             </div>
           </div>
 
@@ -186,8 +187,6 @@ function QuestionModule({
               더 자세한 정보를 열람하세요{' '}
             </span>
             <LoginButton onClick={handleLoginClick}>로그인</LoginButton>
-
-            <span className="question-answer-day">{formattedDate}</span>
           </div>
         </div>
       )}

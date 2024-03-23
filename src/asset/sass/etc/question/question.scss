@@ -8,11 +8,14 @@
   letter-spacing: -1px;
   display: flex;
   justify-content: space-between;
-  margin: 5% 0% -5% 10%;
+  margin: -4% 0% -5% 10%;
 }
 
 .questioner-info {
   white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .questioner {
@@ -90,7 +93,6 @@
 
 .question-title {
   display: flex;
-  align-items: left;
   justify-content: flex-start;
   font-family: 'Pretendard-Bold';
   letter-spacing: -1.5px;

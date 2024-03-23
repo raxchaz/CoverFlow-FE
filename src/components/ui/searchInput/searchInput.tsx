@@ -11,13 +11,13 @@ import { conditionalExecution } from '../../../utils/utils';
 import { showErrorToast } from '../toast/toast';
 
 const StyledSearchInput = styled.input`
-  width: 350px;
-  height: 40px;
-  padding: 8px;
+  width: 32rem;
+  height: 3.4rem;
+  padding-left: 1.8rem;
   border: 1px solid #ff8d1d;
   background-color: #fff;
   border-radius: 30px;
-  margin: 5% 0% 0% 24%;
+  margin: 5% 0% 0% 13%;
   outline: none;
 
   &:focus {
