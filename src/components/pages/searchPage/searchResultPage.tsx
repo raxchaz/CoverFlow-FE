@@ -8,7 +8,7 @@ import TabBar from '../../ui/tabBar/tabBar.tsx';
 import '../../../asset/sass/pages/searchPage/searchResultPage.scss';
 import { BASE_URL } from '../../global/constants/index.ts';
 import Plus from '../../../asset/image/plus.svg';
-import Warning from '../../../asset/image/warning.svg';
+import Warning from '../../../asset/image/warning-triangle.svg';
 import { toast } from 'react-toastify';
 import '../../../asset/sass/pages/notificationPage/notificationPage.scss';
 import SearchInput from '../../ui/searchInput/searchInput.tsx';
@@ -64,13 +64,6 @@ const IndustryTag = styled.span`
   margin: 10% 0% 0% -1%;
 `;
 
-const Line = styled.div`
-  height: 13px;
-  background-color: #f2f2f2;
-  width: 103%;
-  margin: 6% 0% 0% -1.5%;
-`;
-
 const ResultsList = styled.ul`
   padding: 10;
   margin-top: 8%;
@@ -112,39 +105,45 @@ const QuestionCount = styled.div`
 `;
 
 interface SearchResultProps {
-  companyId: number;
-  companyName: string;
-  companyType: string;
-  questionCount: number;
+  state: {
+    searchResults: {
+      companyId: number;
+      companyName: string;
+      companyType: string;
+      questionCount: number;
+    }[];
+  };
 }
 
 function SearchResultPage() {
   const navigate = useNavigate();
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  const keyword = queryParams.get('keyword');
-  const [searchResult, setSearchResult] = useState<SearchResultProps[]>([]);
+  const {
+    state: { searchResults },
+  } = useLocation() as SearchResultProps;
+  const companyList = searchResults.map((result) => result.companyName);
+  // const keyword = queryParams.get('keyword');
+  // const [searchResult, setSearchResult] = useState<SearchResultProps[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = Array.from(searchResult)?.slice(
+  const currentItems = Array.from(searchResults)?.slice(
     indexOfFirstItem,
     indexOfLastItem,
   );
 
-  const totalPages = Math.ceil(searchResult.length / itemsPerPage);
+  const totalPages = Math.ceil(searchResults.length / itemsPerPage);
 
   const handleGoBack = () => {
-    navigate(-1);
+    navigate('/search-company');
   };
 
   useEffect(() => {
     async function fetchData() {
       try {
         const response = await fetch(
-          `${BASE_URL}/api/company?pageNo=1&name=${keyword}`,
+          `${BASE_URL}/api/company?pageNo=1&name=${companyList}`,
           {
             method: 'GET',
             headers: {
@@ -152,10 +151,10 @@ function SearchResultPage() {
             },
           },
         );
-        const { data } = await response.json();
-        if (response.ok) {
-          setSearchResult(data.companyList);
-        }
+
+        console.log('respons', response);
+
+        await response.json();
       } catch (error) {
         if (error instanceof Error) toast.error(error.message);
       }
@@ -182,10 +181,9 @@ function SearchResultPage() {
         <ResultsContainer>
           <TitleHeader pageTitle="검색 결과" handleGoBack={handleGoBack} />
           <SearchInput />
-          <Line />
           <ResultCount>
-            기업 검색 결과{' '}
-            <span className="result-count">{searchResult.length}</span>
+            기업 검색 결과
+            <span className="result-count">{companyList.length}</span>
           </ResultCount>
           <ResultsList>
             {currentItems.length > 0 ? (
@@ -213,7 +211,7 @@ function SearchResultPage() {
                   src={Warning}
                   alt="Warning Icon"
                 />
-                <div className="failed-text">검색 결과가 없습니다</div>
+                <div className="failed-text">검색 결과가 없습니다.</div>
                 <div className="failed-text2">
                   코버플로우에 원하는 기업을 등록해 주세요
                 </div>
@@ -228,7 +226,7 @@ function SearchResultPage() {
             )}
           </ResultsList>
           {totalPages >= 1 && (
-            <div className="button-container">
+            <div className="pagination-button-container">
               <div
                 // disabled={currentGroup === 0}
                 style={{ cursor: 'pointer' }}
