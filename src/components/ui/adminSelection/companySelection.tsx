@@ -147,7 +147,7 @@ export default function CompanySelection() {
                 value={selectedCity}
                 onChange={(e) => setSelectedCity(e.target.value)}
               >
-                <option value="">도시 선택</option>
+                <option value=""></option>
                 {city.map((cityName) => (
                   <option key={cityName} value={cityName}>
                     {cityName}
@@ -158,7 +158,7 @@ export default function CompanySelection() {
             <div className="ad-searchOption-item">
               <span className="ad-searchOption-title">시/군/구</span>
               <select className="ad-searchOption-select">
-                <option value="">시/군/구 선택</option>
+                <option value=""></option>
                 {selectedDistrictOptions.map((districtName, index) => (
                   <option key={index} value={districtName}>
                     {districtName}

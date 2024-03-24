@@ -32,6 +32,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-top: 4rem;
 }
 
 .modify-nick {
@@ -39,23 +40,72 @@
   display: flex;
   align-items: center;
   font-family: pretendard-bold;
-  color: #474646;
-  font-size: 19px;
+  color: black;
+  font-size: 1rem;
 }
 .modify-nick-info {
   font-size: 14px;
   margin-top: 2%;
+  width: 100%;
   letter-spacing: -1px;
-  flex-grow: 1; // 남은 공간을 모두 차지하도록 설정
   justify-content: space-between;
   display: flex;
   align-items: center;
 }
 
+.modify-nickname {
+  color: rgba(114, 114, 114, 1);
+  font-family: pretendard-bold;
+  font-size: x-large;
+}
 .modify-info {
-  margin: 10% 0% 0% 12%;
+  margin: 5% 0% 0% 12%;
+  width: 79%;
 }
 
+.modify-nickname-btn {
+  color: rgba(255, 141, 29, 1);
+  font-family: pretendard-bold;
+  font-size: small;
+  padding: 0.3rem 1.5rem;
+  border: 1px solid rgba(255, 141, 29, 1);
+  border-radius: 0.6rem;
+  cursor: pointer;
+}
+
+.modify-info-btn {
+  color: rgba(100, 100, 100, 1);
+  font-family: pretendard-bold;
+  font-size: large;
+  padding: 0.5rem 3rem;
+  margin-right: 1rem;
+  border: 1px solid rgba(100, 100, 100, 1);
+  border-radius: 1rem;
+  cursor: pointer;
+  background-color: white;
+  min-width: 8.4rem;
+
+  &.default {
+    border: 1px solid rgba(100, 100, 100, 1);
+    color: rgba(100, 100, 100, 1);
+  }
+
+  &.selected {
+    border: 1px solid rgba(255, 141, 29, 1);
+    color: rgba(255, 141, 29, 1);
+  }
+}
+
+.modify-info-wrapper {
+  font-size: 14px;
+  margin-top: 2%;
+  width: 100%;
+  letter-spacing: -1px;
+  justify-content: flex-start;
+  display: flex;
+  align-items: center;
+  overflow: visible;
+}
 //= ===========================
 
 .secessionPage-container {
@@ -73,15 +123,17 @@
   color: #474646;
 }
 .userSecession-info {
-  font-size: 14px;
+  font-size: 0.7rem;
+  color: rgba(100, 100, 100, 1);
   margin-top: 1%;
   letter-spacing: -1px;
-  flex-grow: 1; // 남은 공간을 모두 차지하도록 설정
+  flex-grow: 1;
   justify-content: space-between;
   display: flex;
   align-items: center;
 }
 
 .secessionUser-info {
-  margin: 10% 0% 0% 12%;
+  margin: 4% 0% 0% 12%;
+  width: 79%;
 }

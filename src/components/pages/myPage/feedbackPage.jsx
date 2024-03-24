@@ -68,7 +68,7 @@ function FeedbackPage() {
 
         <Button
           variant={'round'}
-          disabled={contact === ''}
+          disabled={contact === '' || contact.length < 11}
           onClick={submitFeedback}
         >
           제출하기

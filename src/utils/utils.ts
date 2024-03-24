@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { ACCESS_TOKEN } from '../components/global/constants';
 
 export const tryCatch = (
@@ -19,6 +20,16 @@ interface ConditionProps {
 export const conditionalExecution = (conditions: ConditionProps[]) => {
   const condition = conditions.find(({ test }) => test());
   return condition ? condition.execute() : null;
+};
+
+export const goBackToPrev = () => {
+  const navigate = useNavigate();
+  navigate(-1);
+};
+
+export const goBackToMain = () => {
+  const navigate = useNavigate();
+  navigate('/');
 };
 
 export const setHeaders = () => {

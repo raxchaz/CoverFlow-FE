@@ -10,13 +10,13 @@ function ContactPage() {
   const navigate = useNavigate();
 
   const handleGoBack = () => {
-    navigate(-1);
+    navigate('/');
   };
 
   return (
     <StyledPage className="main-page-container">
       <StyledHeader>
-        <TitleHeader pageTitle="문의사항" handleGoBack={handleGoBack} />
+        <TitleHeader pageTitle="문의하기" handleGoBack={handleGoBack} />
         <ContactSlider />
       </StyledHeader>
       <TabBar />

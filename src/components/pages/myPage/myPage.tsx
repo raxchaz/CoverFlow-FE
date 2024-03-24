@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import '../../../asset/sass/pages/myPage/myPage.scss';
+import MyAnswer from '../../ui/myPageSelection/myAnswer';
+import MyQuestion from '../../ui/myPageSelection/myQuestion';
 
 import { ReactComponent as StoreIcon } from '../../../asset/image/store.svg';
 import { ReactComponent as EditIcon } from '../../../asset/image/edit.svg';
@@ -14,7 +16,7 @@ import { setLoggedIn } from '../../../store/actions/userActions';
 import { ACCESS_TOKEN, REFRESH_TOKEN, BASE_URL } from '../../global/constants';
 import TabBar from '../../ui/tabBar/tabBar';
 import TitleHeader from '../../ui/header/titleHeader';
-// import { toast } from 'react-toastify';
+import { showErrorToast } from '../../ui/toast/toast';
 import { useDispatch } from 'react-redux';
 
 /* 스타일 컴포넌트 정의 */
@@ -90,6 +92,7 @@ function Mypage() {
     } else {
       console.log('사용자 정보 로딩 시작');
       loadUserData();
+      loadUserAnswer();
     }
   }, [navigate]);
 
@@ -105,12 +108,25 @@ function Mypage() {
       .then((response) => response.json())
       .then((data) => {
         console.log('사용자 정보:', data);
-        setNickname(data.nickname);
+        setNickname(data.data.nickname);
       })
-      .catch((error) => {
-        // toast.error('회원 정보 불러오기 실패:', error)
-        console.log(error);
-      });
+      .catch(() => showErrorToast('회원 정보 불러오기 실패'));
+  };
+
+  const loadUserAnswer = () => {
+    fetch(`${BASE_URL}/api/question/me?pageNo=0&criterion=createdAt`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('사용자 정보:', data);
+        setNickname(data.data.nickname);
+      })
+      .catch(() => showErrorToast('회원 정보 불러오기 실패'));
   };
 
   /* 로그아웃 버튼을 클릭했을 경우, 서버로 로그아웃 API를 요청한 후,
@@ -168,6 +184,8 @@ function Mypage() {
     navigate('/info-edit', { state: { nickname } });
   };
 
+  const [questionCnt, setQuestionCnt] = useState(0);
+  const [answerCnt, setAnswerCnt] = useState(0);
   /* ========================================================= */
 
   return (
@@ -178,17 +196,12 @@ function Mypage() {
 
           <div className="title-container">
             <div className="title">
-              {nickname}지루한 감자튀김
+              {nickname}
               <span className="title-intro">님, 안녕하세요</span>
             </div>
             <span className="login-status">카카오 로그인 사용 중</span>
           </div>
-          {/* <PremiunButton
-            className="premium-button"
-            onClick={handlePremiumButtonClick}
-          >
-            프리미엄 이용하기
-          </PremiunButton> */}
+
           <div className="mypage-select-menu">
             <div className="menu" onClick={goToContact}>
               <NoticeIcon />
@@ -216,17 +229,21 @@ function Mypage() {
               current={currentCategory === 'comments'}
               onClick={() => setCurrentCategory('comments')}
             >
-              내가 남긴 질문
+              내가 남긴 질문<span className="my-cnt">{questionCnt}</span>
             </StatusTab>
             <StatusTab
               current={currentCategory === 'posts'}
               onClick={() => setCurrentCategory('posts')}
             >
-              내가 남긴 답변
+              내가 남긴 답변<span className="my-cnt">{answerCnt}</span>
             </StatusTab>
           </StatusBar>
 
-          {currentCategory === 'comments' ? <div></div> : <div></div>}
+          {currentCategory === 'comments' ? (
+            <MyQuestion setQuestionCnt={setQuestionCnt} />
+          ) : (
+            <MyAnswer setAnswerCnt={setAnswerCnt} />
+          )}
           <LogoutButton className="logout-button" onClick={handleLogout}>
             로그아웃
           </LogoutButton>

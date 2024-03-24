@@ -10,34 +10,40 @@ import { BASE_URL, ACCESS_TOKEN } from '../../global/constants';
 
 const Divider = styled.div`
   height: 1px;
-  background-color: #ccc;
-  width: 80%;
-  margin: 10% 0% 0% 10%;
+  background-color: rgba(217, 217, 217, 1);
+  width: 79%;
+  margin: 5% 0% 0% 12%;
 `;
 
-const NickModifyBtn = styled.button`
+const ModifyInfoBtn = styled.button`
   cursor: pointer;
-  padding: 5px 8px;
+  padding: 7px 8px;
   font-family: pretendard-light;
   border-radius: 1px;
-  width: 170%;
-  margin-bottom: 10%;
+  width: 79%;
+  margin: 5% 0% 0% 12%;
 `;
 
 const SecessionBtn = styled.button`
   cursor: pointer;
-  padding: 5px 8px;
+  padding: 7px 8px;
   font-family: pretendard-light;
   border-radius: 1px;
-  margin: 2% 0% 0% 0%;
-  width: 110%;
+  margin: 5% 0% 20% 0%;
+  width: 100%;
 `;
 
 function InfoEditPage() {
   const navigate = useNavigate();
   // const [userInfo, setUserInfo] = useState({ socialType: ' ' });
   const [nickname, setNickname] = useState('');
-  const [socialType, setSocialType] = useState('');
+  const [selectedTag, setSelectedTag] = useState('');
+  const [selectedGender, setSelectedGender] = useState('');
+  const [selectedAge, setSelectedAge] = useState('');
+
+  const handleSelectTag = (tag) => setSelectedTag(tag);
+  const handleSelectGender = (gender) => setSelectedGender(gender);
+  const handleSelectAge = (age) => setSelectedAge(age);
 
   /* 사용자의 토큰이 존재한다면, 사용자의 정보를 가져옵니다. */
   useEffect(() => {
@@ -66,27 +72,26 @@ function InfoEditPage() {
       .then((data) => {
         console.log('사용자 정보:', data);
         setNickname(data.data.nickname);
-        setSocialType(data.data.socialType);
       })
       .catch((error) => console.error('회원 정보 불러오기 실패:', error));
   };
 
-  const renderSocialType = (type) => {
-    switch (type) {
-      case 'GOOGLE':
-        return <div className="socialType-ui">구글 로그인 사용 중</div>;
-      case 'KAKAO':
-        return <div className="socialType-ui">카카오 로그인 사용 중</div>;
-      case 'NAVER':
-        return <div className="socialType-ui">네이버 로그인 사용 중</div>;
+  // const renderSocialType = (type) => {
+  //   switch (type) {
+  //     case 'GOOGLE':
+  //       return <div className="socialType-ui">구글 로그인 사용 중</div>;
+  //     case 'KAKAO':
+  //       return <div className="socialType-ui">카카오 로그인 사용 중</div>;
+  //     case 'NAVER':
+  //       return <div className="socialType-ui">네이버 로그인 사용 중</div>;
 
-      default:
-        return null;
-    }
-  };
+  //     default:
+  //       return null;
+  //   }
+  // };
 
   const handleGoBack = () => {
-    navigate(-1);
+    navigate('/');
   };
 
   const goToSecessionPage = () => {
@@ -122,30 +127,80 @@ function InfoEditPage() {
         <TitleHeader pageTitle="내 정보 수정" handleGoBack={handleGoBack} />
         <UserInfoHeader />
 
-        <span className="user-nick-cover">
-          <div className="user-nick-title">
-            {' '}
-            {nickname}
-            <span className="infotitle">님</span>
-          </div>
-          <div className="socialType-ui">{renderSocialType(socialType)}</div>
-        </span>
-
-        <Divider />
         <div className="modify-nick-container">
           <div className="modify-info">
-            <div className="modify-nick">닉네임 변경</div>
+            <span className="modify-nick">닉네임</span>
             <div className="modify-nick-info">
-              변경 버튼을 누르면, 붕어빵 20개가 차감되며 <br /> 다른 랜덤
-              닉네임으로 변경됩니다
+              <span className="modify-nickname">뚱뚱한 돼지찌개</span>
+              <div
+                className="modify-nickname-btn"
+                onClick={handleModifyNickname}
+              >
+                변경
+              </div>
             </div>
-            <NickModifyBtn onClick={handleModifyNickname}> 변경 </NickModifyBtn>
           </div>
         </div>
+        <Divider />
+        <div className="modify-info">
+          <span className="modify-nick">회원 태그</span>
+          <div className="modify-info-wrapper">
+            {['취준생', '현업자'].map((tag) => (
+              <div
+                key={tag}
+                className={`modify-info-btn ${selectedTag === tag ? 'selected' : 'default'}`}
+                onClick={() => handleSelectTag(tag)}
+              >
+                {tag}
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="modify-info">
+          <span className="modify-nick">성별</span>
+          <div className="modify-info-wrapper">
+            {['여성', '남성', '밝히고 싶지 않음'].map((gender) => (
+              <div
+                key={gender}
+                className={`modify-info-btn ${selectedGender === gender ? 'selected' : 'default'}`}
+                onClick={() => handleSelectGender(gender)}
+              >
+                {gender}
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="modify-info">
+          <span className="modify-nick">연령대</span>
+          <div className="modify-info-wrapper">
+            {['10대', '20대', '30대'].map((age) => (
+              <div
+                key={age}
+                className={`modify-info-btn ${selectedAge === age ? 'selected' : 'default'}`}
+                onClick={() => handleSelectAge(age)}
+              >
+                {age}
+              </div>
+            ))}
+          </div>
+          <div className="modify-info-wrapper">
+            {['40대', '50대', '60대'].map((age) => (
+              <div
+                key={age}
+                className={`modify-info-btn ${selectedAge === age ? 'selected' : 'default'}`}
+                onClick={() => handleSelectAge(age)}
+              >
+                {age}
+              </div>
+            ))}
+          </div>
+        </div>
+        <ModifyInfoBtn>저장</ModifyInfoBtn>
+        <Divider />
 
         <div className="secessionPage-container">
           <div className="secessionUser-info">
-            <div className="userSecession">회원 탈퇴</div>
+            <div className="modify-nick">회원 탈퇴</div>
             <div className="userSecession-info">
               회원 탈퇴를 할 경우, 계정을 되돌릴 수 없고 모든 데이터가
               삭제됩니다

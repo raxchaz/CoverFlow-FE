@@ -150,12 +150,14 @@ export default function ContactList({
                     <div className="inquiry-content-question">
                       {item.inquiryContent}
                     </div>
-                    <div className="inquiry-content-answer">
-                      <div className="inquiry-content-answer-tag">
-                        코버플로우
+                    {item.inquiryAnswer != null && (
+                      <div className="inquiry-content-answer">
+                        <div className="inquiry-content-answer-tag">
+                          코버플로우
+                        </div>
+                        {item.inquiryAnswer}
                       </div>
-                      {item.inquiryAnswer}
-                    </div>
+                    )}
                   </div>
                 )}
               </div>

@@ -15,8 +15,35 @@
 
 .fish-disclaimer {
   font-family: pretendard-bold;
-  font-size: large;
-  color: rgba(129, 129, 129, 1);
+  font-size: x-large;
+  color: black;
   padding-top: 1rem;
   letter-spacing: -1px;
+}
+
+.fish-purchase-item {
+  width: 100%;
+  box-shadow: 1px 2px 2px 0px rgba(0, 0, 0, 0.1);
+  height: 6rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 3% 0;
+}
+
+.fishbun-cnt {
+  font-family: pretendard-bold;
+  font-size: large;
+  padding-bottom: 0.2rem;
+}
+
+.fishbun-price {
+  font-family: pretendard-bold;
+  font-size: small;
+
+  span {
+    font-family: pretendard-regular;
+    color: gray;
+    padding-left: 0.5rem;
+  }
 }
