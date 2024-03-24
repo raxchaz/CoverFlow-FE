@@ -48,7 +48,7 @@ const ContentBlur = styled.span<{ $isLoggedIn: boolean }>`
       -webkit-box-orient: vertical;
       -webkit-line-clamp: 2;
       overflow: hidden;
-      filter: blur(5px);
+      /* filter: blur(5px); */
       text-overflow: ellipsis;
     `}
 `;
@@ -128,6 +128,7 @@ function QuestionModule({
 
   const formattedDate = formatDate(createAt);
 
+  console.log(reward);
   return (
     <>
       {isLoggedIn ? (
@@ -140,14 +141,20 @@ function QuestionModule({
               <span className="questioner-tag">{questionerTag}</span>
             </div>
           </div>
-
           <div className="view-container">
             <img className="chat-img" src={Chat} />
             <span className="chat-count">{answerCount}</span>
             <img className="view-img" src={View} />
-          </div>
+          </div>{' '}
           <div className="field">
             <span className="question-title">
+              <div
+                style={{
+                  background: 'red',
+                }}
+              >
+                {reward}
+              </div>
               <img className="question-img" src={Questitle} />{' '}
               {truncateTitle(questionTitle)}
             </span>
@@ -163,23 +170,24 @@ function QuestionModule({
         <div className="question-container">
           <div className="questioner-container">
             <div className="questioner-info">
-              <img src={Tree} alt="tree" />
+              <img src={Tree} alt="" />
               <span className="questioner">{questioner}</span>
+              <span className="middle">•</span>
               <span className="question-answer-day">{formattedDate}</span>
-              {/* <span className="middle">•</span>
-              <span className="questioner-tag">{questionerTag}</span> */}
+              {/*
+              <span className="question-answer-day">{formattedDate}</span>
+               */}
             </div>
           </div>
 
-          <div className="view-container">
+          {/* <div className="view-container">
             <img className="chat-img" src={Chat} />
             <span className="chat-count">{answerCount}</span>
 
             <img className="view-img" src={View} />
-          </div>
+          </div> */}
           <div className="field">
             <span className="question-title">
-              <div className="reward">{reward}</div>
               {truncateTitle(questionTitle)}
             </span>
 
