@@ -70,7 +70,7 @@ const PremiumPage = () => {
       {
         <div className="premium-container">
           <div className="premium-wrapper">
-            <div className="company">코버플로우</div>
+            <div className="premium-company">코버플로우</div>
             <div className="price">9,900원</div>
             <div className="point">포인트</div>
             <div className="benefit">혜택 보기</div>

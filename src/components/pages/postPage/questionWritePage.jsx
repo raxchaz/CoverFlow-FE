@@ -6,7 +6,7 @@ import TabBar from '../../ui/tabBar/tabBar.jsx';
 import TagInput from '../../ui/selection/fishTag.jsx';
 import '../../../asset/sass/pages/postPage/questionWritePage.scss';
 import { BASE_URL, ACCESS_TOKEN } from '../../global/constants/index.js';
-import { toast } from 'react-toastify';
+import { showErrorToast, showSuccessToast } from '../../ui/toast.tsx';
 
 function QuestionWritePage() {
   const navigate = useNavigate();
@@ -45,13 +45,13 @@ function QuestionWritePage() {
 
       if (response.ok) {
         await response.json();
-        toast.success('질문이 등록되었습니다');
+        showSuccessToast('질문이 등록되었습니다');
         navigate('/company-info/:companyId');
       } else {
         throw new Error('서버 에러');
       }
     } catch (error) {
-      toast.error('등록 실패:', error);
+      showErrorToast('등록 실패:', error);
     }
   };
 

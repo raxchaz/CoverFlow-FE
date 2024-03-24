@@ -52,17 +52,14 @@ const QuestionButton = styled.button`
   letter-spacing: -0.7px;
   background-color: #ff8d1d !important;
   /* border-radius: 3px; */
-  font-weight: 900;
-  font-size: 0.9rem;
+  font-weight: 600;
+  font-size: 0.7rem;
   /* border-radius: 7px; */
   /* padding: 1% 2% 1% 2%; */
   /* margin: 10% 13% 5% 0%; */
-  margin: 0;
-  padding: 0;
-  width: 105px;
-  height: 35px;
+
   border-radius: 0;
-  /* font-family: 'Pretendard-ExtraLight'; */
+  font-family: 'Pretendard-ExtraLight' !important;
 `;
 
 const QuestionList = styled.div`
@@ -141,8 +138,6 @@ function CompanyInfoPage() {
   //   }
   // }, [error, navigate]);
 
-  console.log(companyData?.questions);
-
   const handleQuestionClick = () => {
     const token = localStorage.getItem(ACCESS_TOKEN);
 
@@ -160,7 +155,7 @@ function CompanyInfoPage() {
   return (
     <StyledPage className="main-page-container">
       <StyledHeader>
-        <TitleHeader pageTitle="기업 상세" handleGoBack={handleGoBack} />
+        <TitleHeader pageTitle="검색 결과" handleGoBack={handleGoBack} />
         <UserInfoHeader />
         <SearchInput />
       </StyledHeader>
@@ -175,9 +170,8 @@ function CompanyInfoPage() {
                 <span>에 관련된 질문들을 모아봤어요</span>
                 {/* <CompanyType>{companyData?.companyType}</CompanyType> */}
               </div>
-
               <QuestionButton onClick={handleQuestionClick}>
-                <span>질문하기</span>
+                질문하기
               </QuestionButton>
 
               <div className="sub-info">
@@ -190,16 +184,35 @@ function CompanyInfoPage() {
           </CompanyContainer>
           <div className="selected-category">
             <div className="selected-category-item">
-              <div>사내문화</div>
-              <div>급여 연봉</div>
-              <div>업무 방식</div>
+              <div>
+                사내
+                <br />
+                문화
+              </div>
+              <div>
+                급여
+                <br />
+                연봉
+              </div>
+              <div>
+                업무
+                <br />
+                방식
+              </div>
             </div>
             <div className="selected-category-item">
-              <div>승진 커리어</div>
-              <div>직무 워라밸</div>
+              <div>
+                승진
+                <br />
+                커리어
+              </div>
+              <div>
+                직무
+                <br />
+                워라밸
+              </div>
             </div>
           </div>
-
           <Line />
 
           <div className="question-info-container">
