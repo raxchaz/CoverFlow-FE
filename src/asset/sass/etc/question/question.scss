@@ -8,7 +8,7 @@
   letter-spacing: -1px;
   display: flex;
   justify-content: space-between;
-  margin: -4% 0% -5% 10%;
+  margin: -4% 0% -5% 13%;
 }
 
 .questioner-info {
@@ -21,7 +21,7 @@
 .questioner {
   font-weight: 900;
   color: #000;
-  margin-left: 10%;
+  // margin-left: 10%;
 }
 
 .middle {
@@ -101,6 +101,15 @@
   font-size: 20px;
   white-space: nowrap;
   margin: 8% 0% 0% 13%;
+  align-items: center;
+  gap: 10px;
+}
+
+.reward {
+  border-radius: 5px;
+  background-color: #d9d9d9;
+  padding: 5px 10px;
+  font-family: 'Pretendard';
 }
 
 .question-content {
