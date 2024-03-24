@@ -9,9 +9,10 @@ import '../../../asset/sass/pages/searchPage/searchResultPage.scss';
 import { BASE_URL } from '../../global/constants/index.ts';
 import Plus from '../../../asset/image/plus.svg';
 import Warning from '../../../asset/image/warning-triangle.svg';
-import { toast } from 'react-toastify';
 import '../../../asset/sass/pages/notificationPage/notificationPage.scss';
 import SearchInput from '../../ui/searchInput/searchInput.tsx';
+import axios from 'axios';
+import { showErrorToast } from '../../ui/toast/toast.tsx';
 
 const ResultsContainer = styled.div`
   position: relative;
@@ -56,6 +57,11 @@ const ResultItem = styled.li`
     background-color: #007bff;
     border-radius: 50%;
   }
+`;
+
+const IndustryTagContainer = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 const IndustryTag = styled.span`
@@ -115,6 +121,8 @@ interface SearchResultProps {
   };
 }
 
+type PageProps = 'prev' | 'next';
+
 function SearchResultPage() {
   const navigate = useNavigate();
   const {
@@ -140,25 +148,18 @@ function SearchResultPage() {
   };
 
   useEffect(() => {
-    async function fetchData() {
+    const fetchData = async () => {
       try {
-        const response = await fetch(
+        await axios.get(
           `${BASE_URL}/api/company?pageNo=1&name=${companyList}`,
           {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-            },
+            headers: { 'Content-Type': 'application/json' },
           },
         );
-
-        console.log('respons', response);
-
-        await response.json();
       } catch (error) {
-        if (error instanceof Error) toast.error(error.message);
+        showErrorToast(`${error}`);
       }
-    }
+    };
 
     fetchData();
   }, [location.search]);
@@ -167,7 +168,7 @@ function SearchResultPage() {
     navigate(`/company-info/${companyId}`);
   };
 
-  const handlePagination = (type: 'prev' | 'next') => {
+  const handlePagination = (type: PageProps) => {
     if (type === 'prev') {
       setCurrentPage(currentPage - 1);
     } else if (type === 'next') {
@@ -187,21 +188,16 @@ function SearchResultPage() {
           </ResultCount>
           <ResultsList>
             {currentItems.length > 0 ? (
-              currentItems.map((data) => (
+              currentItems.map((item) => (
                 <ResultItem
-                  key={data.companyId}
-                  onClick={() => goToResultDetailPage(data.companyId)}
+                  key={item.companyId}
+                  onClick={() => goToResultDetailPage(item.companyId)}
                 >
-                  <div
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                    }}
-                  >
-                    <span>{data.companyName}</span>
-                    <IndustryTag>업종 : {data.companyType}</IndustryTag>
-                  </div>
-                  <QuestionCount>{data.questionCount}</QuestionCount>
+                  <IndustryTagContainer>
+                    <span>{item.companyName}</span>
+                    <IndustryTag>업종 : {item.companyType}</IndustryTag>
+                  </IndustryTagContainer>
+                  <QuestionCount>{item.questionCount}</QuestionCount>
                 </ResultItem>
               ))
             ) : (
@@ -228,7 +224,6 @@ function SearchResultPage() {
           {totalPages >= 1 && (
             <div className="pagination-button-container">
               <div
-                // disabled={currentGroup === 0}
                 style={{ cursor: 'pointer' }}
                 onClick={() => handlePagination('prev')}
               >

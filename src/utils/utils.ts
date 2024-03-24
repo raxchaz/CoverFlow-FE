@@ -1,4 +1,6 @@
 import { useNavigate } from 'react-router-dom';
+import { ACCESS_TOKEN } from '../components/global/constants';
+
 export const tryCatch = (
   f: () => void,
   errorHandler: (error: unknown) => void,
@@ -28,4 +30,13 @@ export const goBackToPrev = () => {
 export const goBackToMain = () => {
   const navigate = useNavigate();
   navigate('/');
+};
+
+export const setHeaders = () => {
+  return {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
+    },
+  };
 };

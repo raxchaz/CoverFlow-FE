@@ -7,6 +7,9 @@ import { StyledPage, StyledHeader } from '../../../styledComponent.js';
 import TitleHeader from '../../ui/header/titleHeader';
 import TabBar from '../../ui/tabBar/tabBar';
 import { toast } from 'react-toastify';
+import { city, type } from '../../global/constants/companyOption.ts';
+import { setHeaders } from '../../../utils/utils';
+import { showErrorToast, showSuccessToast } from '../../ui/toast/toast.tsx';
 
 interface CompanyInfoProps {
   name: string;
@@ -18,47 +21,15 @@ interface CompanyInfoProps {
 
 function CompanyRegistPage() {
   const navigate = useNavigate();
+  const headers = setHeaders();
 
-  const [companyInfo, setCompanyInfo] = useState<CompanyInfoProps>({
+  const [companyInfo, setCompanyInfo] = useState({
     name: '',
     type: '',
     city: '',
     district: '',
     establishment: '',
   });
-
-  const type = [
-    '서비스업',
-    '제조／화학',
-    '의료／제약／복지',
-    '유통／무역／운송',
-    '교육업',
-    '건설업',
-    'IT / 웹 / 통신',
-    '미디어 / 디자인',
-    '은행 / 금융업',
-    '기관 / 협회',
-    '미디어 및 엔터테인먼트',
-  ];
-  const city = [
-    '서울특별시',
-    '부산광역시',
-    '대구광역시',
-    '인천광역시',
-    '광주광역시',
-    '대전광역시',
-    '울산광역시',
-    '세종특별자치시',
-    '경기도',
-    '강원도',
-    '충청북도',
-    '충청남도',
-    '전라북도',
-    '전라남도',
-    '경상북도',
-    '경상남도',
-    '제주특별자치도',
-  ];
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -79,31 +50,23 @@ function CompanyRegistPage() {
   };
 
   const checkRequiredFields = (info: CompanyInfoProps) => {
-    if (info.name === '' || info.city === '' || info.type === '') {
+    const { name, city, type, district } = info;
+    if (name && city && type && district) {
       toast.error('필수 필드를 모두 입력해주세요.');
     }
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // console.log('기업 정보 제출 중:', companyInfo);
-
     checkRequiredFields(companyInfo);
 
-    axios
-      .post(`${BASE_URL}/api/company`, companyInfo, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      .then((response) => {
-        console.log('서버 응답:', response.data);
-        navigate('/search-company');
-        toast.success('기업 등록이 완료되었어요!');
-      })
-      .catch(() => {
-        toast.error('기업 등록에 실패했어요');
-      });
+    try {
+      await axios.post(`${BASE_URL}/api/company`, companyInfo, headers);
+      showSuccessToast('기업 등록이 완료되었어요!');
+      navigate('/search-company');
+    } catch (error) {
+      showErrorToast(`기업 등록에 실패했어요. ${error}`);
+    }
   };
 
   const handleGoBack = () => {

@@ -13,6 +13,8 @@ import { BASE_URL, ACCESS_TOKEN } from '../../global/constants';
 // import Questitle from '../../../asset/image/questitle.svg';
 // import Report from '../../../asset/image/report.svg';
 import Tree from '../../../asset/image/nature-ecology-tree-3--tree-plant-cloud-shape-park.svg';
+import { toast } from 'react-toastify';
+import { showErrorToast } from '../../ui/toast/toast';
 
 const Questioner = styled.div`
   font-family: pretendard-bold;
@@ -78,7 +80,6 @@ function QuestionDetailPage() {
   });
 
   const { questionId } = useParams();
-  console.log('id', questionId);
 
   function formatDate(fullDate) {
     const date = new Date(fullDate);
@@ -93,7 +94,7 @@ function QuestionDetailPage() {
     const token = localStorage.getItem(ACCESS_TOKEN);
 
     if (!token) {
-      alert('로그인이 필요합니다.');
+      toast.error('로그인이 필요합니다.');
       navigate(-1);
     }
     if (questionId) {
@@ -111,18 +112,18 @@ function QuestionDetailPage() {
       })
       .then((response) => {
         if (response.data && response.data.statusCode === 'OK') {
-          console.log(response.data);
           const questionData = response.data.data;
           const updatedQuestionDetail = {
             ...questionData,
             answers: [...questionData.answers],
           };
-          console.log(updatedQuestionDetail);
+
           setQuestionDetail(updatedQuestionDetail);
         }
       })
       .catch((error) => {
-        console.error('질문과 답변을 불러오는데 실패했습니다.', error);
+        // console.error('질문과 답변을 불러오는데 실패했습니다.', error);
+        showErrorToast(`질문과 답변을 불러오는데 실패했습니다. : ${error}`);
       });
   };
 
@@ -150,8 +151,7 @@ function QuestionDetailPage() {
       .then((response) => {
         console.log('답변 제출 응답:', response.data);
         if (response.data && response.data.statusCode === 'OK') {
-          console.log('답변이 성공적으로 등록되었습니다.');
-          alert('답변이 등록되었습니다.');
+          toast.success('답변이 등록되었습니다.');
           setAnswer(answerRef.current.value);
         }
       })
