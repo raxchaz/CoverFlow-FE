@@ -79,7 +79,6 @@ export const fetchAPI = async (endpoint, method, body = null) => {
     headers.append('Authorization-refresh', `Bearer ${refreshToken}`);
   } else if (accessToken) {
     headers.append('Authorization', `Bearer ${accessToken}`);
-    console.log('액토만 추가');
   }
 
   const response = await fetch(apiLink, {

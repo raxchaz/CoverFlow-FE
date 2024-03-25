@@ -6,7 +6,6 @@ import Disclamier from './disclamier.jsx';
 import ContactList from './contactList.jsx';
 import Button from '../button/Button/Button.jsx';
 import { fetchAPI } from '../../global/utils/apiUtil.js';
-import { store } from '../../../store/index.js';
 import TextArea from '../inputbox/TextArea.jsx';
 import { showSuccessToast, showErrorToast } from '../toast/toast.tsx';
 // import { BASE_URL, ACCESS_TOKEN } from '../../global/constants/index.js';
@@ -38,7 +37,6 @@ export default function ContactSlider() {
   useEffect(() => {
     loadUserData();
   }, [navigate]);
-  console.log(store.getState());
 
   const [currentSection, setCurrentSection] = useState('contact');
   const [contact, setcontact] = useState({
@@ -55,7 +53,6 @@ export default function ContactSlider() {
         `/api/inquiry/me?pageNo=${currentPageAPI}`,
         'GET',
       );
-      console.log('내 문의 내역:', data);
       setContactList(data.data.inquiries);
       setTotalPage(data.data.totalPage);
     } catch (error) {
@@ -66,7 +63,6 @@ export default function ContactSlider() {
   const submitContact = async () => {
     try {
       const res = await fetchAPI('/api/inquiry', 'POST', contact);
-      console.log(res, 'post 결과');
       if (res.statusCode === 'CREATED') {
         setCurrentSection('contactList');
         setcontact({
@@ -77,7 +73,6 @@ export default function ContactSlider() {
         showSuccessToast('문의 등록이 완료되었습니다!');
       }
     } catch (error) {
-      // alert('문의 등록 실패:', error);
       showErrorToast('문의 등록에 실패했습니다.', error);
     }
   };
@@ -94,7 +89,7 @@ export default function ContactSlider() {
 
   return (
     <div>
-      <div className="contact-border"></div>
+      {currentSection === 'contact' && <div className="contact-border"></div>}
       <div className="slider-container">
         <StatusBar>
           <StatusTab

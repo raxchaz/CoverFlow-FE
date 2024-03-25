@@ -31,8 +31,6 @@ function FeedbackPage() {
         },
         body: JSON.stringify({ content: contact }),
       });
-      const res = await response.json();
-      console.log(res, 'post 결과');
 
       if (response.status === 201) {
         showSuccessToast('피드백 등록이 완료되었습니다!');
