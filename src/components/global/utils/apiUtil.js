@@ -79,6 +79,7 @@ export const fetchAPI = async (endpoint, method, body = null) => {
     headers.append('Authorization-refresh', `Bearer ${refreshToken}`);
   } else if (accessToken) {
     headers.append('Authorization', `Bearer ${accessToken}`);
+    console.log('액토만 추가');
   }
 
   const response = await fetch(apiLink, {
@@ -89,7 +90,7 @@ export const fetchAPI = async (endpoint, method, body = null) => {
   const responseData = await response.json();
 
   if (!response.ok) {
-    throw new Error(response.message || '요청 처리 실패');
+    throw new Error('요청 처리 실패', response.message);
   } else {
     // 응답 헤더에서 새로운 액세스 토큰과 리프레시 토큰을 확인하고 저장
     if (isTokenExpired()) {

@@ -3,6 +3,7 @@ import './myComponent.scss';
 import AdminPagination from '../adminSelection/adminPagination';
 import { BASE_URL, ACCESS_TOKEN } from '../../global/constants';
 import { showErrorToast } from '../toast/toast';
+// import { useNavigate } from 'react-router-dom';
 
 interface Answer {
   answerId: number;
@@ -16,7 +17,9 @@ interface Answer {
 }
 interface Data {
   totalPages: number;
+  totalElements: number;
   answers: Answer[];
+  statusCode: string;
 }
 
 interface ApiResponse {
@@ -25,17 +28,20 @@ interface ApiResponse {
 }
 interface MyAnswerProps {
   setAnswerCnt: (cnt: number) => void;
+  initiateAnswer: Answer[];
 }
-export default function MyAnswer({ setAnswerCnt }: MyAnswerProps) {
+export default function MyAnswer({
+  setAnswerCnt,
+  initiateAnswer,
+}: MyAnswerProps) {
+  // const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(0);
-
+  const [totalPages, setTotalPages] = useState(0);
+  const [answer, setAnswer] = useState<Answer[]>(initiateAnswer);
   useEffect(() => {
-    loadUserQuestion(currentPage);
+    loadUserAnswer(currentPage);
     console.log('answer:', answer);
   }, [currentPage]);
-
-  const [totalPages, setTotalPages] = useState(0);
-  const [answer, setAnswer] = useState<Answer[]>([]);
 
   const handlePagination = (direction) => {
     if (direction === 'prev' && currentPage > 0) {
@@ -47,8 +53,8 @@ export default function MyAnswer({ setAnswerCnt }: MyAnswerProps) {
     }
   };
 
-  const loadUserQuestion = (pageNo: number) => {
-    fetch(`${BASE_URL}/api/answer/admin?pageNo=${pageNo}&criterion=createdAt`, {
+  const loadUserAnswer = (pageNo: number) => {
+    fetch(`${BASE_URL}/api/answer/me?pageNo=${pageNo}&criterion=createdAt`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -60,7 +66,7 @@ export default function MyAnswer({ setAnswerCnt }: MyAnswerProps) {
         console.log('사용자 답변:', data);
         setAnswer(data.data.answers);
         setTotalPages(data.data.totalPages);
-        setAnswerCnt(data.data.answers.length);
+        setAnswerCnt(data.data.totalElements);
       })
       .catch(() => showErrorToast('답변 불러오기 실패:'));
   };
@@ -68,14 +74,18 @@ export default function MyAnswer({ setAnswerCnt }: MyAnswerProps) {
   return (
     <div className="my-component-width">
       {answer?.map((q) => (
-        <div className="answer-item" key={q.answerId}>
-          <div className="answer-item-title">{q.answerContent}</div>
-          <div className="answer-item-content">{q.answererNickname}</div>
+        <div className="question-item" key={q.answerId}>
+          <div className="question-text">
+            <div className="question-item-title">{q.questionTitle}</div>
+            <div className="question-item-content">{q.answerContent}</div>
+          </div>
+          <div className="quetion-tag">{q.companyName}</div>
         </div>
       ))}
 
-      {answer.length > 1 && (
+      {answer && (
         <AdminPagination
+          className="my-question-pagination"
           currentPage={currentPage}
           totalPages={totalPages}
           handlePagination={handlePagination}

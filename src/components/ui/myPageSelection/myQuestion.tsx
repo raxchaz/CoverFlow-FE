@@ -3,6 +3,7 @@ import './myComponent.scss';
 import AdminPagination from '../adminSelection/adminPagination';
 import { BASE_URL, ACCESS_TOKEN } from '../../global/constants';
 import { showErrorToast } from '../toast/toast';
+// import { useNavigate } from 'react-router-dom';
 
 interface Questions {
   questionId: number;
@@ -20,6 +21,8 @@ interface Questions {
 
 interface Data {
   totalPages: number;
+  totalElements: number;
+  statusCode: string;
   questions: Questions[];
 }
 
@@ -29,17 +32,21 @@ interface ApiResponse {
 }
 interface MyQuestionProps {
   setQuestionCnt: (cnt: number) => void;
+  initiateQuestion: Questions[];
 }
-export default function MyQuestion({ setQuestionCnt }: MyQuestionProps) {
+export default function MyQuestion({
+  setQuestionCnt,
+  initiateQuestion,
+}: MyQuestionProps) {
   const [currentPage, setCurrentPage] = useState(0);
 
   useEffect(() => {
     loadUserQuestion(currentPage);
-    console.log('question:', question);
   }, [currentPage]);
+  // const navigate = useNavigate();
 
   const [totalPages, setTotalPages] = useState(0);
-  const [question, setQuestion] = useState<Questions[]>([]);
+  const [question, setQuestion] = useState<Questions[]>(initiateQuestion);
 
   const handlePagination = (direction) => {
     if (direction === 'prev' && currentPage > 0) {
@@ -52,22 +59,18 @@ export default function MyQuestion({ setQuestionCnt }: MyQuestionProps) {
   };
 
   const loadUserQuestion = (pageNo: number) => {
-    fetch(
-      `${BASE_URL}/api/question/admin?pageNo=${pageNo}&criterion=createdAt`,
-      {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
-        },
+    fetch(`${BASE_URL}/api/question/me?pageNo=${pageNo}&criterion=createdAt`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
       },
-    )
+    })
       .then((response) => response.json())
       .then((data: ApiResponse) => {
-        console.log('사용자 질문:', data);
         setQuestion(data.data.questions);
         setTotalPages(data.data.totalPages);
-        setQuestionCnt(data.data.questions.length);
+        setQuestionCnt(data.data.totalElements);
       })
       .catch(() => showErrorToast('질문 불러오기 실패:'));
   };
@@ -75,17 +78,19 @@ export default function MyQuestion({ setQuestionCnt }: MyQuestionProps) {
   return (
     <div className="my-component-width">
       {question?.map((q) => (
-        <div className="question-item" key={q.questionId}>
-          <div className="question-text">
-            <div className="question-item-title">{q.companyName}</div>
-            <div className="question-item-content">{q.questionTitle}</div>
-          </div>
-          <div className="quetion-tag">{q.companyName}</div>
+        <div
+          className="answer-item"
+          key={q.questionId}
+          // onClick={()=>navigate(`/company-info/:companyId/${q.questionId}`)}
+        >
+          <div className="answer-item-title">{q.companyName}</div>
+          <div className="answer-item-content">{q.questionTitle}</div>
         </div>
       ))}
 
-      {question.length > 1 && (
+      {question && (
         <AdminPagination
+          className="my-question-pagination"
           currentPage={currentPage}
           totalPages={totalPages}
           handlePagination={handlePagination}
