@@ -7,7 +7,7 @@ import TitleHeader from '../../ui/header/titleHeader';
 import UserInfoHeader from '../../ui/header/userInfoHeader.jsx';
 import TabBar from '../../ui/tabBar/tabBar.jsx';
 import { BASE_URL, ACCESS_TOKEN } from '../../global/constants';
-import { showErrorToast, showSuccessToast } from '../../ui/toast/toast.js';
+import { showErrorToast, showSuccessToast } from '../../ui/toast/toast.tsx';
 
 const Divider = styled.div`
   height: 1px;
