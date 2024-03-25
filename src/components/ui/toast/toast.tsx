@@ -9,7 +9,7 @@ export const StyledToastContainer = styled(ToastContainer)`
   margin-top: 60px;
   .Toastify__toast {
     background-color: black;
-    color: white;'
+    color: white;
     font: pretendard-regular;
   }
   .Toastify__close-button {
