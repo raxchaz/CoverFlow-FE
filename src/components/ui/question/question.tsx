@@ -166,24 +166,15 @@ function QuestionModule({
               <img src={Tree} alt="tree" />
               <span className="questioner">{questioner}</span>
               <span className="question-answer-day">{formattedDate}</span>
-              {/* <span className="middle">•</span>
-              <span className="questioner-tag">{questionerTag}</span> */}
             </div>
           </div>
 
-          <div className="view-container">
-            <img className="chat-img" src={Chat} />
-            <span className="chat-count">{answerCount}</span>
-
-            <img className="view-img" src={View} />
-          </div>
           <div className="field">
-            <span className="question-title">
-              <div className="reward">{reward}</div>
-              {truncateTitle(questionTitle)}
-            </span>
-
             <ContentBlur $isLoggedIn={isLoggedIn}>
+              <span className="question-title">
+                <div className="reward">{reward}</div>
+                {truncateTitle(questionTitle)}
+              </span>
               <span className="question-content">{questionContent}</span>
             </ContentBlur>
 
