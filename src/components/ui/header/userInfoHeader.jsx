@@ -133,7 +133,7 @@ function UserInfoHeader() {
             {/* 붕어빵 */}
             <div className="reward-fish">
               <img
-                className="reward"
+                className="fishbun-reward"
                 src={Reward}
                 onClick={handleRewardClick}
                 alt="붕어빵 아이콘"
