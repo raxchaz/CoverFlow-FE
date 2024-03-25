@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import '../../../asset/sass/pages/postPage/questionWritePage.scss';
 import { ACCESS_TOKEN, BASE_URL } from '../../global/constants';
-import { toast } from 'react-toastify';
 import TagInput from '../../ui/selection/fishTag';
 import TitleHeader from '../../ui/header/titleHeader';
 import TabBar from '../../ui/tabBar/tabBar';
@@ -11,6 +10,7 @@ import Finger from '../../../asset/image/fingerprint.svg';
 // import Home from '../../../asset/image/group.svg';
 import Money from '../../../asset/image/money.svg';
 import axios from 'axios';
+import { showErrorToast, showSuccessToast } from '../../ui/toast/toast';
 
 function QuestionWritePage() {
   const navigate = useNavigate();
@@ -85,13 +85,13 @@ function QuestionWritePage() {
 
       if (response.ok) {
         await response.json();
-        toast.success('질문이 등록되었습니다');
+        showSuccessToast('질문이 등록되었습니다');
         navigate('/company-info/:companyId');
       } else {
         throw new Error('서버 에러');
       }
     } catch (error) {
-      toast.error(`에러 발생 ${error}`);
+      showErrorToast(`에러 발생 ${error}`);
     }
   };
 

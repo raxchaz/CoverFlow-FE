@@ -58,53 +58,50 @@ const FirstLine = styled.div`
 
 const AnswerList = styled.div``;
 
-// interface AnswerProps {
-//   answerId: string;
-//   answerer: string;
-//   answerTag: string;
-//   createAt: string;
-//   replyCount: string;
-//   answerContent: string;
-//   onAdopt: () => void;
-//   answerNickname: string;
-//   content: string;
-// }
+interface AnswerProps {
+  answerId: string;
+  answerer: string;
+  answerTag: string;
+  createAt: string;
+  replyCount: string;
+  answerContent: string;
+  onAdopt: () => void;
+  answerNickname: string;
+  content: string;
+}
 
-// interface QuestionDetailProps {
-//   questionId: string;
-//   title: string;
-//   questionContent: string;
-//   answerCount: number;
-//   reward: number;
-//   questionNickname: string;
-//   questionTag: string;
-//   createAt: string;
-//   answers: AnswerProps[];
-// }
+interface QuestionDetailProps {
+  questionId: string;
+  title: string;
+  questionContent: string;
+  answerCount: number;
+  reward: number;
+  questionNickname: string;
+  questionTag: string;
+  createAt: string;
+  answers: AnswerProps[];
+}
 
 function QuestionDetailPage() {
   const navigate = useNavigate();
-  const answerRef = useRef < HTMLTextAreaElement > null;
+  const answerRef = useRef<HTMLTextAreaElement>(null);
   const [answer, setAnswer] = useState('');
   const [showReportPopup, setShowReportPopup] = useState(false);
-  const [questionDetail, setQuestionDetail] =
-    useState <
-    QuestionDetailProps >
-    {
-      questionId: '3',
-      title: '질문 제목',
-      questionContent: 'Lorem ipsum dolor sit amet, consectetur adip',
-      answerCount: 0,
-      reward: 0,
-      questionNickname: '붕어빵',
-      questionTag: 'JavaScript',
-      createAt: '3',
-      answers: [],
-    };
+  const [questionDetail, setQuestionDetail] = useState<QuestionDetailProps>({
+    questionId: '3',
+    title: '질문 제목',
+    questionContent: 'Lorem ipsum dolor sit amet, consectetur adip',
+    answerCount: 0,
+    reward: 0,
+    questionNickname: '붕어빵',
+    questionTag: 'JavaScript',
+    createAt: '3',
+    answers: [],
+  });
 
   const { questionId } = useParams();
 
-  function formatDate(fullDate) {
+  function formatDate(fullDate: string) {
     const date = new Date(fullDate);
     const year = date.getFullYear();
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
@@ -125,7 +122,7 @@ function QuestionDetailPage() {
     }
   }, [answer]);
 
-  const fetchQuestionDetail = (questionId) => {
+  const fetchQuestionDetail = (questionId: string) => {
     axios
       .get(`${BASE_URL}/api/question/${questionId}`, {
         headers: {

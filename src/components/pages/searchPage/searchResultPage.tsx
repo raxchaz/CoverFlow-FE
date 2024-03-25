@@ -23,13 +23,8 @@ const ResultItem = styled.li`
   font-size: 18px;
   letter-spacing: -1px;
   list-style: none;
-  padding: 20px 20px;
-  background-color: #ffffff;
-  border: 1.5px solid #eaeaea;
-  box-shadow:
-    0 1px 2px rgba(0, 0, 0, 0.05),
-    0 1px 2px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
+  padding: 1.2rem;
+  border-bottom: 1px solid #d0d0d0;
   transition: all 0.3s ease-in-out;
   cursor: pointer;
   display: flex;
@@ -71,7 +66,7 @@ const IndustryTag = styled.span`
 `;
 
 const ResultsList = styled.ul`
-  padding: 10;
+  padding: 0.6rem;
   margin-top: 8%;
   width: 80%;
   margin-left: 10%;
@@ -93,7 +88,14 @@ const QuestionCount = styled.div`
   flex-shrink: 0;
   color: #428238;
   font-weight: 600;
-
+  background-color: #ffffff;
+  border: 1.5px solid #eaeaea;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.05),
+    0 1px 2px rgba(0, 0, 0, 0.1);
+  padding: 0.6rem 1.2rem;
+  border-radius: 0.6rem;
+  border-bottom: #d9d9d9;
   &::before {
     content: '질문 수';
     display: block;

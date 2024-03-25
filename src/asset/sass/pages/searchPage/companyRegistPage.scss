@@ -71,9 +71,10 @@ $color-primary: #ff8d1d;
     box-shadow: none;
   }
 
-  &:active,
-  &:hover {
-    background-color: $color-primary;
+  &.selected {
+    border: 2px solid #ff8d1d;
+    background-color: #ff8d1d;
+    color: #ffffff;
   }
 }
 
