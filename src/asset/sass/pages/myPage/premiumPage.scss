@@ -13,7 +13,7 @@
 
 .banner {
   display: flex;
-  width: 70%;
+  width: 100%;
 }
 
 .banner-text {
@@ -26,6 +26,7 @@
   &:nth-child(0) span,
   &:nth-child(1) span {
     font-weight: bolder;
+    font-size: large;
   }
 }
 

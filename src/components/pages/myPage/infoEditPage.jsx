@@ -86,7 +86,7 @@ function InfoEditPage() {
 
   const handleModifyNickname = async () => {
     try {
-      const response = await fetch(`${BASE_URL}/api/member`, {
+      const response = await fetch(`${BASE_URL}/api/member/nickname`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

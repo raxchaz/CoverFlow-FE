@@ -3,13 +3,15 @@ import './myComponent.scss';
 import AdminPagination from '../adminSelection/adminPagination';
 import { BASE_URL, ACCESS_TOKEN } from '../../global/constants';
 import { showErrorToast } from '../toast/toast';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 interface Answer {
   answerId: number;
+  companyId: number;
   companyName: string;
   questionTitle: string;
   answerContent: string;
+  questionId: number;
   selection: boolean;
   answererNickname: string;
   answererTag: string;
@@ -34,7 +36,7 @@ export default function MyAnswer({
   setAnswerCnt,
   initiateAnswer,
 }: MyAnswerProps) {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [answer, setAnswer] = useState<Answer[]>(initiateAnswer);
@@ -74,7 +76,13 @@ export default function MyAnswer({
   return (
     <div className="my-component-width">
       {answer?.map((q) => (
-        <div className="question-item" key={q.answerId}>
+        <div
+          className="question-item"
+          key={q.answerId}
+          onClick={() =>
+            navigate(`/company-info/${q.companyId}/${q.questionId}`)
+          }
+        >
           <div className="question-text">
             <div className="question-item-title">{q.questionTitle}</div>
             <div className="question-item-content">{q.answerContent}</div>

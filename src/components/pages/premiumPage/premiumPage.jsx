@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 
-import { StyledPage } from '../../../styledComponent';
-
 import styled from 'styled-components';
 import '../../../asset/sass/pages/myPage/premiumPage.scss';
 // import VectorIcon from '../../../asset/image/vector.svg';
@@ -10,6 +8,8 @@ import CheckIconRectangle from '../../../asset/image/check_orange.svg';
 import TabBar from '../../ui/tabBar/tabBar';
 import BannerImage from '../../ui/banner/bannerImage';
 import { useNavigate } from 'react-router-dom';
+import { StyledPage, StyledHeader } from '../../../styledComponent';
+import TitleHeader from '../../ui/header/titleHeader';
 
 const StatusBar = styled.div`
   display: flex;
@@ -45,18 +45,25 @@ const PremiumPage = () => {
     setIsChecked((check) => !check);
   };
 
+  const handleGoBack = () => {
+    navigate('/');
+  };
+
   return (
     <StyledPage
       className="main-page-container"
       style={{ position: 'relative' }}
     >
-      <TabBar />
+      <StyledHeader>
+        <TitleHeader pageTitle="문의하기" handleGoBack={handleGoBack} />
+        <TabBar />
+      </StyledHeader>
       <StatusBar>
         <StatusTab
           $current={currentSection === 'buy'}
           onClick={() => setCurrentSection('buy')}
         >
-          구매하기
+          매하기
         </StatusTab>
         <StatusTab
           $current={currentSection === 'myPremium'}

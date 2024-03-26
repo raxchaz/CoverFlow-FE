@@ -3,10 +3,11 @@ import './myComponent.scss';
 import AdminPagination from '../adminSelection/adminPagination';
 import { BASE_URL, ACCESS_TOKEN } from '../../global/constants';
 import { showErrorToast } from '../toast/toast';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 interface Questions {
   questionId: number;
+  companyId: number;
   companyName: string;
   questionerNickname: string;
   questionerTag: string;
@@ -43,7 +44,7 @@ export default function MyQuestion({
   useEffect(() => {
     loadUserQuestion(currentPage);
   }, [currentPage]);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [totalPages, setTotalPages] = useState(0);
   const [question, setQuestion] = useState<Questions[]>(initiateQuestion);
@@ -81,7 +82,9 @@ export default function MyQuestion({
         <div
           className="answer-item"
           key={q.questionId}
-          // onClick={()=>navigate(`/company-info/:companyId/${q.questionId}`)}
+          onClick={() =>
+            navigate(`/company-info/${q.companyId}/${q.questionId}`)
+          }
         >
           <div className="answer-item-title">{q.companyName}</div>
           <div className="answer-item-content">{q.questionTitle}</div>
