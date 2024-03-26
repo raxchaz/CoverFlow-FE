@@ -125,7 +125,7 @@ function Mypage() {
 
   /* 뒤로가기 눌렀을 경우, 한 페이지 뒤로 가는 로직입니다. */
   const handleGoBack = () => {
-    navigate(-1);
+    navigate('/');
   };
 
   const goToContact = () => {

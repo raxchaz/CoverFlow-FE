@@ -48,7 +48,7 @@ const PremiumTicket = () => {
       style={{ position: 'relative' }}
     >
       <StyledHeader>
-        <TitleHeader pageTitle="문의하기" handleGoBack={handleGoBack} />
+        <TitleHeader pageTitle="프리미엄" handleGoBack={handleGoBack} />
         <TabBar />
       </StyledHeader>
       <StatusBar>
