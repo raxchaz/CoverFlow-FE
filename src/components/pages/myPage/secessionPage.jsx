@@ -8,6 +8,7 @@ import TitleHeader from '../../ui/header/titleHeader.tsx';
 import TabBar from '../../ui/tabBar/tabBar';
 import SecessionWarning from '../../../asset/image/secessionWarning.svg';
 import { BASE_URL, ACCESS_TOKEN } from '../../global/constants/index.ts';
+import { showErrorToast, showSuccessToast } from '../../ui/toast/toast.tsx';
 
 const Divider = styled.div`
   height: 1px;
@@ -22,7 +23,6 @@ function SecessionPage() {
   const [secessionReason, setSecessionReason] = useState('');
 
   const location = useLocation();
-  console.log('Location:', location);
   const nicknameParam = new URLSearchParams(location.search).get('nickname');
   const nickname = nicknameParam || '';
 
@@ -43,9 +43,8 @@ function SecessionPage() {
   };
 
   const handleConfirmSecession = async () => {
-    console.log('탈퇴 확인 시작');
     if (!isAgreed) {
-      alert('탈퇴하기 전에, 동의해야 합니다.');
+      showErrorToast('탈퇴하기 전에, 동의해야 합니다.');
       return;
     }
 
@@ -61,17 +60,14 @@ function SecessionPage() {
       });
 
       if (response.ok) {
-        console.log('성공적으로 탈퇴 처리되었습니다.');
-        alert('성공적으로 탈퇴 처리되었습니다.');
+        showSuccessToast('성공적으로 탈퇴 처리되었습니다.');
         navigate('/');
       } else {
         const data = await response.json();
-        console.error(`탈퇴 처리 중 오류가 발생했습니다: ${data.message}`);
-        alert(`탈퇴 처리 중 오류가 발생했습니다: ${data.message}`);
+        showErrorToast(`탈퇴 처리 중 오류가 발생했습니다: ${data.message}`);
       }
     } catch (error) {
-      console.error('탈퇴 요청 중 오류가 발생했습니다.', error);
-      alert('탈퇴 처리 중 예상치 못한 오류가 발생했습니다.');
+      showErrorToast('탈퇴 처리 중 예상치 못한 오류가 발생했습니다.');
     }
   };
 

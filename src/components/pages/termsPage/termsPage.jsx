@@ -124,7 +124,6 @@ export default function TermsPage() {
       const headers = await fetchToken(code);
       const accessToken = headers.get('Authorization');
       const refreshToken = headers.get('Authorization-refresh');
-      console.log(headers);
       if (!accessToken || !refreshToken) {
         showErrorToast('토큰을 받아오는 데 실패하였습니다.');
         throw new Error('토큰을 받아오는 데 실패하였습니다.');

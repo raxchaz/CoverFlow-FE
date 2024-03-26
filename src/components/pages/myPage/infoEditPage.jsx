@@ -7,6 +7,7 @@ import TitleHeader from '../../ui/header/titleHeader';
 import UserInfoHeader from '../../ui/header/userInfoHeader.jsx';
 import TabBar from '../../ui/tabBar/tabBar.jsx';
 import { BASE_URL, ACCESS_TOKEN } from '../../global/constants';
+import { showErrorToast, showSuccessToast } from '../../ui/toast/toast.tsx';
 
 const Divider = styled.div`
   height: 1px;
@@ -54,7 +55,6 @@ function InfoEditPage() {
       localStorage.setItem('mypageURL', '/mypage');
       navigate('/login');
     } else {
-      console.log('사용자 정보 로딩 시작');
       loadUserData();
     }
   }, [nickname]);
@@ -76,20 +76,6 @@ function InfoEditPage() {
       .catch((error) => console.error('회원 정보 불러오기 실패:', error));
   };
 
-  // const renderSocialType = (type) => {
-  //   switch (type) {
-  //     case 'GOOGLE':
-  //       return <div className="socialType-ui">구글 로그인 사용 중</div>;
-  //     case 'KAKAO':
-  //       return <div className="socialType-ui">카카오 로그인 사용 중</div>;
-  //     case 'NAVER':
-  //       return <div className="socialType-ui">네이버 로그인 사용 중</div>;
-
-  //     default:
-  //       return null;
-  //   }
-  // };
-
   const handleGoBack = () => {
     navigate('/');
   };
@@ -100,7 +86,6 @@ function InfoEditPage() {
 
   const handleModifyNickname = async () => {
     try {
-      console.log('닉네임 변경 요청 중...');
       const response = await fetch(`${BASE_URL}/api/member`, {
         method: 'PATCH',
         headers: {
@@ -111,13 +96,10 @@ function InfoEditPage() {
 
       const data = await response.json();
 
-      console.log('닉네임이 성공적으로 변경되었습니다.');
-      console.log(data);
       setNickname(data.nickname);
-      alert('닉네임이 성공적으로 변경되었습니다.');
+      showSuccessToast('닉네임이 성공적으로 변경되었습니다.');
     } catch (error) {
-      console.error('닉네임 변경 요청 중 오류가 발생했습니다.', error);
-      alert('닉네임 변경 중 예상치 못한 오류가 발생했습니다.');
+      showErrorToast('닉네임 변경 중 예상치 못한 오류가 발생했습니다.');
     }
   };
 
@@ -131,7 +113,7 @@ function InfoEditPage() {
           <div className="modify-info">
             <span className="modify-nick">닉네임</span>
             <div className="modify-nick-info">
-              <span className="modify-nickname">뚱뚱한 돼지찌개</span>
+              <span className="modify-nickname">{nickname}</span>
               <div
                 className="modify-nickname-btn"
                 onClick={handleModifyNickname}

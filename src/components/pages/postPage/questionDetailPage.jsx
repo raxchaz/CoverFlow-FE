@@ -9,7 +9,7 @@ import Answer from '../../ui/question/answer.jsx';
 import TabBar from '../../ui/tabBar/tabBar';
 import { BASE_URL, ACCESS_TOKEN } from '../../global/constants';
 import Tree from '../../../asset/image/nature-ecology-tree-3--tree-plant-cloud-shape-park.svg';
-
+import PropTypes from 'prop-types';
 import { showErrorToast, showSuccessToast } from '../../ui/toast/toast.tsx';
 
 const Questioner = styled.div`
@@ -58,30 +58,6 @@ const FirstLine = styled.div`
 
 const AnswerList = styled.div``;
 
-// interface AnswerProps {
-//   answerId: string;
-//   answerer: string;
-//   answerTag: string;
-//   createAt: string;
-//   replyCount: string;
-//   answerContent: string;
-//   onAdopt: () => void;
-//   answerNickname: string;
-//   content: string;
-// }
-
-// interface QuestionDetailProps {
-//   questionId: string;
-//   title: string;
-//   questionContent: string;
-//   answerCount: number;
-//   reward: number;
-//   questionNickname: string;
-//   questionTag: string;
-//   createAt: string;
-//   answers: AnswerProps[];
-// }
-
 function QuestionDetailPage() {
   const navigate = useNavigate();
   const answerRef = useRef < HTMLTextAreaElement > null;
@@ -89,7 +65,7 @@ function QuestionDetailPage() {
   const [showReportPopup, setShowReportPopup] = useState(false);
   const [questionDetail, setQuestionDetail] =
     useState <
-    QuestionDetailProps >
+    QuestionDetailPropTypes >
     {
       questionId: '3',
       title: '질문 제목',
@@ -316,3 +292,29 @@ function QuestionDetailPage() {
 }
 
 export default QuestionDetailPage;
+
+const AnswerPropTypes = {
+  answerId: PropTypes.string.isRequired,
+  answerer: PropTypes.string.isRequired,
+  answerTag: PropTypes.string.isRequired,
+  createAt: PropTypes.string.isRequired,
+  replyCount: PropTypes.string.isRequired,
+  answerContent: PropTypes.string.isRequired,
+  onAdopt: PropTypes.func.isRequired,
+  answerNickname: PropTypes.string.isRequired,
+  content: PropTypes.string.isRequired,
+};
+
+const QuestionDetailPropTypes = {
+  questionId: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  questionContent: PropTypes.string.isRequired,
+  answerCount: PropTypes.number.isRequired,
+  reward: PropTypes.number.isRequired,
+  questionNickname: PropTypes.string.isRequired,
+  questionTag: PropTypes.string.isRequired,
+  createAt: PropTypes.string.isRequired,
+  answers: PropTypes.arrayOf(PropTypes.shape(AnswerPropTypes)).isRequired,
+};
+
+QuestionDetailPage.propTypes = QuestionDetailPropTypes;

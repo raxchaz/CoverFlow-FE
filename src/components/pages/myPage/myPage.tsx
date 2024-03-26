@@ -12,39 +12,12 @@ import { ReactComponent as PremiumIcon } from '../../../asset/image/premium.svg'
 import { ReactComponent as NoticeIcon } from '../../../asset/image/notice.svg';
 
 import { StyledHeader, StyledPage } from '../../../styledComponent';
-import { setLoggedIn } from '../../../store/actions/userActions';
-import { ACCESS_TOKEN, REFRESH_TOKEN, BASE_URL } from '../../global/constants';
+// import { setLoggedIn } from '../../../store/actions/userActions';
+import { ACCESS_TOKEN, BASE_URL } from '../../global/constants';
 import TabBar from '../../ui/tabBar/tabBar';
 import TitleHeader from '../../ui/header/titleHeader';
 import { showErrorToast } from '../../ui/toast/toast';
-import { useDispatch } from 'react-redux';
-
-/* 스타일 컴포넌트 정의 */
-const LogoutButton = styled.button`
-  font-size: 14px;
-  position: fixed;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 8px 16px;
-  background-color: #f44336;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-`;
-
-// const PremiunButton = styled.button`
-//   white-space: nowrap;
-//   padding: 7px;
-//   width: auto;
-//   font-size: 12px;
-//   border-radius: 1px;
-//   margin: 2% 0% 0% 12%;
-//   &:hover {
-//     cursor: pointer;
-//   }
-// `;
+// import { useDispatch } from 'react-redux';
 
 const StatusBar = styled.div`
   display: flex;
@@ -78,8 +51,12 @@ const StatusTab = styled.div<{ current: boolean }>`
 function Mypage() {
   const [currentCategory, setCurrentCategory] = useState('comments');
   const [nickname, setNickname] = useState('');
+  const [question, setQuestion] = useState([]);
+  const [answer, setAnswer] = useState([]);
+  const [questionCnt, setQuestionCnt] = useState(0);
+  const [answerCnt, setAnswerCnt] = useState(0);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   /* 사용자의 토큰이 존재한다면, 사용자의 정보를 가져옵니다. */
   useEffect(() => {
@@ -93,6 +70,7 @@ function Mypage() {
       console.log('사용자 정보 로딩 시작');
       loadUserData();
       loadUserAnswer();
+      loadUserQuestion();
     }
   }, [navigate]);
 
@@ -114,6 +92,22 @@ function Mypage() {
   };
 
   const loadUserAnswer = () => {
+    fetch(`${BASE_URL}/api/answer/me?pageNo=0&criterion=createdAt`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setAnswer(data.data.answers);
+        setAnswerCnt(data.data.totalElements);
+      })
+      .catch(() => showErrorToast('회원 정보 불러오기 실패'));
+  };
+
+  const loadUserQuestion = () => {
     fetch(`${BASE_URL}/api/question/me?pageNo=0&criterion=createdAt`, {
       method: 'GET',
       headers: {
@@ -123,47 +117,10 @@ function Mypage() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log('사용자 정보:', data);
-        setNickname(data.data.nickname);
+        setQuestion(data.data.questions);
+        setQuestionCnt(data.data.totalElements);
       })
       .catch(() => showErrorToast('회원 정보 불러오기 실패'));
-  };
-
-  /* 로그아웃 버튼을 클릭했을 경우, 서버로 로그아웃 API를 요청한 후,
-      클라이언트 측에서 리프레쉬 토큰과 엑세스 토큰을 삭제하고 메인 페이지로 돌아갑니다. */
-  const handleLogout = () => {
-    console.log('로그아웃 요청 시작');
-    fetch(`${BASE_URL}/api/member/logout`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
-      },
-    })
-      .then((response) => {
-        if (response.ok) {
-          console.log('로그아웃 성공');
-          localStorage.removeItem(ACCESS_TOKEN);
-          localStorage.removeItem(REFRESH_TOKEN);
-          navigate('/');
-          dispatch(setLoggedIn(false));
-        } else {
-          response
-            .json()
-            .then((err) => {
-              console.error(
-                '로그아웃 실패:',
-                err.message || '서버에서 에러가 발생했습니다.',
-              );
-            })
-            .catch((jsonError) => {
-              console.error('응답 파싱 에러:', jsonError);
-            });
-        }
-      })
-      .catch((error) => {
-        console.error('네트워크 에러 또는 요청 실패:', error.message);
-      });
   };
 
   /* 뒤로가기 눌렀을 경우, 한 페이지 뒤로 가는 로직입니다. */
@@ -184,8 +141,6 @@ function Mypage() {
     navigate('/info-edit', { state: { nickname } });
   };
 
-  const [questionCnt, setQuestionCnt] = useState(0);
-  const [answerCnt, setAnswerCnt] = useState(0);
   /* ========================================================= */
 
   return (
@@ -194,12 +149,9 @@ function Mypage() {
         <StyledHeader>
           <TitleHeader pageTitle="마이 페이지" handleGoBack={handleGoBack} />
 
-          <div className="title-container">
-            <div className="title">
-              {nickname}
-              <span className="title-intro">님, 안녕하세요</span>
-            </div>
-            <span className="login-status">카카오 로그인 사용 중</span>
+          <div className="title">
+            {nickname}
+            <span className="title-intro">님, 안녕하세요</span>
           </div>
 
           <div className="mypage-select-menu">
@@ -240,13 +192,14 @@ function Mypage() {
           </StatusBar>
 
           {currentCategory === 'comments' ? (
-            <MyQuestion setQuestionCnt={setQuestionCnt} />
+            <MyQuestion
+              setQuestionCnt={setQuestionCnt}
+              initiateQuestion={question}
+            />
           ) : (
-            <MyAnswer setAnswerCnt={setAnswerCnt} />
+            <MyAnswer setAnswerCnt={setAnswerCnt} initiateAnswer={answer} />
           )}
-          <LogoutButton className="logout-button" onClick={handleLogout}>
-            로그아웃
-          </LogoutButton>
+
           <TabBar />
         </StyledHeader>
       </StyledPage>

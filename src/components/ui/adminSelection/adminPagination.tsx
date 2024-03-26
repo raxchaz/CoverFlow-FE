@@ -4,15 +4,17 @@ interface PaginationProps {
   totalPages: number;
   currentPage: number;
   handlePagination: (direction: string | number) => void;
+  className?: string;
 }
 
 const AdminPagination = ({
   totalPages,
   currentPage,
   handlePagination,
+  className,
 }: PaginationProps) => {
   return (
-    <div className="ad-button-container">
+    <div className={`ad-button-container ${className}`}>
       <div
         // disabled={currentGroup === 0}
         style={{ cursor: 'pointer' }}
