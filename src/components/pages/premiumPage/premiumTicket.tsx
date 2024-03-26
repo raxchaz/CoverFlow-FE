@@ -39,7 +39,7 @@ const PremiumTicket = () => {
   };
 
   const handleGoBack = () => {
-    navigate('/');
+    navigate('/mypage');
   };
 
   return (
