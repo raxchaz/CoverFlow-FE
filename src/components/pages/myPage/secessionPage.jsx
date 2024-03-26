@@ -67,7 +67,7 @@ function SecessionPage() {
           {nickname}
           <span className="user-nick-cover">님 </span>
         </div>
-        <div className="secession-info"> 정말로 탈퇴하시겠어요? </div>
+        <div className="user-nickname"> 정말 탈퇴하시겠어요? </div>
 
         <div className="warning1">
           <img className="warningicon" src={SecessionWarning} />
@@ -100,7 +100,7 @@ function SecessionPage() {
             onChange={handleAgreeChange}
           />
           <label className="agreeSecession">
-            위의 탈퇴 안내 사항을 모두 읽었으며, 이에 동의합니다.
+            안내사항을 모두 확인하였으며, 이에 동의합니다.{' '}
           </label>
         </div>
         <div className="secession-reason">

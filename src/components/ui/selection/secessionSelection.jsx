@@ -29,7 +29,7 @@ function SecessionSelection({ onReasonChange }) {
         onChange={handleChange}
         className="secession-reason-select"
       >
-        <option value="">이유를 선택해 주세요</option>
+        <option value="">탈퇴 사유를 선택해 주세요</option>
         <option value="no-desired-job">원하는 직무가 없어요</option>
         <option value="no-desired-company">원하는 회사가 없어요</option>
         <option value="service-inconvenience">
