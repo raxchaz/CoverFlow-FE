@@ -9,14 +9,12 @@ import { ReactComponent as AdminComment } from '../../../asset/image/admin-comme
 import { ReactComponent as AdminContact } from '../../../asset/image/admin-contact.svg';
 import { ReactComponent as AdminReport } from '../../../asset/image/admin-report.svg';
 import { ReactComponent as AdminNotice } from '../../../asset/image/admin-notice.svg';
-import {
-  BASE_URL,
-  ACCESS_TOKEN,
-  REFRESH_TOKEN,
-} from '../../global/constants/index.ts';
+import { ACCESS_TOKEN, REFRESH_TOKEN } from '../../global/constants/index.ts';
+import { fetchAPI } from '../../global/utils/apiUtil.js';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setLoggedIn } from '../../../store/actions/userActions.js';
+import { showErrorToast } from '../toast/toast.tsx';
 
 interface AdminSideTapProps {
   loadSection: (sectionName: string) => void;
@@ -53,39 +51,20 @@ export default function AdminSideTap({ loadSection }: AdminSideTapProps) {
   //   navigate('/');
   // };
 
-  const logout = () => {
+  const logout = async () => {
     console.log('로그아웃 요청 시작');
-    fetch(`${BASE_URL}/api/member/logout`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
-      },
-    })
-      .then((response) => {
-        if (response.ok) {
-          console.log('로그아웃 성공');
-          localStorage.removeItem(ACCESS_TOKEN);
-          localStorage.removeItem(REFRESH_TOKEN);
-          dispatch(setLoggedIn(false));
-          navigate('/');
-        } else {
-          response
-            .json()
-            .then((err) => {
-              console.error(
-                '로그아웃 실패:',
-                err.message || '서버에서 에러가 발생했습니다.',
-              );
-            })
-            .catch((jsonError) => {
-              console.error('응답 파싱 에러:', jsonError);
-            });
-        }
-      })
-      .catch((error) => {
-        console.error('네트워크 에러 또는 요청 실패:', error.message);
-      });
+    try {
+      await fetchAPI('/api/member/logout', 'PATCH');
+
+      console.log('로그아웃 성공');
+      localStorage.removeItem(ACCESS_TOKEN);
+      localStorage.removeItem(REFRESH_TOKEN);
+      dispatch(setLoggedIn(false));
+      navigate('/');
+    } catch (error) {
+      console.error('로그아웃 실패:', error);
+      showErrorToast('로그아웃에 실패했습니다.');
+    }
   };
 
   return (

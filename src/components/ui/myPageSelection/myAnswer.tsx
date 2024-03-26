@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './myComponent.scss';
 import AdminPagination from '../adminSelection/adminPagination';
-import { BASE_URL, ACCESS_TOKEN } from '../../global/constants';
 import { showErrorToast } from '../toast/toast';
 import { useNavigate } from 'react-router-dom';
+import { fetchAPI } from '../../global/utils/apiUtil';
 
 interface Answer {
   answerId: number;
@@ -55,22 +55,19 @@ export default function MyAnswer({
     }
   };
 
-  const loadUserAnswer = (pageNo: number) => {
-    fetch(`${BASE_URL}/api/answer/me?pageNo=${pageNo}&criterion=createdAt`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((data: ApiResponse) => {
-        console.log('사용자 답변:', data);
-        setAnswer(data.data.answers);
-        setTotalPages(data.data.totalPages);
-        setAnswerCnt(data.data.totalElements);
-      })
-      .catch(() => showErrorToast('답변 불러오기 실패:'));
+  const loadUserAnswer = async (pageNo: number) => {
+    try {
+      const data: ApiResponse = await fetchAPI(
+        `/api/answer/me?pageNo=${pageNo}&criterion=createdAt`,
+        'GET',
+      );
+      console.log('사용자 답변:', data);
+      setAnswer(data.data.answers);
+      setTotalPages(data.data.totalPages);
+      setAnswerCnt(data.data.totalElements);
+    } catch (error) {
+      showErrorToast('답변 불러오기 실패:');
+    }
   };
 
   return (

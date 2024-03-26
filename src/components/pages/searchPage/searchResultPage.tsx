@@ -6,13 +6,12 @@ import styled from 'styled-components';
 import TabBar from '../../ui/tabBar/tabBar.tsx';
 
 import '../../../asset/sass/pages/searchPage/searchResultPage.scss';
-import { BASE_URL } from '../../global/constants/index.ts';
 import Plus from '../../../asset/image/plus.svg';
 import Warning from '../../../asset/image/warning-triangle.svg';
 import '../../../asset/sass/pages/notificationPage/notificationPage.scss';
 import SearchInput from '../../ui/searchInput/searchInput.tsx';
-import axios from 'axios';
 import { showErrorToast } from '../../ui/toast/toast.tsx';
+import { fetchAPI } from '../../global/utils/apiUtil.js';
 
 const ResultsContainer = styled.div`
   position: relative;
@@ -152,14 +151,13 @@ function SearchResultPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await axios.get(
-          `${BASE_URL}/api/company?pageNo=1&name=${companyList}`,
-          {
-            headers: { 'Content-Type': 'application/json' },
-          },
+        const data = await fetchAPI(
+          `/api/company?pageNo=1&name=${companyList}`,
+          'GET',
         );
+        console.log(data);
       } catch (error) {
-        showErrorToast(`${error}`);
+        showErrorToast(`오류 발생: ${error}`);
       }
     };
 

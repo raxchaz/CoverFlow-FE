@@ -6,11 +6,11 @@ import UserInfoHeader from '../../ui/header/userInfoHeader.jsx';
 import TabBar from '../../ui/tabBar/tabBar.tsx';
 import '../../../asset/sass/pages/searchPage/companyInfoPage.scss';
 import Question from '../../ui/question/question.tsx';
-import { ACCESS_TOKEN, BASE_URL } from '../../global/constants/index.ts';
+import { ACCESS_TOKEN } from '../../global/constants/index.ts';
 import { StyledHeader, StyledPage } from '../../../styledComponent.ts';
 import SearchInput from '../../ui/searchInput/searchInput.tsx';
 import { showErrorToast } from '../../ui/toast/toast.tsx';
-
+import { fetchAPI } from '../../global/utils/apiUtil.js';
 const CompanyContainer = styled.div`
   background-color: #ffffff;
   margin: 5% 0% 5% 15%;
@@ -103,20 +103,13 @@ function CompanyInfoPage() {
   useEffect(() => {
     async function fetchCompanyData() {
       try {
-        const response = await fetch(
-          `${BASE_URL}/api/company/${companyId}?pageNo=0`,
-          {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json; charset=UTF-8',
-            },
-          },
+        const data = await fetchAPI(
+          `/api/company/${companyId}?pageNo=0`,
+          'GET',
         );
 
-        const { data } = await response.json();
-
-        if (response.ok && data) {
-          setCompanyData(data);
+        if (data) {
+          setCompanyData(data.data);
         } else {
           throw new Error('데이터가 존재하지 않습니다.');
         }
@@ -129,7 +122,7 @@ function CompanyInfoPage() {
     }
 
     fetchCompanyData();
-  }, []);
+  }, [companyId]);
 
   // useEffect(() => {
   //   if (error) {

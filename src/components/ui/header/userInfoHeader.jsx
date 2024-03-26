@@ -110,11 +110,7 @@ function UserInfoHeader() {
   const logout = async () => {
     console.log('로그아웃 요청 시작');
     try {
-      const endpoint = '/api/member/logout';
-      const method = 'PATCH';
-
-      await fetchAPI(endpoint, method);
-
+      await fetchAPI('/api/member/logout', 'PATCH');
       console.log('로그아웃 성공');
       localStorage.removeItem(ACCESS_TOKEN);
       localStorage.removeItem(REFRESH_TOKEN);

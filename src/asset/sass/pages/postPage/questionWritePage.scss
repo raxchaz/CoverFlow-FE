@@ -308,6 +308,7 @@ select {
 .register-question-button {
   @include button-style;
   margin-top: 3%;
+  margin-bottom: 10%;
 
   &.selected {
     border: 2px solid #ff8d1d;

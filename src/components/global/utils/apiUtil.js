@@ -84,7 +84,7 @@ const reissueTokens = async () => {
 // 1. GET, DELETE : fetchAPI('/API 주소', 'GET').then(response => {데이터처리 로직}
 // 2. POST, PUTfetchAPI('/API 주소', 'POST', postData).then(response => {데이터처리 로직}
 
-export const fetchAPI = async (endpoint, method, body = null) => {
+export const fetchAPI = async (endpoint, method, body) => {
   if (!localStorage.getItem(ACCESS_TOKEN)) {
     throw new Error('토큰이 존재하지 않습니다.');
   }

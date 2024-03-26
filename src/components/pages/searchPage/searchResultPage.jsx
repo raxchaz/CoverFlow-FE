@@ -4,9 +4,8 @@ import { StyledPage, StyledHeader } from '../../../styledComponent';
 import TitleHeader from '../../ui/header/titleHeader.tsx';
 import styled from 'styled-components';
 import TabBar from '../../ui/tabBar/tabBar';
-
+import fetchAPI from '../../global/utils/apiUtil.js';
 import '../../../asset/sass/pages/searchPage/searchResultPage.scss';
-import { BASE_URL } from '../../global/constants';
 import Plus from '../../../asset/image/plus.svg';
 import Warning from '../../../asset/image/warning.svg';
 import { showErrorToast } from '../../ui/toast/toast';
@@ -136,26 +135,21 @@ function SearchResultPage() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch(
-          `${BASE_URL}/api/company?pageNo=1&name=${keyword}`,
-          {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          },
+        const data = await fetchAPI(
+          `/api/company?pageNo=1&name=${encodeURIComponent(keyword)}`,
+          'GET',
         );
-        const { data } = await response.json();
-        if (response.ok) {
+
+        if (data) {
           setSearchResult(data.companyList);
         }
       } catch (error) {
-        showErrorToast(error);
+        showErrorToast(`오류 발생: ${error.message}`);
       }
     }
 
     fetchData();
-  }, [location.search]);
+  }, [keyword]);
 
   const goToResultDetailPage = (companyId) => {
     navigate(`/company-info/${companyId}`);
