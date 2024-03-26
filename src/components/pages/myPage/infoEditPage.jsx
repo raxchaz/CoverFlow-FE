@@ -121,7 +121,7 @@ function InfoEditPage() {
   };
 
   const goToSecessionPage = () => {
-    navigate('/secession-page');
+    navigate('/secession-page', { state: { nickname } });
   };
 
   const handleModifyNickname = async () => {

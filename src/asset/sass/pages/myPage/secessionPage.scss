@@ -1,12 +1,15 @@
 .secession-info {
   letter-spacing: -1px;
-  margin: 0.5% 0% 0% 0%;
+  margin: 0.5% 0% 5% 0%;
   font-size: 20px;
   font-family: pretendard-bold;
 }
 
-.warningicon {
-  margin: 8% 0% 0% 6%;
+.user-nickname-container {
+  letter-spacing: -1px;
+  margin: 10% 15% 10% 15%;
+  font-size: 22px;
+  font-family: pretendard-bold;
 }
 
 .user-nick-cover {
@@ -15,42 +18,38 @@
 
 .warning-info {
   letter-spacing: -1px;
-  font-size: 14px;
-  margin-top: -5.8%;
-  margin-left: 12%;
-}
-
-.warning-info2 {
-  letter-spacing: -1px;
-  font-size: 14px;
-  margin-top: -4.8%;
-  margin-left: 12%;
+  font-size: 1rem;
+  padding-left: 2rem;
+  font-family: pretendard-semiBold;
 }
 
 .agreement-section {
-  margin: 10% 0% 0% 6%;
+  width: 22rem;
 }
 
 .agreeSecession {
   letter-spacing: -1px;
   margin: 5% 0% 0% 1%;
-  font-family: pretendard-medium;
-  color: #474646;
+  font-family: pretendard-bold;
+  font-size: medium;
+  color: #000000;
 }
 
 button.secession-cancel-btn {
-  width: 40%;
+  width: 47%;
+  height: 3rem;
   border-radius: 1px;
   border: 1px solid #ccc;
-  margin-left: 7%;
   background-color: transparent;
   color: black;
   cursor: pointer;
   margin-top: 20px;
+  margin-right: 3%;
 }
 
 .confirm-secession-btn {
-  width: 40%;
+  width: 47%;
+  height: 3rem;
   border-radius: 1px;
   margin-bottom: 10%;
   margin-left: 0%;
@@ -73,12 +72,11 @@ button.secession-cancel-btn {
 }
 
 .secession-reason {
-  font-size: 19px;
-  margin: 10% 24% 0% 0%;
+  font-size: 1rem;
+  margin: 10% 0% 0% 0%;
   letter-spacing: -1px;
   font-family: pretendard-bold;
-  display: flex;
-  justify-content: center;
+  color: rgba(71, 70, 70, 1);
 }
 
 .secession-complete-container {
@@ -94,4 +92,12 @@ button.secession-cancel-btn {
   font-weight: 600;
   font-size: x-large;
   padding-bottom: 0.5rem;
+}
+
+.warning1 {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  height: 5rem;
 }

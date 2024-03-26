@@ -6,8 +6,8 @@ import TitleHeader from '../../ui/header/titleHeader.tsx';
 import TabBar from '../../ui/tabBar/tabBar.jsx';
 import Button from '../../ui/button/Button/Button.jsx';
 import TextArea from '../../ui/inputbox/TextArea.jsx';
-import { BASE_URL, ACCESS_TOKEN } from '../../global/constants/index.ts';
 import { showErrorToast, showSuccessToast } from '../../ui/toast/toast.tsx';
+import { fetchAPI } from '../../global/utils/apiUtil.js';
 function FeedbackPage() {
   const navigate = useNavigate();
 
@@ -23,20 +23,17 @@ function FeedbackPage() {
 
   const submitFeedback = async () => {
     try {
-      const response = await fetch(`${BASE_URL}/api/feedback`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`, // 필요한 경우 토큰을 포함시킵니다.
-        },
-        body: JSON.stringify({ content: contact }),
-      });
+      if (contact.length < 11) {
+        showErrorToast('피드백을 10자 이상 작성해주세요.');
+        return;
+      }
 
-      if (response.status === 201) {
+      const body = { content: contact };
+      const data = await fetchAPI('/api/feedback', 'POST', body);
+
+      if (data.statusCode === 'CREATED') {
         showSuccessToast('피드백 등록이 완료되었습니다!');
         navigate('/');
-      } else {
-        throw new Error('피드백 제출 실패');
       }
     } catch (error) {
       console.error('피드백 등록 실패:', error);
@@ -66,7 +63,7 @@ function FeedbackPage() {
 
         <Button
           variant={'round'}
-          disabled={contact === '' || contact.length < 11}
+          disabled={contact === ''}
           onClick={submitFeedback}
         >
           제출하기

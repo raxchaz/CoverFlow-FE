@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import '../../../asset/sass/etc/selection/secessionSelection.scss';
-
+// import toggle from '../../../asset/image/secesstion-toggle.svg';
 function SecessionSelection({ onReasonChange }) {
   const [selectedReason, setSelectedReason] = useState('');
 
   const StyledSelect = styled.select`
     padding: 10px;
-    letter-spacing: -1px;
+    letter-spacing: -1px;'
+    margin: 0 auto;
   `;
 
   const handleChange = (event) => {

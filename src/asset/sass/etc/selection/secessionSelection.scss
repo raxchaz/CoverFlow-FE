@@ -1,8 +1,8 @@
 .secession-reason-dropdown {
   display: flex;
   flex-direction: column;
-  width: 60%;
-  margin: 5% 0% 0% 14%;
+  width: 100%;
+  margin: 5% 0% 0% 0%;
 }
 
 .secession-reason-label {
@@ -13,8 +13,9 @@
 .secession-reason-select {
   letter-spacing: -1px;
   padding: 10px 0;
-  border: none;
-  border-bottom: 1px solid #ccc;
+  margin-right: 0.7rem;
+  border: 1px solid #ccc;
+  border-radius: 1rem;
   font-size: 16px;
   outline: none;
   background-color: transparent;
@@ -33,10 +34,6 @@
 }
 
 .secession-reason-dropdown:after {
-  position: absolute;
-  left: 10px;
-  right: 10px;
-  top: 15px;
   pointer-events: none;
   color: #000;
 }

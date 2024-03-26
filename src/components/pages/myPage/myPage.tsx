@@ -12,8 +12,8 @@ import { ReactComponent as PremiumIcon } from '../../../asset/image/premium.svg'
 import { ReactComponent as NoticeIcon } from '../../../asset/image/notice.svg';
 
 import { StyledHeader, StyledPage } from '../../../styledComponent';
-// import { setLoggedIn } from '../../../store/actions/userActions';
-import { ACCESS_TOKEN, BASE_URL } from '../../global/constants';
+import { fetchAPI } from '../../global/utils/apiUtil';
+import { ACCESS_TOKEN } from '../../global/constants';
 import TabBar from '../../ui/tabBar/tabBar';
 import TitleHeader from '../../ui/header/titleHeader';
 import { showErrorToast } from '../../ui/toast/toast';
@@ -75,55 +75,42 @@ function Mypage() {
   }, [navigate]);
 
   /* 사용자의 닉네임과 붕어빵 개수를 불러옵니다. */
-  const loadUserData = () => {
-    fetch(`${BASE_URL}/api/member/me`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('사용자 정보:', data);
-        setNickname(data.data.nickname);
-      })
-      .catch(() => showErrorToast('회원 정보 불러오기 실패'));
+  const loadUserData = async () => {
+    try {
+      const data = await fetchAPI('/api/member/me', 'GET');
+      console.log('사용자 정보:', data);
+      setNickname(data.data.nickname);
+    } catch (error) {
+      showErrorToast('회원 정보 불러오기 실패');
+    }
   };
 
-  const loadUserAnswer = () => {
-    fetch(`${BASE_URL}/api/answer/me?pageNo=0&criterion=createdAt`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setAnswer(data.data.answers);
-        setAnswerCnt(data.data.totalElements);
-      })
-      .catch(() => showErrorToast('회원 정보 불러오기 실패'));
+  const loadUserAnswer = async () => {
+    try {
+      const data = await fetchAPI(
+        '/api/answer/me?pageNo=0&criterion=createdAt',
+        'GET',
+      );
+      setAnswer(data.data.answers);
+      setAnswerCnt(data.data.totalElements);
+    } catch (error) {
+      showErrorToast('답변 불러오기에 실패했습니다.');
+    }
   };
 
-  const loadUserQuestion = () => {
-    fetch(`${BASE_URL}/api/question/me?pageNo=0&criterion=createdAt`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setQuestion(data.data.questions);
-        setQuestionCnt(data.data.totalElements);
-      })
-      .catch(() => showErrorToast('회원 정보 불러오기 실패'));
+  const loadUserQuestion = async () => {
+    try {
+      const data = await fetchAPI(
+        '/api/question/me?pageNo=0&criterion=createdAt',
+        'GET',
+      );
+      setQuestion(data.data.questions);
+      setQuestionCnt(data.data.totalElements);
+    } catch (error) {
+      showErrorToast('질문 불러오기에 실패했습니다.');
+    }
   };
 
-  /* 뒤로가기 눌렀을 경우, 한 페이지 뒤로 가는 로직입니다. */
   const handleGoBack = () => {
     navigate('/');
   };

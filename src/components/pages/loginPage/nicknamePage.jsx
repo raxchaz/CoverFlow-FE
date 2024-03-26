@@ -6,9 +6,10 @@ import GenderSelection from '../../ui/genderSelection/genderSelection';
 import '../../../asset/sass/pages/loginPage/nicknamePage.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
-import { ACCESS_TOKEN, BASE_URL } from '../../global/constants';
 import { StyledHeader, StyledPage } from '../../../styledComponent';
 import TitleHeader from '../../ui/header/titleHeader.tsx';
+import { fetchAPI } from '../../global/utils/apiUtil.js';
+import { showErrorToast, showSuccessToast } from '../../ui/toast/toast.tsx';
 
 const CheckboxContainer = styled.div`
   display: flex;
@@ -147,30 +148,18 @@ const NicknamePage = () => {
         tagData = '현직자';
       }
 
-      const response = await fetch(`${BASE_URL}/api/member/nickname`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
-        },
-        body: JSON.stringify({
-          tag: tagData,
-          age: ageRange,
-          gender: genderData,
-        }),
-      });
-
-      const data = await response.json();
-      console.log('서버 응답:', data);
-      console.log('서버 응답 상태:', response.status);
-      if (!response.ok) {
-        throw new Error(`HTTP 오류! 상태: ${response.status}`);
-      }
-
+      const body = {
+        tag: tagData,
+        age: ageRange,
+        gender: genderData,
+      };
+      const data = await fetchAPI('/api/member/nickname', 'POST', body);
+      console.log('서버 응답', data);
       navigate('/');
+      showSuccessToast('환영합니다!');
     } catch (error) {
       console.error('데이터 전송 중 오류:', error);
-      console.warn('데이터를 가져오지 못했습니다.');
+      showErrorToast('데이터 전송에 실패했습니다.');
     }
   };
 
