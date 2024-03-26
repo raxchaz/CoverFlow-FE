@@ -34,32 +34,6 @@ function MainPage() {
   const navigate = useNavigate();
   localStorage.setItem('prevPage', '/');
 
-  // const handleConnect = async () => {
-  //   const res = await fetch(`${BASE_URL}/api/notification/connect`, {
-  //     method: 'GET',
-  //     headers: {
-  //       'Content-Type': 'text/event-stream; charset=utf-8',
-  //       Authorization: `Bearer ${ACCESS_TOKEN}`,
-  //     },
-  //   });
-  //   console.log('res', res);
-  // };
-
-  // const sse = new EventSourcePolyfill(`${BASE_URL}/api/notification/connect`, {
-  //   method: 'GET',
-  //   headers: {
-  //     'Content-Type': 'text/event-stream; charset=utf-8',
-  //     Authorization: `Bearer ${ACCESS_TOKEN}`,
-  //   },
-  // });
-
-  // console.log('sse', sse);
-
-  // sse.addEventListener('connect', (event) => {
-  //   const data = event;
-  //   console.log(data);
-  // });
-
   const handleChange = () => {
     navigate('/search-company');
   };

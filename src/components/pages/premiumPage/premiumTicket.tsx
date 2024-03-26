@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { StyledPage } from '../../../styledComponent';
+import { StyledPage, StyledHeader } from '../../../styledComponent';
 import TabBar from '../../ui/tabBar/tabBar';
 import BannerImage from '../../ui/banner/bannerImage';
 import '../../../asset/sass/pages/myPage/premiumPage.scss';
 import VectorIcon from '../../../asset/image/vector.svg';
 import { useNavigate } from 'react-router-dom';
 import { SectionProps } from '../../../types';
-
+import TitleHeader from '../../ui/header/titleHeader';
 const StatusBar = styled.div`
   display: flex;
   justify-content: space-between;
@@ -38,12 +38,19 @@ const PremiumTicket = () => {
     navigate('/buyer-info');
   };
 
+  const handleGoBack = () => {
+    navigate('/mypage');
+  };
+
   return (
     <StyledPage
       className="main-page-container"
       style={{ position: 'relative' }}
     >
-      <TabBar />
+      <StyledHeader>
+        <TitleHeader pageTitle="프리미엄" handleGoBack={handleGoBack} />
+        <TabBar />
+      </StyledHeader>
       <StatusBar>
         <StatusTab
           $current={currentSection === 'buy'}

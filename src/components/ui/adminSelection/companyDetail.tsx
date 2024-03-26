@@ -6,9 +6,8 @@ import {
   district,
   type,
 } from '../../global/constants/companyOption';
-import { ACCESS_TOKEN, BASE_URL } from '../../global/constants';
 import Button from '../button/Button/Button';
-
+import { fetchAPI } from '../../global/utils/apiUtil';
 interface Company {
   companyId: number;
   companyName: string;
@@ -46,31 +45,30 @@ export default function CompanyDetail({
   };
 
   const handleUpdateCompany = async () => {
-    const updateResponse = await fetch(
-      `${BASE_URL}/api/company/admin/${editedCompany.companyId}`,
-      {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
-        },
-        body: JSON.stringify({
-          name: editedCompany.companyName,
-          type: editedCompany.companyType,
-          city: editedCompany.companyCity,
-          district: editedCompany.companyDistrict,
-          establishment: editedCompany.companyEstablishment,
-          companyStatus: editedCompany.companyStatus,
-        }),
-      },
-    );
+    try {
+      const {
+        companyId,
+        companyName,
+        companyType,
+        companyCity,
+        companyDistrict,
+        companyEstablishment,
+        companyStatus,
+      } = editedCompany;
 
-    if (!updateResponse.ok) {
-      console.error('기업 정보 수정 실패');
-      return;
+      await fetchAPI(`/api/company/admin/${companyId}`, 'PATCH', {
+        name: companyName,
+        type: companyType,
+        city: companyCity,
+        district: companyDistrict,
+        establishment: companyEstablishment,
+        companyStatus,
+      });
+      handleSearch();
+      showCompanyList();
+    } catch (error) {
+      console.error('기업 정보 수정 실패:', error);
     }
-    handleSearch();
-    showCompanyList();
   };
 
   return (

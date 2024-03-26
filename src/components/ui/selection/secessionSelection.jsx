@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import '../../../asset/sass/etc/selection/secessionSelection.scss';
-
+// import toggle from '../../../asset/image/secesstion-toggle.svg';
 function SecessionSelection({ onReasonChange }) {
   const [selectedReason, setSelectedReason] = useState('');
 
   const StyledSelect = styled.select`
     padding: 10px;
-    letter-spacing: -1px;
+    letter-spacing: -1px;'
+    margin: 0 auto;
   `;
 
   const handleChange = (event) => {
@@ -28,7 +29,7 @@ function SecessionSelection({ onReasonChange }) {
         onChange={handleChange}
         className="secession-reason-select"
       >
-        <option value="">이유를 선택해 주세요</option>
+        <option value="">탈퇴 사유를 선택해 주세요</option>
         <option value="no-desired-job">원하는 직무가 없어요</option>
         <option value="no-desired-company">원하는 회사가 없어요</option>
         <option value="service-inconvenience">

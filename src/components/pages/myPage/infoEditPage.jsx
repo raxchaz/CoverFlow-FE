@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
+import { setRewardCount } from '../../../store/actions/userActions.js';
 import { useNavigate } from 'react-router-dom';
 import '../../../asset/sass/pages/myPage/infoEditPage.scss';
 import { StyledPage, StyledHeader } from '../../../styledComponent.js';
 import TitleHeader from '../../ui/header/titleHeader';
 import UserInfoHeader from '../../ui/header/userInfoHeader.jsx';
 import TabBar from '../../ui/tabBar/tabBar.jsx';
-import { BASE_URL, ACCESS_TOKEN } from '../../global/constants';
+import { ACCESS_TOKEN } from '../../global/constants';
 import { showErrorToast, showSuccessToast } from '../../ui/toast/toast.tsx';
-
+import { fetchAPI } from '../../global/utils/apiUtil.js';
 const Divider = styled.div`
   height: 1px;
   background-color: rgba(217, 217, 217, 1);
@@ -35,13 +37,13 @@ const SecessionBtn = styled.button`
 `;
 
 function InfoEditPage() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   // const [userInfo, setUserInfo] = useState({ socialType: ' ' });
   const [nickname, setNickname] = useState('');
   const [selectedTag, setSelectedTag] = useState('');
   const [selectedGender, setSelectedGender] = useState('');
   const [selectedAge, setSelectedAge] = useState('');
-
   const handleSelectTag = (tag) => setSelectedTag(tag);
   const handleSelectGender = (gender) => setSelectedGender(gender);
   const handleSelectAge = (age) => setSelectedAge(age);
@@ -60,20 +62,58 @@ function InfoEditPage() {
   }, [nickname]);
 
   /* 사용자의 닉네임과 붕어빵 개수를 불러옵니다. */
-  const loadUserData = () => {
-    fetch(`${BASE_URL}/api/member/me`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('사용자 정보:', data);
-        setNickname(data.data.nickname);
-      })
-      .catch((error) => console.error('회원 정보 불러오기 실패:', error));
+  const loadUserData = async () => {
+    try {
+      const data = await fetchAPI('/api/member/me', 'GET');
+      console.log('사용자 정보:', data);
+      setNickname(data.data.nickname);
+      dispatch(setRewardCount(data.data.fishShapedBun));
+    } catch (error) {
+      console.error('회원 정보 불러오기 실패:', error);
+    }
+  };
+
+  const sendDataToServer = async () => {
+    try {
+      let genderData = '';
+      if (selectedTag === '' || selectedAge === '' || selectedGender === '') {
+        showErrorToast('선택된 정보가 없습니다.');
+      }
+
+      if (selectedGender === '여성') {
+        genderData = 'Female';
+      } else if (selectedGender === '남성') {
+        genderData = 'Male';
+      } else {
+        genderData = 'Unknown';
+      }
+
+      const ageRange =
+        {
+          '10대': '10-19',
+          '20대': '20-29',
+          '30대': '30-39',
+          '40대': '40-49',
+          '50대': '50-59',
+          '60대 이상': '60-',
+        }[selectedAge] || selectedAge;
+
+      const body = {
+        tag: selectedTag,
+        age: ageRange,
+        gender: genderData,
+      };
+
+      if (selectedTag && selectedAge && selectedGender) {
+        const data = await fetchAPI('/api/member', 'PATCH', body);
+        console.log('서버 응답:', data);
+        showSuccessToast('성공적으로 정보를 수정했습니다.');
+        navigate('/mypage');
+      }
+    } catch (error) {
+      console.error('데이터 전송 중 오류:', error);
+      showErrorToast('정보 수정 중 오류가 발생했습니다.');
+    }
   };
 
   const handleGoBack = () => {
@@ -81,21 +121,12 @@ function InfoEditPage() {
   };
 
   const goToSecessionPage = () => {
-    navigate('/secession-page');
+    navigate('/secession-page', { state: { nickname } });
   };
 
   const handleModifyNickname = async () => {
     try {
-      const response = await fetch(`${BASE_URL}/api/member`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
-        },
-      });
-
-      const data = await response.json();
-
+      const data = await fetchAPI('/api/member/nickname', 'PATCH');
       setNickname(data.nickname);
       showSuccessToast('닉네임이 성공적으로 변경되었습니다.');
     } catch (error) {
@@ -177,7 +208,14 @@ function InfoEditPage() {
             ))}
           </div>
         </div>
-        <ModifyInfoBtn>저장</ModifyInfoBtn>
+        <ModifyInfoBtn
+          // disabled={
+          //   selectedTag === '' || selectedAge === '' || selectedGender === ''
+          // }
+          onClick={sendDataToServer}
+        >
+          저장
+        </ModifyInfoBtn>
         <Divider />
 
         <div className="secessionPage-container">

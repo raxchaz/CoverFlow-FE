@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import '../../../asset/sass/pages/postPage/questionWritePage.scss';
-import { ACCESS_TOKEN, BASE_URL } from '../../global/constants';
 import TagInput from '../../ui/selection/fishTag';
 import TitleHeader from '../../ui/header/titleHeader';
 import TabBar from '../../ui/tabBar/tabBar';
@@ -9,9 +8,8 @@ import { StyledHeader, StyledPage } from '../../../styledComponent';
 import Finger from '../../../asset/image/fingerprint.svg';
 // import Home from '../../../asset/image/group.svg';
 import Money from '../../../asset/image/money.svg';
-import axios from 'axios';
 import { showErrorToast, showSuccessToast } from '../../ui/toast/toast';
-
+import { fetchAPI } from '../../global/utils/apiUtil';
 function QuestionWritePage() {
   const navigate = useNavigate();
   const [content, setContent] = useState('');
@@ -68,29 +66,29 @@ function QuestionWritePage() {
 
   const handleRegister = async () => {
     try {
-      const response: Response = await axios.post(`${BASE_URL}/api/question`, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
-        },
-        body: JSON.stringify({
-          questionTag,
-          questionCategory,
-          title,
-          content,
-          companyId: Number(companyId),
-          reward: Number(reward),
-        }),
-      });
+      const body = {
+        questionTag,
+        questionCategory,
+        title,
+        content,
+        companyId: Number(companyId),
+        reward: Number(reward),
+      };
+      const isValid = Object.values(body).every(
+        (value) => value !== null && value !== '',
+      );
 
-      if (response.ok) {
-        await response.json();
-        showSuccessToast('질문이 등록되었습니다');
-        navigate('/company-info/:companyId');
+      if (!isValid) {
+        throw new Error('모든 필드를 채워주세요.');
       } else {
-        throw new Error('서버 에러');
+        const data = await fetchAPI('/api/question', 'POST', body);
+        console.log(data);
+        showSuccessToast('질문이 등록되었습니다');
+
+        navigate(`/company-info/${companyId}`);
       }
     } catch (error) {
+      console.log(error);
       showErrorToast(`에러 발생 ${error}`);
     }
   };
