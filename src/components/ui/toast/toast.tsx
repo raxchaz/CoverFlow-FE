@@ -10,7 +10,8 @@ export const StyledToastContainer = styled(ToastContainer)`
   .Toastify__toast {
     background-color: black;
     color: white;
-    font: pretendard-regular;
+    font-family: 'pretendard-semiBold';
+    letter-spacing: -1.5px;
   }
   .Toastify__close-button {
     display: none;
@@ -38,7 +39,8 @@ export const showSuccessToast = (message: string) => {
       ...baseToastOptions.style,
       background: 'black',
       color: 'white',
-      font: 'pretendard-regular',
+      fontFamily: 'pretendard-semiBold',
+      letterSpacing: '-1.5px',
     },
   });
 };
@@ -51,7 +53,8 @@ export const showErrorToast = (message: string) => {
       ...baseToastOptions.style,
       background: 'black',
       color: 'white',
-      font: 'pretendard-regular',
+      fontFamily: 'pretendard-semiBold',
+      letterSpacing: '-1.5px',
     },
   });
 };
