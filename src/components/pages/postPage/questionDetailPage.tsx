@@ -88,7 +88,7 @@ function QuestionDetailPage() {
   const [answer, setAnswer] = useState('');
   const [showReportPopup, setShowReportPopup] = useState(false);
   const [questionDetail, setQuestionDetail] = useState<QuestionDetailProps>({
-    questionId: '3',
+    questionId: '1',
     title: '질문 제목',
     questionContent: 'Lorem ipsum dolor sit amet, consectetur adip',
     answerCount: 0,
