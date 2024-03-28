@@ -1,16 +1,16 @@
 import React, { useEffect, useState, useRef } from 'react';
-import axios from 'axios';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import '../../../asset/sass/pages/postPage/questionDetailPage.scss';
 import { StyledPage, StyledHeader } from '../../../styledComponent';
 import TitleHeader from '../../ui/header/titleHeader';
 import Answer from '../../ui/question/answer.jsx';
 import TabBar from '../../ui/tabBar/tabBar';
-import { BASE_URL, ACCESS_TOKEN } from '../../global/constants';
+import { ACCESS_TOKEN } from '../../global/constants';
 import Tree from '../../../asset/image/nature-ecology-tree-3--tree-plant-cloud-shape-park.svg';
 
 import { showErrorToast, showSuccessToast } from '../../ui/toast/toast.tsx';
+import { fetchAPI } from '../../global/utils/apiUtil.js';
 
 const Questioner = styled.div`
   font-family: pretendard-bold;
@@ -84,68 +84,55 @@ interface QuestionDetailProps {
 
 function QuestionDetailPage() {
   const navigate = useNavigate();
+  const { state } = useLocation();
   const answerRef = useRef<HTMLTextAreaElement>(null);
   const [answer, setAnswer] = useState('');
   const [showReportPopup, setShowReportPopup] = useState(false);
   const [questionDetail, setQuestionDetail] = useState<QuestionDetailProps>({
-    questionId: '3',
-    title: '질문 제목',
-    questionContent: 'Lorem ipsum dolor sit amet, consectetur adip',
+    questionId: '',
+    title: '',
+    questionContent: '',
     answerCount: 0,
     reward: 0,
-    questionNickname: '붕어빵',
-    questionTag: 'JavaScript',
-    createAt: '3',
+    questionNickname: '',
+    questionTag: '',
+    createAt: '',
     answers: [],
   });
 
   const { questionId } = useParams();
 
-  function formatDate(fullDate: string) {
-    const date = new Date(fullDate);
-    const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const day = date.getDate().toString().padStart(2, '0');
+  // function formatDate(fullDate: string) {
+  //   const date = new Date(fullDate);
+  //   const year = date.getFullYear();
+  //   const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  //   const day = date.getDate().toString().padStart(2, '0');
 
-    return `${year}-${month}-${day}`;
-  }
+  //   return `${year}-${month}-${day}`;
+  // }
 
   useEffect(() => {
-    const token = localStorage.getItem(ACCESS_TOKEN);
+    const fecthQuestionDetail = async () => {
+      const token = localStorage.getItem(ACCESS_TOKEN);
 
-    if (!token) {
-      showErrorToast('로그인이 필요합니다.');
-      navigate(-1);
-    }
-    if (questionId) {
-      fetchQuestionDetail(questionId);
-    }
+      if (!token) {
+        showErrorToast('로그인이 필요합니다.');
+        navigate(-1);
+      }
+      if (questionId) {
+        const data = await fetchAPI(`/api/question/${questionId}`, 'GET', null);
+
+        const questionData = data.data;
+        const updatedQuestionDetail = {
+          ...questionData,
+          answers: [...questionData.answers],
+        };
+
+        setQuestionDetail(updatedQuestionDetail);
+      }
+    };
+    fecthQuestionDetail();
   }, [answer]);
-
-  const fetchQuestionDetail = (questionId: string) => {
-    axios
-      .get(`${BASE_URL}/api/question/${questionId}`, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
-        },
-      })
-      .then((response) => {
-        if (response.data && response.data.statusCode === 'OK') {
-          const questionData = response.data.data;
-          const updatedQuestionDetail = {
-            ...questionData,
-            answers: [...questionData.answers],
-          };
-
-          setQuestionDetail(updatedQuestionDetail);
-        }
-      })
-      .catch((error) => {
-        // console.error('질문과 답변을 불러오는데 실패했습니다.', error);
-        showErrorToast(`질문과 답변을 불러오는데 실패했습니다. : ${error}`);
-      });
-  };
 
   const handleGoBack = () => {
     navigate(-1);
@@ -161,30 +148,13 @@ function QuestionDetailPage() {
 
     // console.log('답변 제출 중:', requestData);
 
-    await axios
-      .post(`${BASE_URL}/api/answer`, requestData, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
-        },
-      })
-      .then((response) => {
-        console.log('답변 제출 응답:', response.data);
-        if (
-          response.data &&
-          response.data.statusCode === 'OK' &&
-          answerRef.current
-        ) {
-          showSuccessToast('답변이 등록되었습니다.');
-          setAnswer(answerRef.current.value);
-        }
-      })
-      .catch((error) => {
-        console.error('답변 등록에 실패했습니다.', error);
-      });
-  };
+    const data = await fetchAPI('/api/answer', 'POST', requestData);
 
-  const formattedDate = formatDate(questionDetail.createAt);
+    if (data.statusCode === 'CREATED') {
+      showSuccessToast('답변이 등록되었습니다.');
+      if (answerRef.current) setAnswer(answerRef.current?.value);
+    }
+  };
 
   const toggleReportPopup = () => {
     setShowReportPopup(!showReportPopup);
@@ -193,8 +163,6 @@ function QuestionDetailPage() {
   const handleReportSubmit = async () => {
     toggleReportPopup();
   };
-
-  console.log(questionDetail);
 
   return (
     <StyledPage className="main-page-container">
@@ -209,22 +177,21 @@ function QuestionDetailPage() {
         </div>
         <QuestionTitle>
           {/* <img className="questionicon-img" src={Questitle} /> */}
-          {questionDetail.title}
+          {state.questionTitle}
         </QuestionTitle>
         <div className="questioner-info">
           <Questioner>
-            {questionDetail.questionNickname || 'Anonymous'}{' '}
-            {/* <span className="middle">•</span> */}
-            <span className="question-date">{formattedDate}</span>
+            {state.questioner || 'Anonymous'}{' '}
+            <span className="question-date">{state.createAt}</span>
           </Questioner>
 
-          <QuestionerTag>{questionDetail.questionTag}</QuestionerTag>
+          <QuestionerTag>{state.questionerTag}</QuestionerTag>
         </div>
 
-        <QuestionContent>{questionDetail.questionContent}</QuestionContent>
+        <QuestionContent>{state.questionContent}</QuestionContent>
         <div className="company-fish-tag">
           <div className="detailpage-company">카카오</div>
-          <div className="detailpage-fishbuncount">{questionDetail.reward}</div>
+          <div className="detailpage-fishbuncount">{state.reward}</div>
         </div>
         <FirstLine />
         <div className="view-info-container">
