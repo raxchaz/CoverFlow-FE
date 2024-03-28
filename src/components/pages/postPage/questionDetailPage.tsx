@@ -11,6 +11,7 @@ import { BASE_URL, ACCESS_TOKEN } from '../../global/constants';
 import Tree from '../../../asset/image/nature-ecology-tree-3--tree-plant-cloud-shape-park.svg';
 
 import { showErrorToast, showSuccessToast } from '../../ui/toast/toast.tsx';
+import { fetchAPI } from '../../global/utils/apiUtil.js';
 
 const Questioner = styled.div`
   font-family: pretendard-bold;
@@ -161,27 +162,12 @@ function QuestionDetailPage() {
 
     // console.log('답변 제출 중:', requestData);
 
-    await axios
-      .post(`${BASE_URL}/api/answer`, requestData, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
-        },
-      })
-      .then((response) => {
-        console.log('답변 제출 응답:', response.data);
-        if (
-          response.data &&
-          response.data.statusCode === 'OK' &&
-          answerRef.current
-        ) {
-          showSuccessToast('답변이 등록되었습니다.');
-          setAnswer(answerRef.current.value);
-        }
-      })
-      .catch((error) => {
-        console.error('답변 등록에 실패했습니다.', error);
-      });
+    const data = await fetchAPI('/api/answer', 'POST', requestData);
+
+    if (data.statusCode === 'CREATED') {
+      showSuccessToast('답변이 등록되었습니다.');
+      if (answerRef.current) setAnswer(answerRef.current?.value);
+    }
   };
 
   const formattedDate = formatDate(questionDetail.createAt);
