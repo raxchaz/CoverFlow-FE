@@ -20,11 +20,11 @@ function QuestionWritePage() {
   const { companyId } = useParams();
 
   const tagName = [
-    '사내 문화가 궁금해요',
-    '급여 정보가 궁금해요',
-    '업무 방식이 궁금해요',
-    '승진이나 커리어가 궁금해요',
-    '직무,워라밸이 궁금해요',
+    { name: '사내 문화가 궁금해요', value: 'CULTURE' },
+    { name: '급여 정보가 궁금해요', value: 'SALARY' },
+    { name: '업무 방식이 궁금해요', value: 'BUSINESS' },
+    { name: '승진이나 커리어가 궁금해요', value: 'CAREER' },
+    { name: '직무,워라밸이 궁금해요', value: 'WORKLIFEBALANCE' },
   ];
   const categoryName = [
     '서비스',
@@ -81,8 +81,8 @@ function QuestionWritePage() {
       if (!isValid) {
         throw new Error('모든 필드를 채워주세요.');
       } else {
-        const data = await fetchAPI('/api/question', 'POST', body);
-        console.log(data);
+        await fetchAPI('/api/question', 'POST', body);
+
         showSuccessToast('질문이 등록되었습니다');
 
         navigate(`/company-info/${companyId}`);
@@ -117,14 +117,14 @@ function QuestionWritePage() {
         </div>
 
         <div className="tag-select-wrapper">
-          {tagName.map((tag, index) => (
+          {tagName.map((tag) => (
             <div
-              className={`tag-select ${questionTag === tag ? 'selected' : ''} `}
-              key={index}
-              onClick={() => handleTagSelect(tag)}
+              className={`tag-select ${questionTag === tag.value ? 'selected' : ''} `}
+              key={tag.value}
+              onClick={() => handleTagSelect(tag.value)}
             >
               <img src={Money} alt="money" />
-              <span>{tag}</span>
+              <span>{tag.name}</span>
             </div>
           ))}
         </div>
