@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import '../../../asset/sass/etc/question/question.scss';
 import styled, { css } from 'styled-components';
 import Chat from '../../../asset/image/chat.svg';
@@ -60,7 +59,6 @@ function truncateTitle(title, maxLength = 25) {
 }
 
 function truncateContent(questionContent, maxLength = 30) {
-  console.log('questionContent: ', questionContent);
   return questionContent.length > maxLength
     ? questionContent.substring(0, maxLength + 20) + '...'
     : questionContent;
@@ -106,19 +104,18 @@ function QuestionModule({
   };
 
   const goToDetail = () => {
-    navigate(
-      `/company-info/${companyId}/${questionId}`,
-      // state: {
-      //   questionId,
-      //   questioner,
-      //   questionerTag,
-      //   viewCount,
-      //   answerCount,
-      //   questionTitle,
-      //   questionContent,
-      //   createAt,
-      // },
-    );
+    navigate(`/company-info/${companyId}/${questionId}`, {
+      state: {
+        questionId,
+        questioner,
+        questionerTag,
+        answerCount,
+        questionTitle,
+        questionContent,
+        createAt,
+        reward,
+      },
+    });
   };
 
   useEffect(() => {
@@ -190,17 +187,5 @@ function QuestionModule({
     </>
   );
 }
-
-QuestionModule.propTypes = {
-  companyId: PropTypes.string,
-  questionId: PropTypes.number.isRequired,
-  questioner: PropTypes.string.isRequired,
-  questionerTag: PropTypes.string.isRequired,
-  answerCount: PropTypes.number.isRequired,
-  createAt: PropTypes.string.isRequired,
-  questionContent: PropTypes.string.isRequired,
-  questionTitle: PropTypes.string.isRequired,
-  isLoggedIn: PropTypes.bool,
-};
 
 export default QuestionModule;
