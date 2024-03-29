@@ -88,6 +88,7 @@ const TokenManagement = () => {
         navigate('/login');
       });
   }, [navigate, location, dispatch]);
+
   const handleConnect = async () => {
     const res = await fetch(`${BASE_URL}/api/notification/connect`, {
       method: 'GET',

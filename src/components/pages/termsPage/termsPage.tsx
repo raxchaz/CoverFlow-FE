@@ -15,14 +15,27 @@ import allCheckGreen from '../../../asset/image/allCheck_green.svg';
 import { showErrorToast, showSuccessToast } from '../../ui/toast/toast.tsx';
 import { EventSourcePolyfill } from 'event-source-polyfill';
 
+interface LocationState {
+  code?: string;
+}
+
+interface TermsAgreement {
+  [term: string]: boolean;
+}
+
+interface TermText {
+  title: string;
+  link: string;
+}
+
 export default function TermsPage() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { code } = location.state || {};
+  const { code } = (location.state || {}) as LocationState;
 
   // =========================================================== 약관 동의 확인을 위한 부분
-  const [allAgreed, setAllAgreed] = useState(false);
-  const [termsAgreement, setTermsAgreement] = useState({
+  const [allAgreed, setAllAgreed] = useState<boolean>(false);
+  const [termsAgreement, setTermsAgreement] = useState<TermsAgreement>({
     term1: false,
     term2: false,
     term3: false,
@@ -34,17 +47,16 @@ export default function TermsPage() {
 
   useEffect(() => {
     setAllAgreed(Object.values(termsAgreement).every((v) => v));
-    console.log(termsAgreement);
   }, [termsAgreement]);
 
-  const toggleAgreement = (termTitle) => {
+  const toggleAgreement = (termTitle: string): void => {
     setTermsAgreement((prevTerms) => ({
       ...prevTerms,
       [termTitle]: !prevTerms[termTitle],
     }));
   };
 
-  const toggleAllAgreement = () => {
+  const toggleAllAgreement = (): void => {
     const newAllAgreed = !allAgreed;
     setAllAgreed(newAllAgreed);
     setTermsAgreement(
@@ -55,7 +67,7 @@ export default function TermsPage() {
     );
   };
 
-  const termsText = {
+  const termsText: Record<string, TermText> = {
     term1: {
       title: '[필수] 코버플로우 이용 약관',
       link: 'https://fallacious-scowl-9f4.notion.site/eaa829b2e5ea4ebd98534c11b264d82b?pvs=4',
@@ -89,7 +101,8 @@ export default function TermsPage() {
 
   // =========================================================== 토큰 발급을 위한 부분
 
-  const fetchToken = async (code) => {
+  const fetchToken = async (code?: string): Promise<Headers> => {
+    if (!code) throw new Error('Code is required');
     const response = await fetch(`${BASE_URL}/api/auth/token?code=${code}`, {
       method: 'GET',
       headers: {
@@ -102,16 +115,7 @@ export default function TermsPage() {
     return response.headers;
   };
 
-  // useEffect(() => {
-  //   if (!code) {
-  //     showErrorToast('죄송합니다. 오류가 발생했습니다.');
-  //     console.log('code 값이 없습니다. 로그인 페이지로 이동합니다.');
-  //     navigate('/login');
-  //   }
-  //   console.log(termsAgreement);
-  // }, [code, navigate, termsAgreement]);
-
-  const agreeToTerms = async () => {
+  const agreeToTerms = async (): Promise<void> => {
     try {
       if (
         !termsAgreement.term1 ||
@@ -153,7 +157,6 @@ export default function TermsPage() {
   };
 
   const sse = new EventSourcePolyfill(`${BASE_URL}/api/notification/connect`, {
-    method: 'GET',
     headers: {
       'Content-Type': 'text/event-stream; charset=utf-8',
       Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,

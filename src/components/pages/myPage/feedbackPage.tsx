@@ -8,6 +8,11 @@ import Button from '../../ui/button/Button/Button.jsx';
 import TextArea from '../../ui/inputbox/TextArea.jsx';
 import { showErrorToast, showSuccessToast } from '../../ui/toast/toast.tsx';
 import { fetchAPI } from '../../global/utils/apiUtil.js';
+
+interface Feedback {
+  content: string;
+}
+
 function FeedbackPage() {
   const navigate = useNavigate();
 
@@ -16,7 +21,7 @@ function FeedbackPage() {
   };
   const [contact, setcontact] = useState('');
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
     setcontact(value);
   };
@@ -28,7 +33,7 @@ function FeedbackPage() {
         return;
       }
 
-      const body = { content: contact };
+      const body: Feedback = { content: contact };
       const data = await fetchAPI('/api/feedback', 'POST', body);
 
       if (data.statusCode === 'CREATED') {

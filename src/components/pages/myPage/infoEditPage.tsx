@@ -11,6 +11,26 @@ import TabBar from '../../ui/tabBar/tabBar.jsx';
 import { ACCESS_TOKEN } from '../../global/constants';
 import { showErrorToast, showSuccessToast } from '../../ui/toast/toast.tsx';
 import { fetchAPI } from '../../global/utils/apiUtil.js';
+
+interface UserData {
+  email: string;
+  nickname: string;
+  tag: string;
+  age: string;
+  gender: string;
+  fishShapedBun: number;
+  membStatus: 'WAIT' | 'REGISTRATION' | 'LEAVE';
+  createdAt: string;
+  connectedAt: string;
+  role: string;
+  socialType: string;
+}
+
+interface UserResponse {
+  statusCode: string;
+  data: UserData;
+}
+
 const Divider = styled.div`
   height: 1px;
   background-color: rgba(217, 217, 217, 1);
@@ -64,7 +84,7 @@ function InfoEditPage() {
   /* 사용자의 닉네임과 붕어빵 개수를 불러옵니다. */
   const loadUserData = async () => {
     try {
-      const data = await fetchAPI('/api/member/me', 'GET');
+      const data = (await fetchAPI('/api/member/me', 'GET')) as UserResponse;
       console.log('사용자 정보:', data);
       setNickname(data.data.nickname);
       dispatch(setRewardCount(data.data.fishShapedBun));

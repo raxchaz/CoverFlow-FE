@@ -47,7 +47,7 @@ function MainPage() {
 
       <div className="main-info">
         <span className="main-info-bold">
-          <strong>기업</strong>
+          <strong className="main-info-bold">기업</strong>
         </span>
         에 대해 <strong className="main-info-bold">궁금한점</strong>이 있다면,
         <br />
@@ -63,6 +63,7 @@ function MainPage() {
       />
       <img className="search" src={Searchicon} />
       <TabBar />
+      <div className="wrapper"></div>
     </StyledPage>
   );
 }
