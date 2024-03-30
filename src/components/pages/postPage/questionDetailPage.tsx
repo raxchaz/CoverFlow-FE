@@ -8,35 +8,27 @@ import Answer from '../../ui/question/answer.jsx';
 import TabBar from '../../ui/tabBar/tabBar';
 import { ACCESS_TOKEN } from '../../global/constants';
 import Tree from '../../../asset/image/nature-ecology-tree-3--tree-plant-cloud-shape-park.svg';
+import Reward from '../../../asset/image/reward.svg';
 
 import { showErrorToast, showSuccessToast } from '../../ui/toast/toast.tsx';
 import { fetchAPI } from '../../global/utils/apiUtil.js';
 
 const Questioner = styled.div`
-  font-family: pretendard-bold;
   letter-spacing: -1px;
   margin-left: 2%;
 `;
 
-const QuestionerTag = styled.div`
-  letter-spacing: -1px;
-  margin-left: -44%;
-  margin-top: 0.5%;
-  font-size: 13px;
-`;
-
 const QuestionTitle = styled.div`
-  margin-top: 5%;
   font-family: pretendard-semibold;
   letter-spacing: -1px;
-  font-size: 18px;
+  font-size: 30px;
   padding: 10px;
 `;
 
 const QuestionContent = styled.div`
-  margin-top: 7%;
+  margin-top: 3%;
   margin-left: 2%;
-  margin-bottom: 7%;
+  margin-bottom: 2%;
   letter-spacing: -1px;
   font-family: pretendard-light;
   line-height: 1.5;
@@ -71,7 +63,6 @@ interface AnswerProps {
 }
 
 interface QuestionDetailProps {
-  questionId: string;
   title: string;
   questionContent: string;
   answerCount: number;
@@ -89,7 +80,6 @@ function QuestionDetailPage() {
   const [answer, setAnswer] = useState('');
   const [showReportPopup, setShowReportPopup] = useState(false);
   const [questionDetail, setQuestionDetail] = useState<QuestionDetailProps>({
-    questionId: '',
     title: '',
     questionContent: '',
     answerCount: 0,
@@ -101,7 +91,11 @@ function QuestionDetailPage() {
   });
 
   const { questionId } = useParams();
-
+  console.log('questionId: ', questionId);
+  const body = {
+    content: state.questionContent,
+    questionId: Number(questionId),
+  };
   // function formatDate(fullDate: string) {
   //   const date = new Date(fullDate);
   //   const year = date.getFullYear();
@@ -119,17 +113,21 @@ function QuestionDetailPage() {
         showErrorToast('로그인이 필요합니다.');
         navigate(-1);
       }
-      if (questionId) {
-        const data = await fetchAPI(`/api/question/${questionId}`, 'GET', null);
 
-        const questionData = data.data;
-        const updatedQuestionDetail = {
-          ...questionData,
-          answers: [...questionData.answers],
-        };
+      console.log('body', body);
 
-        setQuestionDetail(updatedQuestionDetail);
-      }
+      const data = await fetchAPI('/api/answer', 'POST', body);
+      console.log('data: ', data);
+
+      const questionData = data.data;
+      console.log('questionData: ', questionData);
+
+      const updatedQuestionDetail = {
+        ...questionData,
+        answers: [...questionData.answers],
+      };
+
+      setQuestionDetail(updatedQuestionDetail);
     };
     fecthQuestionDetail();
   }, [answer]);
@@ -139,11 +137,9 @@ function QuestionDetailPage() {
   };
 
   const handleAnswerSubmit = async () => {
-    const questionId = questionDetail && questionDetail.questionId;
-
     const requestData = {
       content: answerRef.current ? answerRef.current.value : '',
-      questionId,
+      questionId: Number(questionId),
     };
 
     // console.log('답변 제출 중:', requestData);
@@ -173,25 +169,25 @@ function QuestionDetailPage() {
       <div className="question-detail-container">
         <div className="job-info">
           <img src={Tree} alt="" />
-          현직자가 남긴 글이에요
+          {state.questionerTag === '취준생'
+            ? `${state.questionerTag}이 남긴 글이에요.`
+            : `${state.questionerTag}가 남긴 질문이에요.}`}
         </div>
-        <QuestionTitle>
-          {/* <img className="questionicon-img" src={Questitle} /> */}
-          {state.questionTitle}
-        </QuestionTitle>
+        <QuestionTitle>{state.questionTitle}</QuestionTitle>
         <div className="questioner-info">
           <Questioner>
-            {state.questioner || 'Anonymous'}{' '}
+            {state.questioner || 'Anonymous'} <span className="middle">•</span>
             <span className="question-date">{state.createAt}</span>
           </Questioner>
-
-          <QuestionerTag>{state.questionerTag}</QuestionerTag>
         </div>
 
         <QuestionContent>{state.questionContent}</QuestionContent>
         <div className="company-fish-tag">
           <div className="detailpage-company">카카오</div>
-          <div className="detailpage-fishbuncount">{state.reward}</div>
+          <div className="detailpage-fishbuncount">
+            <img src={Reward} alt="reward" />
+            {state.reward}
+          </div>
         </div>
         <FirstLine />
         <div className="view-info-container">

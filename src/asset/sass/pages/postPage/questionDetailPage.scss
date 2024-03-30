@@ -11,22 +11,30 @@
   background-color: #ff8d1d;
   padding: 5px 15px;
   border-radius: 20px;
-  margin-bottom: 4%;
   margin-left: 1.5%;
   font-family: pretendard-medium;
+}
+
+.company-fish-tag {
+  display: flex;
+  align-items: center;
 }
 
 .detailpage-fishbuncount {
   font-size: 15px;
   letter-spacing: -1px;
-  display: inline-block;
+  display: inline-flex;
+  justify-content: space-evenly;
   color: #ff8d1d;
-  border: 2px solid #ff8d1d;
+  border: 1px solid #ff8d1d;
   padding: 5px 8px;
   border-radius: 20px;
-  margin-bottom: 4%;
   margin-left: 1.5%;
   font-family: pretendard-bold;
+  img {
+    padding: 0;
+  }
+  width: 83px;
 }
 
 .questioner-info {
@@ -197,4 +205,5 @@
   img {
     margin-right: 7px;
   }
+  color: #875100;
 }
