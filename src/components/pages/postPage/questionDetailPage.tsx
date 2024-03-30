@@ -117,10 +117,7 @@ function QuestionDetailPage() {
       console.log('body', body);
 
       const data = await fetchAPI('/api/answer', 'POST', body);
-      console.log('data: ', data);
-
       const questionData = data.data;
-      console.log('questionData: ', questionData);
 
       const updatedQuestionDetail = {
         ...questionData,
