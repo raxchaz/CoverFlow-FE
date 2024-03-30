@@ -11,7 +11,8 @@ import Warning from '../../../asset/image/warning-triangle.svg';
 import '../../../asset/sass/pages/notificationPage/notificationPage.scss';
 import SearchInput from '../../ui/searchInput/searchInput.tsx';
 import { showErrorToast } from '../../ui/toast/toast.tsx';
-import { fetchAPI } from '../../global/utils/apiUtil.js';
+import axios from 'axios';
+import { BASE_URL } from '../../global/constants/index.ts';
 
 const ResultsContainer = styled.div`
   position: relative;
@@ -122,6 +123,15 @@ interface SearchResultProps {
   };
 }
 
+interface SearchDataProps {
+  companyAddress: string;
+  companyId: number;
+  companyName: string;
+  companyStatus: 'EXAMINATION' | 'REGISTRATION' | 'DELETION';
+  companyType: string;
+  questionCount: number;
+}
+
 type PageProps = 'prev' | 'next';
 
 function SearchResultPage() {
@@ -130,17 +140,18 @@ function SearchResultPage() {
     state: { searchResults },
   } = useLocation() as SearchResultProps;
   const companyList = searchResults.map((result) => result.companyName);
+  const [searchData, setSearchData] = useState<SearchDataProps[]>([]);
   // const keyword = queryParams.get('keyword');
-  // const [searchResult, setSearchResult] = useState<SearchResultProps[]>([]);
+
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = Array.from(searchResults)?.slice(
-    indexOfFirstItem,
-    indexOfLastItem,
-  );
+  // const indexOfLastItem = currentPage * itemsPerPage;
+  // const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  // const currentItems = Array.from(searchResults)?.slice(
+  //   indexOfFirstItem,
+  //   indexOfLastItem,
+  // );
 
   const totalPages = Math.ceil(searchResults.length / itemsPerPage);
 
@@ -151,11 +162,10 @@ function SearchResultPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await fetchAPI(
-          `/api/company?pageNo=1&name=${companyList}`,
-          'GET',
+        const data = await axios.get(
+          `${BASE_URL}/api/company?pageNo=1&name=${companyList[0]}`,
         );
-        console.log(data);
+        setSearchData(data.data.data.companyList);
       } catch (error) {
         showErrorToast(`오류 발생: ${error}`);
       }
@@ -187,8 +197,8 @@ function SearchResultPage() {
             <span className="result-count">{companyList.length}</span>
           </ResultCount>
           <ResultsList>
-            {currentItems.length > 0 ? (
-              currentItems.map((item) => (
+            {searchData.length > 0 ? (
+              searchData.map((item) => (
                 <ResultItem
                   key={item.companyId}
                   onClick={() => goToResultDetailPage(item.companyId)}
