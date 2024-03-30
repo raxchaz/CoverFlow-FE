@@ -14,7 +14,6 @@ interface Company {
   companyType: string;
   companyCity: string;
   companyDistrict: string;
-  companyEstablishment: string;
   questionCount: number;
   companyStatus: string;
 }
@@ -52,7 +51,7 @@ export default function CompanyDetail({
         companyType,
         companyCity,
         companyDistrict,
-        companyEstablishment,
+
         companyStatus,
       } = editedCompany;
 
@@ -61,7 +60,7 @@ export default function CompanyDetail({
         type: companyType,
         city: companyCity,
         district: companyDistrict,
-        establishment: companyEstablishment,
+
         companyStatus,
       });
       handleSearch();
