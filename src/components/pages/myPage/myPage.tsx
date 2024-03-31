@@ -22,28 +22,29 @@ import { showErrorToast } from '../../ui/toast/toast';
 const StatusBar = styled.div`
   display: flex;
   justify-content: space-between;
-  border-top: 0.5rem solid rgba(255, 249, 244, 1);
+  border-top: 5px solid rgba(255, 249, 244, 1);
   margin: 10% auto 0 auto;
   font-family: pretendard-semibold;
-  width: 75%;
+  width: 505px;
 `;
 
 const StatusTab = styled.div<{ current: boolean }>`
-  width: 50%;
+  width: 245px;
   letter-spacing: -1px;
   text-align: center;
   padding: 15px 0;
   margin-top: -0.5rem;
   cursor: pointer;
   color: gray;
-  border-top: 8px solid transparent;
-  font-size: 1.2rem;
+  font-family: Pretendard-Bold;
+  border-top: 5px solid transparent;
+  font-size: 2rem;
   transition:
     border-top 0.3s ease-in-out,
     color 0.3s ease-in-out;
   ${(props) =>
     props.current &&
-    'color: black; border-top: 8px solid rgba(255, 141, 29, 1);'}
+    'color: black; border-top: 5px solid rgba(255, 141, 29, 1);'}
 `;
 
 /* ========================================================= */

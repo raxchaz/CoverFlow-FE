@@ -10,20 +10,20 @@ import MainPage from '../components/pages/mainPage/mainPage.jsx';
 /* 사용자 등록 페이지 관련  */
 import LoginPage from '../components/pages/loginPage/loginPage.tsx';
 import NicknamePage from '../components/pages/loginPage/nicknamePage.jsx';
-import TermsPage from '../components/pages/termsPage/termsPage.jsx';
+import TermsPage from '../components/pages/termsPage/termsPage.tsx';
 
 /* 사용자 참여 페이지 관련 */
 import Store from '../components/pages/storePage/storePage.tsx';
 import MyPage from '../components/pages/myPage/myPage.tsx';
 import NotificationPage from '../components/pages/notificationPage/notificationPage.jsx';
 import NoticePage from '../components/pages/myPage/noticePage.tsx';
-import EventPage from '../components/pages/myPage/eventPage.jsx';
-import InfoEditPage from '../components/pages/myPage/infoEditPage.jsx';
-import ContactPage from '../components/pages/myPage/contactPage.jsx';
-import FeedbackPage from '../components/pages/myPage/feedbackPage.jsx';
-import SecessionPage from '../components/pages/myPage/secessionPage.jsx';
+import EventPage from '../components/pages/myPage/eventPage.tsx';
+import InfoEditPage from '../components/pages/myPage/infoEditPage.tsx';
+import ContactPage from '../components/pages/myPage/contactPage.tsx';
+import FeedbackPage from '../components/pages/myPage/feedbackPage.tsx';
+import SecessionPage from '../components/pages/myPage/secessionPage.tsx';
 import SecessionCompletePage from '../components/pages/myPage/secessionCompletePage.tsx';
-import CompletePaymentPage from '../components/pages/completePaymentPage/completePaymentPage.jsx';
+import CompletePaymentPage from '../components/pages/completePaymentPage/completePaymentPage.tsx';
 
 /* 질문 페이지 관련 */
 import SearchPage from '../components/pages/searchPage/searchPage.tsx';

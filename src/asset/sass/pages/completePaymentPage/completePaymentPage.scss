@@ -12,19 +12,20 @@
 }
 
 .check-payment-title {
-  font-family: pretendard-bold;
-  font-size: x-large;
+  font-family: 'pretendard-Bold';
+  font-size: 3.5rem;
   padding-bottom: 0.3rem;
+  letter-spacing: -1px;
 }
 
 .check-payment-content {
-  font-family: pretendard-regular;
-  font-size: small;
+  font-family: 'Pretendard-Light';
+  font-size: 2.5rem;
   letter-spacing: -1px;
   padding-bottom: 0.2rem;
 }
 .payResult-container {
-  margin-top: 1rem;
+  margin-top: 4rem;
   width: 78%;
   border-top: 1px rgba(197, 197, 197, 0.551) solid;
   border-bottom: 1px rgba(197, 197, 197, 0.551) solid;
@@ -32,14 +33,14 @@
 }
 
 .payResult-item {
-  font-family: pretendard-regular;
-  font-size: small;
-  color: rgb(197, 197, 197);
+  font-family: pretendard-light;
+  font-size: 2.5rem;
+  color: #808080;
   letter-spacing: -1px;
 }
 
 .payResult-item-container {
   display: flex;
   justify-content: space-between;
-  padding: 0.31rem 0;
+  padding: 1rem 0;
 }

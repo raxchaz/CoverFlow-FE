@@ -1,7 +1,7 @@
 .store-wrapper {
   width: 100%;
   height: 100%;
-  padding: 1rem 0;
+  padding: 3rem 0;
 }
 
 .no-fish-purchase {
@@ -15,7 +15,7 @@
 
 .fish-disclaimer {
   font-family: pretendard-bold;
-  font-size: x-large;
+  font-size: 3rem;
   color: black;
   padding-top: 1rem;
   letter-spacing: -1px;
@@ -24,7 +24,7 @@
 .fish-purchase-item {
   width: 100%;
   box-shadow: 1px 2px 2px 0px rgba(0, 0, 0, 0.1);
-  height: 6rem;
+  height: 9rem;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -33,17 +33,25 @@
 
 .fishbun-cnt {
   font-family: pretendard-bold;
-  font-size: large;
+  font-size: 2rem;
   padding-bottom: 0.2rem;
+  letter-spacing: -1px;
 }
 
 .fishbun-price {
-  font-family: pretendard-bold;
-  font-size: small;
-
+  font-family: pretendard-SemiBold;
+  font-size: 1.6rem;
+  letter-spacing: -1px;
+  color: #474646;
   span {
-    font-family: pretendard-regular;
-    color: gray;
+    font-family: pretendard-medium;
+    color: #808080;
     padding-left: 0.5rem;
   }
+}
+
+.store-container {
+  padding-top: 3rem;
+  margin: 0px auto;
+  width: 540px;
 }

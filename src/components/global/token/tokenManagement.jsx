@@ -5,7 +5,7 @@ import { BASE_URL, ACCESS_TOKEN, REFRESH_TOKEN } from '../constants/index.ts';
 import { useDispatch } from 'react-redux';
 import { setTokens } from '../../../store/actions/authActions';
 // import { store } from '../../../store';
-import { EventSourcePolyfill } from 'event-source-polyfill';
+import { initializeSSE } from '../utils/eventApiUtils.js';
 
 const decodeToken = (token) => {
   const payload = token.split('.')[1];
@@ -76,7 +76,7 @@ const TokenManagement = () => {
         } else if (['MEMBER', 'PREMIUM', 'ADMIN'].includes(userRole)) {
           console.log('회원 정보가 존재합니다. 메인 페이지로 이동합니다.');
           navigate(prevPage);
-          handleConnect();
+          initializeSSE();
         } else {
           alert('로그인에 실패하였습니다. 다시 시도해주세요.');
           navigate('/login');
@@ -88,31 +88,6 @@ const TokenManagement = () => {
         navigate('/login');
       });
   }, [navigate, location, dispatch]);
-  const handleConnect = async () => {
-    const res = await fetch(`${BASE_URL}/api/notification/connect`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'text/event-stream; charset=utf-8',
-        Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
-      },
-    });
-    console.log('res', res);
-  };
-
-  const sse = new EventSourcePolyfill(`${BASE_URL}/api/notification/connect`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'text/event-stream; charset=utf-8',
-      Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
-    },
-  });
-
-  console.log('sse', sse);
-
-  sse.addEventListener('connect', (event) => {
-    const data = event;
-    console.log('ssedata', data);
-  });
   return null;
 };
 

@@ -116,33 +116,31 @@ export default function ContactList({
                     <div className={`inquiry-type-tag ${className}`}>
                       {text}
                     </div>
-                    <div className="inquiry-date-tag">
-                      {item.createdAt.slice(0, 11)}
-                    </div>
+                    <div className="inquiry-date-tag">{item.createdAt}</div>
                   </div>
-                  {item.inquiryTitle}
-                  <div className="inquiry-header">
-                    <span className="contact-inquiry-title"></span>
-
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 14 14"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d={
-                          activeToggleIndex === index
-                            ? 'M11.0837 8.75L7.00033 4.66667L2.91699 8.75'
-                            : 'M11.0837 5.25L7.00033 9.33333L2.91699 5.25'
-                        }
-                        stroke="#1D1D1F"
-                        strokeWidth="0.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
+                  <div className="inquiryTitle-container">
+                    {item.inquiryTitle}
+                    <div className="inquiry-header">
+                      <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 14 14"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d={
+                            activeToggleIndex === index
+                              ? 'M11.0837 8.75L7.00033 4.66667L2.91699 8.75'
+                              : 'M11.0837 5.25L7.00033 9.33333L2.91699 5.25'
+                          }
+                          stroke="#1D1D1F"
+                          strokeWidth="1"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </div>
                   </div>
                 </div>
                 {activeToggleIndex === index && (

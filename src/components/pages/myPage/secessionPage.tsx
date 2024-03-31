@@ -19,13 +19,12 @@ const Divider = styled.div`
 
 function SecessionPage() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { nickname } = location.state as { nickname: string };
   const [isAgreed, setIsAgreed] = useState(false);
   const [secessionReason, setSecessionReason] = useState('');
 
-  const location = useLocation();
-  const { nickname } = location.state;
-
-  const handleReasonChange = (reason) => {
+  const handleReasonChange = (reason: string) => {
     setSecessionReason(reason);
   };
 
@@ -33,7 +32,7 @@ function SecessionPage() {
     navigate(-1);
   };
 
-  const handleAgreeChange = (event) => {
+  const handleAgreeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsAgreed(event.target.checked);
   };
 
@@ -52,7 +51,7 @@ function SecessionPage() {
       showSuccessToast('성공적으로 탈퇴 처리되었습니다.');
       navigate('/');
     } catch (error) {
-      showErrorToast(`탈퇴 처리 중 오류가 발생했습니다: ${error.message}`);
+      showErrorToast(`탈퇴 처리 중 오류가 발생했습니다: ${error}`);
     }
   };
 
@@ -98,6 +97,7 @@ function SecessionPage() {
             id="agreeSecession"
             checked={isAgreed}
             onChange={handleAgreeChange}
+            className="agreement-checkbox"
           />
           <label className="agreeSecession">
             안내사항을 모두 확인하였으며, 이에 동의합니다.{' '}

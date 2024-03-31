@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import '../../../asset/sass/etc/tabBar/tabBar.scss';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHouse, faBell, faUser } from '@fortawesome/free-solid-svg-icons';
 import { ACCESS_TOKEN } from '../../global/constants';
+import user from '../../../asset/image/tabbar-user.svg';
+import home from '../../../asset/image/tabbar-home.svg';
+import alert from '../../../asset/image/tabbar-alert.svg';
 
 const TabBar = () => {
   const [activeNav, setActiveNav] = useState(1);
@@ -39,7 +40,7 @@ const TabBar = () => {
       <div style={{ width: '33.33%' }}>
         <Link to="/mypage" className="nav-link" onClick={() => setActiveNav(2)}>
           <div className={activeNav === 2 ? 'nav-item tab-active' : 'nav-item'}>
-            <FontAwesomeIcon icon={faUser} className="icon" />
+            <img src={user} alt="user" className="icon" />
             <div className="text">마이페이지</div>
           </div>
         </Link>
@@ -48,7 +49,7 @@ const TabBar = () => {
       <div style={{ width: '33.33%' }}>
         <Link to="/" className="nav-link" onClick={() => setActiveNav(1)}>
           <div className={activeNav === 1 ? 'nav-item tab-active' : 'nav-item'}>
-            <FontAwesomeIcon icon={faHouse} className="icon" />
+            <img src={home} alt="user" className="icon" />{' '}
             <div className="text">홈</div>
           </div>
         </Link>
@@ -61,7 +62,7 @@ const TabBar = () => {
           onClick={() => setActiveNav(3)}
         >
           <div className={activeNav === 3 ? 'nav-item tab-active' : 'nav-item'}>
-            <FontAwesomeIcon icon={faBell} className="icon" />
+            <img src={alert} alt="user" className="icon" />{' '}
             <div className="text">알림</div>
           </div>
         </Link>

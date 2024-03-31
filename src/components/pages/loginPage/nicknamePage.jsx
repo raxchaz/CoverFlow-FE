@@ -14,25 +14,26 @@ import { showErrorToast, showSuccessToast } from '../../ui/toast/toast.tsx';
 const CheckboxContainer = styled.div`
   display: flex;
   align-items: center;
-  margin: 9% 0% -6.5% 10%;
+
   border-bottom: 1px solid #d9d9d9;
   width: calc(80% - 25px);
   padding: 2%;
+  margin-left: 10%;
 `;
 const CheckboxLabel = styled.label`
   display: flex;
   align-items: center;
-  margin-left: 1%;
-  font-size: 1rem;
+  font-size: 2rem;
+  font-family: Pretendard-SemiBold;
   cursor: pointer;
   letter-spacing: -1px;
 
   color: #000;
 `;
 const Icon = styled(FontAwesomeIcon)`
-  margin-right: 7px;
-  width: 20px;
-  height: 20px;
+  margin-right: 2rem;
+  width: 34px;
+  height: 34px;
   color: ${(props) => (props.checked ? '#22932D' : '#d9d9d9')};
 `;
 const HiddenCheckbox = styled.input`
@@ -44,16 +45,19 @@ const HiddenCheckbox = styled.input`
 const StartButton = styled.button.withConfig({
   shouldForwardProp: (prop) => prop !== 'isActive',
 })`
+  width: 520px;
+  height: 45px;
   background-color: #ff8d1d;
   color: white;
   border: none;
   padding: 8px 15px;
-  font-size: 1rem;
-  letter-spacing: 0.5px;
+  font-size: 2rem;
+  font-family: Pretendard-Bold;
+  letter-spacing: -1px;
   font-weight: 800;
   cursor: ${(props) => (props.isActive ? 'pointer' : 'not-allowed')};
-  margin: 15% 0% 20% 70%;
-  border-radius: 5px;
+  margin: 3% 0 5% 10%;
+  border-radius: 0px;
 
   &:hover {
     background-color: ${(props) => (props.isActive ? '#ff8d1d' : '#ccc')};
@@ -198,7 +202,7 @@ const NicknamePage = () => {
             />
             <CheckboxLabel htmlFor="employedCheckbox" checked={isEmployed}>
               <Icon icon={faCircleCheck} checked={isEmployed} />
-              직장을 다니고 있어요
+              현재 직장을 다니고 있어요
             </CheckboxLabel>
           </CheckboxContainer>
 

@@ -10,6 +10,7 @@ import SelectSlider from '../../ui/selectSlider/selectSlider';
 import { CurrentFishBanner } from '../../ui/banner/currentFishBanner';
 import { ACCESS_TOKEN } from '../../global/constants';
 import FishListItem from '../../ui/selection/fishListItem.tsx';
+import UserInfoHeader from '../../ui/header/userInfoHeader.jsx';
 
 function StorePage() {
   const navigate = useNavigate();
@@ -41,56 +42,58 @@ function StorePage() {
     <StyledPage className="main-page-container">
       <StyledHeader>
         <TitleHeader pageTitle="상점" handleGoBack={handleGoBack} />
-
+        <UserInfoHeader />
         <TabBar />
-        <SelectSlider sectionA="붕어빵 구매하기" sectionB="나의 구매내역">
-          <div className="store-wrapper">
-            <CurrentFishBanner />
-            <div className="fish-list-container">
-              <FishListItem payEvent={goWIL} price="1,900원">
-                붕어빵 100개
-              </FishListItem>
-              <FishListItem payEvent={goWIL} price="4,900원">
-                붕어빵 300개
-              </FishListItem>
-              <FishListItem payEvent={goWIL} price="9,900원">
-                붕어빵 700개
-              </FishListItem>
+        <div className="store-container">
+          <SelectSlider sectionA="붕어빵 구매하기" sectionB="나의 구매내역">
+            <div className="store-wrapper">
+              <CurrentFishBanner />
+              <div className="fish-list-container">
+                <FishListItem payEvent={goWIL} price="1,900원">
+                  붕어빵 100개
+                </FishListItem>
+                <FishListItem payEvent={goWIL} price="4,900원">
+                  붕어빵 300개
+                </FishListItem>
+                <FishListItem payEvent={goWIL} price="9,900원">
+                  붕어빵 700개
+                </FishListItem>
+              </div>
             </div>
-          </div>
-          <div className="store-wrapper">
-            <CurrentFishBanner />
+            <div className="store-wrapper">
+              <CurrentFishBanner />
 
-            {purchaseList.length > 0 ? (
-              <div className="fish-purchase-list">
-                {purchaseList.map((item, index) => (
-                  <div key={index} className="fish-purchase-item">
-                    <div>
-                      <div className="fishbun-cnt">
-                        붕어빵 {item.fishShapeBun}개
+              {purchaseList.length > 0 ? (
+                <div className="fish-purchase-list">
+                  {purchaseList.map((item, index) => (
+                    <div key={index} className="fish-purchase-item">
+                      <div>
+                        <div className="fishbun-cnt">
+                          붕어빵 {item.fishShapeBun}개
+                        </div>
+                        <div className="fishbun-price">
+                          {item.price}원<span>X 총{item.cnt}개</span>
+                        </div>
                       </div>
                       <div className="fishbun-price">
-                        {item.price}원<span>X 총{item.cnt}개</span>
+                        구입<span> {item.date}</span>
                       </div>
                     </div>
-                    <div className="fishbun-price">
-                      구입<span> {item.date}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="no-fish-purchase">
-                <img
-                  src={FaceIcon}
-                  alt="구매 내역 없음"
-                  className="no-result"
-                />
-                <span className="fish-disclaimer">구매 내역이 없어요</span>
-              </div>
-            )}
-          </div>
-        </SelectSlider>
+                  ))}
+                </div>
+              ) : (
+                <div className="no-fish-purchase">
+                  <img
+                    src={FaceIcon}
+                    alt="구매 내역 없음"
+                    className="no-result"
+                  />
+                  <span className="fish-disclaimer">구매 내역이 없어요</span>
+                </div>
+              )}
+            </div>
+          </SelectSlider>
+        </div>
       </StyledHeader>
     </StyledPage>
   );

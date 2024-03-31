@@ -1,57 +1,68 @@
 .slider-container {
-  width: 70%;
+  width: 100%;
   margin: 0 auto;
   height: 100%;
 }
 
 .contact-container {
-  border: 1px solid rgba(217, 217, 217, 1);
-  margin: 2rem 0;
+  // border: 1px solid rgba(217, 217, 217, 1);
+  margin: 2rem auto;
   display: grid;
+  width: 505px;
   grid-template-columns: repeat(3, 1fr);
 }
 
 .contact-item {
   border: 1px solid rgba(217, 217, 217, 1);
-  height: 9rem;
-  color: rgb(0, 0, 0);
+  height: 165px;
+  width: 172px;
+  color: #474646;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   letter-spacing: -1px;
-  font-size: small;
+  font-size: 1.8rem;
   font-family: 'pretendard-bold';
 }
 
 .contact-count {
-  padding-bottom: 0.5rem;
-  font-size: x-large;
-  font-family: 'pretendard-extraBold';
-  color: black;
+  padding-bottom: 1rem;
+  font-size: 3rem;
+  font-family: 'pretendard-Bold';
+  color: #474646;
 }
 .disclaimer {
-  font-size: 0.7rem;
+  font-size: 1.5rem;
+  color: #808080;
   letter-spacing: -1px;
+  font-family: Pretendard-Medium;
+  margin-bottom: 0.5rem;
+}
+
+.additional-disclaimer {
+  margin-bottom: 2rem;
 }
 
 .input-field-contact,
 .option-field {
   letter-spacing: -1px;
-  font-size: 0.9rem;
+  font-size: 1.5rem;
   border: none;
-  margin-top: 20px;
-  width: 100%;
+  color: #808080;
+  font-family: Pretendard-Medium;
+  margin-top: 4rem;
+  width: 520px;
   background-color: rgba(242, 242, 242, 1);
   transition: background-color 0.3s;
   padding: 8px 0;
   text-indent: 0.5rem;
-  height: 2.5rem;
+  height: 45px;
 
   &::placeholder {
-    color: #474646;
+    color: #cacaca;
     opacity: 1;
-    text-indent: 0.5rem;
+    text-indent: 2rem;
   }
 
   &:hover {
@@ -85,7 +96,11 @@
   width: 100%;
   margin: 0 auto;
   position: absolute;
-  top: 43%;
+  top: 410px;
   height: 0.5rem;
   background-color: rgba(242, 242, 242, 1);
+}
+.contact-input-field-container {
+  width: 505px;
+  margin: 1rem auto 15% auto;
 }

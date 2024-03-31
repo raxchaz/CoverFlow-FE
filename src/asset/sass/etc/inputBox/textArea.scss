@@ -1,22 +1,22 @@
 .textarea-field-contact,
 .option-field {
   letter-spacing: -1px;
-  font-size: 0.9rem;
+  font-size: 1.5rem;
   border: none;
-
+  font-family: 'pretendard-regular';
   margin: 20px 0;
-  width: 100%;
+  width: 520px;
   background-color: rgba(242, 242, 242, 1);
   transition: background-color 0.3s;
-  padding: 1rem 0.3rem;
+  padding: 2rem 0.3rem;
   text-indent: 0.5rem;
-  height: 10rem;
+  height: 230px;
   resize: none;
 
   &::placeholder {
-    color: #474646;
+    color: #cacaca;
     opacity: 1;
-    text-indent: 0.5rem;
+    text-indent: 2rem;
   }
 
   &:focus {

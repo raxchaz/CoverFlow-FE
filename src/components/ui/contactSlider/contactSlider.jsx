@@ -11,24 +11,29 @@ import { showSuccessToast, showErrorToast } from '../toast/toast.tsx';
 // import { BASE_URL, ACCESS_TOKEN } from '../../global/constants/index.js';
 const StatusBar = styled.div`
   display: flex;
+  width: 505px;
   justify-content: space-between;
-  border-bottom: 1px solid gray;
-  margin-top: 10%;
-  font-family: pretendard-semibold;
+  border-bottom: 5px solid #d9d9d9;
+  margin: 5% auto;
+  font-size: 2rem;
+  color: #d9d9d9;
+  letter-spacing: -1px;
+  font-family: Pretendard-Bold;
 `;
 
 const StatusTab = styled.div`
-  width: 50%;
+  width: 245px;
   letter-spacing: -1px;
   text-align: center;
   padding: 10px 0;
+  margin-bottom: -5px;
   cursor: pointer;
   color: gray;
-  border-bottom: 2px solid transparent;
+  border-bottom: 5px solid transparent;
   transition:
     border-bottom 0.3s ease-in-out,
     color 0.3s ease-in-out;
-  ${(props) => props.current && 'color: black; border-bottom: 2px solid black;'}
+  ${(props) => props.current && 'color: black; border-bottom: 5px solid black;'}
 `;
 // ======================= 스타일드 컴포넌트
 
@@ -134,9 +139,9 @@ export default function ContactSlider() {
               </div>
             </div>
 
-            <Disclamier />
+            <div className="contact-input-field-container">
+              <Disclamier />
 
-            <div>
               <input
                 type="text"
                 className="input-field-contact"
@@ -157,7 +162,7 @@ export default function ContactSlider() {
                 onClick={submitContact}
                 disabled={contact.title === '' || contact.content === ''}
               >
-                제출
+                문의하기
               </Button>
             </div>
           </div>

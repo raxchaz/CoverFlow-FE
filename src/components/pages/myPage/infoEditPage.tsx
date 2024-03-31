@@ -11,29 +11,32 @@ import TabBar from '../../ui/tabBar/tabBar.jsx';
 import { ACCESS_TOKEN } from '../../global/constants';
 import { showErrorToast, showSuccessToast } from '../../ui/toast/toast.tsx';
 import { fetchAPI } from '../../global/utils/apiUtil.js';
+import Button from '../../ui/button/Button/Button.jsx';
+
+interface UserData {
+  email: string;
+  nickname: string;
+  tag: string;
+  age: string;
+  gender: string;
+  fishShapedBun: number;
+  membStatus: 'WAIT' | 'REGISTRATION' | 'LEAVE';
+  createdAt: string;
+  connectedAt: string;
+  role: string;
+  socialType: string;
+}
+
+interface UserResponse {
+  statusCode: string;
+  data: UserData;
+}
+
 const Divider = styled.div`
   height: 1px;
   background-color: rgba(217, 217, 217, 1);
   width: 79%;
   margin: 5% 0% 0% 12%;
-`;
-
-const ModifyInfoBtn = styled.button`
-  cursor: pointer;
-  padding: 7px 8px;
-  font-family: pretendard-light;
-  border-radius: 1px;
-  width: 79%;
-  margin: 5% 0% 0% 12%;
-`;
-
-const SecessionBtn = styled.button`
-  cursor: pointer;
-  padding: 7px 8px;
-  font-family: pretendard-light;
-  border-radius: 1px;
-  margin: 5% 0% 20% 0%;
-  width: 100%;
 `;
 
 function InfoEditPage() {
@@ -64,7 +67,7 @@ function InfoEditPage() {
   /* 사용자의 닉네임과 붕어빵 개수를 불러옵니다. */
   const loadUserData = async () => {
     try {
-      const data = await fetchAPI('/api/member/me', 'GET');
+      const data = (await fetchAPI('/api/member/me', 'GET')) as UserResponse;
       console.log('사용자 정보:', data);
       setNickname(data.data.nickname);
       dispatch(setRewardCount(data.data.fishShapedBun));
@@ -156,7 +159,7 @@ function InfoEditPage() {
         </div>
         <Divider />
         <div className="modify-info">
-          <span className="modify-nick">회원 태그</span>
+          <div className="modify-nick">회원 태그</div>
           <div className="modify-info-wrapper">
             {['취준생', '현업자'].map((tag) => (
               <div
@@ -170,7 +173,7 @@ function InfoEditPage() {
           </div>
         </div>
         <div className="modify-info">
-          <span className="modify-nick">성별</span>
+          <div className="modify-nick">성별</div>
           <div className="modify-info-wrapper">
             {['여성', '남성', '밝히고 싶지 않음'].map((gender) => (
               <div
@@ -184,7 +187,7 @@ function InfoEditPage() {
           </div>
         </div>
         <div className="modify-info">
-          <span className="modify-nick">연령대</span>
+          <div className="modify-nick">연령대</div>
           <div className="modify-info-wrapper">
             {['10대', '20대', '30대'].map((age) => (
               <div
@@ -207,15 +210,16 @@ function InfoEditPage() {
               </div>
             ))}
           </div>
+          <Button
+            disabled={
+              selectedTag === '' || selectedAge === '' || selectedGender === ''
+            }
+            onClick={sendDataToServer}
+          >
+            저장
+          </Button>
         </div>
-        <ModifyInfoBtn
-          // disabled={
-          //   selectedTag === '' || selectedAge === '' || selectedGender === ''
-          // }
-          onClick={sendDataToServer}
-        >
-          저장
-        </ModifyInfoBtn>
+
         <Divider />
 
         <div className="secessionPage-container">
@@ -225,7 +229,7 @@ function InfoEditPage() {
               회원 탈퇴를 할 경우, 계정을 되돌릴 수 없고 모든 데이터가
               삭제됩니다
             </div>
-            <SecessionBtn onClick={goToSecessionPage}>탈퇴</SecessionBtn>
+            <Button onClick={goToSecessionPage}>탈퇴</Button>
           </div>
         </div>
       </StyledHeader>

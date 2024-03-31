@@ -7,18 +7,30 @@
   cursor: pointer;
   outline: none;
   line-height: 1.5;
-  height: fit-content;
+  height: max-content;
+  padding: 2rem 0;
 }
 .inquiry-container {
   position: relative;
+  width: 505px;
+  margin: 0 auto;
   max-height: 68vh;
   min-height: 68vh;
-  padding: 30px 0;
+  padding: 1rem 0;
   overflow-y: scroll;
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
-
+.inquiryTitle-container {
+  display: flex;
+  width: 505px;
+  justify-content: space-between;
+  padding: 1rem;
+  font-size: 2rem;
+  color: #000000;
+  letter-spacing: -1px;
+  font-family: Pretendard-semiBold;
+}
 .inquiry-container::-webkit-scrollbar {
   display: none;
 }
@@ -38,17 +50,23 @@
 }
 
 .inquiry-header {
-  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 .inquiry-type-tag {
+  width: 90px;
+  height: 30px;
   border: 1px solid rgba(151, 151, 151, 1);
-  border-radius: 30px;
-  font-size: x-small;
+  border-radius: 10px;
   padding: 2px 8px;
-  color: rgba(151, 151, 151, 1);
+  font-size: 1.6rem;
+  color: #808080;
+  letter-spacing: -1px;
+  font-family: Pretendard-Medium;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .inquiry-type-tag.yellow {
   border-color: rgba(244, 198, 36, 1);
@@ -61,9 +79,11 @@
 }
 
 .inquiry-date-tag {
-  padding-left: 0.5rem;
-  font-size: x-small;
-  color: rgba(151, 151, 151, 1);
+  padding-left: 1rem;
+  font-size: 1.6rem;
+  color: #474646;
+  letter-spacing: -1px;
+  font-family: Pretendard-Medium;
 }
 
 .contact-inquiry-title {
@@ -72,21 +92,22 @@
 }
 
 .inquiry-content-answer {
-  background-color: rgba(241, 241, 241, 1);
-  width: 100%;
-  min-width: 20rem;
-  min-height: 3rem;
+  background-color: #f5f5f5;
+  width: 520px;
+  min-height: 210px;
   text-indent: 0.3rem;
   padding: 0.3rem 0.8rem;
   margin-bottom: 1rem;
-  font-size: small;
+  font-size: 1.5rem;
+  letter-spacing: -1px;
   border-radius: 15px;
+  font-family: Pretendard-Medium;
 }
 
 .inquiry-content-question {
   width: 19rem;
   min-height: 1rem;
-  text-indent: 0.3rem;
+  text-indent: 1rem;
   padding-bottom: 1rem;
   font-size: small;
 }
@@ -95,20 +116,19 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  margin-top: 1.5rem;
   position: absolute;
-  bottom: 10;
+  bottom: 8%;
   left: 10%;
   width: 80%;
 }
 
 .inquiry-index-btn {
   border-radius: 100%;
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 2.5rem;
+  height: 2.5rem;
   font-size: small;
   text-align: center;
-  padding-top: auto;
+
   border: solid 1px #cacaca;
   display: flex;
   justify-content: center;
@@ -159,14 +179,15 @@
 }
 
 .inquiry-content-answer-tag {
-  background-color: rgba(151, 151, 151, 1);
+  background-color: #d9d9d9;
   border-radius: 30px;
-  font-size: x-small;
-  font-family: pretendard-bold;
+  font-size: 1rem;
+  font-family: pretendard-semiBold;
   padding: 3px 0.3rem;
   margin: 0.5rem 0px;
   color: black;
-  width: 5rem;
+  width: 80px;
+  height: 20px;
   text-align: center;
-  letter-spacing: -1;
+  letter-spacing: -1px;
 }

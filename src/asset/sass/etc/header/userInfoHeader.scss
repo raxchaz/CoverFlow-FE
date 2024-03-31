@@ -1,16 +1,20 @@
-a.login-btn {
-  position: relative;
-  margin-left: 74%;
-  top: -17px;
-  font-size: 0.75rem;
-  padding: 0.6% 2% 0.6% 1.7%;
+.login-btn {
+  width: 100px;
+  height: 30px;
+  margin-left: 10%;
+  position: fixed;
+  font-size: 1.5rem;
+  font-family: 'pretendard-Bold';
   border: 0.1px solid #fefefe;
   background-color: #ff8d1d;
-  color: #fefefe;
-  border-radius: 25px;
+  color: #fff;
+  border-radius: 10px;
   cursor: pointer;
   letter-spacing: -1.2px;
   font-weight: 400;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 img.loginuser {
@@ -19,8 +23,8 @@ img.loginuser {
   background: none;
   border: none;
   padding: 0;
-  margin-top: -9.5%;
-  margin-left: 22%;
+  margin-top: -12%;
+  margin-left: 30%;
   cursor: pointer;
 }
 
@@ -29,11 +33,12 @@ img.loginuser {
 }
 
 .reward-fish {
+  height: 0;
   display: flex;
   align-items: center;
   flex-direction: column;
-  margin-top: -2%;
-  margin-left: 48%;
+  margin-top: -3.5%;
+  margin-left: 52%;
   cursor: pointer;
   padding: 0;
 }
@@ -56,8 +61,8 @@ img.loginuser {
     width: 120px;
     max-height: 350px;
     border-radius: 5px;
-    margin-left: 65%;
-    margin-top: 5%;
+    margin-left: 70%;
+    margin-top: 7%;
   }
 
   .dropdown-item,

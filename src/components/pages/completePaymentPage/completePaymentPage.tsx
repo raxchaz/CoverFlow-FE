@@ -13,6 +13,11 @@ export default function CompletePaymentPage() {
   // 기본 적으로는 home으로 이동합니다.
   // 만약 확인 후, 추가하고 싶은 navigate가 있다면 추가해주세요.
 
+  // const payResult = {
+  //   amount: '1,000,000',
+  //   created_at: '2023-03-20',
+  //   method: '카드',
+  // };
   return (
     <StyledPage className="main-page-container">
       <StyledHeader>
@@ -25,15 +30,15 @@ export default function CompletePaymentPage() {
           </span>
           <div className="payResult-container">
             <div className="payResult-item-container">
-              <span className="payResult-item">결제 수단 :</span>
+              <span className="payResult-item">결제 수단 </span>
               <span className="payResult-item">{payResult.method}</span>
             </div>
             <div className="payResult-item-container">
-              <span className="payResult-item">결제 일시 :</span>
+              <span className="payResult-item">결제 일시 </span>
               <span className="payResult-item">{payResult.created_at}</span>
             </div>
             <div className="payResult-item-container">
-              <span className="payResult-item">결제 금액 :</span>
+              <span className="payResult-item">결제 금액 </span>
               <span className="payResult-item">{payResult.amount}</span>
             </div>
           </div>

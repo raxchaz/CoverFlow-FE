@@ -125,7 +125,7 @@ function UserInfoHeader() {
     <header>
       <div className="userInfo-container">
         {isLoggedIn ? (
-          <div className="user-icon-container" ref={dropdownRef}>
+          <div className="user-icon-container-flex" ref={dropdownRef}>
             {/* 붕어빵 */}
             <div className="reward-fish">
               <img
@@ -178,9 +178,13 @@ function UserInfoHeader() {
             )}
           </div>
         ) : (
-          <a href="/login" className="login-btn">
-            로그인 / 가입
-          </a>
+          <div className="user-icon-container">
+            <div className="reward-fish">
+              <div onClick={() => navigate('/login')} className="login-btn">
+                로그인 / 가입
+              </div>
+            </div>
+          </div>
         )}
       </div>
     </header>
