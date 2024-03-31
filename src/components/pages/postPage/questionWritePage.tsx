@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import '../../../asset/sass/pages/postPage/questionWritePage.scss';
 import TagInput from '../../ui/selection/fishTag';
 import TitleHeader from '../../ui/header/titleHeader';
@@ -12,6 +12,7 @@ import { showErrorToast, showSuccessToast } from '../../ui/toast/toast';
 import { fetchAPI } from '../../global/utils/apiUtil';
 function QuestionWritePage() {
   const navigate = useNavigate();
+  const { state } = useLocation();
   const [content, setContent] = useState('');
   const [title, setTitle] = useState('');
   const [reward, setReward] = useState(0);
@@ -106,7 +107,7 @@ function QuestionWritePage() {
       <StyledHeader>
         <TitleHeader pageTitle="질문 등록" handleGoBack={handleGoBack} />
         <div className="company-name">
-          <span>아모레퍼시픽</span>
+          <span>{state}</span>
         </div>
 
         <div className="tag-container">

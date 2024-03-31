@@ -1,9 +1,10 @@
 import React from 'react';
+import { PageProps } from '../pages/searchPage/searchResultPage';
 
 interface PaginationProps {
   totalPages: number;
   currentPage: number;
-  handlePagination: (direction: string) => void;
+  handlePagination: (type: PageProps) => void;
 }
 
 const Pagination = ({

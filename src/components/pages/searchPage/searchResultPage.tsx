@@ -11,7 +11,9 @@ import Warning from '../../../asset/image/warning-triangle.svg';
 import '../../../asset/sass/pages/notificationPage/notificationPage.scss';
 import SearchInput from '../../ui/searchInput/searchInput.tsx';
 import { showErrorToast } from '../../ui/toast/toast.tsx';
-import { fetchAPI } from '../../global/utils/apiUtil.js';
+import axios from 'axios';
+import { BASE_URL } from '../../global/constants/index.ts';
+import Pagination from '../../ui/Pagination.tsx';
 
 const ResultsContainer = styled.div`
   position: relative;
@@ -122,25 +124,36 @@ interface SearchResultProps {
   };
 }
 
-type PageProps = 'prev' | 'next';
+interface SearchDataProps {
+  companyAddress: string;
+  companyId: number;
+  companyName: string;
+  companyStatus: 'EXAMINATION' | 'REGISTRATION' | 'DELETION';
+  companyType: string;
+  questionCount: number;
+}
+
+export type PageProps = 'prev' | 'next';
 
 function SearchResultPage() {
   const navigate = useNavigate();
   const {
     state: { searchResults },
   } = useLocation() as SearchResultProps;
-  const companyList = searchResults.map((result) => result.companyName);
+  const [searchData, setSearchData] = useState<SearchDataProps[]>([]);
+  const companyList = searchResults.map((result) => result);
+  const companyName = companyList.map((list) => list.companyName);
   // const keyword = queryParams.get('keyword');
-  // const [searchResult, setSearchResult] = useState<SearchResultProps[]>([]);
+
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = Array.from(searchResults)?.slice(
-    indexOfFirstItem,
-    indexOfLastItem,
-  );
+  // const indexOfLastItem = currentPage * itemsPerPage;
+  // const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  // const currentItems = Array.from(searchResults)?.slice(
+  //   indexOfFirstItem,
+  //   indexOfLastItem,
+  // );
 
   const totalPages = Math.ceil(searchResults.length / itemsPerPage);
 
@@ -151,11 +164,16 @@ function SearchResultPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await fetchAPI(
-          `/api/company?pageNo=1&name=${companyList}`,
-          'GET',
+        const {
+          data: {
+            data: { companyList },
+          },
+        } = await axios.get(
+          `${BASE_URL}/api/company?pageNo=0
+					&name=${companyName}&criterion=createdAt`,
         );
-        console.log(data);
+
+        setSearchData(companyList);
       } catch (error) {
         showErrorToast(`오류 발생: ${error}`);
       }
@@ -169,9 +187,9 @@ function SearchResultPage() {
   };
 
   const handlePagination = (type: PageProps) => {
-    if (type === 'prev') {
+    if (type === 'prev' && currentPage > 0) {
       setCurrentPage(currentPage - 1);
-    } else if (type === 'next') {
+    } else if (type === 'next' && currentPage < totalPages - 1) {
       setCurrentPage(currentPage + 1);
     }
   };
@@ -184,11 +202,11 @@ function SearchResultPage() {
           <SearchInput />
           <ResultCount>
             기업 검색 결과
-            <span className="result-count">{companyList.length}</span>
+            <span className="result-count">{companyName.length}</span>
           </ResultCount>
           <ResultsList>
-            {currentItems.length > 0 ? (
-              currentItems.map((item) => (
+            {searchData.length > 0 ? (
+              searchData.map((item) => (
                 <ResultItem
                   key={item.companyId}
                   onClick={() => goToResultDetailPage(item.companyId)}
@@ -221,58 +239,13 @@ function SearchResultPage() {
               </span>
             )}
           </ResultsList>
-          {totalPages >= 1 && (
-            <div className="pagination-button-container">
-              <div
-                style={{ cursor: 'pointer' }}
-                onClick={() => handlePagination('prev')}
-              >
-                <svg
-                  width="8"
-                  height="15"
-                  viewBox="0 0 6 10"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M5 9L1 5L5 1"
-                    stroke="#1D1D1F"
-                    strokeWidth="0.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </div>
-              {[...Array(totalPages)].map((_, index) => (
-                <div
-                  className={`notice-button ${currentPage === index + 1 ? 'active-item' : ''}`}
-                  key={index}
-                >
-                  {index + 1}
-                </div>
-              ))}
-              <div
-                style={{ cursor: 'pointer' }}
-                onClick={() => handlePagination('next')}
-                // disabled={currentGroup === totalGroup - 1}
-              >
-                <svg
-                  width="8"
-                  height="15"
-                  viewBox="0 0 6 10"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M1 9L5 5L1 1"
-                    stroke="#1D1D1F"
-                    strokeWidth="0.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </div>
-            </div>
+
+          {totalPages > 1 && (
+            <Pagination
+              totalPages={totalPages}
+              currentPage={currentPage}
+              handlePagination={handlePagination}
+            />
           )}
         </ResultsContainer>
         <TabBar />
