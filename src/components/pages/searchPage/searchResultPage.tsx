@@ -170,7 +170,7 @@ function SearchResultPage() {
           },
         } = await axios.get(
           `${BASE_URL}/api/company?pageNo=0
-					&name=${companyName}`,
+					&name=${companyName}&criterion=createdAt`,
         );
 
         setSearchData(companyList);
@@ -202,7 +202,7 @@ function SearchResultPage() {
           <SearchInput />
           <ResultCount>
             기업 검색 결과
-            <span className="result-count">{companyList.length}</span>
+            <span className="result-count">{companyName.length}</span>
           </ResultCount>
           <ResultsList>
             {searchData.length > 0 ? (
@@ -240,7 +240,7 @@ function SearchResultPage() {
             )}
           </ResultsList>
 
-          {totalPages >= 1 && (
+          {totalPages > 1 && (
             <Pagination
               totalPages={totalPages}
               currentPage={currentPage}
