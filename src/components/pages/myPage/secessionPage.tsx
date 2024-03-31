@@ -97,6 +97,7 @@ function SecessionPage() {
             id="agreeSecession"
             checked={isAgreed}
             onChange={handleAgreeChange}
+            className="agreement-checkbox"
           />
           <label className="agreeSecession">
             안내사항을 모두 확인하였으며, 이에 동의합니다.{' '}
