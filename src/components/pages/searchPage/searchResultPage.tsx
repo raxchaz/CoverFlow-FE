@@ -13,6 +13,7 @@ import SearchInput from '../../ui/searchInput/searchInput.tsx';
 import { showErrorToast } from '../../ui/toast/toast.tsx';
 import axios from 'axios';
 import { BASE_URL } from '../../global/constants/index.ts';
+import Pagination from '../../ui/Pagination.tsx';
 
 const ResultsContainer = styled.div`
   position: relative;
@@ -132,15 +133,16 @@ interface SearchDataProps {
   questionCount: number;
 }
 
-type PageProps = 'prev' | 'next';
+export type PageProps = 'prev' | 'next';
 
 function SearchResultPage() {
   const navigate = useNavigate();
   const {
     state: { searchResults },
   } = useLocation() as SearchResultProps;
-  const companyList = searchResults.map((result) => result.companyName);
   const [searchData, setSearchData] = useState<SearchDataProps[]>([]);
+  const companyList = searchResults.map((result) => result);
+  const companyName = companyList.map((list) => list.companyName);
   // const keyword = queryParams.get('keyword');
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -162,10 +164,16 @@ function SearchResultPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await axios.get(
-          `${BASE_URL}/api/company?pageNo=1&name=${companyList[0]}`,
+        const {
+          data: {
+            data: { companyList },
+          },
+        } = await axios.get(
+          `${BASE_URL}/api/company?pageNo=0
+					&name=${companyName}`,
         );
-        setSearchData(data.data.data.companyList);
+
+        setSearchData(companyList);
       } catch (error) {
         showErrorToast(`오류 발생: ${error}`);
       }
@@ -179,9 +187,9 @@ function SearchResultPage() {
   };
 
   const handlePagination = (type: PageProps) => {
-    if (type === 'prev') {
+    if (type === 'prev' && currentPage > 0) {
       setCurrentPage(currentPage - 1);
-    } else if (type === 'next') {
+    } else if (type === 'next' && currentPage < totalPages - 1) {
       setCurrentPage(currentPage + 1);
     }
   };
@@ -231,58 +239,13 @@ function SearchResultPage() {
               </span>
             )}
           </ResultsList>
+
           {totalPages >= 1 && (
-            <div className="pagination-button-container">
-              <div
-                style={{ cursor: 'pointer' }}
-                onClick={() => handlePagination('prev')}
-              >
-                <svg
-                  width="8"
-                  height="15"
-                  viewBox="0 0 6 10"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M5 9L1 5L5 1"
-                    stroke="#1D1D1F"
-                    strokeWidth="0.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </div>
-              {[...Array(totalPages)].map((_, index) => (
-                <div
-                  className={`notice-button ${currentPage === index + 1 ? 'active-item' : ''}`}
-                  key={index}
-                >
-                  {index + 1}
-                </div>
-              ))}
-              <div
-                style={{ cursor: 'pointer' }}
-                onClick={() => handlePagination('next')}
-                // disabled={currentGroup === totalGroup - 1}
-              >
-                <svg
-                  width="8"
-                  height="15"
-                  viewBox="0 0 6 10"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M1 9L5 5L1 1"
-                    stroke="#1D1D1F"
-                    strokeWidth="0.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </div>
-            </div>
+            <Pagination
+              totalPages={totalPages}
+              currentPage={currentPage}
+              handlePagination={handlePagination}
+            />
           )}
         </ResultsContainer>
         <TabBar />
