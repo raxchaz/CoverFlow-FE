@@ -116,7 +116,7 @@ function SearchInput() {
       );
       setAutoCompleteValue(res.data.data.companyList);
     } catch (error) {
-      console.error('자동완성 데이터 요청 실패', error);
+      showErrorToast(`자동완성 데이터 요청 실패 ${error}`);
       setAutoCompleteValue([]);
     }
   };
