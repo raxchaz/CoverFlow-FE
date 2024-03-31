@@ -46,8 +46,6 @@ const Line = styled.div`
 //   margin-right: 12%;
 // `;
 
-const CompanyEstablishment = styled.div``;
-
 const QuestionButton = styled.button`
   letter-spacing: -0.7px;
   background-color: #ff8d1d !important;
@@ -84,7 +82,6 @@ interface Questions {
 
 interface CompanInfoProps {
   companyAddress: string;
-  companyEstablishment: string;
   companyId: number;
   companyName: string;
   companyType: string;
@@ -166,13 +163,6 @@ function CompanyInfoPage() {
               <QuestionButton onClick={handleQuestionClick}>
                 질문하기
               </QuestionButton>
-
-              <div className="sub-info">
-                {/* <CompanyAddress>{companyData.companyAddress}</CompanyAddress> */}
-                <CompanyEstablishment>
-                  {companyData.companyEstablishment}
-                </CompanyEstablishment>
-              </div>
             </div>
           </CompanyContainer>
           <div className="selected-category">
