@@ -10,10 +10,10 @@ import { StyledPage, StyledHeader } from '../../../styledComponent';
 // import { EventSourcePolyfill } from 'event-source-polyfill';
 // import { ACCESS_TOKEN, BASE_URL } from '../../global/constants';
 const SearchInput = styled.input`
-  width: 477px;
-  height: 67px;
+  width: 500px;
+  height: 70px;
   padding: 8px;
-  border: 1px solid #ffbd7c;
+  border: 2px solid #ffbd7c;
   border-radius: 30px;
   margin: 3% 0% 0% 17%;
   outline: none;
@@ -25,8 +25,9 @@ const SearchInput = styled.input`
 
   &::placeholder {
     color: #cacaca;
-    font-size: 1rem;
-    padding-left: 10px;
+    font-size: 2rem;
+    padding-left: 32px;
+    letter-spacing: -1.5px;
   }
 `;
 

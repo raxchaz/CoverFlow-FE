@@ -14,7 +14,7 @@ const AgeSelection = ({ onSelectAge }) => {
   };
 
   return (
-    <div className="button-container">
+    <div className="age-button-container">
       <div className="button-row">
         <button
           className={selectedAge === '10대' ? 'selected' : ''}
@@ -52,7 +52,7 @@ const AgeSelection = ({ onSelectAge }) => {
           className={selectedAge === '60대 이상' ? 'selected' : ''}
           onClick={() => handleAgeKeywordClick('60대 이상')}
         >
-          60대 이상
+          60대
         </button>
       </div>
     </div>

@@ -67,7 +67,7 @@ function FeedbackPage() {
         />
 
         <Button
-          variant={'round'}
+          variant="default"
           disabled={contact === ''}
           onClick={submitFeedback}
         >

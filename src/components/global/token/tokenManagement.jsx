@@ -5,7 +5,7 @@ import { BASE_URL, ACCESS_TOKEN, REFRESH_TOKEN } from '../constants/index.ts';
 import { useDispatch } from 'react-redux';
 import { setTokens } from '../../../store/actions/authActions';
 // import { store } from '../../../store';
-import { EventSourcePolyfill } from 'event-source-polyfill';
+import { handleConnect } from '../utils/eventApiUtils.js';
 
 const decodeToken = (token) => {
   const payload = token.split('.')[1];
@@ -88,32 +88,6 @@ const TokenManagement = () => {
         navigate('/login');
       });
   }, [navigate, location, dispatch]);
-
-  const handleConnect = async () => {
-    const res = await fetch(`${BASE_URL}/api/notification/connect`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'text/event-stream; charset=utf-8',
-        Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
-      },
-    });
-    console.log('res', res);
-  };
-
-  const sse = new EventSourcePolyfill(`${BASE_URL}/api/notification/connect`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'text/event-stream; charset=utf-8',
-      Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
-    },
-  });
-
-  console.log('sse', sse);
-
-  sse.addEventListener('connect', (event) => {
-    const data = event;
-    console.log('ssedata', data);
-  });
   return null;
 };
 

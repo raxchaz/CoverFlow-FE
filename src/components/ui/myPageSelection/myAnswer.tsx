@@ -81,8 +81,8 @@ export default function MyAnswer({
           }
         >
           <div className="question-text">
-            <div className="question-item-title">{q.questionTitle}</div>
-            <div className="question-item-content">{q.answerContent}</div>
+            <div className="answer-item-title">{q.questionTitle}</div>
+            <div className="answer-item-content">{q.answerContent}</div>
           </div>
           <div className="quetion-tag">{q.companyName}</div>
         </div>

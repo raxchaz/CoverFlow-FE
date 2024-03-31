@@ -14,9 +14,9 @@
 }
 
 .title {
-  font-size: 2rem;
+  font-size: 3.5rem;
   margin: 10% 0 2% 12%;
-  letter-spacing: -2px;
+  letter-spacing: -1px;
   font-family: pretendard-bold;
   align-items: center;
   width: 70%;
@@ -30,8 +30,8 @@
 
 .title-intro {
   letter-spacing: -1px;
-  font-family: pretendard-regular;
-  font-size: 1.2rem;
+  font-family: pretendard-semiBold;
+  font-size: 2rem;
   margin-left: 0.3rem;
 }
 
@@ -76,8 +76,9 @@
 
 .letter {
   letter-spacing: -1px;
-  font-weight: bold;
-  font-size: 1rem;
+  font-family: Pretendard-Bold;
+  color: #474646;
+  font-size: 1.5rem;
 }
 
 .title-info-container {

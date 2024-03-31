@@ -12,7 +12,8 @@ import { ACCESS_TOKEN, BASE_URL } from '../../global/constants';
 
 const WelcomeMessage = styled.p`
   margin: 20% 0% 0% 15%;
-  font-size: 1.4rem;
+  font-size: 3.5rem;
+  font-family: Pretendard-Bold;
   letter-spacing: -1px;
   color: #000;
   font-weight: bold;
@@ -21,10 +22,10 @@ const WelcomeMessage = styled.p`
 
 const SecondaryMessage = styled.p`
   margin: 2% 0% 0% 15%;
-  font-size: 0.8rem;
-  letter-spacing: -0.5px;
+  font-size: 1.5rem;
+  letter-spacing: -1x;
   color: #474646;
-  font-weight: 100;
+  font-family: Pretendard-Medium;
 `;
 
 const FastLoginImage = styled.img`
@@ -40,7 +41,7 @@ const HorizontalRule = styled.hr`
 
   &:after {
     content: '또는';
-    font-size: 0.7rem;
+    font-size: 1.5rem;
     position: relative;
     top: -10px;
     background-color: white;
@@ -48,6 +49,7 @@ const HorizontalRule = styled.hr`
     letter-spacing: -1px;
     padding: 0 10px;
     margin-left: 4.8%;
+    font-family: Pretendard-Medium;
   }
 `;
 
