@@ -14,7 +14,9 @@ export const initializeSSE = () => {
     headers: {
       'Content-Type': 'text/event-stream; charset=utf-8',
       Authorization: `Bearer ${accessToken}`,
+      Connection: 'keep-alive',
     },
+    heartbeatTimeout: 120000,
   });
 
   const handleConnect = async () => {
@@ -26,11 +28,17 @@ export const initializeSSE = () => {
       },
     });
     console.log('res', res);
-
-    sse.addEventListener('connect', (event) => {
-      const data = event;
-      console.log('ssedata', data);
-    });
+  };
+  sse.addEventListener('connect', (event) => {
+    const data = event;
+    console.log('ssedata', data);
+  });
+  sse.onmessage = (e) => {
+    console.log('onmessage', e);
+  };
+  sse.onerror = (event) => {
+    console.log('onerror', event);
+    sse.close();
   };
 
   handleConnect();
