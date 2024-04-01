@@ -11,9 +11,8 @@ import Warning from '../../../asset/image/warning-triangle.svg';
 import '../../../asset/sass/pages/notificationPage/notificationPage.scss';
 import SearchInput from '../../ui/searchInput/searchInput.tsx';
 import { showErrorToast } from '../../ui/toast/toast.tsx';
-import axios from 'axios';
-import { BASE_URL } from '../../global/constants/index.ts';
 import Pagination from '../../ui/Pagination.tsx';
+import { fetchAPI } from '../../global/utils/apiUtil.js';
 
 const ResultsContainer = styled.div`
   position: relative;
@@ -165,13 +164,8 @@ function SearchResultPage() {
     const fetchData = async () => {
       try {
         const {
-          data: {
-            data: { companyList },
-          },
-        } = await axios.get(
-          `${BASE_URL}/api/company?pageNo=0
-					&name=${companyName}&criterion=createdAt`,
-        );
+          data: { companyList },
+        } = await fetchAPI(`/api/company?pageNo=0&name=${companyName}`, 'GET');
 
         setSearchData(companyList);
       } catch (error) {
