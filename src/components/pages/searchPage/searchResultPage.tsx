@@ -165,8 +165,12 @@ function SearchResultPage() {
       try {
         const {
           data: { companyList },
-        } = await fetchAPI(`/api/company?pageNo=0&name=${companyName}`, 'GET');
-
+        } = await fetchAPI(
+          `/api/company?pageNo=0
+		 	&name=${companyName}&criterion=createdAt`,
+          'GET',
+          null,
+        );
         setSearchData(companyList);
       } catch (error) {
         showErrorToast(`오류 발생: ${error}`);

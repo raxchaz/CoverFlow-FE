@@ -51,7 +51,7 @@ const QuestionButton = styled.button`
   background-color: #ff8d1d !important;
   /* border-radius: 3px; */
   font-weight: 600;
-  font-size: 0.7rem;
+  font-size: 18px;
   /* border-radius: 7px; */
   /* padding: 1% 2% 1% 2%; */
   /* margin: 10% 13% 5% 0%; */
@@ -101,8 +101,9 @@ function CompanyInfoPage() {
     async function fetchCompanyData() {
       try {
         const data = await fetchAPI(
-          `/api/company/${companyId}?pageNo=0`,
+          `/api/company/${companyId}?pageNo=0&criterion=createdAt`,
           'GET',
+          null,
         );
 
         if (data) {
@@ -111,9 +112,7 @@ function CompanyInfoPage() {
           throw new Error('데이터가 존재하지 않습니다.');
         }
       } catch (error) {
-        showErrorToast(
-          '기업 데이터가 존재하지 않아, 검색 결과 페이지로 돌아갑니다.',
-        );
+        if (error instanceof Error) showErrorToast(error.message);
         navigate(-1);
       }
     }
@@ -132,7 +131,9 @@ function CompanyInfoPage() {
     const token = localStorage.getItem(ACCESS_TOKEN);
 
     if (token) {
-      navigate(`/company-info/${companyId}/question-write`);
+      navigate(`/company-info/${companyId}/question-write`, {
+        state: companyData?.companyName,
+      });
     } else if (confirm('로그인이 필요합니다. 로그인 하시겠습니까?') === true) {
       navigate(`/login`);
     }
@@ -147,9 +148,8 @@ function CompanyInfoPage() {
       <StyledHeader>
         <TitleHeader pageTitle="검색 결과" handleGoBack={handleGoBack} />
         <UserInfoHeader />
-        <SearchInput />
       </StyledHeader>
-
+      <SearchInput />
       {companyData && (
         <>
           {/* <div className="company-result-title">기업 정보</div> */}
