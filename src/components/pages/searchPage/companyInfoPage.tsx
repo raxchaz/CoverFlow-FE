@@ -148,8 +148,9 @@ function CompanyInfoPage() {
       <StyledHeader>
         <TitleHeader pageTitle="검색 결과" handleGoBack={handleGoBack} />
         <UserInfoHeader />
+        <SearchInput />
       </StyledHeader>
-      <SearchInput />
+
       {companyData && (
         <>
           {/* <div className="company-result-title">기업 정보</div> */}
