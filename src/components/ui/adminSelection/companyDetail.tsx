@@ -60,7 +60,6 @@ export default function CompanyDetail({
         type: companyType,
         city: companyCity,
         district: companyDistrict,
-
         companyStatus,
       });
       handleSearch();
