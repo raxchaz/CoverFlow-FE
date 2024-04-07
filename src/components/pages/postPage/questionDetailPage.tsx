@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import '../../../asset/sass/pages/postPage/questionDetailPage.scss';
 import { StyledPage, StyledHeader } from '../../../styledComponent';
 import TitleHeader from '../../ui/header/titleHeader';
-import Answer from '../../ui/question/answer.jsx';
+import Answer from '../../ui/question/answer.tsx';
 import TabBar from '../../ui/tabBar/tabBar';
 import { ACCESS_TOKEN } from '../../global/constants';
 import Tree from '../../../asset/image/nature-ecology-tree-3--tree-plant-cloud-shape-park.svg';
@@ -50,16 +50,12 @@ const FirstLine = styled.div`
 
 const AnswerList = styled.div``;
 
-interface AnswerProps {
+export interface AnswerProps {
   answerId: string;
-  answerer: string;
-  answerTag: string;
+  answererTag: string;
   createAt: string;
-  replyCount: string;
   answerContent: string;
-  onAdopt: () => void;
-  answerNickname: string;
-  content: string;
+  answererNickname: string;
 }
 
 interface QuestionDetailProps {
@@ -67,10 +63,18 @@ interface QuestionDetailProps {
   questionContent: string;
   answerCount: number;
   reward: number;
-  questionNickname: string;
+  questionerNickname: string;
   questionTag: string;
   createAt: string;
   answers: AnswerProps[];
+  answerer?: string;
+  companyName?: string;
+  questionCategory: unknown;
+  questionTitle: string;
+  totalPages?: number;
+  viewCount?: number;
+  onAdopt?: () => void;
+  content?: string;
 }
 
 function QuestionDetailPage() {
@@ -79,23 +83,26 @@ function QuestionDetailPage() {
   const answerRef = useRef<HTMLTextAreaElement>(null);
   const [answer, setAnswer] = useState('');
   const [showReportPopup, setShowReportPopup] = useState(false);
-  const [questionDetail, setQuestionDetail] = useState<QuestionDetailProps>({
-    title: '',
-    questionContent: '',
-    answerCount: 0,
-    reward: 0,
-    questionNickname: '',
-    questionTag: '',
-    createAt: '',
-    answers: [],
-  });
+  const [questionDetail, setQuestionDetail] = useState<QuestionDetailProps[]>([
+    {
+      title: '',
+      questionContent: '',
+      answerCount: 0,
+      reward: 0,
+      questionerNickname: '',
+      questionTag: '',
+      createAt: '',
+      answers: [],
+      questionCategory: null,
+      companyName: '',
+      questionTitle: '',
+      totalPages: 0,
+      viewCount: 0,
+    },
+  ]);
 
   const { questionId } = useParams();
-  console.log('questionId: ', questionId);
-  const body = {
-    content: state.questionContent,
-    questionId: Number(questionId),
-  };
+
   // function formatDate(fullDate: string) {
   //   const date = new Date(fullDate);
   //   const year = date.getFullYear();
@@ -113,18 +120,6 @@ function QuestionDetailPage() {
         showErrorToast('로그인이 필요합니다.');
         navigate(-1);
       }
-
-      console.log('body', body);
-
-      const data = await fetchAPI('/api/answer', 'POST', body);
-      const questionData = data.data;
-
-      const updatedQuestionDetail = {
-        ...questionData,
-        answers: [...questionData.answers],
-      };
-
-      setQuestionDetail(updatedQuestionDetail);
     };
     fecthQuestionDetail();
   }, [answer]);
@@ -145,8 +140,42 @@ function QuestionDetailPage() {
 
     if (data.statusCode === 'CREATED') {
       showSuccessToast('답변이 등록되었습니다.');
-      if (answerRef.current) setAnswer(answerRef.current?.value);
+      if (answerRef.current) {
+        console.log('answerRef.current?.value', answerRef.current?.value);
+        setAnswer(answerRef.current?.value);
+      }
     }
+
+    const res = await fetchAPI(
+      `/api/question/${questionId}?pageNo=0`,
+      'GET',
+      null,
+    );
+    const questionDetailData = res.data;
+
+    setQuestionDetail([
+      {
+        title: questionDetailData.questionTitle,
+        questionContent: questionDetailData.questionContent,
+        answerCount: questionDetailData.answerCount,
+        reward: questionDetailData.reward,
+        questionerNickname: questionDetailData.questionerNickname,
+        questionTag: questionDetailData.questionTag,
+        createAt: questionDetailData.createAt,
+        answers: questionDetailData.answers.map((answer) => ({
+          answerId: answer.answerId,
+          answererNickname: answer.answererNickname,
+          answererTag: answer.answererTag,
+          createAt: answer.createAt,
+          answerContent: answer.answerContent,
+        })),
+        companyName: questionDetailData.companyName,
+        questionCategory: questionDetailData.questionCategory,
+        questionTitle: questionDetailData.questionTitle,
+        totalPages: questionDetailData.totalPages,
+        viewCount: questionDetailData.viewCount,
+      },
+    ]);
   };
 
   const toggleReportPopup = () => {
@@ -254,17 +283,25 @@ function QuestionDetailPage() {
       {/* <LastLine /> */}
 
       <AnswerList>
-        <div className="answer-title">답변</div>
-        {questionDetail.answers.map((answer, index) => (
-          <Answer
-            key={index}
-            answerId={answer.answerId.toString()}
-            answerer={answer.answerNickname}
-            answererTag={answer.answerTag}
-            replyCount={'0'}
-            answerContent={answer.content}
-            createAt={answer.createAt}
-          />
+        {/* <Answer key={questionId} answerContent={answer} />
+         */}
+        {questionDetail.map((detail, index) => (
+          <>
+            <div className="answer-title">답변 {detail.answerCount}</div>
+            <Answer
+              answerCount={detail.answerCount}
+              answererTag={detail.questionTag}
+              createAt={detail.createAt}
+              key={index}
+              answers={detail.answers.map((answer) => ({
+                answerId: answer.answerId,
+                answererTag: answer.answererTag,
+                createAt: answer.createAt,
+                answerContent: answer.answerContent,
+                answererNickname: answer.answererNickname,
+              }))}
+            />
+          </>
         ))}
       </AnswerList>
       <TabBar />
