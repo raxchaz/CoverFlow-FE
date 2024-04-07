@@ -26,7 +26,7 @@ export const initializeSSE = () => {
   });
 
   sse.onmessage = (e) => {
-    console.log('onmessage', e);
+    console.log('onmessage', e.data);
   };
 
   sse.onerror = (event) => {
