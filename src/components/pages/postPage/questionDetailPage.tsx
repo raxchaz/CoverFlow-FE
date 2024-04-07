@@ -69,8 +69,6 @@ interface QuestionDetailProps {
   answers: AnswerProps[];
   answerer?: string;
   companyName?: string;
-  questionCategory: unknown;
-  questionTitle: string;
   totalPages?: number;
   viewCount?: number;
   onAdopt?: () => void;
@@ -93,9 +91,7 @@ function QuestionDetailPage() {
       questionTag: '',
       createAt: '',
       answers: [],
-      questionCategory: null,
       companyName: '',
-      questionTitle: '',
       totalPages: 0,
       viewCount: 0,
     },
@@ -151,29 +147,40 @@ function QuestionDetailPage() {
       'GET',
       null,
     );
-    const questionDetailData = res.data;
+    const {
+      answerCount,
+      answers,
+      companyName,
+      questionContent,
+      createAt,
+      questionTag,
+      questionTitle,
+      questionerNickname,
+      reward,
+      totalPages,
+      viewCount,
+    } = res.data;
 
     setQuestionDetail([
       {
-        title: questionDetailData.questionTitle,
-        questionContent: questionDetailData.questionContent,
-        answerCount: questionDetailData.answerCount,
-        reward: questionDetailData.reward,
-        questionerNickname: questionDetailData.questionerNickname,
-        questionTag: questionDetailData.questionTag,
-        createAt: questionDetailData.createAt,
-        answers: questionDetailData.answers.map((answer) => ({
+        title: questionTitle,
+        questionContent,
+        answerCount,
+        reward,
+        questionerNickname,
+        questionTag,
+        createAt,
+        answers: answers.map((answer: AnswerProps) => ({
           answerId: answer.answerId,
           answererNickname: answer.answererNickname,
           answererTag: answer.answererTag,
           createAt: answer.createAt,
           answerContent: answer.answerContent,
         })),
-        companyName: questionDetailData.companyName,
-        questionCategory: questionDetailData.questionCategory,
-        questionTitle: questionDetailData.questionTitle,
-        totalPages: questionDetailData.totalPages,
-        viewCount: questionDetailData.viewCount,
+        companyName,
+
+        totalPages,
+        viewCount,
       },
     ]);
   };
