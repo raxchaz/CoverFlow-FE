@@ -134,12 +134,9 @@ function QuestionDetailPage() {
 
     const data = await fetchAPI('/api/answer', 'POST', requestData);
 
-    if (data.statusCode === 'CREATED') {
+    if (data.statusCode === 'CREATED' && answerRef.current) {
+      setAnswer(answerRef.current?.value);
       showSuccessToast('답변이 등록되었습니다.');
-      if (answerRef.current) {
-        console.log('answerRef.current?.value', answerRef.current?.value);
-        setAnswer(answerRef.current?.value);
-      }
     }
 
     const res = await fetchAPI(
