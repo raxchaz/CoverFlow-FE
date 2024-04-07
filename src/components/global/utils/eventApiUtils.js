@@ -22,7 +22,7 @@ export const initializeSSE = () => {
   sse.addEventListener('connect', (event) => {
     const data = event;
     console.log('ssedata', data);
-    handleConnect();
+    // handleConnect();
   });
 
   sse.onmessage = (e) => {
@@ -37,14 +37,14 @@ export const initializeSSE = () => {
   return sse;
 };
 
-const handleConnect = async () => {
-  const accessToken = localStorage.getItem(ACCESS_TOKEN);
-  const res = await fetch(`${BASE_URL}/api/notification/connect`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'text/event-stream; charset=utf-8',
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
-  console.log('res', res);
-};
+// const handleConnect = async () => {
+//   const accessToken = localStorage.getItem(ACCESS_TOKEN);
+//   const res = await fetch(`${BASE_URL}/api/notification/connect`, {
+//     method: 'GET',
+//     headers: {
+//       'Content-Type': 'text/event-stream; charset=utf-8',
+//       Authorization: `Bearer ${accessToken}`,
+//     },
+//   });
+//   console.log('res', res);
+// };
