@@ -13,11 +13,11 @@ import { showErrorToast } from '../toast/toast';
 const StyledSearchInput = styled.input`
   width: 32rem;
   height: 3.4rem;
-  padding-left: 1.8rem;
-  border: 1px solid #ff8d1d;
+  padding: 8px;
+  border: 2px solid #ff8d1d;
   background-color: #fff;
-  border-radius: 30px;
-  margin: 5% 0% 0% 13%;
+  border-radius: 1.8rem;
+  margin: 9% 0% 0% 27%;
   outline: none;
 
   &:focus {
@@ -25,8 +25,9 @@ const StyledSearchInput = styled.input`
   }
 
   &::placeholder {
-    color: #c0c0c0;
-    font-size: 0.8rem;
+    color: #cacaca;
+    font-size: 1.4rem;
+    letter-spacing: -1.5px;
   }
 `;
 
