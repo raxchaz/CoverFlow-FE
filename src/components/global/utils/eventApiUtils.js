@@ -25,13 +25,10 @@ export const initializeSSE = () => {
     // handleConnect();
   });
 
-  sse.onmessage = (e) => {
-    console.log('onmessage', e.data);
-  };
-
   sse.onerror = (event) => {
     console.log('onerror', event);
     sse.close();
+    setTimeout(initializeSSE, 5000);
   };
 
   return sse;

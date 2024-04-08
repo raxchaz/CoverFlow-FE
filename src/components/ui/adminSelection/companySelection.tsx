@@ -28,7 +28,7 @@ interface ApiResponse {
   data: {
     totalPages: number;
     companies: Company[];
-    totalCompanyCount: number;
+    totalElements: number;
   };
 }
 
@@ -43,9 +43,11 @@ export default function CompanySelection() {
   const [selectedDistrictOptions, setSelectedDistrictOptions] = useState<
     string[]
   >([]);
+  const [selectedDistrict, setSelectedDistrict] = useState<string>('');
+  const itemsPerPage = 10;
 
   useEffect(() => {
-    fetchCompanies(currentPage, companyStatus);
+    fetchCompanies(currentPage);
   }, [currentPage]);
 
   useEffect(() => {
@@ -66,29 +68,47 @@ export default function CompanySelection() {
     }
   };
 
-  const fetchCompanies = (pageNo: number, status: string) => {
-    fetch(
-      `${BASE_URL}/api/company/admin/status?pageNo=${pageNo}&Wcriterion=createdAt&companyStatus=${status}`,
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
-          'Content-Type': 'application/json',
-        },
+  const fetchCompanies = (pageNo: number) => {
+    // 쿼리 파라미터를 초기화하고, 필요한 값들을 추가합니다.
+    const queryParams = new URLSearchParams({
+      pageNo: pageNo.toString(),
+      criterion: 'createdAt', // 기본 정렬 기준
+    });
+
+    // 선택된 값들이 있을 경우에만 쿼리 파라미터에 추가합니다.
+    if (companyStatus) {
+      queryParams.set('companyStatus', companyStatus);
+    }
+    if (selectedCity) {
+      queryParams.set('city', selectedCity);
+    }
+    if (selectedDistrict) {
+      queryParams.set('district', selectedDistrict);
+    }
+
+    // URL을 구성합니다.
+    const url = `${BASE_URL}/api/company/admin?${queryParams.toString()}`;
+
+    // API 요청을 보내고, 응답을 처리합니다.
+    fetch(url, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
+        'Content-Type': 'application/json',
       },
-    )
+    })
       .then((response) => response.json())
       .then((data: ApiResponse) => {
         console.log(data);
         setCompanies(data.data.companies);
         setTotalPages(data.data.totalPages);
-        seTtotalCompanyCount(data.data.totalCompanyCount);
+        seTtotalCompanyCount(data.data.totalElements);
       })
       .catch((error) => console.error('Error:', error));
   };
 
   const handleSearch = () => {
     setCurrentPage(0);
-    fetchCompanies(0, companyStatus);
+    fetchCompanies(0);
   };
 
   const showCompanyDetail = (company) => {
@@ -157,7 +177,11 @@ export default function CompanySelection() {
             </div>
             <div className="ad-searchOption-item">
               <span className="ad-searchOption-title">시/군/구</span>
-              <select className="ad-searchOption-select">
+              <select
+                className="ad-searchOption-select"
+                value={selectedDistrict}
+                onChange={(e) => setSelectedDistrict(e.target.value)}
+              >
                 <option value=""></option>
                 {selectedDistrictOptions.map((districtName, index) => (
                   <option key={index} value={districtName}>
@@ -215,22 +239,25 @@ export default function CompanySelection() {
                     <span>시군구</span>
                     <span>관리</span>
                   </li>
-                  {companies.map((company, index) => (
-                    <li
-                      key={company.companyId}
-                      className="ad-searchResult-item"
-                    >
-                      <input type="checkbox" />
-                      <span>{index + 1}</span>
-                      <span>{company.companyName}</span>
-                      <span>{company.companyType}</span>
-                      <span>{company.companyCity}</span>
-                      <span>{company.companyDistrict}</span>
-                      <span onClick={() => showCompanyDetail(company)}>
-                        <span className="ad-detail">관리 변경</span>
-                      </span>
-                    </li>
-                  ))}
+                  {companies.map((company, index) => {
+                    const itemNumber = index + 1 + currentPage * itemsPerPage;
+                    return (
+                      <li
+                        key={company.companyId}
+                        className="ad-searchResult-item"
+                      >
+                        <input type="checkbox" />
+                        <span>{itemNumber}</span>
+                        <span>{company.companyName}</span>
+                        <span>{company.companyType}</span>
+                        <span>{company.companyCity}</span>
+                        <span>{company.companyDistrict}</span>
+                        <span onClick={() => showCompanyDetail(company)}>
+                          <span className="ad-detail">관리 변경</span>
+                        </span>
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
               {companies && (
