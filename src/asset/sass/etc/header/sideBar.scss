@@ -1,7 +1,7 @@
 .sidebar {
   background-color: #3838381e;
   width: 700px;
-  height: 100%;
+  height: 1000px;
   margin-left: -0.5%;
   margin-top: -10%;
   position: absolute;
@@ -32,7 +32,7 @@
 .sidebar-menu {
   list-style: none;
   height: 20%;
-  margin-top: 30%;
+  margin-top: 20%;
   font-size: 16px;
   letter-spacing: -1px;
   font-family: pretendard-medium;
@@ -59,4 +59,5 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  color: black;
 }

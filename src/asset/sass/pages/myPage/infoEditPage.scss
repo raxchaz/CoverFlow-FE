@@ -85,15 +85,16 @@
   justify-content: center;
   align-items: center;
   font-size: 2rem;
+  padding: 1.5% 3% 1.5% 3%;
   color: #808080;
   letter-spacing: -1px;
   font-family: Pretendard-SemiBold;
   margin-right: 1rem;
-  border: 1px solid rgba(100, 100, 100, 1);
+  border: 1.5px solid rgba(100, 100, 100, 1);
   border-radius: 2rem;
   cursor: pointer;
   background-color: white;
-  width: 150px;
+
   height: 40px;
   &.default {
     border: 1px solid rgba(100, 100, 100, 1);

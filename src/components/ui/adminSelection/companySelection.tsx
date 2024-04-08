@@ -28,7 +28,7 @@ interface ApiResponse {
   data: {
     totalPages: number;
     companies: Company[];
-    totalCompanyCount: number;
+    totalElements: number;
   };
 }
 
@@ -43,10 +43,12 @@ export default function CompanySelection() {
   const [selectedDistrictOptions, setSelectedDistrictOptions] = useState<
     string[]
   >([]);
+  const [selectedDistrict, setSelectedDistrict] = useState<string>('');
+  const itemsPerPage = 10;
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    fetchCompanies(currentPage, companyStatus);
+    fetchCompanies(currentPage);
   }, [currentPage]);
 
   useEffect(() => {
@@ -67,22 +69,36 @@ export default function CompanySelection() {
     }
   };
 
-  const fetchCompanies = (pageNo: number, status: string) => {
-    fetch(
-      `${BASE_URL}/api/company/admin/status?pageNo=${pageNo}&Wcriterion=createdAt&companyStatus=${status}`,
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
-          'Content-Type': 'application/json',
-        },
+  const fetchCompanies = (pageNo: number) => {
+    setIsLoading(true);
+    const queryParams = new URLSearchParams({
+      pageNo: pageNo.toString(),
+      criterion: 'createdAt',
+    });
+
+    if (companyStatus) {
+      queryParams.set('companyStatus', companyStatus);
+    }
+    if (selectedCity) {
+      queryParams.set('city', selectedCity);
+    }
+    if (selectedDistrict) {
+      queryParams.set('district', selectedDistrict);
+    }
+
+    const url = `${BASE_URL}/api/company/admin?${queryParams.toString()}`;
+    fetch(url, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
+        'Content-Type': 'application/json',
       },
-    )
+    })
       .then((response) => response.json())
       .then((data: ApiResponse) => {
         console.log(data);
         setCompanies(data.data.companies);
         setTotalPages(data.data.totalPages);
-        seTtotalCompanyCount(data.data.totalCompanyCount);
+        seTtotalCompanyCount(data.data.totalElements);
         setIsLoading(false);
       })
       .catch((error) => {
@@ -93,7 +109,7 @@ export default function CompanySelection() {
 
   const handleSearch = () => {
     setCurrentPage(0);
-    fetchCompanies(0, companyStatus);
+    fetchCompanies(0);
   };
 
   const showCompanyDetail = (company) => {
@@ -162,7 +178,11 @@ export default function CompanySelection() {
             </div>
             <div className="ad-searchOption-item">
               <span className="ad-searchOption-title">시/군/구</span>
-              <select className="ad-searchOption-select">
+              <select
+                className="ad-searchOption-select"
+                value={selectedDistrict}
+                onChange={(e) => setSelectedDistrict(e.target.value)}
+              >
                 <option value=""></option>
                 {selectedDistrictOptions.map((districtName, index) => (
                   <option key={index} value={districtName}>
@@ -223,22 +243,25 @@ export default function CompanySelection() {
                       <span>시군구</span>
                       <span>관리</span>
                     </li>
-                    {companies.map((company, index) => (
-                      <li
-                        key={company.companyId}
-                        className="ad-searchResult-item"
-                      >
-                        <input type="checkbox" />
-                        <span>{index + 1}</span>
-                        <span>{company.companyName}</span>
-                        <span>{company.companyType}</span>
-                        <span>{company.companyCity}</span>
-                        <span>{company.companyDistrict}</span>
-                        <span onClick={() => showCompanyDetail(company)}>
-                          <span className="ad-detail">관리 변경</span>
-                        </span>
-                      </li>
-                    ))}
+                    {companies.map((company, index) => {
+                      const itemNumber = index + 1 + currentPage * itemsPerPage;
+                      return (
+                        <li
+                          key={company.companyId}
+                          className="ad-searchResult-item"
+                        >
+                          <input type="checkbox" />
+                          <span>{itemNumber}</span>
+                          <span>{company.companyName}</span>
+                          <span>{company.companyType}</span>
+                          <span>{company.companyCity}</span>
+                          <span>{company.companyDistrict}</span>
+                          <span onClick={() => showCompanyDetail(company)}>
+                            <span className="ad-detail">관리 변경</span>
+                          </span>
+                        </li>
+                      );
+                    })}
                   </ul>
                 </div>
                 {companies && (

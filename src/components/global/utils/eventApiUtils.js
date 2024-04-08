@@ -14,25 +14,34 @@ export const initializeSSE = () => {
     headers: {
       'Content-Type': 'text/event-stream; charset=utf-8',
       Authorization: `Bearer ${accessToken}`,
+      Connection: 'keep-alive',
     },
+    heartbeatTimeout: 120000,
   });
 
-  const handleConnect = async () => {
-    const res = await fetch(`${BASE_URL}/api/notification/connect`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'text/event-stream; charset=utf-8',
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-    console.log('res', res);
+  sse.addEventListener('connect', (event) => {
+    const data = event;
+    console.log('ssedata', data);
+    // handleConnect();
+  });
 
-    sse.addEventListener('connect', (event) => {
-      const data = event;
-      console.log('ssedata', data);
-    });
+  sse.onerror = (event) => {
+    console.log('onerror', event);
+    sse.close();
+    setTimeout(initializeSSE, 5000);
   };
 
-  handleConnect();
   return sse;
 };
+
+// const handleConnect = async () => {
+//   const accessToken = localStorage.getItem(ACCESS_TOKEN);
+//   const res = await fetch(`${BASE_URL}/api/notification/connect`, {
+//     method: 'GET',
+//     headers: {
+//       'Content-Type': 'text/event-stream; charset=utf-8',
+//       Authorization: `Bearer ${accessToken}`,
+//     },
+//   });
+//   console.log('res', res);
+// };

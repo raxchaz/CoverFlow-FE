@@ -30,6 +30,7 @@ export default function CompanyDetail({
 }: CompanyDetailProps) {
   const [editedCompany, setEditedCompany] = useState(company);
   const [districtOptions, setDistrictOptions] = useState<string[]>([]);
+
   useEffect(() => {
     const districts = district[editedCompany.companyCity] || [];
     setDistrictOptions(districts);
@@ -60,7 +61,6 @@ export default function CompanyDetail({
         type: companyType,
         city: companyCity,
         district: companyDistrict,
-
         companyStatus,
       });
       handleSearch();
