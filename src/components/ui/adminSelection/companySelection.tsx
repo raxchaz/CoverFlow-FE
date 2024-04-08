@@ -43,6 +43,7 @@ export default function CompanySelection() {
   const [selectedDistrictOptions, setSelectedDistrictOptions] = useState<
     string[]
   >([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     fetchCompanies(currentPage, companyStatus);
@@ -82,8 +83,12 @@ export default function CompanySelection() {
         setCompanies(data.data.companies);
         setTotalPages(data.data.totalPages);
         seTtotalCompanyCount(data.data.totalCompanyCount);
+        setIsLoading(false);
       })
-      .catch((error) => console.error('Error:', error));
+      .catch((error) => {
+        console.error('Error:', error);
+        setIsLoading(false);
+      });
   };
 
   const handleSearch = () => {
@@ -198,49 +203,53 @@ export default function CompanySelection() {
               </Button>
             </div>
 
-            <div>
-              <p className="ad-cnt">
-                <span className="ad-cnt-num">{totalCompanyCount}</span>건의
-                기업이 검색되었습니다.
-              </p>
+            {isLoading ? (
+              <p>로딩 중...</p>
+            ) : (
+              <div>
+                <p className="ad-cnt">
+                  <span className="ad-cnt-num">{totalCompanyCount}</span>건의
+                  기업이 검색되었습니다.
+                </p>
 
-              <div className="ad-result">
-                <ul>
-                  <li className="ad-searchResult-header">
-                    <input type="checkbox" />
-                    <span>번호</span>
-                    <span>기업명</span>
-                    <span>업종</span>
-                    <span>도시</span>
-                    <span>시군구</span>
-                    <span>관리</span>
-                  </li>
-                  {companies.map((company, index) => (
-                    <li
-                      key={company.companyId}
-                      className="ad-searchResult-item"
-                    >
+                <div className="ad-result">
+                  <ul>
+                    <li className="ad-searchResult-header">
                       <input type="checkbox" />
-                      <span>{index + 1}</span>
-                      <span>{company.companyName}</span>
-                      <span>{company.companyType}</span>
-                      <span>{company.companyCity}</span>
-                      <span>{company.companyDistrict}</span>
-                      <span onClick={() => showCompanyDetail(company)}>
-                        <span className="ad-detail">관리 변경</span>
-                      </span>
+                      <span>번호</span>
+                      <span>기업명</span>
+                      <span>업종</span>
+                      <span>도시</span>
+                      <span>시군구</span>
+                      <span>관리</span>
                     </li>
-                  ))}
-                </ul>
+                    {companies.map((company, index) => (
+                      <li
+                        key={company.companyId}
+                        className="ad-searchResult-item"
+                      >
+                        <input type="checkbox" />
+                        <span>{index + 1}</span>
+                        <span>{company.companyName}</span>
+                        <span>{company.companyType}</span>
+                        <span>{company.companyCity}</span>
+                        <span>{company.companyDistrict}</span>
+                        <span onClick={() => showCompanyDetail(company)}>
+                          <span className="ad-detail">관리 변경</span>
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                {companies && (
+                  <AdminPagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    handlePagination={handlePagination}
+                  />
+                )}
               </div>
-              {companies && (
-                <AdminPagination
-                  currentPage={currentPage}
-                  totalPages={totalPages}
-                  handlePagination={handlePagination}
-                />
-              )}
-            </div>
+            )}
           </div>
         </>
       )}
