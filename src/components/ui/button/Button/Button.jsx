@@ -44,7 +44,13 @@ Button.propTypes = {
   children: PropTypes.string.isRequired,
   disabled: PropTypes.bool,
   onClick: PropTypes.func.isRequired,
-  variant: PropTypes.oneOf(['default', 'noEffect']),
+  variant: PropTypes.oneOf([
+    'default',
+    'noEffect',
+    'round',
+    'admin',
+    'admin-white',
+  ]),
 };
 
 Button.defaultProps = {
