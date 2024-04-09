@@ -88,13 +88,15 @@ export default function MyQuestion({
         </div>
       ))}
 
-      {question && (
+      {question.length >= 1 ? (
         <AdminPagination
           className="my-question-pagination"
           currentPage={currentPage}
           totalPages={totalPages}
           handlePagination={handlePagination}
         />
+      ) : (
+        <div></div>
       )}
     </div>
   );

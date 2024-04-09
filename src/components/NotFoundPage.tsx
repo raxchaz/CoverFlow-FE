@@ -3,7 +3,6 @@ import HomeLogo from '../asset/image/home.svg';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { StyledHeader } from '../styledComponent';
-import TitleHeader from './ui/header/titleHeader';
 
 const Container = styled.div`
   display: flex;
@@ -18,8 +17,8 @@ const Text = styled.span`
   margin-top: 5rem;
   font-size: 3.5rem;
   font-weight: 600;
-  letter-spacing: -1px;
-  font-family: Pretendard-semiBold;
+  letter-spacing: -1.8px;
+  font-family: Pretendard-Bold;
 `;
 
 const Description = styled.span`
@@ -28,7 +27,7 @@ const Description = styled.span`
   margin-top: 1.3rem;
   text-align: center;
   font-size: 2rem;
-  color: #7e7e7e;
+  color: #474646;
   letter-spacing: -1px;
   font-family: Pretendard-Light;
 `;
@@ -43,6 +42,7 @@ const GoHome = styled.div`
   text-decoration: underline;
   letter-spacing: -1px;
   cursor: pointer;
+  font-family: Pretendard-Light;
 `;
 
 export const StyledPage = styled.div`
@@ -70,10 +70,6 @@ const NotFoundPage = () => {
     <>
       <StyledPage className="main-page-container">
         <StyledHeader>
-          <TitleHeader
-            pageTitle="잘못된 페이지 입니다."
-            handleGoBack={goHome}
-          />
           <Container>
             <div>
               {' '}

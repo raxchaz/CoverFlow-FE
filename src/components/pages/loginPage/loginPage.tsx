@@ -11,7 +11,7 @@ import { StyledHeader, StyledPage } from '../../../styledComponent';
 import { ACCESS_TOKEN, BASE_URL } from '../../global/constants';
 
 const WelcomeMessage = styled.p`
-  margin: 20% 0% 0% 15%;
+  margin: 15% 0% 0% 15%;
   font-size: 3.5rem;
   font-family: Pretendard-Bold;
   letter-spacing: -1px;
@@ -22,14 +22,13 @@ const WelcomeMessage = styled.p`
 
 const SecondaryMessage = styled.p`
   margin: 2% 0% 0% 15%;
-  font-size: 1.5rem;
+  font-size: 2rem;
   letter-spacing: -1x;
   color: #474646;
-  font-family: Pretendard-Medium;
 `;
 
 const FastLoginImage = styled.img`
-  margin: 0% 0% -21% 41.5%;
+  margin: 3rem 0% 0 43%;
 `;
 
 const HorizontalRule = styled.hr`
@@ -95,11 +94,7 @@ function LoginPage() {
 
         <SecondaryMessage>로그인을 진행해 주세요 :)</SecondaryMessage>
 
-        <FastLoginImage
-          src={Fastlogin}
-          alt="빠른 로그인"
-          className="fast-login"
-        />
+        <FastLoginImage src={Fastlogin} alt="빠른 로그인" />
 
         <KakaoLoginButton href={`${BASE_URL}/oauth2/authorization/kakao`}>
           <img src={Kakao} alt="Kakao 로그인" className="kakao-login" />
