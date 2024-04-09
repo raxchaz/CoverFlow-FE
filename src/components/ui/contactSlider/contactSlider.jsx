@@ -13,7 +13,7 @@ const StatusBar = styled.div`
   display: flex;
   width: 505px;
   justify-content: space-between;
-  border-bottom: 5px solid #d9d9d9;
+  border-bottom: 8px solid #d9d9d9;
   margin: 5% auto;
   font-size: 2rem;
   color: #d9d9d9;
@@ -26,14 +26,14 @@ const StatusTab = styled.div`
   letter-spacing: -1px;
   text-align: center;
   padding: 10px 0;
-  margin-bottom: -5px;
+  margin-bottom: -8px;
   cursor: pointer;
   color: gray;
-  border-bottom: 5px solid transparent;
+  border-bottom: 8px solid transparent;
   transition:
     border-bottom 0.3s ease-in-out,
     color 0.3s ease-in-out;
-  ${(props) => props.current && 'color: black; border-bottom: 5px solid black;'}
+  ${(props) => props.current && 'color: black; border-bottom: 8px solid black;'}
 `;
 // ======================= 스타일드 컴포넌트
 

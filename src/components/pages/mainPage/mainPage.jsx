@@ -15,7 +15,7 @@ const SearchInput = styled.input`
   padding: 8px;
   border: 2px solid #ffbd7c;
   border-radius: 30px;
-  margin: 3% 0% 0% 17%;
+  margin: 3% 0 0 14.5%;
   outline: none;
 
   &:focus {
@@ -26,8 +26,9 @@ const SearchInput = styled.input`
   &::placeholder {
     color: #cacaca;
     font-size: 2rem;
-    padding-left: 32px;
+    padding-left: 28px;
     letter-spacing: -1.5px;
+    font-family: Pretendard-Regular;
   }
 `;
 
@@ -48,18 +49,18 @@ function MainPage() {
 
       <div className="main-info">
         <span className="main-info-bold">
-          <strong className="main-info-bold">기업</strong>
+          <strong>기업</strong>
         </span>
-        에 대해 <strong className="main-info-bold">궁금한점</strong>이 있다면,
+        에 대해 <strong className="main-info-bold">궁금한 점</strong>이 있다면,
         <br />
-        <strong className="white-bold">코버플로우</strong>에서 모두
-        <strong className="main-info-bold">공유</strong>하고
+        <strong className="white-bold">코버플로우</strong>에서 모두{' '}
+        <strong className="main-info-bold">공유</strong>하고{' '}
         <strong className="main-info-bold">해결</strong>하세요!
       </div>
       <SearchInput
         type="text"
         className="search-input-text"
-        placeholder="기업 명을 검색하세요"
+        placeholder="기업 이름을 검색해 주세요"
         onClick={handleChange}
       />
       <img className="search" src={Searchicon} />

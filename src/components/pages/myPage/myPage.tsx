@@ -22,7 +22,7 @@ import { showErrorToast } from '../../ui/toast/toast';
 const StatusBar = styled.div`
   display: flex;
   justify-content: space-between;
-  border-top: 5px solid rgba(255, 249, 244, 1);
+  border-top: 8px solid rgba(255, 249, 244, 1);
   margin: 10% auto 0 auto;
   font-family: pretendard-semibold;
   width: 505px;
@@ -33,18 +33,18 @@ const StatusTab = styled.div<{ current: boolean }>`
   letter-spacing: -1px;
   text-align: center;
   padding: 15px 0;
-  margin-top: -0.5rem;
+  margin-top: -8px;
   cursor: pointer;
   color: gray;
   font-family: Pretendard-Bold;
-  border-top: 5px solid transparent;
+  border-top: 8px solid transparent;
   font-size: 2rem;
   transition:
     border-top 0.3s ease-in-out,
     color 0.3s ease-in-out;
   ${(props) =>
     props.current &&
-    'color: black; border-top: 5px solid rgba(255, 141, 29, 1);'}
+    'color: black; border-top: 8px solid rgba(255, 141, 29, 1);'}
 `;
 
 /* ========================================================= */
@@ -52,6 +52,7 @@ const StatusTab = styled.div<{ current: boolean }>`
 function Mypage() {
   const [currentCategory, setCurrentCategory] = useState('comments');
   const [nickname, setNickname] = useState('');
+  const [socialType, setSocialType] = useState('');
   const [question, setQuestion] = useState([]);
   const [answer, setAnswer] = useState([]);
   const [questionCnt, setQuestionCnt] = useState(0);
@@ -81,6 +82,7 @@ function Mypage() {
       const data = await fetchAPI('/api/member/me', 'GET');
       console.log('사용자 정보:', data);
       setNickname(data.data.nickname);
+      mySocialType(data.data.socialType);
     } catch (error) {
       showErrorToast('회원 정보 불러오기 실패');
     }
@@ -112,6 +114,16 @@ function Mypage() {
     }
   };
 
+  const mySocialType = (socialType: string) => {
+    if (socialType === 'KAKAO') {
+      setSocialType('카카오');
+    } else if (socialType === 'NAVER') {
+      setSocialType('네이버');
+    } else if (socialType === 'GOOGLE') {
+      setSocialType('구글');
+    }
+  };
+
   const handleGoBack = () => {
     navigate('/');
   };
@@ -140,6 +152,7 @@ function Mypage() {
           <div className="title">
             {nickname}
             <span className="title-intro">님, 안녕하세요</span>
+            <p className="my-social-type"> {socialType} 로그인 사용중</p>
           </div>
 
           <div className="mypage-select-menu">
@@ -148,17 +161,17 @@ function Mypage() {
               <div className="letter">문의하기</div>
             </div>
 
-            <div className="menu-contact" onClick={goToStore}>
+            <div className="menu" onClick={goToStore}>
               <StoreIcon />
               <div className="letter">상점</div>
             </div>
 
-            <div className="menu-event" onClick={goToPremium}>
+            <div className="menu" onClick={goToPremium}>
               <PremiumIcon />
               <div className="letter">프리미엄</div>
             </div>
 
-            <div className="menu-edit" onClick={goToEdit}>
+            <div className="menu" onClick={goToEdit}>
               <EditIcon />
               <div className="letter">내 정보 수정</div>
             </div>

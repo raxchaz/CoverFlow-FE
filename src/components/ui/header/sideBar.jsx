@@ -4,7 +4,6 @@ import '../../../asset/sass/etc/header/sideBar.scss';
 import Sidenotice from '../../../asset/image/sidenotice.svg';
 import Feedback from '../../../asset/image/feedback.svg';
 import Sideevent from '../../../asset/image/sideevent.svg';
-import { ReactComponent as Logo } from '../../../asset/image/tab_logo.svg';
 import PropTypes from 'prop-types';
 
 function SideBar({ setIsSideBarOpen }) {
@@ -16,7 +15,8 @@ function SideBar({ setIsSideBarOpen }) {
     <div className="sidebar" onMouseDown={() => setIsSideBarOpen(false)}>
       <div className="sidebar-content" onMouseDown={handleContentClick}>
         <div className="sidebar-info">
-          <Logo />
+          <div className="logo-title">기업 Q&A 서비스</div>
+          <div className="logo-subtitle">COVERFLOW</div>
         </div>
         <ul className="sidebar-menu">
           <li className="menu-item">
