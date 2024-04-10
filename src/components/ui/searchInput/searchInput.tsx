@@ -90,6 +90,12 @@ function SearchInput() {
     }
   }, [debouncedKeyword]);
 
+  useEffect(() => {
+    if (!showAutoComplete && keyword) {
+      handleCompanySearch();
+    }
+  }, [showAutoComplete, keyword]);
+
   // 입력값 변경 핸들러
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newInputValue = event.target.value.trim();
@@ -116,45 +122,45 @@ function SearchInput() {
         `${BASE_URL}/api/company?pageNo=0&name=${name}`,
       );
       setAutoCompleteValue(res.data.data.companyList);
+      console.log('인풋 내 결과', res.data.data.companyList);
     } catch (error) {
       showErrorToast(`자동완성 데이터 요청 실패 ${error}`);
       setAutoCompleteValue([]);
     }
   };
 
-  const fullDataSearch = (keyword: string) => {
+  // const fullDataSearch = (keyword: string) => {
+  //   const params = new URLSearchParams();
+  //   params.append('keyword', keyword);
+  //   navigate(`/search-result?${params.toString()}`, {
+  //     state: { searchResults: autoCompleteValue },
+  //   });
+  // };
+
+  // const specificItemSeach = (companyName: string) => {
+  //   const selectedItem = autoCompleteValue.find(
+  //     (item) => item.companyName === companyName,
+  //   );
+  //   if (selectedItem) {
+  //     setKeyword(selectedItem.name);
+  //     setShowAutoComplete(false);
+  //     const params = new URLSearchParams();
+  //     params.append('keyword', selectedItem.name);
+  //     navigate(`/search-result?${params.toString()}`, {
+  //       state: { searchResults: [selectedItem] },
+  //     });
+  //   }
+  // };
+  // 검색 함수
+  const handleCompanySearch = () => {
+    if (!keyword) return;
+
     const params = new URLSearchParams();
     params.append('keyword', keyword);
+
     navigate(`/search-result?${params.toString()}`, {
       state: { searchResults: autoCompleteValue },
     });
-  };
-
-  const specificItemSeach = (item: string) => {
-    const selectedItem = autoCompleteValue[activeIndex];
-    if (selectedItem) {
-      const params = new URLSearchParams();
-      params.append('keyword', item);
-
-      navigate(`/search-result?${params.toString()}`, {
-        state: { searchResults: [selectedItem] },
-      });
-    }
-  };
-
-  // 검색 함수
-  const handleCompanySearch = () => {
-    try {
-      if (activeIndex === -1 && autoCompleteValue.length > 0) {
-        fullDataSearch(keyword);
-      } else if (activeIndex >= 0 && autoCompleteValue[activeIndex]) {
-        specificItemSeach(
-          autoCompleteValue.map((value) => value.companyName)[activeIndex],
-        );
-      }
-    } catch (error) {
-      showErrorToast(`검색 중 오류 발생 ${error}`);
-    }
   };
 
   useEffect(() => {
@@ -175,10 +181,26 @@ function SearchInput() {
   }, []);
 
   // 자동완성 선택 함수
-  const selectAutoCompleteValue = (value: string) => {
-    setKeyword(value);
-    setAutoCompleteValue([]);
-    handleCompanySearch();
+  const selectAutoCompleteValue = (companyName: string) => {
+    const selectedItem = autoCompleteValue.find(
+      (item) => item.companyName === companyName,
+    );
+
+    if (selectedItem) {
+      // console.log('선택된 회사:', selectedItem.companyName);
+      setKeyword(selectedItem.companyName);
+      setShowAutoComplete(false);
+
+      setTimeout(() => {
+        const params = new URLSearchParams();
+        params.append('keyword', selectedItem.companyName);
+        navigate(`/search-result?${params.toString()}`, {
+          state: { searchResults: [selectedItem] },
+        });
+      }, 0);
+    } else {
+      showErrorToast('선택한 회사를 찾을 수 없습니다.');
+    }
   };
 
   const enteredKey = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -201,7 +223,7 @@ function SearchInput() {
         test: () => event.key === 'Enter',
         execute: () => {
           activeIndex >= 0 && autoCompleteValue[activeIndex]
-            ? specificItemSeach(
+            ? selectAutoCompleteValue(
                 autoCompleteValue.map((value) => value.companyName)[
                   activeIndex
                 ],
@@ -237,7 +259,7 @@ function SearchInput() {
           {autoCompleteValue.map((value, index) => (
             <AutoCompleteItem
               key={index}
-              onClick={() => selectAutoCompleteValue(value.name)}
+              onClick={() => selectAutoCompleteValue(value.companyName)}
               style={
                 index === activeIndex ? { backgroundColor: '#f2f2f2' } : {}
               }
