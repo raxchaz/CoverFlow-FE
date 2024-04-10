@@ -131,8 +131,6 @@ function QuestionDetailPage() {
       questionId: Number(questionId),
     };
 
-    // console.log('답변 제출 중:', requestData);
-
     const data = await fetchAPI('/api/answer', 'POST', requestData);
 
     if (data.statusCode === 'CREATED' && answerRef.current) {
@@ -184,15 +182,16 @@ function QuestionDetailPage() {
   };
 
   const toggleReportPopup = () => {
-    setShowReportPopup(!showReportPopup);
+    setShowReportPopup((isToggled) => !isToggled);
   };
 
   const handleReportSubmit = async () => {
     toggleReportPopup();
-  };
-
-  const handleReportClick = () => {
-    setShowReportPopup(!showReportPopup);
+    await fetchAPI(`/api/report`, 'POST', {
+      content: state.questionContent,
+      type: 'QUESTION',
+      id: state.questionId,
+    });
   };
 
   return (
@@ -210,7 +209,7 @@ function QuestionDetailPage() {
               : `${state.questionerTag}가 남긴 질문이에요.`}
           </span>
 
-          <img onClick={handleReportClick} src={Dot} alt="dot" />
+          <img onClick={toggleReportPopup} src={Dot} alt="dot" />
         </div>
         <QuestionTitle>{state.questionTitle}</QuestionTitle>
         <div className="questioner-info">
