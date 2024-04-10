@@ -9,6 +9,7 @@ import TabBar from '../../ui/tabBar/tabBar';
 import { ACCESS_TOKEN } from '../../global/constants';
 import Tree from '../../../asset/image/nature-ecology-tree-3--tree-plant-cloud-shape-park.svg';
 import Reward from '../../../asset/image/reward.svg';
+import Dot from '../../../asset/image/dots-vertical.svg';
 
 import { showErrorToast, showSuccessToast } from '../../ui/toast/toast.tsx';
 import { fetchAPI } from '../../global/utils/apiUtil.js';
@@ -190,6 +191,10 @@ function QuestionDetailPage() {
     toggleReportPopup();
   };
 
+  const handleReportClick = () => {
+    setShowReportPopup(!showReportPopup);
+  };
+
   return (
     <StyledPage className="main-page-container">
       <StyledHeader>
@@ -199,9 +204,13 @@ function QuestionDetailPage() {
       <div className="question-detail-container">
         <div className="job-info">
           <img src={Tree} alt="" />
-          {state.questionerTag === '취준생'
-            ? `${state.questionerTag}이 남긴 글이에요.`
-            : `${state.questionerTag}가 남긴 질문이에요.}`}
+          <span>
+            {state.questionerTag === '취준생'
+              ? `${state.questionerTag}이 남긴 글이에요.`
+              : `${state.questionerTag}가 남긴 질문이에요.`}
+          </span>
+
+          <img onClick={handleReportClick} src={Dot} alt="dot" />
         </div>
         <QuestionTitle>{state.questionTitle}</QuestionTitle>
         <div className="questioner-info">
@@ -220,22 +229,12 @@ function QuestionDetailPage() {
           </div>
         </div>
         <FirstLine />
-        <div className="view-info-container">
-          {/* <img className="answer-img" src={Chat} />
-          <span className="answer-count">{questionDetail.answerCount}</span>
-
-          <img className="answerview-img" src={View} /> */}
-
-          {/* <img
-            className="report-img"
-            src={Report}
-            onClick={toggleReportPopup}
-          /> */}
-        </div>
         {showReportPopup && (
           <div className="report-popup-overlay">
             <div className="report-popup">
-              <div className="report-title">신고 사유를 선택하세요</div>
+              <div className="report-title">사용자 신고</div>
+              <div className="report-sub-title">사유 선택</div>
+
               <label>
                 <input type="checkbox" name="reason" value="reason1" /> 욕설
                 혹은 비방표현이 있어요
@@ -287,16 +286,15 @@ function QuestionDetailPage() {
       {/* <LastLine /> */}
 
       <AnswerList>
-        {/* <Answer key={questionId} answerContent={answer} />
-         */}
         {questionDetail.map((detail, index) => (
           <>
-            <div className="answer-title">답변 {detail.answerCount}</div>
+            <div key={index} className="answer-title">
+              답변 {detail.answerCount}
+            </div>
             <Answer
               answerCount={detail.answerCount}
               answererTag={detail.questionTag}
               createAt={detail.createAt}
-              key={index}
               answers={detail.answers.map((answer) => ({
                 answerId: answer.answerId,
                 answererTag: answer.answererTag,
