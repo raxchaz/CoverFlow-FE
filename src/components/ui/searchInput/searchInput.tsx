@@ -159,7 +159,6 @@ function SearchInput() {
     params.append('keyword', keyword);
 
     navigate(`/search-result?${params.toString()}`, {
-      replace: true,
       state: { searchResults: autoCompleteValue },
     });
   };

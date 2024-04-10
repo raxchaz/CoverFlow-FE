@@ -172,7 +172,7 @@ function SearchResultPage() {
           'GET',
         );
         setSearchData(data.companyList);
-        console.log('페이지 내 결과', data.companyList);
+        // console.log('페이지 내 결과', data.companyList);
       } catch (error) {
         showErrorToast(`오류 발생: ${error}`);
         setSearchData([]);
