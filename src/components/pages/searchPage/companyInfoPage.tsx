@@ -140,7 +140,7 @@ function CompanyInfoPage() {
   };
 
   const handleGoBack = () => {
-    navigate(`/search-result`, { state: companyData });
+    navigate(-1);
   };
 
   return (
@@ -166,31 +166,32 @@ function CompanyInfoPage() {
               </QuestionButton>
             </div>
           </CompanyContainer>
-          <div className="selected-category">
-            <div className="selected-category-item">
-              <div>
+          <div className="selected-category-container">
+            <div className="selected-category-wrapper">
+              <div className="selected-category-item">
                 사내
                 <br />
                 문화
               </div>
-              <div>
+
+              <div className="selected-category-item">
                 급여
                 <br />
                 연봉
               </div>
-              <div>
+              <div className="selected-category-item">
                 업무
                 <br />
                 방식
               </div>
             </div>
-            <div className="selected-category-item">
-              <div>
+            <div className="selected-category-wrapper">
+              <div className="selected-category-item">
                 승진
                 <br />
                 커리어
               </div>
-              <div>
+              <div className="selected-category-item">
                 직무
                 <br />
                 워라밸
