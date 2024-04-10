@@ -1,21 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import '../../../asset/sass/etc/tabBar/tabBar.scss';
-import { ACCESS_TOKEN } from '../../global/constants/index.ts';
+// import { ACCESS_TOKEN } from '../../global/constants/index.ts';
 import user from '../../../asset/image/tabbar-user.svg';
 import home from '../../../asset/image/tabbar-home.svg';
 import alert from '../../../asset/image/tabbar-alert.svg';
+import { useSelector } from 'react-redux';
 
 const TabBar = () => {
   const [activeNav, setActiveNav] = useState(1);
-  const [showTabBar, setShowTabBar] = useState(true);
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
 
   useEffect(() => {
-    if (!localStorage.getItem(ACCESS_TOKEN)) {
-      setShowTabBar(false);
-    } else {
-      setShowTabBar(true);
-    }
     switch (location.pathname) {
       case '/':
         setActiveNav(1);
@@ -31,7 +27,7 @@ const TabBar = () => {
     }
   }, [location]);
 
-  if (!showTabBar) {
+  if (!isLoggedIn) {
     return null;
   }
 
