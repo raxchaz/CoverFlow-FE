@@ -21,14 +21,16 @@ const WelcomeMessage = styled.p`
 `;
 
 const SecondaryMessage = styled.p`
-  margin: 2% 0% 0% 15%;
+  margin: 2% 0% 5% 15%;
   font-size: 2rem;
-  letter-spacing: -1x;
+  letter-spacing: -1.5px;
   color: #474646;
 `;
 
 const FastLoginImage = styled.img`
-  margin: 3rem 0% 0 43%;
+  margin: 3rem 39% 0 39%;
+  width: 15rem;
+  height: 5rem;
 `;
 
 const HorizontalRule = styled.hr`
