@@ -25,11 +25,11 @@ const StatusBar = styled.div`
   border-top: 8px solid rgba(255, 249, 244, 1);
   margin: 10% auto 0 auto;
   font-family: pretendard-semibold;
-  width: 505px;
+  width: 520px;
 `;
 
 const StatusTab = styled.div<{ current: boolean }>`
-  width: 245px;
+  width: 260px;
   letter-spacing: -1px;
   text-align: center;
   padding: 15px 0;
