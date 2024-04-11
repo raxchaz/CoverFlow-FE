@@ -24,7 +24,6 @@ nav > div {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100%;
   color: #000;
 }
 
@@ -43,9 +42,3 @@ nav > div {
 // .tab-active {
 //   color: #ff8d1d;
 // }
-
-.icon-overlay {
-  position: absolute;
-  top: 1.9rem;
-  right: 10.2rem;
-}
