@@ -22,7 +22,6 @@ const fetchToken = async (code) => {
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
   }
-  console.log('fetchToken:', response);
   return response.headers;
 };
 
@@ -31,7 +30,7 @@ const TokenManagement = () => {
   const location = useLocation();
   const dispatch = useDispatch();
   const [userRole, setUserRole] = useState(null);
-  const [code, setCode] = useState(null);
+  const [initialized, setInitialized] = useState(false);
 
   useEffect(() => {
     const query = new URLSearchParams(location.search);
@@ -44,7 +43,7 @@ const TokenManagement = () => {
       return;
     }
 
-    fetchToken(code, role)
+    fetchToken(code)
       .then((headers) => {
         const accessToken = headers.get('Authorization');
         const refreshToken = headers.get('Authorization-refresh');
@@ -61,7 +60,6 @@ const TokenManagement = () => {
 
         const decoded = decodeToken(accessToken);
         setUserRole(decoded.role);
-        setCode(code);
       })
       .catch((error) => {
         console.error('토큰 요청 중 오류가 발생했습니다:', error);
@@ -73,13 +71,17 @@ const TokenManagement = () => {
   useEffect(() => {
     if (userRole === 'GUEST') {
       console.log('약관 동의 페이지로 이동합니다.');
-      navigate('/login/terms', { state: { code } });
-    } else if (['MEMBER', 'PREMIUM', 'ADMIN'].includes(userRole)) {
+      navigate('/login/terms');
+    } else if (
+      ['MEMBER', 'PREMIUM', 'ADMIN'].includes(userRole) &&
+      !initialized
+    ) {
       console.log('회원 정보가 존재합니다. 메인 페이지로 이동합니다.');
       navigate('/');
       useInitializeSSE();
+      setInitialized(true);
     }
-  }, [userRole, navigate, code]);
+  }, [userRole, navigate]);
 
   return null;
 };
