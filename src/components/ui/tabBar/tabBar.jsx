@@ -5,8 +5,6 @@ import '../../../asset/sass/etc/tabBar/tabBar.scss';
 import user from '../../../asset/image/tabbar-user.svg';
 import home from '../../../asset/image/tabbar-home.svg';
 import alert from '../../../asset/image/tabbar-alert.svg';
-import newAlert from '../../../asset/image/tabbar-new-alert.svg';
-
 import { useSelector } from 'react-redux';
 
 const TabBar = () => {
@@ -61,9 +59,6 @@ const TabBar = () => {
           onClick={() => setActiveNav(3)}
         >
           <div className={activeNav === 3 ? 'nav-item tab-active' : 'nav-item'}>
-            {isNewAlert > 0 && (
-              <img src={newAlert} alt="new alert" className="icon-overlay" />
-            )}
             <img src={alert} alt="alert" className="icon" />
             <div className="text">알림</div>
           </div>
