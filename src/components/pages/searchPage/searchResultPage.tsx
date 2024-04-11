@@ -5,6 +5,7 @@ import TitleHeader from '../../ui/header/titleHeader.tsx';
 import styled from 'styled-components';
 import TabBar from '../../ui/tabBar/tabBar.tsx';
 
+import { BASE_URL } from '../../global/constants/index.ts';
 import '../../../asset/sass/pages/searchPage/searchResultPage.scss';
 import Plus from '../../../asset/image/plus.svg';
 import Warning from '../../../asset/image/warning-triangle.svg';
@@ -12,7 +13,6 @@ import '../../../asset/sass/pages/notificationPage/notificationPage.scss';
 import SearchInput from '../../ui/searchInput/searchInput.tsx';
 import { showErrorToast } from '../../ui/toast/toast.tsx';
 import Pagination from '../../ui/Pagination.tsx';
-import { fetchAPI } from '../../global/utils/apiUtil.js';
 
 const ResultsContainer = styled.div`
   position: relative;
@@ -167,14 +167,17 @@ function SearchResultPage() {
     const fetchData = async () => {
       if (!keyword) return;
       try {
-        const { data } = await fetchAPI(
-          `/api/company?pageNo=0&name=${keyword}`,
-          'GET',
+        const response = await fetch(
+          `${BASE_URL}/api/company?pageNo=0&name=${keyword}`,
+          {
+            method: 'GET',
+          },
         );
-        setSearchData(data.companyList);
-        // console.log('페이지 내 결과', data.companyList);
+        const data = await response.json();
+        setSearchData(data.data.companyList);
+        console.log('페이지 내 결과', data.data.companyList);
       } catch (error) {
-        showErrorToast(`오류 발생: ${error}`);
+        showErrorToast(`오류가 여기서발생: ${error}`);
         setSearchData([]);
       }
     };
@@ -205,7 +208,7 @@ function SearchResultPage() {
             <span className="result-count">{companyName.length}</span>
           </ResultCount>
           <ResultsList>
-            {searchData.length > 0 ? (
+            {searchData ? (
               searchData.map((item) => (
                 <ResultItem
                   key={item.companyId}
