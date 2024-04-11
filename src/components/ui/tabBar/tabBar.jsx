@@ -10,7 +10,6 @@ import { useSelector } from 'react-redux';
 const TabBar = () => {
   const [activeNav, setActiveNav] = useState(1);
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
-  const isNewAlert = useSelector((state) => state.alert.count);
 
   useEffect(() => {
     switch (location.pathname) {

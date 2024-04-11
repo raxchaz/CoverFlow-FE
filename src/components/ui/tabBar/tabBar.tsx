@@ -15,10 +15,6 @@ const TabBar = () => {
   const [activeNav, setActiveNav] = useState(1);
   // const [showTabBar, setShowTabBar] = useState(true);
   const isLoggedIn = useSelector((state: RootState) => state.user.isLoggedIn);
-<<<<<<< HEAD
-  const isNewAlert = useSelector((state: RootState) => state.alert.count);
-=======
->>>>>>> 1607ad7e27292a2e973549720ebb21e9e87280f2
 
   useEffect(() => {
     switch (location.pathname) {
