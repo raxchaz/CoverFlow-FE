@@ -91,9 +91,20 @@ interface CompanInfoProps {
 
 function CompanyInfoPage() {
   const navigate = useNavigate();
-  // const [error, setError] = useState(null);
   const [companyData, setCompanyData] = useState<CompanInfoProps>();
   const { companyId } = useParams();
+
+  const [selectedCategories, setSelectedCategories] = useState(['']);
+
+  const handleCategoryClick = (category: string) => {
+    if (selectedCategories.includes(category)) {
+      setSelectedCategories(
+        selectedCategories.filter((item) => item !== category),
+      );
+    } else {
+      setSelectedCategories([...selectedCategories, category]);
+    }
+  };
 
   localStorage.setItem('prevPage', window.location.pathname);
 
@@ -119,13 +130,6 @@ function CompanyInfoPage() {
 
     fetchCompanyData();
   }, [companyId]);
-
-  // useEffect(() => {
-  //   if (error) {
-  //     alert('기업 데이터가 존재하지 않아, 검색 결과 페이지로 돌아갑니다.');
-  //     navigate(-1);
-  //   }
-  // }, [error, navigate]);
 
   const handleQuestionClick = () => {
     const token = localStorage.getItem(ACCESS_TOKEN);
@@ -153,13 +157,11 @@ function CompanyInfoPage() {
 
       {companyData && (
         <>
-          {/* <div className="company-result-title">기업 정보</div> */}
           <CompanyContainer>
             <div className="company">
               <div className="main-company-info">
                 <CompanyName>{companyData?.companyName}</CompanyName>
                 <span>에 관련된 질문들을 모아봤어요</span>
-                {/* <CompanyType>{companyData?.companyType}</CompanyType> */}
               </div>
               <QuestionButton onClick={handleQuestionClick}>
                 질문하기
@@ -168,30 +170,45 @@ function CompanyInfoPage() {
           </CompanyContainer>
           <div className="selected-category-container">
             <div className="selected-category-wrapper">
-              <div className="selected-category-item">
+              <div
+                onClick={() => handleCategoryClick('사내문화')}
+                className={`selected-category-item ${selectedCategories.includes('사내문화') ? 'active' : ''}`}
+              >
                 사내
                 <br />
                 문화
               </div>
 
-              <div className="selected-category-item">
+              <div
+                onClick={() => handleCategoryClick('급여연봉')}
+                className={`selected-category-item ${selectedCategories.includes('급여연봉') ? 'active' : ''}`}
+              >
                 급여
                 <br />
                 연봉
               </div>
-              <div className="selected-category-item">
+              <div
+                onClick={() => handleCategoryClick('업무방식')}
+                className={`selected-category-item ${selectedCategories.includes('업무방식') ? 'active' : ''}`}
+              >
                 업무
                 <br />
                 방식
               </div>
             </div>
             <div className="selected-category-wrapper">
-              <div className="selected-category-item">
+              <div
+                onClick={() => handleCategoryClick('승진커리어')}
+                className={`selected-category-item ${selectedCategories.includes('승진커리어') ? 'active' : ''}`}
+              >
                 승진
                 <br />
                 커리어
               </div>
-              <div className="selected-category-item">
+              <div
+                onClick={() => handleCategoryClick('직무워라밸')}
+                className={`selected-category-item ${selectedCategories.includes('직무워라밸') ? 'active' : ''}`}
+              >
                 직무
                 <br />
                 워라밸

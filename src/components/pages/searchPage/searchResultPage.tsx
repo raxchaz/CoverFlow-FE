@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, useSearchParams } from 'react-router-dom';
 import { StyledPage, StyledHeader } from '../../../styledComponent.ts';
 import TitleHeader from '../../ui/header/titleHeader.tsx';
 import styled from 'styled-components';
@@ -136,6 +136,9 @@ export type PageProps = 'prev' | 'next';
 
 function SearchResultPage() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const keyword = searchParams.get('keyword');
+
   const {
     state: { searchResults },
   } = useLocation() as SearchResultProps;
@@ -163,23 +166,22 @@ function SearchResultPage() {
 
   useEffect(() => {
     const fetchData = async () => {
+      if (!keyword) return;
       try {
-        const {
-          data: { companyList },
-        } = await fetchAPI(
-          `/api/company?pageNo=0
-		 	&name=${companyName}&criterion=createdAt`,
+        const { data } = await fetchAPI(
+          `/api/company?pageNo=0&name=${keyword}`,
           'GET',
-          null,
         );
-        setSearchData(companyList);
+        setSearchData(data.companyList);
+        // console.log('페이지 내 결과', data.companyList);
       } catch (error) {
         showErrorToast(`오류 발생: ${error}`);
+        setSearchData([]);
       }
     };
 
     fetchData();
-  }, [location.search]);
+  }, [keyword]);
 
   const goToResultDetailPage = (companyId: number) => {
     navigate(`/company-info/${companyId}`);
