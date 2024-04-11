@@ -5,17 +5,21 @@ import '../../../asset/sass/etc/tabBar/tabBar.scss';
 import user from '../../../asset/image/tabbar-user.svg';
 import home from '../../../asset/image/tabbar-home.svg';
 import alert from '../../../asset/image/tabbar-alert.svg';
+import newAlert from '../../../asset/image/tabbar-new-alert.svg';
+
 import { useSelector } from 'react-redux';
 interface RootState {
   user: {
     isLoggedIn: boolean;
+  };
+  alert: {
+    count: number;
   };
 }
 const TabBar = () => {
   const [activeNav, setActiveNav] = useState(1);
   // const [showTabBar, setShowTabBar] = useState(true);
   const isLoggedIn = useSelector((state: RootState) => state.user.isLoggedIn);
-
   useEffect(() => {
     switch (location.pathname) {
       case '/':
@@ -35,6 +39,8 @@ const TabBar = () => {
   if (!isLoggedIn) {
     return null;
   }
+
+  const isNewAlert = useSelector((state: RootState) => state.alert.count);
 
   return (
     <nav className="wrapper" style={{ width: '700px', margin: '0 auto' }}>
@@ -63,7 +69,10 @@ const TabBar = () => {
           onClick={() => setActiveNav(3)}
         >
           <div className={activeNav === 3 ? 'nav-item tab-active' : 'nav-item'}>
-            <img src={alert} alt="user" className="icon" />{' '}
+            {isNewAlert > 0 && (
+              <img src={newAlert} alt="new alert" className="icon-overlay" />
+            )}
+            <img src={alert} alt="user" className="icon" />
             <div className="text">알림</div>
           </div>
         </Link>

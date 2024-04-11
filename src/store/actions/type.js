@@ -3,3 +3,4 @@ export const SET_REWARD_COUNT = 'SET_REWARD_COUNT';
 export const TOGGLE_DROPDOWN = 'TOGGLE_DROPDOWN';
 export const SET_TOKENS = 'SET_TOKENS';
 export const CLEAR_TOKENS = 'CLEAR_TOKENS';
+export const SET_ALERT_COUNT = 'SET_ALERT_COUNT';

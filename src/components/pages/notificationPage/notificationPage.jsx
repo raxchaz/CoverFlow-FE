@@ -1,35 +1,34 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { StyledPage, StyledHeader } from '../../../styledComponent';
 import TitleHeader from '../../ui/header/titleHeader.tsx';
 import TabBar from '../../ui/tabBar/tabBar';
 import NotificationList from './notificationList.jsx';
 import '../../../asset/sass/pages/notificationPage/notificationPage.scss';
+import { fetchAPI } from '../../global/utils/apiUtil.js';
+import { useQuery } from '@tanstack/react-query';
+import { useDispatch } from 'react-redux';
+import { alertCount } from '../../../store/actions/alertActions.js';
+import { showErrorToast } from '../../ui/toast/toast.tsx';
 
 function NotificationPage() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const initialNotifications = [];
+  const { data, isError, error, isLoading } = useQuery({
+    queryKey: ['notifications'],
+    queryFn: () => fetchAPI('/api/notification', 'GET'),
+  });
 
-  const [notifications, setNotifications] = useState(initialNotifications);
+  useEffect(() => {
+    if (data && data.data) {
+      dispatch(alertCount(data.data.noReadElements));
+    }
+  }, [data, dispatch]);
 
-  const handleCheckNotification = (index) => {
-    const newNotifications = [...notifications];
-    newNotifications[index].checked = true;
-    setNotifications(newNotifications);
-  };
-
-  const handleCheckAllNotifications = () => {
-    const newNotifications = notifications.map((notification) => ({
-      ...notification,
-      checked: true,
-    }));
-    setNotifications(newNotifications);
-  };
-
-  const unreadNotificationsCount = notifications.filter(
-    (notification) => !notification.checked,
-  ).length;
+  if (isError) {
+    showErrorToast(error);
+  }
 
   const handleGoBack = () => {
     navigate(-1);
@@ -42,19 +41,16 @@ function NotificationPage() {
         <div className="notification-controls">
           <div className="no-read">
             읽지 않은 알림{' '}
-            <div className="no-read-count"> {unreadNotificationsCount}</div>
+            <div className="no-read-count">
+              {data?.data?.noReadElements || 0}{' '}
+            </div>
           </div>
-          <button
-            className="all-read-btn"
-            onClick={handleCheckAllNotifications}
-          >
-            모두 읽음
-          </button>
+          <button className="all-read-btn">모두 읽음</button>
         </div>
       </StyledHeader>
       <NotificationList
-        notifications={notifications}
-        onCheckNotification={handleCheckNotification}
+        notifications={data?.data?.notificationList || []}
+        isLoading={isLoading}
       />
       <TabBar />
     </StyledPage>

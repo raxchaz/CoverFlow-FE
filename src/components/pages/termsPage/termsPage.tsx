@@ -13,7 +13,7 @@ import greenCheck from '../../../asset/image/greenCheck.svg';
 import allCheckGrey from '../../../asset/image/allCheck_grey.svg';
 import allCheckGreen from '../../../asset/image/allCheck_green.svg';
 import { showErrorToast, showSuccessToast } from '../../ui/toast/toast.tsx';
-import { initializeSSE } from '../../global/utils/eventApiUtils.js';
+import { useInitializeSSE } from '../../global/utils/eventApiUtils.js';
 interface LocationState {
   code?: string;
 }
@@ -136,7 +136,7 @@ export default function TermsPage() {
       localStorage.setItem(REFRESH_TOKEN, refreshToken);
       navigate('/login/member-info');
       showSuccessToast('회원 가입을 축하드립니다!');
-      initializeSSE();
+      useInitializeSSE();
     } catch (error) {
       console.error(error);
       showErrorToast('토큰을 받아오는 중 오류가 발생했습니다.');
