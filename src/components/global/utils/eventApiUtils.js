@@ -4,10 +4,12 @@ import { BASE_URL, ACCESS_TOKEN } from '../constants/index.ts';
 import { showSuccessToast } from '../../ui/toast/toast.tsx';
 import { useQueryClient } from '@tanstack/react-query';
 
-export const useInitializeSSE = () => {
+export const useInitializeSSE = (active) => {
   const queryClient = useQueryClient();
 
   useEffect(() => {
+    if (!active) return;
+
     let lastEventId = null;
     const accessToken = localStorage.getItem(ACCESS_TOKEN);
 
@@ -41,11 +43,11 @@ export const useInitializeSSE = () => {
     sse.addEventListener('error', (event) => {
       console.log('Error:', event);
       sse.close();
-      setTimeout(useInitializeSSE, 5000);
+      setTimeout(() => useInitializeSSE(active), 5000);
     });
 
     return () => {
       sse.close();
     };
-  }, []);
+  }, [active]);
 };
