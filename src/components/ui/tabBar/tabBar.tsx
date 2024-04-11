@@ -20,6 +20,8 @@ const TabBar = () => {
   const [activeNav, setActiveNav] = useState(1);
   // const [showTabBar, setShowTabBar] = useState(true);
   const isLoggedIn = useSelector((state: RootState) => state.user.isLoggedIn);
+  const isNewAlert = useSelector((state: RootState) => state.alert.count);
+
   useEffect(() => {
     switch (location.pathname) {
       case '/':
@@ -39,8 +41,6 @@ const TabBar = () => {
   if (!isLoggedIn) {
     return null;
   }
-
-  const isNewAlert = useSelector((state: RootState) => state.alert.count);
 
   return (
     <nav className="wrapper" style={{ width: '700px', margin: '0 auto' }}>
