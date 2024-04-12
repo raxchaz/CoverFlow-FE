@@ -76,11 +76,25 @@ interface QuestionDetailProps {
   content?: string;
 }
 
+export interface CommentProps {
+  data: {
+    answerCount: number;
+    answers: {
+      answerId: string;
+      answererTag: string;
+      createAt: string;
+      answerContent: string;
+      answererNickname: string;
+    }[];
+  };
+}
+
 function QuestionDetailPage() {
   const navigate = useNavigate();
   const { state } = useLocation();
   const answerRef = useRef<HTMLTextAreaElement>(null);
   const [answer, setAnswer] = useState('');
+  const [comments, setComments] = useState<CommentProps>();
   const [showReportPopup, setShowReportPopup] = useState(false);
   const [questionDetail, setQuestionDetail] = useState<QuestionDetailProps[]>([
     {
@@ -201,6 +215,19 @@ function QuestionDetailPage() {
     });
   };
 
+  useEffect(() => {
+    const fetchComment = async () => {
+      const response = await fetchAPI(
+        `/api/question/${questionId}?pageNo=0&criterion=createdAt`,
+        'GET',
+        null,
+      );
+
+      setComments(response);
+    };
+    fetchComment();
+  }, []);
+
   return (
     <StyledPage className="main-page-container">
       <StyledHeader>
@@ -292,22 +319,14 @@ function QuestionDetailPage() {
       {/* <LastLine /> */}
 
       <AnswerList>
-        {questionDetail.map((detail, index) => (
+        <div className="answer-title">답변 {comments?.data.answerCount}</div>
+        {comments?.data.answers.map((detail) => (
           <>
-            <div key={index} className="answer-title">
-              답변 {detail.answerCount}
-            </div>
             <Answer
-              answerCount={detail.answerCount}
-              answererTag={detail.questionTag}
               createAt={detail.createAt}
-              answers={detail.answers.map((answer) => ({
-                answerId: answer.answerId,
-                answererTag: answer.answererTag,
-                createAt: answer.createAt,
-                answerContent: answer.answerContent,
-                answererNickname: answer.answererNickname,
-              }))}
+              answerContent={detail.answerContent}
+              answererNickname={detail.answererNickname}
+              answererTag={detail.answererTag}
             />
           </>
         ))}
