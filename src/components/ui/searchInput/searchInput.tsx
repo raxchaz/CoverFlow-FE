@@ -22,6 +22,8 @@ const StyledSearchInput = styled.input`
 
   &:focus {
     box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+    border-color: #ffbd7c;
+    box-shadow: 0 0 2px rgba(106, 57, 9, 0.5);
   }
 
   &::placeholder {
@@ -49,6 +51,9 @@ const AutoCompleteItem = styled.div`
   padding: 10px;
   cursor: pointer;
   &:hover {
+    background-color: #f2f2f2;
+  }
+  &.active {
     background-color: #f2f2f2;
   }
 `;
@@ -81,6 +86,16 @@ function SearchInput() {
   useEffect(() => {
     inputRef.current?.focus();
   }, []);
+
+  useEffect(() => {
+    if (activeIndex >= 0 && autoCompleteValue[activeIndex]) {
+      const selectedItem = autoCompleteContainerRef.current?.children[
+        activeIndex
+      ] as HTMLElement;
+
+      selectedItem?.focus();
+    }
+  }, [activeIndex, autoCompleteValue]);
 
   useEffect(() => {
     if (debouncedKeyword !== '') {
@@ -263,6 +278,7 @@ function SearchInput() {
               style={
                 index === activeIndex ? { backgroundColor: '#f2f2f2' } : {}
               }
+              className={index === activeIndex ? 'active' : ''}
             >
               {value.companyName}
             </AutoCompleteItem>

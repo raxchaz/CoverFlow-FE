@@ -7,6 +7,7 @@ import View from '../../../asset/image/view.svg';
 import Questitle from '../../../asset/image/questitle.svg';
 import { ACCESS_TOKEN } from '../../global/constants/index.ts';
 import Tree from '../../../asset/image/nature-ecology-tree-3--tree-plant-cloud-shape-park.svg';
+import { CompanInfoProps } from '../../pages/searchPage/companyInfoPage.tsx';
 
 const Line = styled.div`
   height: 1px;
@@ -83,6 +84,7 @@ interface QuestionModulesProps {
   createAt: string;
   questionContent: string;
   reward: number;
+  companyData: CompanInfoProps;
 }
 
 function QuestionModule({
@@ -95,9 +97,12 @@ function QuestionModule({
   questionContent,
   createAt,
   reward,
+  companyData,
 }: QuestionModulesProps) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
+
+  const companyName = companyData.companyName;
 
   const handleLoginClick = () => {
     navigate('/login'); // 로그인 페이지로 이동
@@ -114,6 +119,7 @@ function QuestionModule({
         questionContent,
         createAt,
         reward,
+        companyName,
       },
     });
   };

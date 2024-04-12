@@ -142,9 +142,10 @@ function SearchResultPage() {
   const {
     state: { searchResults },
   } = useLocation() as SearchResultProps;
+  console.log('searchResults', searchResults);
   const [searchData, setSearchData] = useState<SearchDataProps[]>([]);
-  const companyList = searchResults.map((result) => result);
-  const companyName = companyList.map((list) => list.companyName);
+  const companyList = searchResults?.map((result) => result);
+  const companyName = companyList?.map((list) => list.companyName);
   // const keyword = queryParams.get('keyword');
 
   const [currentPage, setCurrentPage] = useState(1);
