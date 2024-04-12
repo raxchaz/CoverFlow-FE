@@ -137,7 +137,7 @@ function SearchInput() {
         `${BASE_URL}/api/company?pageNo=0&name=${name}`,
       );
       setAutoCompleteValue(res.data.data.companyList);
-      console.log('인풋 내 결과', res.data.data.companyList);
+      // console.log('인풋 내 결과', res.data.data.companyList);
     } catch (error) {
       showErrorToast(`자동완성 데이터 요청 실패 ${error}`);
       setAutoCompleteValue([]);
