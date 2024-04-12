@@ -221,7 +221,7 @@ function QuestionDetailPage() {
 
         <QuestionContent>{state.questionContent}</QuestionContent>
         <div className="company-fish-tag">
-          <div className="detailpage-company">카카오</div>
+          <div className="detailpage-company">{state.companyName}</div>
           <div className="detailpage-fishbuncount">
             <img src={Reward} alt="reward" />
             {state.reward}

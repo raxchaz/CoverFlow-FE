@@ -80,7 +80,7 @@ interface Questions {
   reward: number;
 }
 
-interface CompanInfoProps {
+export interface CompanInfoProps {
   companyAddress: string;
   companyId: number;
   companyName: string;
@@ -237,6 +237,7 @@ function CompanyInfoPage() {
                 questionContent={question.questionContent}
                 createAt={question.createAt}
                 reward={question.reward}
+                companyData={companyData}
               />
             ))}
           </QuestionList>
