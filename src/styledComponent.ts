@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const StyledPage = styled.div`
   height: 100vh;
-  width: 480px;
+  width: 700px;
   background-color: #ffffff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   font-size: 16px;

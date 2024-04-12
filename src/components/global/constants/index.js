@@ -1,3 +1,0 @@
-export const BASE_URL = 'http://15.165.1.48:8081';
-export const ACCESS_TOKEN = 'access_token';
-export const REFRESH_TOKEN = 'refresh_token';

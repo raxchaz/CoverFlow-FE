@@ -32,36 +32,98 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-top: 4rem;
 }
 
 .modify-nick {
+  font-size: 2rem;
+  color: #000000;
   letter-spacing: -1px;
+  font-family: Pretendard-Bold;
   display: flex;
   align-items: center;
-  font-family: pretendard-bold;
-  color: #474646;
-  font-size: 19px;
+  margin-bottom: 1.5rem;
 }
 .modify-nick-info {
   font-size: 14px;
   margin-top: 2%;
+  width: 100%;
   letter-spacing: -1px;
-  flex-grow: 1; // 남은 공간을 모두 차지하도록 설정
   justify-content: space-between;
   display: flex;
   align-items: center;
 }
 
+.modify-nickname {
+  font-size: 3rem;
+  color: #808080;
+  letter-spacing: -1px;
+  font-family: Pretendard-Bold;
+}
 .modify-info {
-  margin: 10% 0% 0% 12%;
+  margin: 5% 0% 0% 12%;
+  width: 79%;
 }
 
+.modify-nickname-btn {
+  font-size: 1.6rem;
+  width: 75px;
+  height: 30px;
+  color: #ff8d1d;
+  letter-spacing: -1px;
+  font-family: Pretendard-SemiBold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid rgba(255, 141, 29, 1);
+  border-radius: 1rem;
+  cursor: pointer;
+}
+
+.modify-info-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  padding: 1.5% 3% 1.5% 3%;
+  color: #808080;
+  letter-spacing: -1px;
+  font-family: Pretendard-SemiBold;
+  margin-right: 1rem;
+  border: 1.5px solid rgba(100, 100, 100, 1);
+  border-radius: 2rem;
+  cursor: pointer;
+  background-color: white;
+
+  height: 40px;
+  &.default {
+    border: 1px solid rgba(100, 100, 100, 1);
+    color: rgba(100, 100, 100, 1);
+  }
+
+  &.selected {
+    border: 1px solid rgba(255, 141, 29, 1);
+    color: rgba(255, 141, 29, 1);
+  }
+}
+
+.modify-info-wrapper {
+  font-size: 14px;
+  margin-top: 2%;
+  width: 100%;
+  letter-spacing: -1px;
+  justify-content: flex-start;
+  display: flex;
+  align-items: center;
+  overflow: visible;
+}
 //= ===========================
 
 .secessionPage-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 15%;
 }
 
 .userSecession {
@@ -73,15 +135,18 @@
   color: #474646;
 }
 .userSecession-info {
-  font-size: 14px;
+  font-size: 1.5rem;
+  font-family: Pretendard-Medium;
+  color: rgba(100, 100, 100, 1);
   margin-top: 1%;
   letter-spacing: -1px;
-  flex-grow: 1; // 남은 공간을 모두 차지하도록 설정
+  flex-grow: 1;
   justify-content: space-between;
   display: flex;
   align-items: center;
 }
 
 .secessionUser-info {
-  margin: 10% 0% 0% 12%;
+  margin: 4% 0% 0% 12%;
+  width: 79%;
 }

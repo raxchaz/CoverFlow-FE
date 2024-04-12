@@ -13,6 +13,7 @@
   text-align: center;
   flex-direction: column;
   letter-spacing: -1px;
+  align-items: center;
 }
 
 .warning-icon {
@@ -22,8 +23,7 @@
   height: 55px;
   width: 55px;
   margin-top: 20%;
-  margin-bottom: 5%;
-  margin-left: 41%;
+  margin-bottom: 3%;
 }
 
 .failed-text {
@@ -42,7 +42,11 @@
 .registContainer {
   display: flex;
   justify-content: center;
-  flex-direction: row;
+  border: 1px solid #ff8d1d;
+  width: 12.5rem;
+  border-radius: 1.8rem;
+  height: 2.8rem;
+  align-items: center;
 }
 
 .plus-icon {
@@ -53,7 +57,13 @@
 .company-registration {
   display: flex;
   color: #ff8d1d;
-  font-size: 14px;
+  font-size: 1rem;
   letter-spacing: -1px;
   font-family: pretendard-medium;
+}
+
+.pagination-button-container {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 1rem;
 }

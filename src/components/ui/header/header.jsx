@@ -13,7 +13,9 @@ function Header() {
 
   const handleClickOutside = (event) => {
     if (headerRef.current && !headerRef.current.contains(event.target)) {
-      setIsSideBarOpen(false);
+      if (isSideBarOpen) {
+        setIsSideBarOpen(false); // 사이드바가 열려있을 때만 닫기
+      }
     }
   };
 
@@ -28,7 +30,10 @@ function Header() {
   return (
     <>
       <header ref={headerRef}>
-        <div className="sidebar-wrapper">{isSideBarOpen && <SideBar />}</div>
+        <div className="sidebar-wrapper">
+          {isSideBarOpen && <SideBar setIsSideBarOpen={setIsSideBarOpen} />}
+        </div>
+
         <img
           className="hambar"
           src={Hambar}

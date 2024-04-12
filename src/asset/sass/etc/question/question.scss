@@ -8,17 +8,20 @@
   letter-spacing: -1px;
   display: flex;
   justify-content: space-between;
-  margin: 5% 0% -5% 10%;
+  margin: -4% 0% -5% 13%;
 }
 
 .questioner-info {
   white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .questioner {
   font-weight: 900;
   color: #000;
-  margin-left: 10%;
+  // margin-left: 10%;
 }
 
 .middle {
@@ -90,7 +93,6 @@
 
 .question-title {
   display: flex;
-  align-items: left;
   justify-content: flex-start;
   font-family: 'Pretendard-Bold';
   letter-spacing: -1.5px;
@@ -99,6 +101,15 @@
   font-size: 20px;
   white-space: nowrap;
   margin: 8% 0% 0% 13%;
+  align-items: center;
+  gap: 10px;
+}
+
+.reward {
+  border-radius: 5px;
+  background-color: #d9d9d9;
+  padding: 5px 10px;
+  font-family: 'Pretendard';
 }
 
 .question-content {

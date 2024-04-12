@@ -5,17 +5,17 @@ import TabBar from '../../ui/tabBar/tabBar.jsx';
 import Header from '../../ui/header/header.jsx';
 import Searchicon from '../../../asset/image/searchicon.svg';
 import UserInfoHeader from '../../ui/header/userInfoHeader.jsx';
-// import Modal from '../../ui/modal/modal.jsx';
 import '../../../asset/sass/pages/mainPage/mainPage.scss';
-import { StyledPage, StyledHeader } from '../../../styledComponent.js';
-
+import { StyledPage, StyledHeader } from '../../../styledComponent';
+// import { EventSourcePolyfill } from 'event-source-polyfill';
+// import { ACCESS_TOKEN, BASE_URL } from '../../global/constants';
 const SearchInput = styled.input`
-  width: 300px;
-  height: 20px;
+  width: 500px;
+  height: 70px;
   padding: 8px;
-  border: 1px solid #ffbd7c;
-  border-radius: 10px;
-  margin: 5% 0% 0% 17%;
+  border: 2px solid #ffbd7c;
+  border-radius: 30px;
+  margin: 3% 0 0 14.5%;
   outline: none;
 
   &:focus {
@@ -24,8 +24,11 @@ const SearchInput = styled.input`
   }
 
   &::placeholder {
-    color: #d9d9d9;
-    font-size: 0.8rem;
+    color: #cacaca;
+    font-size: 2rem;
+    padding-left: 28px;
+    letter-spacing: -1.5px;
+    font-family: Pretendard-Regular;
   }
 `;
 
@@ -40,21 +43,29 @@ function MainPage() {
   return (
     <StyledPage className="main-page-deco">
       <StyledHeader />
-      <UserInfoHeader />
+
       <Header />
-      <div className="coverflow">COVERFLOW</div>
+      <UserInfoHeader />
+
       <div className="main-info">
-        <span className="main-info-bold">원하는 기업에 대한 질문과 답변</span>
-        을 <br />더 쉽고 빠르게 찾아보세요
+        <span className="main-info-bold">
+          <strong>기업</strong>
+        </span>
+        에 대해 <strong className="main-info-bold">궁금한 점</strong>이 있다면,
+        <br />
+        <strong className="white-bold">코버플로우</strong>에서 모두{' '}
+        <strong className="main-info-bold">공유</strong>하고{' '}
+        <strong className="main-info-bold">해결</strong>하세요!
       </div>
       <SearchInput
         type="text"
         className="search-input-text"
-        placeholder="기업 명을 검색하세요"
+        placeholder="기업 이름을 검색해 주세요"
         onClick={handleChange}
       />
       <img className="search" src={Searchicon} />
       <TabBar />
+      <div className="wrapper"></div>
     </StyledPage>
   );
 }

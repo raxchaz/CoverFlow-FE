@@ -1,0 +1,23 @@
+.textarea-field-contact,
+.option-field {
+  letter-spacing: -1px;
+  font-size: 1.5rem;
+  border: none;
+  margin: 20px 0;
+  width: 520px;
+  background-color: #f5f5f5;
+  transition: background-color 0.3s;
+  padding: 2rem;
+  height: 230px;
+  resize: none;
+
+  &::placeholder {
+    color: #cacaca;
+    opacity: 1;
+  }
+}
+
+.round {
+  border-radius: 1rem;
+  height: 15rem;
+}

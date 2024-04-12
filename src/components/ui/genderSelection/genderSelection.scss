@@ -1,9 +1,16 @@
 .button-container {
   display: flex;
   flex-wrap: wrap;
+  width: 15rem;
 }
 
-button {
+.gender-button-container {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 5%;
+}
+
+.gender-button {
   padding: 8px 16px;
   border: none;
   cursor: pointer;
@@ -16,19 +23,19 @@ button {
     box-shadow 0.3s; /* 트랜지션 효과 추가 */
 }
 
-button.selected {
+.gender-button.selected {
   background-color: #ff8d1d;
   color: #ffffff;
   font-weight: bold;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
 }
 
-button:not(.selected) {
+.gender-button:not(.selected) {
   background-color: #cacaca;
   color: white;
 }
 
-button:hover {
+.gender-button:hover {
   background-color: #ff8d1d;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
 }

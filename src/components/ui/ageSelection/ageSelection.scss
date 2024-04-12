@@ -1,10 +1,16 @@
-.button-container {
+.age-button-container {
   display: flex;
   flex-wrap: wrap;
   margin-top: 5%;
+  width: 45%;
 }
 
 button {
+  min-width: 8rem;
+  font-size: 1.8rem;
+  letter-spacing: -1px;
+  color: #ffffff;
+  font-family: Pretendard-Bold;
   padding: 8px 16px;
   border: none;
   cursor: pointer;

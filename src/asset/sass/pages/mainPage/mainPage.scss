@@ -1,5 +1,6 @@
 .main-page-deco {
-  background: linear-gradient(to bottom, #ffffff, #fff3e7);
+  // background: linear-gradient(to bottom, #ffffff, #fff3e7);
+  background: linear-gradient(to bottom, #ff8d1d 365px, #ffffff 0%);
 }
 
 .coverflow {
@@ -12,15 +13,21 @@
 
 .main-info {
   text-align: center;
-  margin-top: 45%;
-  font-size: 0.9rem;
-  letter-spacing: -1px;
+  margin-top: 25%;
+  font-size: 2.8rem;
+  letter-spacing: -1.5px;
   color: #000;
   font-weight: 500;
+  line-height: 1.3;
 }
 
 .main-info-bold {
-  font-weight: 600;
+  font-family: 'pretendard-extraBold';
+}
+
+.white-bold {
+  font-family: 'pretendard-extraBold';
+  color: #ffffff;
 }
 
 .main-logo {
@@ -32,6 +39,6 @@
 }
 
 .search {
-  margin: 1% 0% -0.6% -7%;
+  margin: 0 0 -1% -7%;
   cursor: pointer;
 }

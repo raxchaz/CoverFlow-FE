@@ -6,32 +6,34 @@ import GenderSelection from '../../ui/genderSelection/genderSelection';
 import '../../../asset/sass/pages/loginPage/nicknamePage.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
-import { ACCESS_TOKEN, BASE_URL } from '../../global/constants/index.js';
-import TitleHeader from '../../ui/header/titleHeader.jsx';
-import { StyledPage, StyledHeader } from '../../../styledComponent.js';
+import { StyledHeader, StyledPage } from '../../../styledComponent';
+import TitleHeader from '../../ui/header/titleHeader.tsx';
+import { fetchAPI } from '../../global/utils/apiUtil.js';
+import { showErrorToast, showSuccessToast } from '../../ui/toast/toast.tsx';
 
 const CheckboxContainer = styled.div`
   display: flex;
   align-items: center;
-  margin: 9% 0% -6.5% 10%;
-  border-bottom: 2px solid #d9d9d9;
+
+  border-bottom: 1px solid #d9d9d9;
   width: calc(80% - 25px);
   padding: 2%;
+  margin-left: 10%;
 `;
 const CheckboxLabel = styled.label`
   display: flex;
   align-items: center;
-  margin-left: 1%;
-  font-size: 1rem;
+  font-size: 2rem;
+  font-family: Pretendard-SemiBold;
   cursor: pointer;
   letter-spacing: -1px;
 
   color: #000;
 `;
 const Icon = styled(FontAwesomeIcon)`
-  margin-right: 7px;
-  width: 20px;
-  height: 20px;
+  margin-right: 2rem;
+  width: 34px;
+  height: 34px;
   color: ${(props) => (props.checked ? '#22932D' : '#d9d9d9')};
 `;
 const HiddenCheckbox = styled.input`
@@ -43,16 +45,19 @@ const HiddenCheckbox = styled.input`
 const StartButton = styled.button.withConfig({
   shouldForwardProp: (prop) => prop !== 'isActive',
 })`
+  width: 520px;
+  height: 45px;
   background-color: #ff8d1d;
   color: white;
   border: none;
   padding: 8px 15px;
-  font-size: 1rem;
-  letter-spacing: 0.5px;
+  font-size: 2rem;
+  font-family: Pretendard-Bold;
+  letter-spacing: -1px;
   font-weight: 800;
   cursor: ${(props) => (props.isActive ? 'pointer' : 'not-allowed')};
-  margin: 15% 0% 20% 70%;
-  border-radius: 5px;
+  margin: 3% 0 5% 10%;
+  border-radius: 0px;
 
   &:hover {
     background-color: ${(props) => (props.isActive ? '#ff8d1d' : '#ccc')};
@@ -99,7 +104,7 @@ const NicknamePage = () => {
   };
 
   /*
-  해당 페이지에 진입하자마자 사용자의 로그인 상태를 확인합니다. 
+  해당 페이지에 진입하자마자 사용자의 로그인 상태를 확인합니다.
   토큰을 가지고 있는 사용자라면, 잘못된 접근임을 명시하고, 다시 로그인 페이지로 리다이렉트 합니다.
   */
   useEffect(() => {
@@ -113,9 +118,9 @@ const NicknamePage = () => {
     // checkLoginStatus();
   }, [navigate]);
 
-  /* 
-사용자가  데이터를 선택하고, 시작하기 버튼을 눌렀을 때, 
-데이터가 서버로 전송될 수 있도록 하는 로직입니다. 
+  /*
+사용자가  데이터를 선택하고, 시작하기 버튼을 눌렀을 때,
+데이터가 서버로 전송될 수 있도록 하는 로직입니다.
  */
   const sendDataToServer = async () => {
     try {
@@ -147,30 +152,18 @@ const NicknamePage = () => {
         tagData = '현직자';
       }
 
-      const response = await fetch(`${BASE_URL}/api/member/save-member-info`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
-        },
-        body: JSON.stringify({
-          tag: tagData,
-          age: ageRange,
-          gender: genderData,
-        }),
-      });
-
-      const data = await response.json();
-      console.log('서버 응답:', data);
-      console.log('서버 응답 상태:', response.status);
-      if (!response.ok) {
-        throw new Error(`HTTP 오류! 상태: ${response.status}`);
-      }
-
+      const body = {
+        tag: tagData,
+        age: ageRange,
+        gender: genderData,
+      };
+      const data = await fetchAPI('/api/member/nickname', 'POST', body);
+      console.log('서버 응답', data);
       navigate('/');
+      showSuccessToast('환영합니다!');
     } catch (error) {
       console.error('데이터 전송 중 오류:', error);
-      console.warn('데이터를 가져오지 못했습니다.');
+      showErrorToast('데이터 전송에 실패했습니다.');
     }
   };
 
@@ -209,7 +202,7 @@ const NicknamePage = () => {
             />
             <CheckboxLabel htmlFor="employedCheckbox" checked={isEmployed}>
               <Icon icon={faCircleCheck} checked={isEmployed} />
-              직장을 다니고 있어요
+              현재 직장을 다니고 있어요
             </CheckboxLabel>
           </CheckboxContainer>
 

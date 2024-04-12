@@ -1,3 +1,5 @@
+$color-primary: #ff8d1d;
+
 .company-form,
 .location-container {
   display: flex;
@@ -32,17 +34,18 @@
 .option-field::placeholder {
   color: #474646;
   opacity: 1;
+  padding: 0 8px;
 }
 
 .input-field-regist:focus,
 .option-field:focus {
-  border-color: #ff8d1d;
+  border-color: $color-primary;
   outline: none;
 }
 
 .input-field-regist:hover,
 .option-field:hover {
-  border-color: #ff8d1d;
+  border-color: $color-primary;
 }
 
 .regist-company-name,
@@ -58,14 +61,20 @@
   width: 82%;
   margin-top: 13%;
   margin-left: 2%;
-  border-radius: 0px;
-  background-color: #ff8d1d;
+  border-radius: 5px;
+  background-color: $color-primary;
 
   &:disabled {
     background-color: #ccc;
     color: #fff;
     cursor: not-allowed;
     box-shadow: none;
+  }
+
+  &.selected {
+    border: 2px solid #ff8d1d;
+    background-color: #ff8d1d;
+    color: #ffffff;
   }
 }
 

@@ -1,9 +1,19 @@
-.company-result-title {
+:root {
+  --color-primary: #000000;
+  --color-sub: #ff8d1d;
+}
+
+@mixin company-title {
   letter-spacing: -1px;
   margin: 10% 0% 0% 13%;
-  font-family: 'Pretendard-Black';
   font-size: 18px;
-  color: #ff8d1d;
+  color: var(--color-sub);
+  font-family: 'Pretendard-Black';
+}
+
+.company-result-title {
+  @include company-title;
+  font-family: 'Pretendard-Black';
 }
 
 .company-question-title {
@@ -12,23 +22,35 @@
   letter-spacing: -1px;
   margin: 10% 0% 0% 13%;
   font-size: 18px;
-  color: #ff8d1d;
+  color: var(--color-primary);
   font-family: 'Pretendard-Black';
+  gap: 10px;
+}
+
+.question-count {
+  color: var(--color-sub);
 }
 
 .question-info-container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
+  color: var(--color-primary);
+}
+
+.question-count {
+  color: var(--color-sub);
 }
 
 .company {
   display: flex;
   position: relative;
+  justify-content: space-around;
   text-align: center;
   align-items: center;
   justify-content: center;
-  flex: 1;
+  flex: 2 1;
 }
 
 .main-company-info {
@@ -36,7 +58,9 @@
   flex-direction: column;
   text-align: left;
   flex: 1;
-  margin-left: 4%;
+  span {
+    font-size: 0.9rem;
+  }
 }
 
 .sub-info {
@@ -48,7 +72,39 @@
   white-space: nowrap;
 }
 
-.company {
+.selected-category-container {
   display: flex;
-  justify-content: space-around;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap-reverse;
+  width: 50%;
+  margin: 0 auto;
+  gap: 10px;
+}
+
+.selected-category-wrapper {
+  display: flex;
+  gap: 10px;
+
+  div {
+    cursor: pointer;
+    border-radius: 50%;
+    // border: 1px solid blue;
+    // padding: 8px;
+    background-color: #fff9f4;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 0 8px;
+    text-align: center;
+    font-weight: 500;
+  }
+}
+
+.selected-category-item.active {
+  border: 2px solid #ff8d1d;
 }

@@ -1,21 +1,20 @@
 .title-container {
-  display: flex;
-  align-items: center;
-  flex-direction: row;
+  width: 75%;
+  margin: 10% auto 0 auto;
 }
 
 .mypage-select-menu {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-end;
+  justify-content: space-between;
   flex-direction: row;
-  gap: 10.5%;
-  margin-top: 10%;
+  margin: 5% auto 0 auto;
+  width: 75%;
 }
 
 .title {
-  font-size: 20px;
-  margin: 16% 0% 0% 12%;
+  font-size: 3.5rem;
+  margin: 10% 0 8% 12%;
   letter-spacing: -1px;
   font-family: pretendard-bold;
   align-items: center;
@@ -30,11 +29,17 @@
 
 .title-intro {
   letter-spacing: -1px;
-  font-family: pretendard-regular;
-  font-size: 15px;
+  font-family: pretendard-semiBold;
+  font-size: 2rem;
+  margin-left: 0.3rem;
 }
 
-.title-login {
+.my-social-type {
+  font-size: 2rem;
+  color: #474646;
+  letter-spacing: -1px;
+  font-family: Pretendard-SemiBold;
+  margin-top: 1rem;
 }
 
 .menu-contact,
@@ -46,6 +51,7 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
+
   transition: transform 0.3s ease; /* 변환 효과가 0.3초 동안 일어나도록 설정 */
 }
 
@@ -57,25 +63,15 @@
   transform: scale(1.05);
 }
 .menu {
-  gap: 11px;
-}
-
-.menu-contact {
-  gap: 12px;
-}
-
-.menu-event {
-  gap: 10px;
-}
-
-.menu-edit {
-  gap: 12.5px;
+  gap: 25px;
+  height: 100%;
 }
 
 .letter {
   letter-spacing: -1px;
-  font-weight: bold;
-  font-size: 13px;
+  font-family: Pretendard-semiBold;
+  color: #474646;
+  font-size: 1.5rem;
 }
 
 .title-info-container {
@@ -97,4 +93,11 @@
 .mypage-bun-count {
   font-size: 25px;
   font-weight: 600;
+}
+
+.login-status {
+  font-size: 1.1rem;
+  font-weight: 500;
+
+  color: rgba(109, 109, 109, 1);
 }
