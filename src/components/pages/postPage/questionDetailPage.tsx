@@ -92,6 +92,7 @@ export interface CommentProps {
 function QuestionDetailPage() {
   const navigate = useNavigate();
   const { state } = useLocation();
+  console.log('state: ', state);
   const answerRef = useRef<HTMLTextAreaElement>(null);
   const [postAnswer, setPostAnswer] = useState('');
   const [loadAnswer, setLoadAnswer] = useState<CommentProps>();
@@ -114,15 +115,6 @@ function QuestionDetailPage() {
 
   const { questionId } = useParams();
 
-  // function formatDate(fullDate: string) {
-  //   const date = new Date(fullDate);
-  //   const year = date.getFullYear();
-  //   const month = (date.getMonth() + 1).toString().padStart(2, '0');
-  //   const day = date.getDate().toString().padStart(2, '0');
-
-  //   return `${year}-${month}-${day}`;
-  // }
-
   useEffect(() => {
     const fecthQuestionDetail = async () => {
       const token = localStorage.getItem(ACCESS_TOKEN);
@@ -131,6 +123,48 @@ function QuestionDetailPage() {
         showErrorToast('로그인이 필요합니다.');
         navigate(-1);
       }
+
+      const res = await fetchAPI(
+        `/api/question/${questionId}?pageNo=3`,
+        'GET',
+        null,
+      );
+      const {
+        answerCount,
+        answers,
+        companyName,
+        questionContent,
+        createAt,
+        questionTag,
+        questionTitle,
+        questionerNickname,
+        reward,
+        totalPages,
+        viewCount,
+      } = res.data;
+
+      setQuestionDetail([
+        {
+          title: questionTitle,
+          questionContent,
+          answerCount,
+          reward,
+          questionerNickname,
+          questionTag,
+          createAt,
+          answers: answers.map((answer: AnswerProps) => ({
+            answerId: answer.answerId,
+            answererNickname: answer.answererNickname,
+            answererTag: answer.answererTag,
+            createAt: answer.createAt,
+            answerContent: answer.answerContent,
+          })),
+          companyName,
+
+          totalPages,
+          viewCount,
+        },
+      ]);
     };
     fecthQuestionDetail();
   }, [postAnswer]);
@@ -145,7 +179,10 @@ function QuestionDetailPage() {
       questionId: Number(questionId),
     };
 
-    const answerer = questionDetail.map((detail) => detail.questionerNickname);
+    const answerer =
+      questionDetail &&
+      questionDetail.map((detail) => detail.questionerNickname);
+    console.log('answerer: ', answerer);
 
     if (state.questioner === answerer[0]) {
       showErrorToast('본인의 질문에 답변을 달 수 없습니다.');
@@ -154,52 +191,14 @@ function QuestionDetailPage() {
 
     const data = await fetchAPI('/api/answer', 'POST', requestData);
 
-    if (data.statusCode === 'CREATED' && answerRef.current) {
+    if (
+      state.questioner !== answerer[0] &&
+      data.statusCode === 'CREATED' &&
+      answerRef.current
+    ) {
       setPostAnswer(answerRef.current?.value);
       showSuccessToast('답변이 등록되었습니다.');
     }
-
-    const res = await fetchAPI(
-      `/api/question/${questionId}?pageNo=0`,
-      'GET',
-      null,
-    );
-    const {
-      answerCount,
-      answers,
-      companyName,
-      questionContent,
-      createAt,
-      questionTag,
-      questionTitle,
-      questionerNickname,
-      reward,
-      totalPages,
-      viewCount,
-    } = res.data;
-
-    setQuestionDetail([
-      {
-        title: questionTitle,
-        questionContent,
-        answerCount,
-        reward,
-        questionerNickname,
-        questionTag,
-        createAt,
-        answers: answers.map((answer: AnswerProps) => ({
-          answerId: answer.answerId,
-          answererNickname: answer.answererNickname,
-          answererTag: answer.answererTag,
-          createAt: answer.createAt,
-          answerContent: answer.answerContent,
-        })),
-        companyName,
-
-        totalPages,
-        viewCount,
-      },
-    ]);
   };
 
   const toggleReportPopup = () => {
