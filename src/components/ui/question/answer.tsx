@@ -3,13 +3,6 @@ import '../../../asset/sass/etc/question/answer.scss';
 import styled from 'styled-components';
 import Trophy from '../../../asset/image/trophy.svg';
 
-const Line = styled.div`
-  height: 1px;
-  background-color: #f2f2f2;
-  width: 103%;
-  margin: 7% 0% -5% -1.5%;
-`;
-
 const AdoptButton = styled.button`
   position: relative;
   display: flex;
@@ -49,8 +42,6 @@ function AnswerModule({
         <img src={Trophy} alt="trophy" />
         채택하기
       </AdoptButton>
-
-      <Line />
     </>
   );
 }

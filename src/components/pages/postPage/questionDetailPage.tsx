@@ -93,8 +93,8 @@ function QuestionDetailPage() {
   const navigate = useNavigate();
   const { state } = useLocation();
   const answerRef = useRef<HTMLTextAreaElement>(null);
-  const [answer, setAnswer] = useState('');
-  const [comments, setComments] = useState<CommentProps>();
+  const [postAnswer, setPostAnswer] = useState('');
+  const [loadAnswer, setLoadAnswer] = useState<CommentProps>();
   const [showReportPopup, setShowReportPopup] = useState(false);
   const [questionDetail, setQuestionDetail] = useState<QuestionDetailProps[]>([
     {
@@ -133,7 +133,7 @@ function QuestionDetailPage() {
       }
     };
     fecthQuestionDetail();
-  }, [answer]);
+  }, [postAnswer]);
 
   const handleGoBack = () => {
     navigate(-1);
@@ -155,7 +155,7 @@ function QuestionDetailPage() {
     const data = await fetchAPI('/api/answer', 'POST', requestData);
 
     if (data.statusCode === 'CREATED' && answerRef.current) {
-      setAnswer(answerRef.current?.value);
+      setPostAnswer(answerRef.current?.value);
       showSuccessToast('답변이 등록되었습니다.');
     }
 
@@ -222,8 +222,7 @@ function QuestionDetailPage() {
         'GET',
         null,
       );
-
-      setComments(response);
+      setLoadAnswer(response);
     };
     fetchComment();
   }, []);
@@ -319,8 +318,8 @@ function QuestionDetailPage() {
       {/* <LastLine /> */}
 
       <AnswerList>
-        <div className="answer-title">답변 {comments?.data.answerCount}</div>
-        {comments?.data.answers.map((detail) => (
+        <div className="answer-title">답변 {loadAnswer?.data.answerCount}</div>
+        {loadAnswer?.data.answers.map((detail) => (
           <>
             <Answer
               createAt={detail.createAt}
