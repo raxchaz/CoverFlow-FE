@@ -32,7 +32,9 @@ const TokenManagement = () => {
   const [userRole, setUserRole] = useState(null);
   const [initialized, setInitialized] = useState(false);
 
-  useInitializeSSE(initialized);
+  if (initialized === true) {
+    useInitializeSSE(initialized);
+  }
 
   useEffect(() => {
     const query = new URLSearchParams(location.search);
@@ -80,6 +82,7 @@ const TokenManagement = () => {
     ) {
       setInitialized(true);
       console.log('회원 정보가 존재합니다. 메인 페이지로 이동합니다.');
+      console.log(initialized);
       navigate('/');
     }
   }, [userRole, navigate, initialized]);
