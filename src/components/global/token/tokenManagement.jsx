@@ -78,11 +78,11 @@ const TokenManagement = () => {
       ['MEMBER', 'PREMIUM', 'ADMIN'].includes(userRole) &&
       !initialized
     ) {
+      setInitialized(true);
       console.log('회원 정보가 존재합니다. 메인 페이지로 이동합니다.');
       navigate('/');
-      setInitialized(true);
     }
-  }, [userRole, navigate]);
+  }, [userRole, navigate, initialized]);
 
   return null;
 };
