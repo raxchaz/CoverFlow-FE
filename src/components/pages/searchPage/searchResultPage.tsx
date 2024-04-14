@@ -12,11 +12,12 @@ import Warning from '../../../asset/image/warning-triangle.svg';
 import '../../../asset/sass/pages/notificationPage/notificationPage.scss';
 import SearchInput from '../../ui/searchInput/searchInput.tsx';
 import { showErrorToast } from '../../ui/toast/toast.tsx';
-import Pagination from '../../ui/Pagination.tsx';
+import AdminPagination from '../../ui/adminSelection/adminPagination.tsx';
 
 const ResultsContainer = styled.div`
   position: relative;
   background-color: #ffffff;
+  margin-bottom: 10rem;
 `;
 
 const ResultItem = styled.li`
@@ -78,7 +79,7 @@ const ResultCount = styled.div`
   letter-spacing: -1px;
   margin: 9% 0% -3% 11%;
   color: #333;
-  font-size: 14px;
+  font-size: 1.8rem;
   font-weight: 600;
 `;
 
@@ -120,14 +121,16 @@ interface SearchResultProps {
       companyType: string;
       questionCount: number;
     }[];
+    totalCompany: number;
+    totalPages: number;
   };
 }
 
 interface SearchDataProps {
-  companyAddress: string;
+  companyAddress?: string;
   companyId: number;
   companyName: string;
-  companyStatus: 'EXAMINATION' | 'REGISTRATION' | 'DELETION';
+  companyStatus?: 'EXAMINATION' | 'REGISTRATION' | 'DELETION';
   companyType: string;
   questionCount: number;
 }
@@ -140,16 +143,17 @@ function SearchResultPage() {
   const keyword = searchParams.get('keyword');
 
   const {
-    state: { searchResults },
+    state: { searchResults, totalCompany, totalPages },
   } = useLocation() as SearchResultProps;
-  console.log('searchResults', searchResults);
-  const [searchData, setSearchData] = useState<SearchDataProps[]>([]);
-  const companyList = searchResults?.map((result) => result);
-  const companyName = companyList?.map((list) => list.companyName);
+  // console.log('searchResults', searchResults);
+  const [searchData, setSearchData] =
+    useState<SearchDataProps[]>(searchResults);
+  const [companyCnt, setCompanyCnt] = useState(totalCompany);
+  const [pageCnt, setPageCnt] = useState(totalPages);
+
   // const keyword = queryParams.get('keyword');
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
+  const [currentPage, setCurrentPage] = useState(0);
 
   // const indexOfLastItem = currentPage * itemsPerPage;
   // const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -157,8 +161,6 @@ function SearchResultPage() {
   //   indexOfFirstItem,
   //   indexOfLastItem,
   // );
-
-  const totalPages = Math.ceil(searchResults.length / itemsPerPage);
 
   const handleGoBack = () => {
     navigate('/search-company');
@@ -169,32 +171,36 @@ function SearchResultPage() {
       if (!keyword) return;
       try {
         const response = await fetch(
-          `${BASE_URL}/api/company?pageNo=0&name=${keyword}`,
+          `${BASE_URL}/api/company?pageNo=${currentPage}&name=${keyword}`,
           {
             method: 'GET',
           },
         );
         const data = await response.json();
         setSearchData(data.data.companyList);
-        console.log('페이지 내 결과', data.data.companyList);
+        setCompanyCnt(data.data.totalElements);
+        setPageCnt(data.data.totalPages);
+        // console.log('페이지 내 결과', data.data.companyList);
       } catch (error) {
-        showErrorToast(`오류가 여기서발생: ${error}`);
+        showErrorToast(`오류 발생: ${error}`);
         setSearchData([]);
       }
     };
 
     fetchData();
-  }, [keyword]);
+  }, [keyword, currentPage]);
 
   const goToResultDetailPage = (companyId: number) => {
     navigate(`/company-info/${companyId}`);
   };
 
-  const handlePagination = (type) => {
-    if (type === 'prev' && currentPage > 0) {
+  const handlePagination = (direction) => {
+    if (direction === 'prev' && currentPage > 0) {
       setCurrentPage(currentPage - 1);
-    } else if (type === 'next' && currentPage < totalPages - 1) {
+    } else if (direction === 'next' && currentPage < totalPages - 1) {
       setCurrentPage(currentPage + 1);
+    } else if (typeof direction === 'number') {
+      setCurrentPage(direction);
     }
   };
 
@@ -206,10 +212,10 @@ function SearchResultPage() {
           <SearchInput />
           <ResultCount>
             기업 검색 결과
-            <span className="result-count">{companyName.length}</span>
+            <span className="result-count">{companyCnt}</span>
           </ResultCount>
           <ResultsList>
-            {searchData ? (
+            {searchData.length > 0 ? (
               searchData.map((item) => (
                 <ResultItem
                   key={item.companyId}
@@ -244,9 +250,9 @@ function SearchResultPage() {
             )}
           </ResultsList>
 
-          {totalPages > 1 && (
-            <Pagination
-              totalPages={totalPages}
+          {companyCnt > 0 && (
+            <AdminPagination
+              totalPages={pageCnt}
               currentPage={currentPage}
               handlePagination={handlePagination}
             />

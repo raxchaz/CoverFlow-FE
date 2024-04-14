@@ -24,7 +24,7 @@ function NotificationPage() {
   useEffect(() => {
     if (data && data.data) {
       dispatch(alertCount(data.data.noReadElements));
-      console.log(data.data);
+      // console.log(data.data);
     }
   }, [data, dispatch]);
 
