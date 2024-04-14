@@ -38,20 +38,28 @@ const TabBar = () => {
     }
   }, [location]);
 
-  if (!isLoggedIn) {
-    return null;
-  }
+  // if (!isLoggedIn) {
+  //   return null;
+  // }
 
   return (
     <nav className="wrapper" style={{ width: '700px', margin: '0 auto' }}>
-      <div style={{ width: '33.33%' }}>
-        <Link to="/mypage" className="nav-link" onClick={() => setActiveNav(2)}>
-          <div className={activeNav === 2 ? 'nav-item tab-active' : 'nav-item'}>
-            <img src={user} alt="user" className="icon" />
-            <div className="text">마이페이지</div>
-          </div>
-        </Link>
-      </div>
+      {isLoggedIn && (
+        <div style={{ width: '33.33%' }}>
+          <Link
+            to="/mypage"
+            className="nav-link"
+            onClick={() => setActiveNav(2)}
+          >
+            <div
+              className={activeNav === 2 ? 'nav-item tab-active' : 'nav-item'}
+            >
+              <img src={user} alt="user" className="icon" />
+              <div className="text">마이페이지</div>
+            </div>
+          </Link>
+        </div>
+      )}
 
       <div style={{ width: '33.33%' }}>
         <Link to="/" className="nav-link" onClick={() => setActiveNav(1)}>
@@ -62,21 +70,25 @@ const TabBar = () => {
         </Link>
       </div>
 
-      <div style={{ width: '33.33%' }}>
-        <Link
-          to="/notification"
-          className="nav-link"
-          onClick={() => setActiveNav(3)}
-        >
-          <div className={activeNav === 3 ? 'nav-item tab-active' : 'nav-item'}>
-            {isNewAlert > 0 && (
-              <img src={newAlert} alt="new alert" className="icon-overlay" />
-            )}
-            <img src={alert} alt="user" className="icon" />
-            <div className="text">알림</div>
-          </div>
-        </Link>
-      </div>
+      {isLoggedIn && (
+        <div style={{ width: '33.33%' }}>
+          <Link
+            to="/notification"
+            className="nav-link"
+            onClick={() => setActiveNav(3)}
+          >
+            <div
+              className={activeNav === 3 ? 'nav-item tab-active' : 'nav-item'}
+            >
+              {isNewAlert > 0 && (
+                <img src={newAlert} alt="new alert" className="icon-overlay" />
+              )}
+              <img src={alert} alt="user" className="icon" />
+              <div className="text">알림</div>
+            </div>
+          </Link>
+        </div>
+      )}
     </nav>
   );
 };
