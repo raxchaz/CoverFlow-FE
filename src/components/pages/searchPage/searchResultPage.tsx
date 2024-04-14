@@ -180,7 +180,7 @@ function SearchResultPage() {
         setSearchData(data.data.companyList);
         setCompanyCnt(data.data.totalElements);
         setPageCnt(data.data.totalPages);
-        console.log('페이지 내 결과', data.data.companyList);
+        // console.log('페이지 내 결과', data.data.companyList);
       } catch (error) {
         showErrorToast(`오류 발생: ${error}`);
         setSearchData([]);

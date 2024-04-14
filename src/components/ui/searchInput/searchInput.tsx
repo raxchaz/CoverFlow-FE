@@ -130,7 +130,7 @@ function SearchInput() {
       setAutoCompleteValue(res.data.data.companyList);
       setTotalCompany(res.data.data.totalElements);
       setTotalPages(res.data.data.totalPages);
-      console.log('인풋 내 결과', res.data);
+      // console.log('인풋 내 결과', res.data);
     } catch (error) {
       showErrorToast(`자동완성 데이터 요청 실패 ${error}`);
       setAutoCompleteValue([]);
