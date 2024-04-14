@@ -5,10 +5,11 @@ import INQUIRY from '../../../asset/image/notification-question.svg';
 import ANSWER from '../../../asset/image/notification-answer.svg';
 import SELECTION from '../../../asset/image/notification-adopt.svg';
 import DAILY from '../../../asset/image/notification-fishbun.svg';
-// import { fetchAPI } from '../../global/utils/apiUtil';
-import { showErrorToast } from '../../ui/toast/toast';
+import { fetchAPI } from '../../global/utils/apiUtil';
+import { useQueryClient } from '@tanstack/react-query';
 
 function NotificationList({ notifications, isLoading }) {
+  const queryClient = useQueryClient();
   const getNotificationDetails = (type) => {
     switch (type) {
       case 'DAILY':
@@ -24,17 +25,16 @@ function NotificationList({ notifications, isLoading }) {
     }
   };
 
-  const checktNotification = () => {
-    // console.log('Notification index:', index);
-    // fetchAPI('/api/notification', 'PATCH', [{ notificationId: index }])
-    //   .then((response) => {
-    //     console.log('Notification updated successfully:', response);
-    //     fetchAlert();
-    //   })
-    //   .catch((error) => {
-    //     console.error('Failed to update notification:', error);
-    //   });
-    showErrorToast('알림이에요!');
+  const checkNotification = (index) => {
+    console.log('Notification index:', index);
+    fetchAPI('/api/notification', 'PATCH', [{ notificationId: index }])
+      .then((response) => {
+        console.log('Notification updated successfully:', response);
+        queryClient.invalidateQueries(['notifications']);
+      })
+      .catch((error) => {
+        console.error('Failed to update notification:', error);
+      });
   };
 
   if (isLoading) {
@@ -51,7 +51,7 @@ function NotificationList({ notifications, isLoading }) {
         <div
           key={index}
           className={`notification-item ${notification.read ? 'checked' : 'unchecked'}`}
-          onClick={() => checktNotification(index)}
+          onClick={() => checkNotification(notification.id)}
         >
           <img
             src={getNotificationDetails(notification.type).icon}
