@@ -4,7 +4,6 @@ import { Base64 } from 'js-base64';
 import { BASE_URL, ACCESS_TOKEN, REFRESH_TOKEN } from '../constants/index.ts';
 import { useDispatch } from 'react-redux';
 import { setTokens } from '../../../store/actions/authActions';
-import { useInitializeSSE } from '../utils/eventApiUtils.js';
 
 const decodeToken = (token) => {
   const payload = token.split('.')[1];
@@ -30,11 +29,6 @@ const TokenManagement = () => {
   const location = useLocation();
   const dispatch = useDispatch();
   const [userRole, setUserRole] = useState(null);
-  const [initialized, setInitialized] = useState(false);
-
-  if (initialized === true) {
-    useInitializeSSE(initialized);
-  }
 
   useEffect(() => {
     const query = new URLSearchParams(location.search);
@@ -76,16 +70,11 @@ const TokenManagement = () => {
     if (userRole === 'GUEST') {
       console.log('약관 동의 페이지로 이동합니다.');
       navigate('/login/terms');
-    } else if (
-      ['MEMBER', 'PREMIUM', 'ADMIN'].includes(userRole) &&
-      !initialized
-    ) {
-      setInitialized(true);
+    } else if (['MEMBER', 'PREMIUM', 'ADMIN'].includes(userRole)) {
       console.log('회원 정보가 존재합니다. 메인 페이지로 이동합니다.');
-      console.log(initialized);
       navigate('/');
     }
-  }, [userRole, navigate, initialized]);
+  }, [userRole, navigate]);
 
   return null;
 };
