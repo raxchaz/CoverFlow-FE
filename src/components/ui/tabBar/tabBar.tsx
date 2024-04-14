@@ -43,7 +43,7 @@ const TabBar = () => {
   // }
 
   return (
-    <nav className="wrapper" style={{ width: '700px', margin: '0 auto' }}>
+    <nav className="wrapper">
       {isLoggedIn && (
         <div style={{ width: '33.33%' }}>
           <Link
@@ -61,7 +61,10 @@ const TabBar = () => {
         </div>
       )}
 
-      <div style={{ width: '33.33%' }}>
+      <div
+        style={{ width: '33.33%' }}
+        className={isLoggedIn ? '' : 'nav-center'}
+      >
         <Link to="/" className="nav-link" onClick={() => setActiveNav(1)}>
           <div className={activeNav === 1 ? 'nav-item tab-active' : 'nav-item'}>
             <img src={home} alt="user" className="icon" />{' '}

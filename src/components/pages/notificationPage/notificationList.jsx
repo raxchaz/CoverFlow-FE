@@ -28,8 +28,8 @@ function NotificationList({ notifications, isLoading }) {
   const checkNotification = (index) => {
     console.log('Notification index:', index);
     fetchAPI('/api/notification', 'PATCH', [{ notificationId: index }])
-      .then((response) => {
-        console.log('Notification updated successfully:', response);
+      .then(() => {
+        // console.log('Notification updated successfully:', response);
         queryClient.invalidateQueries(['notifications']);
       })
       .catch((error) => {

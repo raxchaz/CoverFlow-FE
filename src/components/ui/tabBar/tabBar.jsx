@@ -35,7 +35,7 @@ const TabBar = () => {
   // }
 
   return (
-    <nav className="wrapper" style={{ width: '700px', margin: '0 auto' }}>
+    <nav className="wrapper">
       {isLoggedIn && (
         <div style={{ width: '33.33%' }}>
           <Link

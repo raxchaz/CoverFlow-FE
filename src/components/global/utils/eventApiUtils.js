@@ -6,11 +6,11 @@ import { useQueryClient } from '@tanstack/react-query';
 
 export const useInitializeSSE = (active) => {
   const queryClient = useQueryClient();
-  console.log('연결 시작 전.', active);
+  // console.log('연결 시작 전.', active);
 
   useEffect(() => {
     if (!active) return;
-    console.log('연결을 시작합니다.', active);
+    // console.log('연결을 시작합니다.', active);
     let lastEventId = null;
     const accessToken = localStorage.getItem(ACCESS_TOKEN);
 
@@ -35,7 +35,7 @@ export const useInitializeSSE = (active) => {
 
     sse.addEventListener('message', (event) => {
       const data = event.data;
-      console.log('Received data:', data);
+      console.log('연결에 성공했습니다.', event);
       showSuccessToast(data);
       queryClient.invalidateQueries(['notifications']);
       lastEventId = event.lastEventId;
