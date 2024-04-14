@@ -5,6 +5,7 @@
 .no-read {
   letter-spacing: -1px;
   font-weight: 800;
+  font-size: 2rem;
   display: flex;
   gap: 5px;
   margin-top: 12%;
@@ -20,8 +21,13 @@
   margin-top: 11%;
   margin-right: 8%;
   border: 1px solid #000;
-  background-color: transparent !important;
-  color: black !important;
+  width: 7.5rem;
+  height: 2.5rem;
+  font-size: 1.2rem;
+  font-family: 'pretendard-extrabold';
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .notification-controls {
