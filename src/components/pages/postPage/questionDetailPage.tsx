@@ -13,6 +13,7 @@ import Dot from '../../../asset/image/dots-vertical.svg';
 
 import { showErrorToast, showSuccessToast } from '../../ui/toast/toast.tsx';
 import { fetchAPI } from '../../global/utils/apiUtil.js';
+import Pagination from '../../ui/Pagination.tsx';
 
 const Questioner = styled.div`
   letter-spacing: -1px;
@@ -76,11 +77,29 @@ interface QuestionDetailProps {
   content?: string;
 }
 
+export interface CommentProps {
+  data: {
+    answerCount: number;
+    answers: {
+      answerId: string;
+      answererTag: string;
+      createAt: string;
+      answerContent: string;
+      answererNickname: string;
+    }[];
+  };
+}
+
 function QuestionDetailPage() {
   const navigate = useNavigate();
   const { state } = useLocation();
+
+  const [currentPage, setCurrentPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+
   const answerRef = useRef<HTMLTextAreaElement>(null);
-  const [answer, setAnswer] = useState('');
+  const [postAnswer, setPostAnswer] = useState('');
+  const [loadAnswer, setLoadAnswer] = useState<CommentProps>();
   const [showReportPopup, setShowReportPopup] = useState(false);
   const [questionDetail, setQuestionDetail] = useState<QuestionDetailProps[]>([
     {
@@ -100,26 +119,67 @@ function QuestionDetailPage() {
 
   const { questionId } = useParams();
 
-  // function formatDate(fullDate: string) {
-  //   const date = new Date(fullDate);
-  //   const year = date.getFullYear();
-  //   const month = (date.getMonth() + 1).toString().padStart(2, '0');
-  //   const day = date.getDate().toString().padStart(2, '0');
-
-  //   return `${year}-${month}-${day}`;
-  // }
-
   useEffect(() => {
-    const fecthQuestionDetail = async () => {
-      const token = localStorage.getItem(ACCESS_TOKEN);
+    const loadAnswerList = async (pageNo: number) => {
+      try {
+        const token = localStorage.getItem(ACCESS_TOKEN);
 
-      if (!token) {
-        showErrorToast('로그인이 필요합니다.');
-        navigate(-1);
+        if (!token) {
+          showErrorToast('로그인이 필요합니다.');
+          navigate(-1);
+        }
+
+        const res = await fetchAPI(
+          `/api/question/${questionId}?pageNo=${pageNo}&criterion=createdAt`,
+          'GET',
+          null,
+        );
+        const {
+          data: {
+            answerCount,
+            answers,
+            companyName,
+            questionContent,
+            createAt,
+            questionTag,
+            questionTitle,
+            questionerNickname,
+            reward,
+            totalPages,
+            viewCount,
+          },
+        } = res;
+
+        setQuestionDetail([
+          {
+            title: questionTitle,
+            questionContent,
+            answerCount,
+            reward,
+            questionerNickname,
+            questionTag,
+            createAt,
+            answers: answers.map((answer: AnswerProps) => ({
+              answerId: answer.answerId,
+              answererNickname: answer.answererNickname,
+              answererTag: answer.answererTag,
+              createAt: answer.createAt,
+              answerContent: answer.answerContent,
+            })),
+            companyName,
+            totalPages,
+            viewCount,
+          },
+        ]);
+
+        setTotalPages(totalPages);
+      } catch (error) {
+        if (error instanceof Error) showErrorToast(error.message);
       }
     };
-    fecthQuestionDetail();
-  }, [answer]);
+
+    loadAnswerList(currentPage);
+  }, [currentPage, questionId, navigate, postAnswer]);
 
   const handleGoBack = () => {
     navigate(-1);
@@ -131,54 +191,35 @@ function QuestionDetailPage() {
       questionId: Number(questionId),
     };
 
-    const data = await fetchAPI('/api/answer', 'POST', requestData);
+    const answerer =
+      questionDetail &&
+      questionDetail.map((detail) => detail.questionerNickname);
 
-    if (data.statusCode === 'CREATED' && answerRef.current) {
-      setAnswer(answerRef.current?.value);
-      showSuccessToast('답변이 등록되었습니다.');
+    if (state.questioner === answerer[0]) {
+      showErrorToast('본인의 질문에 답변을 달 수 없습니다.');
+      return;
     }
 
-    const res = await fetchAPI(
-      `/api/question/${questionId}?pageNo=0`,
-      'GET',
-      null,
-    );
-    const {
-      answerCount,
-      answers,
-      companyName,
-      questionContent,
-      createAt,
-      questionTag,
-      questionTitle,
-      questionerNickname,
-      reward,
-      totalPages,
-      viewCount,
-    } = res.data;
+    const data = await fetchAPI('/api/answer', 'POST', requestData);
 
-    setQuestionDetail([
-      {
-        title: questionTitle,
-        questionContent,
-        answerCount,
-        reward,
-        questionerNickname,
-        questionTag,
-        createAt,
-        answers: answers.map((answer: AnswerProps) => ({
-          answerId: answer.answerId,
-          answererNickname: answer.answererNickname,
-          answererTag: answer.answererTag,
-          createAt: answer.createAt,
-          answerContent: answer.answerContent,
-        })),
-        companyName,
+    if (
+      state.questioner !== answerer[0] &&
+      data.statusCode === 'CREATED' &&
+      answerRef.current
+    ) {
+      setPostAnswer(answerRef.current?.value);
+      showSuccessToast('답변이 등록되었습니다.');
+    }
+  };
 
-        totalPages,
-        viewCount,
-      },
-    ]);
+  const handlePagination = async (direction: string | number) => {
+    if (direction === 'prev' && currentPage > 0) {
+      setCurrentPage(currentPage - 1);
+    } else if (direction === 'next' && currentPage < totalPages - 1) {
+      setCurrentPage(currentPage + 1);
+    } else if (typeof direction === 'number') {
+      setCurrentPage(currentPage);
+    }
   };
 
   const toggleReportPopup = () => {
@@ -193,6 +234,26 @@ function QuestionDetailPage() {
       id: state.questionId,
     });
   };
+
+  useEffect(() => {
+    const fetchComment = async () => {
+      const response = await fetchAPI(
+        `/api/question/${questionId}?pageNo=0&criterion=createdAt`,
+        'GET',
+        null,
+      );
+      setLoadAnswer(response);
+    };
+    fetchComment();
+  }, []);
+
+  const reportReasons = [
+    '욕설 혹은 비방표현이 있어요',
+    '개인정보 노출 게시물이에요',
+    '불법 정보를 포함하고 있어요',
+    '스팸 혹은 홍보성 도배글이에요',
+    '특정 이용자가 질문, 답변, 채택을 반복해요',
+  ];
 
   return (
     <StyledPage className="main-page-container">
@@ -234,26 +295,16 @@ function QuestionDetailPage() {
               <div className="report-title">사용자 신고</div>
               <div className="report-sub-title">사유 선택</div>
 
-              <label>
-                <input type="checkbox" name="reason" value="reason1" /> 욕설
-                혹은 비방표현이 있어요
-              </label>
-              <label>
-                <input type="checkbox" name="reason" value="reason2" /> 개인정보
-                노출 게시물이에요
-              </label>
-              <label>
-                <input type="checkbox" name="reason" value="reason3" /> 불법
-                정보를 포함하고 있어요
-              </label>
-              <label>
-                <input type="checkbox" name="reason" value="reason4" /> 스팸
-                혹은 홍보성 도배글이에요
-              </label>
-              <label>
-                <input type="checkbox" name="reason" value="reason5" /> 특정
-                이용자가 질문, 답변, 채택을 반복해요
-              </label>
+              {reportReasons.map((reason, index) => (
+                <label key={index}>
+                  <input
+                    type="checkbox"
+                    name="reason"
+                    value={`reason${index + 1}`}
+                  />
+                  {reason}
+                </label>
+              ))}
 
               <div className="reportBtn">
                 <button
@@ -285,27 +336,26 @@ function QuestionDetailPage() {
       {/* <LastLine /> */}
 
       <AnswerList>
-        {questionDetail.map((detail, index) => (
+        <div className="answer-title">답변 {loadAnswer?.data.answerCount}</div>
+        {loadAnswer?.data.answers.map((answer) => (
           <>
-            <div key={index} className="answer-title">
-              답변 {detail.answerCount}
-            </div>
             <Answer
-              answerCount={detail.answerCount}
-              answererTag={detail.questionTag}
-              createAt={detail.createAt}
-              answers={detail.answers.map((answer) => ({
-                answerId: answer.answerId,
-                answererTag: answer.answererTag,
-                createAt: answer.createAt,
-                answerContent: answer.answerContent,
-                answererNickname: answer.answererNickname,
-              }))}
+              createAt={answer.createAt}
+              answerContent={answer.answerContent}
+              answererNickname={answer.answererNickname}
+              answererTag={answer.answererTag}
+              answerId={answer.answerId}
             />
           </>
         ))}
       </AnswerList>
       <TabBar />
+      <Pagination
+        className="my-question-pagination"
+        currentPage={currentPage}
+        totalPages={totalPages}
+        handlePagination={handlePagination}
+      />
     </StyledPage>
   );
 }

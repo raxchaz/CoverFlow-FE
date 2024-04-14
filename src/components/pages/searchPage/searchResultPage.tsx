@@ -190,7 +190,7 @@ function SearchResultPage() {
     navigate(`/company-info/${companyId}`);
   };
 
-  const handlePagination = (type: PageProps) => {
+  const handlePagination = (type) => {
     if (type === 'prev' && currentPage > 0) {
       setCurrentPage(currentPage - 1);
     } else if (type === 'next' && currentPage < totalPages - 1) {
