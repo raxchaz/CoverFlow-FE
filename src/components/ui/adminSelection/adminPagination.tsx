@@ -39,7 +39,7 @@ const AdminPagination = ({
   return (
     <div className={`ad-button-container ${className}`}>
       <div
-        style={{ cursor: 'pointer' }}
+        style={{ cursor: 'pointer', padding: '1rem' }}
         onClick={() => currentPage > 0 && handlePagination('prev')}
       >
         <svg
@@ -60,7 +60,7 @@ const AdminPagination = ({
       </div>
       {pages}
       <div
-        style={{ cursor: 'pointer' }}
+        style={{ cursor: 'pointer', padding: '1rem' }}
         onClick={() => currentPage < totalPages - 1 && handlePagination('next')}
       >
         <svg
