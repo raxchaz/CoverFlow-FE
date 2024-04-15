@@ -3,6 +3,7 @@ import '../../../asset/sass/etc/question/answer.scss';
 import styled from 'styled-components';
 import Trophy from '../../../asset/image/trophy.svg';
 import { fetchAPI } from '../../global/utils/apiUtil';
+import { showSuccessToast } from '../toast/toast';
 
 const AdoptButton = styled.button`
   display: flex;
@@ -22,6 +23,10 @@ const AdoptButton = styled.button`
   }
   justify-content: space-around;
   align-items: center;
+
+  &:active {
+    transform: translateY(3px);
+  }
 `;
 
 interface AnswerDetailProps {
@@ -42,6 +47,8 @@ function AnswerModule({
     await fetchAPI(`/api/answer/selection/${answerId}`, 'PATCH', {
       selection: true,
     });
+    if (confirm('채택하시겠습니까?'))
+      showSuccessToast('답변이 채택되었습니다.');
   };
 
   return (
