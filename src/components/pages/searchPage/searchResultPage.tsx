@@ -255,6 +255,7 @@ function SearchResultPage() {
               totalPages={pageCnt}
               currentPage={currentPage}
               handlePagination={handlePagination}
+              className="rst-pagination"
             />
           )}
         </ResultsContainer>
