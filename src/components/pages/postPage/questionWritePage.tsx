@@ -89,7 +89,7 @@ function QuestionWritePage() {
         navigate(`/company-info/${companyId}`);
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       showErrorToast(`에러 발생 ${error}`);
     }
   };

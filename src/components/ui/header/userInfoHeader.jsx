@@ -5,7 +5,7 @@ import Reward from '../../../asset/image/reward.svg';
 import Loginuser from '../../../asset/image/loginuser.svg';
 import '../../../asset/sass/etc/header/userInfoHeader.scss';
 import { fetchAPI } from '../../global/utils/apiUtil.js';
-
+// import { useInitializeSSE } from '../../global/utils/eventApiUtils.js';
 import {
   setLoggedIn,
   setRewardCount,
@@ -25,6 +25,7 @@ function UserInfoHeader() {
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
 
+  // useInitializeSSE(isLoggedIn);
   /*
 사용자의 로그인 상태를 확인하고, 붕어빵 개수를 로드하는 로직입니다.
 01. 페이지 로드 시에 로컬 스토리지에서 토큰을 조회하여 로그인 상태를 확인합니다.

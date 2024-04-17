@@ -28,7 +28,7 @@ const StatusBar = styled.div`
   width: 520px;
 `;
 
-const StatusTab = styled.div<{ current: boolean }>`
+const StatusTab = styled.div<{ $current: boolean }>`
   width: 260px;
   letter-spacing: -1px;
   text-align: center;
@@ -42,9 +42,8 @@ const StatusTab = styled.div<{ current: boolean }>`
   transition:
     border-top 0.3s ease-in-out,
     color 0.3s ease-in-out;
-  ${(props) =>
-    props.current &&
-    'color: black; border-top: 8px solid rgba(255, 141, 29, 1);'}
+  ${($current) =>
+    $current && 'color: black; border-top: 8px solid rgba(255, 141, 29, 1);'}
 `;
 
 /* ========================================================= */
@@ -179,13 +178,13 @@ function Mypage() {
 
           <StatusBar>
             <StatusTab
-              current={currentCategory === 'comments'}
+              $current={currentCategory === 'comments'}
               onClick={() => setCurrentCategory('comments')}
             >
               내가 남긴 질문<span className="my-cnt">{questionCnt}</span>
             </StatusTab>
             <StatusTab
-              current={currentCategory === 'posts'}
+              $current={currentCategory === 'posts'}
               onClick={() => setCurrentCategory('posts')}
             >
               내가 남긴 답변<span className="my-cnt">{answerCnt}</span>

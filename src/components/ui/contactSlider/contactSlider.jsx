@@ -33,7 +33,7 @@ const StatusTab = styled.div`
   transition:
     border-bottom 0.3s ease-in-out,
     color 0.3s ease-in-out;
-  ${(props) => props.current && 'color: black; border-bottom: 8px solid black;'}
+  ${($current) => $current && 'color: black; border-bottom: 8px solid black;'}
 `;
 // ======================= 스타일드 컴포넌트
 

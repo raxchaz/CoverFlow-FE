@@ -11,17 +11,19 @@ import { conditionalExecution } from '../../../utils/utils';
 import { showErrorToast } from '../toast/toast';
 
 const StyledSearchInput = styled.input`
-  width: 32rem;
-  height: 3.4rem;
-  padding: 8px;
-  border: 2px solid #ff8d1d;
+  width: 51.5rem;
+  height: 5.5rem;
+  padding: 0.8rem 0.8rem 0.8rem 2rem;
+  border: 2px solid #ffbd7c;
   background-color: #fff;
-  border-radius: 1.8rem;
-  margin: 9% 0% 0% 27%;
+  border-radius: 3rem;
+  margin: 9% 0% 0% 14%;
   outline: none;
 
   &:focus {
     box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+    border-color: #ff8d1d;
+    box-shadow: 0 0 2px rgba(106, 57, 9, 0.5);
   }
 
   &::placeholder {
@@ -51,6 +53,9 @@ const AutoCompleteItem = styled.div`
   &:hover {
     background-color: #f2f2f2;
   }
+  &.active {
+    background-color: #f2f2f2;
+  }
 `;
 
 interface CompanyProps {
@@ -68,6 +73,8 @@ function SearchInput() {
   const [activeIndex, setActiveIndex] = useState(-1);
   const [showAutoComplete, setShowAutoComplete] = useState(false);
   const autoCompleteContainerRef = useRef<HTMLDivElement | null>(null);
+  const [totalCompany, setTotalCompany] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
 
   const debouncedKeyword = useDebounce(keyword, 300);
 
@@ -83,6 +90,16 @@ function SearchInput() {
   }, []);
 
   useEffect(() => {
+    if (activeIndex >= 0 && autoCompleteValue[activeIndex]) {
+      const selectedItem = autoCompleteContainerRef.current?.children[
+        activeIndex
+      ] as HTMLElement;
+
+      selectedItem?.focus();
+    }
+  }, [activeIndex, autoCompleteValue]);
+
+  useEffect(() => {
     if (debouncedKeyword !== '') {
       fetchAutoCompleteData(debouncedKeyword);
     } else {
@@ -90,23 +107,18 @@ function SearchInput() {
     }
   }, [debouncedKeyword]);
 
+  useEffect(() => {
+    if (!showAutoComplete && keyword) {
+      handleCompanySearch();
+    }
+  }, [showAutoComplete, keyword]);
+
   // 입력값 변경 핸들러
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newInputValue = event.target.value.trim();
     setShowAutoComplete(true);
     setKeyword(newInputValue);
     setActiveIndex(-1);
-
-    // if (newInputValue.length > 0) {
-    //   const lastCharacter = newInputValue.slice(-1);
-    //   if (isSyllable(lastCharacter)) {
-    //     fetchAutoCompleteData(newInputValue);
-    //   } else {
-    //     setAutoCompleteValue([]);
-    //   }
-    // } else {
-    //   setAutoCompleteValue([]);
-    // }
   };
 
   // 자동완성 데이터 요청
@@ -116,45 +128,25 @@ function SearchInput() {
         `${BASE_URL}/api/company?pageNo=0&name=${name}`,
       );
       setAutoCompleteValue(res.data.data.companyList);
+      setTotalCompany(res.data.data.totalElements);
+      setTotalPages(res.data.data.totalPages);
+      // console.log('인풋 내 결과', res.data);
     } catch (error) {
       showErrorToast(`자동완성 데이터 요청 실패 ${error}`);
       setAutoCompleteValue([]);
     }
   };
 
-  const fullDataSearch = (keyword: string) => {
-    const params = new URLSearchParams();
-    params.append('keyword', keyword);
-    navigate(`/search-result?${params.toString()}`, {
-      state: { searchResults: autoCompleteValue },
-    });
-  };
-
-  const specificItemSeach = (item: string) => {
-    const selectedItem = autoCompleteValue[activeIndex];
-    if (selectedItem) {
-      const params = new URLSearchParams();
-      params.append('keyword', item);
-
-      navigate(`/search-result?${params.toString()}`, {
-        state: { searchResults: [selectedItem] },
-      });
-    }
-  };
-
   // 검색 함수
   const handleCompanySearch = () => {
-    try {
-      if (activeIndex === -1 && autoCompleteValue.length > 0) {
-        fullDataSearch(keyword);
-      } else if (activeIndex >= 0 && autoCompleteValue[activeIndex]) {
-        specificItemSeach(
-          autoCompleteValue.map((value) => value.companyName)[activeIndex],
-        );
-      }
-    } catch (error) {
-      showErrorToast(`검색 중 오류 발생 ${error}`);
-    }
+    if (!keyword) return;
+
+    const params = new URLSearchParams();
+    params.append('keyword', keyword);
+
+    navigate(`/search-result?${params.toString()}`, {
+      state: { searchResults: autoCompleteValue, totalCompany, totalPages },
+    });
   };
 
   useEffect(() => {
@@ -175,10 +167,26 @@ function SearchInput() {
   }, []);
 
   // 자동완성 선택 함수
-  const selectAutoCompleteValue = (value: string) => {
-    setKeyword(value);
-    setAutoCompleteValue([]);
-    handleCompanySearch();
+  const selectAutoCompleteValue = (companyName: string) => {
+    const selectedItem = autoCompleteValue.find(
+      (item) => item.companyName === companyName,
+    );
+
+    if (selectedItem) {
+      // console.log('선택된 회사:', selectedItem.companyName);
+      setKeyword(selectedItem.companyName);
+      setShowAutoComplete(false);
+
+      setTimeout(() => {
+        const params = new URLSearchParams();
+        params.append('keyword', selectedItem.companyName);
+        navigate(`/search-result?${params.toString()}`, {
+          state: { searchResults: [selectedItem], totalCompany, totalPages },
+        });
+      }, 0);
+    } else {
+      showErrorToast('선택한 회사를 찾을 수 없습니다.');
+    }
   };
 
   const enteredKey = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -201,7 +209,7 @@ function SearchInput() {
         test: () => event.key === 'Enter',
         execute: () => {
           activeIndex >= 0 && autoCompleteValue[activeIndex]
-            ? specificItemSeach(
+            ? selectAutoCompleteValue(
                 autoCompleteValue.map((value) => value.companyName)[
                   activeIndex
                 ],
@@ -237,10 +245,11 @@ function SearchInput() {
           {autoCompleteValue.map((value, index) => (
             <AutoCompleteItem
               key={index}
-              onClick={() => selectAutoCompleteValue(value.name)}
+              onClick={() => selectAutoCompleteValue(value.companyName)}
               style={
                 index === activeIndex ? { backgroundColor: '#f2f2f2' } : {}
               }
+              className={index === activeIndex ? 'active' : ''}
             >
               {value.companyName}
             </AutoCompleteItem>

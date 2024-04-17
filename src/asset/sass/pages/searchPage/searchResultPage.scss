@@ -20,44 +20,48 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 55px;
-  width: 55px;
+  height: 8rem;
+  width: 8.6rem;
   margin-top: 20%;
   margin-bottom: 3%;
 }
 
 .failed-text {
   font-family: pretendard-bold;
-  color: #474646;
-  font-size: 25px;
+  color: #000000;
+  font-size: 4rem;
   margin-bottom: 1%;
+  letter-spacing: -1px;
 }
 
 .failed-text2 {
   font-family: pretendard-light;
-  color: darkgray;
+  color: #808080;
+  font-size: 2rem;
   margin-bottom: 5%;
+  letter-spacing: -1px;
 }
 
 .registContainer {
   display: flex;
   justify-content: center;
   border: 1px solid #ff8d1d;
-  width: 12.5rem;
-  border-radius: 1.8rem;
-  height: 2.8rem;
+  width: 20rem;
+  border-radius: 3rem;
+  height: 4.5rem;
   align-items: center;
 }
 
 .plus-icon {
-  width: 13px;
-  height: 13px;
+  width: 3rem;
+  height: 3rem;
+  margin-right: 0.5rem;
 }
 
 .company-registration {
   display: flex;
   color: #ff8d1d;
-  font-size: 1rem;
+  font-size: 2rem;
   letter-spacing: -1px;
   font-family: pretendard-medium;
 }
@@ -66,4 +70,8 @@
   display: flex;
   justify-content: space-evenly;
   margin-top: 1rem;
+}
+
+.rst-pagination {
+  width: 40rem !important;
 }

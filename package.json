@@ -10,6 +10,7 @@
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@react-navigation/bottom-tabs": "^6.5.11",
     "@svgr/cli": "^8.1.0",
+    "@tanstack/react-query": "^5.29.2",
     "@testing-library/jest-dom": "^6.3.0",
     "@testing-library/react": "^14.1.2",
     "@testing-library/user-event": "^14.5.2",
@@ -40,6 +41,7 @@
   },
   "scripts": {
     "start": "export PORT=3001 && react-scripts start",
+    "devs": "set PORT=3001 && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

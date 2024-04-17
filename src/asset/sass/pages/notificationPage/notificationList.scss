@@ -1,22 +1,24 @@
 .notification-list {
   margin-bottom: 10%;
-  width: 105%;
+  width: 71rem;
   margin-left: -2%;
 
   .notification-item {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 15px;
+    padding: 3rem 3rem 3rem 5rem;
+
     background-color: #ffffff;
-    border-top: 0.5px solid #ccc;
+    border-top: 0.5px solid #d9d9d9;
+    height: 14rem;
 
     &.checked {
       background-color: white;
     }
 
     &.unchecked {
-      background-color: #ebf2f2;
+      background-color: #fff9f4;
     }
 
     .notification-icon {
@@ -28,13 +30,14 @@
       flex-grow: 1;
       margin-bottom: 10px;
       font-weight: bold;
+      font-size: 2rem;
     }
 
     .notification-time {
       letter-spacing: -1px;
       margin-right: 10px;
-      color: #888888;
-      font-size: 15px;
+      color: #474646;
+      font-size: 1.5rem;
     }
 
     .title-time {
@@ -48,6 +51,7 @@
       letter-spacing: -1px;
       font-family: pretendard-black;
       color: #333333;
+      font-size: 1.8rem;
       margin-right: 5%;
     }
   }
