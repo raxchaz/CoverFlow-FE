@@ -5,6 +5,9 @@
   right: 0;
   z-index: 99;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  width: 70rem;
+  margin: 0 auto;
 }
 
 nav {
@@ -47,4 +50,8 @@ nav > div {
   position: absolute;
   top: 1.9rem;
   right: 10.2rem;
+}
+
+.nav-center {
+  margin-left: 33.3%;
 }

@@ -30,14 +30,18 @@ const TabBar = () => {
     }
   }, [location]);
 
-  if (!isLoggedIn) {
-    return null;
-  }
+  // if (!isLoggedIn) {
+  //   return null;
+  // }
 
   return (
-    <nav className="wrapper" style={{ width: '700px', margin: '0 auto' }}>
+    <nav className="wrapper">
       <div style={{ width: '33.33%' }}>
-        <Link to="/mypage" className="nav-link" onClick={() => setActiveNav(2)}>
+        <Link
+          to={isLoggedIn ? '/mypage' : '/login'}
+          className="nav-link"
+          onClick={() => setActiveNav(2)}
+        >
           <div className={activeNav === 2 ? 'nav-item tab-active' : 'nav-item'}>
             <img src={user} alt="user" className="icon" />
             <div className="text">마이페이지</div>
@@ -56,7 +60,7 @@ const TabBar = () => {
 
       <div style={{ width: '33.33%' }}>
         <Link
-          to="/notification"
+          to={isLoggedIn ? '/notification' : '/login'}
           className="nav-link"
           onClick={() => setActiveNav(3)}
         >

@@ -34,18 +34,18 @@ interface ApiResponse {
 
 export default function CompanySelection() {
   const [companies, setCompanies] = useState<Company[]>([]);
-  const [totalCompanyCount, seTtotalCompanyCount] = useState<number>(0);
+  const [totalCompanyCount, seTtotalCompanyCount] = useState(0);
   const [selectedCompany, setSelectedCompany] = useState(null);
-  const [currentPage, setCurrentPage] = useState<number>(0);
-  const [totalPages, setTotalPages] = useState<number>(0);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
   const [companyStatus, setCompanyStatus] = useState('');
-  const [selectedCity, setSelectedCity] = useState<string>('');
+  const [selectedCity, setSelectedCity] = useState('');
   const [selectedDistrictOptions, setSelectedDistrictOptions] = useState<
     string[]
   >([]);
-  const [selectedDistrict, setSelectedDistrict] = useState<string>('');
+  const [selectedDistrict, setSelectedDistrict] = useState('');
   const itemsPerPage = 10;
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     fetchCompanies(currentPage);

@@ -25,7 +25,7 @@ const StatusTab = styled.div`
   transition:
     border-bottom 0.3s ease-in-out,
     color 0.3s ease-in-out;
-  ${(props) => props.current && 'color: black; border-bottom: 3px solid black;'}
+  ${($current) => $current && 'color: black; border-bottom: 3px solid black;'}
 `;
 
 const NotFound = () => {
