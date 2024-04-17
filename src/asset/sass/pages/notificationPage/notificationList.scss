@@ -1,16 +1,14 @@
 .notification-list {
   margin-bottom: 10%;
-  width: 71rem;
-  margin-left: -2%;
-
   .notification-item {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 3rem 3rem 3rem 5rem;
-
+    margin-left: -0.5rem;
     background-color: #ffffff;
     border-top: 0.5px solid #d9d9d9;
+    width: 70rem;
     height: 14rem;
 
     &.checked {
@@ -52,7 +50,16 @@
       font-family: pretendard-black;
       color: #333333;
       font-size: 1.8rem;
-      margin-right: 5%;
+      // margin-right: 5%;
     }
   }
+}
+
+.main-page-container {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.main-page-container::-webkit-scrollbar {
+  display: none;
 }
