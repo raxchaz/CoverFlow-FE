@@ -5,7 +5,6 @@ import Plus from '../../../asset/image/plus.svg';
 import Warning from '../../../asset/image/warning.svg';
 import { ReactComponent as LeftArrow } from '../../../asset/image/left_arrow.svg';
 import { ReactComponent as RightArrow } from '../../../asset/image/right_arrow.svg';
-import { store } from '../../../store';
 
 export default function ContactList({
   contactList,
@@ -13,15 +12,11 @@ export default function ContactList({
   setCurrentPageAPI,
   totalPages,
 }) {
-  const reduxData = store.getState().auth;
   const [activeToggleIndex, setActiveToggleIndex] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const groupSize = 5; // 한 그룹당 최대 페이지 수
-  const [currentGroup, setCurrentGroup] = useState(0); // 현재 페이지 그룹 인덱스
-
-  // 페이지 그룹별 시작 및 끝 페이지 계산
+  const groupSize = 5;
+  const [currentGroup, setCurrentGroup] = useState(0);
   const totalGroups = Math.ceil(totalPages / groupSize);
-  console.log('리덕스 확인', reduxData);
   const startPage = currentGroup * groupSize + 1;
   const endPage = Math.min(startPage + groupSize - 1, totalPages);
 
@@ -46,7 +41,6 @@ export default function ContactList({
     }
   };
 
-  // 현재 페이지 그룹에 따라 페이지네이션 렌더링
   const renderPageNumbers = () => {
     const pages = [];
     for (let i = startPage; i <= endPage; i++) {
@@ -60,7 +54,6 @@ export default function ContactList({
         </div>,
       );
     }
-    // 페이지 번호가 없는 경우 (totalPages가 1인 경우 포함) 여기서 처리할 수 있습니다.
     if (pages.length === 0) {
       pages.push(
         <div
