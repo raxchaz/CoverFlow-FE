@@ -28,13 +28,14 @@ const StatusTab = styled.div`
   padding: 10px 0;
   margin-bottom: -8px;
   cursor: pointer;
-  color: gray;
-  border-bottom: 8px solid transparent;
+  color: ${({ $current }) => ($current ? 'black' : 'gray')};
+  border-bottom: ${({ $current }) =>
+    $current ? '8px solid black' : '8px solid transparent'};
   transition:
     border-bottom 0.3s ease-in-out,
     color 0.3s ease-in-out;
-  ${($current) => $current && 'color: black; border-bottom: 8px solid black;'}
 `;
+
 // ======================= 스타일드 컴포넌트
 
 export default function ContactSlider() {
@@ -94,17 +95,16 @@ export default function ContactSlider() {
 
   return (
     <div>
-      {currentSection === 'contact' && <div className="contact-border"></div>}
       <div className="slider-container">
         <StatusBar>
           <StatusTab
-            current={currentSection === 'contact'}
+            $current={currentSection === 'contact'}
             onClick={() => setCurrentSection('contact')}
           >
             문의 하기
           </StatusTab>
           <StatusTab
-            current={currentSection === 'contactList'}
+            $current={currentSection === 'contactList'}
             onClick={() => setCurrentSection('contactList')}
           >
             문의 내역 확인
