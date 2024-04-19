@@ -93,6 +93,7 @@ export interface CommentProps {
 function QuestionDetailPage() {
   const navigate = useNavigate();
   const { state } = useLocation();
+  console.log('state: ', state);
 
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
