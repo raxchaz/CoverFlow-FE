@@ -33,7 +33,6 @@ img.loginuser {
 }
 
 .reward-fish {
-  height: 0;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -51,6 +50,7 @@ img.loginuser {
 
 .dropdown-menu {
   position: relative;
+  z-index: 500;
 
   ul {
     position: absolute;
