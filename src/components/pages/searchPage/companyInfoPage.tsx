@@ -111,12 +111,12 @@ function CompanyInfoPage() {
   useEffect(() => {
     async function fetchCompanyData() {
       try {
-        const data = await axios.get(
+        const { data } = await axios.get(
           `${BASE_URL}/api/company/${companyId}?pageNo=0&criterion=createdAt`,
         );
 
         if (data) {
-          setCompanyData(data.data.data);
+          setCompanyData(data.data);
         } else {
           throw new Error('데이터가 존재하지 않습니다.');
         }
