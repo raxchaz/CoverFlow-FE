@@ -6,11 +6,11 @@ import UserInfoHeader from '../../ui/header/userInfoHeader.jsx';
 import TabBar from '../../ui/tabBar/tabBar.tsx';
 import '../../../asset/sass/pages/searchPage/companyInfoPage.scss';
 import Question from '../../ui/question/question.tsx';
-import { ACCESS_TOKEN } from '../../global/constants/index.ts';
+import { ACCESS_TOKEN, BASE_URL } from '../../global/constants/index.ts';
 import { StyledHeader, StyledPage } from '../../../styledComponent.ts';
 import SearchInput from '../../ui/searchInput/searchInput.tsx';
 import { showErrorToast } from '../../ui/toast/toast.tsx';
-import { fetchAPI } from '../../global/utils/apiUtil.js';
+import axios from 'axios';
 const CompanyContainer = styled.div`
   background-color: #ffffff;
   margin: 5% 0% 5% 15%;
@@ -111,10 +111,8 @@ function CompanyInfoPage() {
   useEffect(() => {
     async function fetchCompanyData() {
       try {
-        const data = await fetchAPI(
-          `/api/company/${companyId}?pageNo=0&criterion=createdAt`,
-          'GET',
-          null,
+        const { data } = await axios.get(
+          `${BASE_URL}/api/company/${companyId}?pageNo=0&criterion=createdAt`,
         );
 
         if (data) {

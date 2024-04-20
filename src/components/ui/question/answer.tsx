@@ -23,10 +23,6 @@ const AdoptButton = styled.button`
   }
   justify-content: space-around;
   align-items: center;
-
-  &:active {
-    transform: translateY(3px);
-  }
 `;
 
 interface AnswerDetailProps {

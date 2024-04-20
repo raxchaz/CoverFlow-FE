@@ -43,13 +43,6 @@ const FirstLine = styled.div`
   margin: 5% 0% 0% 0%;
 `;
 
-// const LastLine = styled.div`
-//   height: 0.5px;
-//   background-color: #cecece;
-//   width: 85%;
-//   margin: 10% 0% 0% 9%;
-// `;
-
 const AnswerList = styled.div``;
 
 export interface AnswerProps {
@@ -58,23 +51,6 @@ export interface AnswerProps {
   createAt: string;
   answerContent: string;
   answererNickname: string;
-}
-
-interface QuestionDetailProps {
-  title: string;
-  questionContent: string;
-  answerCount: number;
-  reward: number;
-  questionerNickname: string;
-  questionTag: string;
-  createAt: string;
-  answers: AnswerProps[];
-  answerer?: string;
-  companyName?: string;
-  totalPages?: number;
-  viewCount?: number;
-  onAdopt?: () => void;
-  content?: string;
 }
 
 export interface CommentProps {
@@ -93,92 +69,33 @@ export interface CommentProps {
 function QuestionDetailPage() {
   const navigate = useNavigate();
   const { state } = useLocation();
+  // console.log('state: ', state);
 
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
+  const [nickName, setNickName] = useState('');
 
   const answerRef = useRef<HTMLTextAreaElement>(null);
   const [postAnswer, setPostAnswer] = useState('');
   const [loadAnswer, setLoadAnswer] = useState<CommentProps>();
   const [showReportPopup, setShowReportPopup] = useState(false);
-  const [questionDetail, setQuestionDetail] = useState<QuestionDetailProps[]>([
-    {
-      title: '',
-      questionContent: '',
-      answerCount: 0,
-      reward: 0,
-      questionerNickname: '',
-      questionTag: '',
-      createAt: '',
-      answers: [],
-      companyName: '',
-      totalPages: 0,
-      viewCount: 0,
-    },
-  ]);
 
   const { questionId } = useParams();
 
   useEffect(() => {
-    const loadAnswerList = async (pageNo: number) => {
+    const loadAnswerList = async () => {
       try {
         const token = localStorage.getItem(ACCESS_TOKEN);
-
         if (!token) {
           showErrorToast('로그인이 필요합니다.');
           navigate(-1);
         }
-
-        const res = await fetchAPI(
-          `/api/question/${questionId}?pageNo=${pageNo}&criterion=createdAt`,
-          'GET',
-          null,
-        );
-        const {
-          data: {
-            answerCount,
-            answers,
-            companyName,
-            questionContent,
-            createAt,
-            questionTag,
-            questionTitle,
-            questionerNickname,
-            reward,
-            totalPages,
-            viewCount,
-          },
-        } = res;
-
-        setQuestionDetail([
-          {
-            title: questionTitle,
-            questionContent,
-            answerCount,
-            reward,
-            questionerNickname,
-            questionTag,
-            createAt,
-            answers: answers.map((answer: AnswerProps) => ({
-              answerId: answer.answerId,
-              answererNickname: answer.answererNickname,
-              answererTag: answer.answererTag,
-              createAt: answer.createAt,
-              answerContent: answer.answerContent,
-            })),
-            companyName,
-            totalPages,
-            viewCount,
-          },
-        ]);
-
-        setTotalPages(totalPages);
       } catch (error) {
         if (error instanceof Error) showErrorToast(error.message);
       }
     };
 
-    loadAnswerList(currentPage);
+    loadAnswerList();
   }, [currentPage, questionId, navigate, postAnswer]);
 
   const handleGoBack = () => {
@@ -186,24 +103,21 @@ function QuestionDetailPage() {
   };
 
   const handleAnswerSubmit = async () => {
+    // const answerer = questionDetail.map((detail) => detail.questionerNickname);
+
     const requestData = {
       content: answerRef.current ? answerRef.current.value : '',
       questionId: Number(questionId),
     };
 
-    const answerer =
-      questionDetail &&
-      questionDetail.map((detail) => detail.questionerNickname);
-
-    if (state.questioner === answerer[0]) {
-      showErrorToast('본인의 질문에 답변을 달 수 없습니다.');
-      return;
+    if (state.questioner === nickName) {
+      showErrorToast('본인의 문의는 답변할 수 없습니다.');
     }
 
     const data = await fetchAPI('/api/answer', 'POST', requestData);
 
     if (
-      state.questioner !== answerer[0] &&
+      state.questioner !== nickName &&
       data.statusCode === 'CREATED' &&
       answerRef.current
     ) {
@@ -236,16 +150,23 @@ function QuestionDetailPage() {
   };
 
   useEffect(() => {
-    const fetchComment = async () => {
+    const fetchData = async (pageNo: number) => {
       const response = await fetchAPI(
-        `/api/question/${questionId}?pageNo=0&criterion=createdAt`,
+        `/api/question/${questionId}?pageNo=${pageNo}&criterion=createdAt`,
         'GET',
         null,
       );
       setLoadAnswer(response);
+      setTotalPages(totalPages);
+
+      const {
+        data: { nickname },
+      } = await fetchAPI('/api/member/me', 'GET');
+      setNickName(nickname);
     };
-    fetchComment();
-  }, []);
+
+    fetchData(currentPage);
+  }, [questionId, postAnswer]);
 
   const reportReasons = [
     '욕설 혹은 비방표현이 있어요',
@@ -333,7 +254,6 @@ function QuestionDetailPage() {
           등록
         </button>
       </div>
-      {/* <LastLine /> */}
 
       <AnswerList>
         <div className="answer-title">답변 {loadAnswer?.data.answerCount}</div>
