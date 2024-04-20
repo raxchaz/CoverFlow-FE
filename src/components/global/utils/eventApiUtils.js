@@ -1,5 +1,5 @@
 import { EventSourcePolyfill } from 'event-source-polyfill';
-import { BASE_URL, ACCESS_TOKEN } from '../constants/index.ts';
+import { BASE_URL, ACCESS_TOKEN, REFRESH_TOKEN } from '../constants/index.ts';
 import { showSuccessToast } from '../../ui/toast/toast.tsx';
 
 export const initializeSSE = () => {
@@ -17,7 +17,12 @@ export const initializeSSE = () => {
       'Content-Type': 'text/event-stream; charset=utf-8',
       Authorization: `Bearer ${accessToken}`,
       Connection: 'keep-alive',
-      ...(lastEventId ? { 'Last-Event-ID': lastEventId } : {}),
+      ...(lastEventId
+        ? {
+            'Last-Event-ID': lastEventId,
+            'Authorization-refresh': `Bearer ${localStorage.getItem(REFRESH_TOKEN)}`,
+          }
+        : {}),
     },
     heartbeatTimeout: 3600000,
   });
