@@ -192,13 +192,9 @@ function QuestionDetailPage() {
       questionId: Number(questionId),
     };
 
-    const answerer =
-      questionDetail &&
-      questionDetail.map((detail) => detail.questionerNickname);
-
+    const answerer = questionDetail.map((detail) => detail.questionerNickname);
     if (state.questioner === answerer[0]) {
-      showErrorToast('본인의 질문에 답변을 달 수 없습니다.');
-      return;
+      showErrorToast('본인의 문의는 답변할 수 없습니다.');
     }
 
     const data = await fetchAPI('/api/answer', 'POST', requestData);
@@ -334,7 +330,6 @@ function QuestionDetailPage() {
           등록
         </button>
       </div>
-      {/* <LastLine /> */}
 
       <AnswerList>
         <div className="answer-title">답변 {loadAnswer?.data.answerCount}</div>
