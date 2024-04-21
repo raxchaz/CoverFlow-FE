@@ -48,8 +48,8 @@ const AnswerList = styled.div`
   flex-direction: column;
   align-items: center;
   width: 80%;
+
   margin: 0px auto;
-  padding: 0;
 `;
 
 export interface AnswerProps {
@@ -282,7 +282,6 @@ function QuestionDetailPage() {
       </AnswerList>
       <TabBar />
       <Pagination
-        className="my-question-pagination"
         currentPage={currentPage}
         totalPages={totalPages}
         handlePagination={handlePagination}

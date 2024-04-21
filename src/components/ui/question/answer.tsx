@@ -7,7 +7,7 @@ import { showSuccessToast } from '../toast/toast';
 
 const AdoptButton = styled.button`
   display: flex;
-  margin: -12% 0% 0% 82%;
+  margin: -12% 6% 0% 82%;
   padding: 5px 5px;
   position: relative;
   font-size: 10px;
@@ -46,17 +46,17 @@ function AnswerModule({
   };
 
   return (
-    <>
-      <div className="answer-container">
+    <div className="answer-container">
+      <div>
         <div>{answererNickname}</div>
         <div>{answerContent}</div>
         <div className="user-container">{createAt}</div>
+        <AdoptButton onClick={handleAdoptAnswer}>
+          <img src={Trophy} alt="trophy" />
+          채택하기
+        </AdoptButton>
       </div>
-      <AdoptButton onClick={handleAdoptAnswer}>
-        <img src={Trophy} alt="trophy" />
-        채택하기
-      </AdoptButton>
-    </>
+    </div>
   );
 }
 

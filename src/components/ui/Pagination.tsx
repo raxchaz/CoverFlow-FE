@@ -37,7 +37,7 @@ const Pagination = ({
     );
   }
   return (
-    <div className={`ad-button-container ${className}`}>
+    <div className={`answer-button-container ${className}`}>
       <div
         style={{ cursor: 'pointer' }}
         onClick={() => currentPage > 0 && handlePagination('prev')}
