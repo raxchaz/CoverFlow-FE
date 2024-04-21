@@ -10,8 +10,6 @@ const AdoptButton = styled.button`
   margin: -12% 0% 0% 82%;
   padding: 5px 5px;
   position: relative;
-  right: 4rem;
-  top: 0.625rem;
   font-size: 10px;
   border-radius: 5px;
   font-family: pretendard-extraLight;
