@@ -3,12 +3,16 @@
   color: #ffffff;
   border: #ff8d1d;
 }
+.activePanel-toggle {
+  margin-right: 15%;
+}
 
 .notice-wrapper {
   margin-top: 3rem;
   max-height: 70vh;
   overflow-y: scroll;
   scrollbar-width: none;
+  overflow-x: hidden;
 }
 
 .notice-wrapper::-webkit-scrollbar {
@@ -27,10 +31,10 @@
 }
 
 .notice-item-container {
-  width: 70rem;
+  width: 65rem;
   display: flex;
   align-items: center;
-  margin: 0% 0% 0% 5%;
+  margin: 0% 0% 0% 10%;
   img {
     margin-top: 1rem;
   }
@@ -41,6 +45,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+  margin: 0%, 0%, 0%, 12%;
   width: 60rem;
   height: 10px;
   h3 {
@@ -52,14 +57,13 @@
 
   h2 {
     font-size: 2rem;
-    margin: 2% 0% 2% 0%;
+    margin: 3% 0% 10% 0%;
     letter-spacing: -1px;
     font-family: Pretendard-SemiBold;
   }
 }
 
 .panel {
-  background-color: #fafafa;
   padding: 0 1.25rem;
   display: flex;
   flex-direction: column;
@@ -68,7 +72,7 @@
   max-height: 0;
   width: 95%;
   box-sizing: border-box;
-  margin: 5% 0% 5% 3%;
+  margin: 5% 0% 5% 8.2%;
   display: block;
   font-size: 1.8rem;
   letter-spacing: -1px;
@@ -96,7 +100,7 @@
   h3 {
     font-size: 1.8rem;
     letter-spacing: -1px;
-    margin: 3% 0% 0.5% 0%;
+    margin: 3% 0% 0.5% 3%;
     font-family: Pretendard-Bold;
   }
 }
@@ -144,6 +148,8 @@
 }
 
 .notice-pagination {
-  margin-bottom: 10rem;
+  position: sticky;
+  left: 21%;
+  bottom: -10rem;
   width: 40rem !important;
 }
