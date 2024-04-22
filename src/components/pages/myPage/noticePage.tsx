@@ -15,11 +15,10 @@ interface NoticeListProps {
 
 function NoticePage() {
   const [activePanelIndex, setActivePanelIndex] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [startNoticeIndex, setStartNoticeIndex] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
 
   const itemsPerPage = 10;
-
+  const totalPages = 5;
   const navigate = useNavigate();
 
   const handlePanelToggle = (index) => {
@@ -30,17 +29,13 @@ function NoticePage() {
     navigate(-1);
   };
 
-  const handlePagination = (type) => {
-    if (type === 'prev') {
-      if (currentPage > 1) {
-        setCurrentPage(currentPage - 1);
-        setStartNoticeIndex((currentPage - 2) * itemsPerPage);
-      }
-    } else if (type === 'next') {
-      if (currentPage < totalPages) {
-        setCurrentPage(currentPage + 1);
-        setStartNoticeIndex(currentPage * itemsPerPage);
-      }
+  const handlePagination = (direction) => {
+    if (direction === 'prev' && currentPage > 0) {
+      setCurrentPage(currentPage - 1);
+    } else if (direction === 'next' && currentPage < totalPages - 1) {
+      setCurrentPage(currentPage + 1);
+    } else if (typeof direction === 'number') {
+      setCurrentPage(direction);
     }
   };
 
@@ -64,29 +59,12 @@ function NoticePage() {
 
   // const totalNotice = noticeList.length;
 
-  const getPaginatedList = (
-    list: NoticeListProps[],
-    page: number,
-    startIndex: number,
-  ) => {
-    const endIndex = startIndex + itemsPerPage;
-    return list.slice(startIndex, endIndex);
-  };
-
-  const paginatedList = getPaginatedList(
-    noticeList,
-    currentPage,
-    startNoticeIndex,
-  );
-
-  const totalPages = Math.ceil(noticeList.length / itemsPerPage);
-
   return (
     <StyledPage className="main-page-container">
       <StyledHeader>
         <TitleHeader pageTitle="공지사항" handleGoBack={handleGoBack} />
         <div className="notice-wrapper">
-          {paginatedList.map((item, index) => (
+          {noticeList.map((item, index) => (
             <div
               className={`notice-list ${activePanelIndex === index ? 'active' : ''} `}
               key={index}
@@ -99,7 +77,7 @@ function NoticePage() {
                 </div>
                 <img
                   src={activePanelIndex === index ? upArrow : downArrow}
-                  alt=""
+                  alt="toggle_icon"
                 />
               </div>
               <div className="panel">

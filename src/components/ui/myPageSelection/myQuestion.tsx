@@ -65,6 +65,7 @@ export default function MyQuestion({
         `/api/question/me?pageNo=${pageNo}&criterion=createdAt`,
         'GET',
       );
+      console.log(data, '사용자 질문');
       setQuestion(data.data.questions);
       setTotalPages(data.data.totalPages);
       setQuestionCnt(data.data.totalElements);
