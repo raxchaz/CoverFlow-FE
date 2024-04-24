@@ -3,7 +3,7 @@ import './myComponent.scss';
 import AdminPagination from '../adminSelection/adminPagination';
 import { showErrorToast } from '../toast/toast';
 import { useNavigate } from 'react-router-dom';
-import { useApi } from '../../global/utils/apiUtil';
+import { fetchAPI } from '../../global/utils/apiUtil';
 
 interface Questions {
   questionId: number;
@@ -48,7 +48,7 @@ export default function MyQuestion({
 
   const [totalPages, setTotalPages] = useState(0);
   const [question, setQuestion] = useState<Questions[]>(initiateQuestion);
-  const { fetchAPI } = useApi();
+
   const handlePagination = (direction) => {
     if (direction === 'prev' && currentPage > 0) {
       setCurrentPage(currentPage - 1);
@@ -65,7 +65,6 @@ export default function MyQuestion({
         `/api/question/me?pageNo=${pageNo}&criterion=createdAt`,
         'GET',
       );
-      console.log(data, '사용자 질문');
       setQuestion(data.data.questions);
       setTotalPages(data.data.totalPages);
       setQuestionCnt(data.data.totalElements);

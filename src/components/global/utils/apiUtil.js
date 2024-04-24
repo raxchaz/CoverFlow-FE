@@ -7,7 +7,6 @@ import {
 import { store } from '../../../store';
 import { setTokens } from '../../../store/actions/authActions';
 import { showErrorToast } from '../../ui/toast/toast.tsx';
-import { useQueryClient } from '@tanstack/react-query';
 
 const request = async (options) => {
   const headers = new Headers({
@@ -85,39 +84,32 @@ const reissueTokens = async () => {
 // 1. GET, DELETE : fetchAPI('/API 주소', 'GET').then(response => {데이터처리 로직}
 // 2. POST, PUTfetchAPI('/API 주소', 'POST', postData).then(response => {데이터처리 로직}
 
-export const useApi = () => {
-  const queryClient = useQueryClient();
+export const fetchAPI = async (endpoint, method, body) => {
+  if (!localStorage.getItem(ACCESS_TOKEN)) {
+    throw new Error('토큰이 존재하지 않습니다.');
+  }
 
-  const fetchAPI = async (endpoint, method, body) => {
-    if (!localStorage.getItem(ACCESS_TOKEN)) {
-      throw new Error('토큰이 존재하지 않습니다.');
-    }
+  if (isTokenExpired()) {
+    console.log('토큰 시간 만료, 재발급 진행');
+    await reissueTokens();
+  }
 
-    if (isTokenExpired()) {
-      console.log('토큰 시간 만료, 재발급 진행');
-      await reissueTokens();
-    }
+  const headers = new Headers({
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
+  });
 
-    const headers = new Headers({
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
-    });
+  const apiLink = `${BASE_URL}${endpoint}`;
+  const response = await fetch(apiLink, {
+    method,
+    headers,
+    body: body ? JSON.stringify(body) : null,
+  });
+  const responseData = await response.json();
 
-    const apiLink = `${BASE_URL}${endpoint}`;
-    const response = await fetch(apiLink, {
-      method,
-      headers,
-      body: body ? JSON.stringify(body) : null,
-    });
-    const responseData = await response.json();
-    queryClient.invalidateQueries(['notifications']);
+  if (!response.ok) {
+    throw new Error('요청 처리 실패', response.message);
+  }
 
-    if (!response.ok) {
-      throw new Error('요청 처리 실패', response.statusText);
-    }
-
-    return responseData;
-  };
-
-  return { fetchAPI };
+  return responseData;
 };
