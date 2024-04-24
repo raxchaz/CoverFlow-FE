@@ -60,7 +60,6 @@ const AllRouter = () => {
     <div className="app">
       <Routes>
         <Route path="/" element={<MainPage />} />
-        <Route path="/home" element={<MainPage />} />
         <Route path="/auth/token" element={<TokenManagement />} />
 
         <Route path="/login" element={<LoginPage />} />
@@ -90,7 +89,7 @@ const AllRouter = () => {
           path="/company-info/:companyId/:questionId"
           element={<QuestionDetailPage />}
         />
-        <Route path="/notfound" element={<NotFoundPage />} />
+
         <Route path="*" element={<NotFoundPage />} />
         <Route path="/work-progress" element={<WIL />} />
 

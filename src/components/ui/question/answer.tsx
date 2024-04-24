@@ -2,7 +2,7 @@ import React from 'react';
 import '../../../asset/sass/etc/question/answer.scss';
 import styled from 'styled-components';
 import Trophy from '../../../asset/image/trophy.svg';
-import { useApi } from '../../global/utils/apiUtil';
+import { fetchAPI } from '../../global/utils/apiUtil';
 import { showSuccessToast } from '../toast/toast';
 
 const AdoptButton = styled.button`
@@ -37,7 +37,6 @@ function AnswerModule({
   answererNickname,
   answerId,
 }: AnswerDetailProps) {
-  const { fetchAPI } = useApi();
   const handleAdoptAnswer = async () => {
     await fetchAPI(`/api/answer/selection/${answerId}`, 'PATCH', {
       selection: true,

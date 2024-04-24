@@ -15,16 +15,17 @@ export default function ErrorFallback({
 
   useEffect(() => {
     console.error(error);
-    if (window.location.pathname === '/notfound') {
-      navigate('/home');
-    } else {
-      navigate('/notfound');
-    }
+    navigate('/');
 
     const handlePopState = () => {
       resetErrorBoundary();
     };
-    handlePopState();
+
+    window.addEventListener('popstate', handlePopState);
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
   }, [navigate, resetErrorBoundary]);
 
   return <NotFoundPage />;

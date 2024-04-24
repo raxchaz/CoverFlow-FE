@@ -5,13 +5,10 @@ import INQUIRY from '../../../asset/image/notification-question.svg';
 import ANSWER from '../../../asset/image/notification-answer.svg';
 import SELECTION from '../../../asset/image/notification-adopt.svg';
 import DAILY from '../../../asset/image/notification-fishbun.svg';
-import { useApi } from '../../global/utils/apiUtil';
+import { fetchAPI } from '../../global/utils/apiUtil';
 import { useQueryClient } from '@tanstack/react-query';
-import { useNavigate } from 'react-router-dom';
 
 function NotificationList({ notifications, isLoading }) {
-  const navigate = useNavigate();
-  const { fetchAPI } = useApi();
   const queryClient = useQueryClient();
   const getNotificationDetails = (type) => {
     switch (type) {
@@ -27,18 +24,13 @@ function NotificationList({ notifications, isLoading }) {
         return { icon: null, message: '' };
     }
   };
-  console.log(notifications);
-  const checkNotification = (index, uri, type) => {
-    console.log('Notification index:', uri);
+
+  const checkNotification = (index) => {
+    console.log('Notification index:', index);
     fetchAPI('/api/notification', 'PATCH', [{ notificationId: index }])
       .then(() => {
         // console.log('Notification updated successfully:', response);
         queryClient.invalidateQueries(['notifications']);
-        if (type !== 'DAILY' && uri) {
-          navigate(uri);
-        } else {
-          console.log('땡');
-        }
       })
       .catch((error) => {
         console.error('Failed to update notification:', error);
@@ -59,13 +51,7 @@ function NotificationList({ notifications, isLoading }) {
         <div
           key={index}
           className={`notification-item ${notification.read ? 'checked' : 'unchecked'}`}
-          onClick={() =>
-            checkNotification(
-              notification.id,
-              notification.uri,
-              notification.type,
-            )
-          }
+          onClick={() => checkNotification(notification.id)}
         >
           <img
             src={getNotificationDetails(notification.type).icon}

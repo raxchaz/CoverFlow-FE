@@ -7,7 +7,7 @@ import TabBar from '../../ui/tabBar/tabBar.jsx';
 import Button from '../../ui/button/Button/Button.jsx';
 import TextArea from '../../ui/inputbox/TextArea.jsx';
 import { showErrorToast, showSuccessToast } from '../../ui/toast/toast.tsx';
-import { useApi } from '../../global/utils/apiUtil.js';
+import { fetchAPI } from '../../global/utils/apiUtil.js';
 
 interface Feedback {
   content: string;
@@ -15,7 +15,7 @@ interface Feedback {
 
 function FeedbackPage() {
   const navigate = useNavigate();
-  const { fetchAPI } = useApi();
+
   const handleGoBack = () => {
     navigate(-1);
   };

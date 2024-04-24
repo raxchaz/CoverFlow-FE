@@ -5,7 +5,7 @@ import './contactSlider.scss';
 import Disclamier from './disclamier.jsx';
 import ContactList from './contactList.jsx';
 import Button from '../button/Button/Button.jsx';
-import { useApi } from '../../global/utils/apiUtil.js';
+import { fetchAPI } from '../../global/utils/apiUtil.js';
 import TextArea from '../inputbox/TextArea.jsx';
 import { showSuccessToast, showErrorToast } from '../toast/toast.tsx';
 // import { BASE_URL, ACCESS_TOKEN } from '../../global/constants/index.js';
@@ -40,7 +40,6 @@ const StatusTab = styled.div`
 
 export default function ContactSlider() {
   const navigate = useNavigate();
-  const { fetchAPI } = useApi();
   useEffect(() => {
     loadUserData();
   }, [navigate]);
