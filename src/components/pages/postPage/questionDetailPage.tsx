@@ -119,6 +119,7 @@ function QuestionDetailPage() {
 
     if (state.questioner === nickName) {
       showErrorToast('본인의 문의는 답변할 수 없습니다.');
+      return;
     }
 
     const data = await fetchAPI('/api/answer', 'POST', requestData);
