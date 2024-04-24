@@ -7,7 +7,7 @@ import { StyledPage, StyledHeader } from '../../../styledComponent';
 import TitleHeader from '../../ui/header/titleHeader.tsx';
 import TabBar from '../../ui/tabBar/tabBar';
 import SecessionWarning from '../../../asset/image/secessionWarning.svg';
-import { fetchAPI } from '../../global/utils/apiUtil.js';
+import { useApi } from '../../global/utils/apiUtil.js';
 import { showErrorToast, showSuccessToast } from '../../ui/toast/toast.tsx';
 
 const Divider = styled.div`
@@ -20,6 +20,7 @@ const Divider = styled.div`
 function SecessionPage() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { fetchAPI } = useApi();
   const { nickname } = location.state as { nickname: string };
   const [isAgreed, setIsAgreed] = useState(false);
   const [secessionReason, setSecessionReason] = useState('');

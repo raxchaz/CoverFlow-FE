@@ -9,7 +9,7 @@ import downArrow from '../../../asset/image/notice-down-arrow.svg';
 import AdminPagination from '../../ui/adminSelection/adminPagination';
 import styled from 'styled-components';
 // import { BASE_URL } from '../../global/constants';
-import { fetchAPI } from '../../global/utils/apiUtil';
+import { useApi } from '../../global/utils/apiUtil';
 interface Notice {
   noticeId: number;
   noticeTitle: string;
@@ -50,7 +50,7 @@ function NoticePage() {
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [notices, setNotices] = useState<Notice[]>([]);
-
+  const { fetchAPI } = useApi();
   const navigate = useNavigate();
   useEffect(() => {
     const fetchNotices = async () => {

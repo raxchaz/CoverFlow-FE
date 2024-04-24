@@ -1,11 +1,12 @@
 import { EventSourcePolyfill } from 'event-source-polyfill';
 import { BASE_URL, ACCESS_TOKEN, REFRESH_TOKEN } from '../constants/index.ts';
 import { showSuccessToast } from '../../ui/toast/toast.tsx';
-import { fetchAPI } from './apiUtil.js';
+import { useApi } from './apiUtil.js';
 
 export const initializeSSE = () => {
   let accessToken = localStorage.getItem(ACCESS_TOKEN);
   let lastEventId = null;
+  const { fetchAPI } = useApi();
 
   if (!accessToken) {
     console.log('토큰이 없어서 연결을 시작할 수 없습니다.');
@@ -42,6 +43,7 @@ export const initializeSSE = () => {
       await fetchAPI('/api/auth/reissue', 'GET');
       accessToken = localStorage.getItem(ACCESS_TOKEN);
       setTimeout(initializeSSE, 5000);
+      console.log('SSE 재연결 성공');
     } catch (error) {
       console.error('토큰 재발급 실패: ', error);
     }

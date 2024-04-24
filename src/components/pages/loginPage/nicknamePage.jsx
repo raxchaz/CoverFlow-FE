@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 import { StyledHeader, StyledPage } from '../../../styledComponent';
 import TitleHeader from '../../ui/header/titleHeader.tsx';
-import { fetchAPI } from '../../global/utils/apiUtil.js';
+import { useApi } from '../../global/utils/apiUtil.js';
 import { showErrorToast, showSuccessToast } from '../../ui/toast/toast.tsx';
 
 const CheckboxContainer = styled.div`
@@ -81,7 +81,7 @@ const NicknamePage = () => {
   const [isJobSeeking, setIsJobSeeking] = useState(false);
   const [isEmployed, setIsEmployed] = useState(false);
   const navigate = useNavigate();
-
+  const { fetchAPI } = useApi();
   /*
     사용자가 입력해야 할 데이터들을 정의해 놓았습니다.
   */

@@ -64,7 +64,7 @@ const NotFoundPage = () => {
   const navigatge = useNavigate();
 
   const goHome = () => {
-    navigatge('/');
+    navigatge('/home');
   };
   return (
     <>
