@@ -12,7 +12,7 @@ import Reward from '../../../asset/image/reward.svg';
 import Dot from '../../../asset/image/dots-vertical.svg';
 
 import { showErrorToast, showSuccessToast } from '../../ui/toast/toast.tsx';
-import { fetchAPI } from '../../global/utils/apiUtil.js';
+import { useApi } from '../../global/utils/apiUtil.js';
 import Pagination from '../../ui/Pagination.tsx';
 
 const Questioner = styled.div`
@@ -74,6 +74,7 @@ export interface CommentProps {
 }
 
 function QuestionDetailPage() {
+  const { fetchAPI } = useApi();
   const navigate = useNavigate();
   const { state } = useLocation();
   // console.log('state: ', state);

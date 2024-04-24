@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../../asset/sass/pages/myPage/noticePage.scss';
 import { StyledHeader, StyledPage } from '../../../styledComponent';
@@ -7,21 +7,67 @@ import TabBar from '../../ui/tabBar/tabBar';
 import upArrow from '../../../asset/image/notice-up-arrow.svg';
 import downArrow from '../../../asset/image/notice-down-arrow.svg';
 import AdminPagination from '../../ui/adminSelection/adminPagination';
-interface NoticeListProps {
-  date: string;
-  title: string;
-  content: string;
+import styled from 'styled-components';
+// import { BASE_URL } from '../../global/constants';
+import { useApi } from '../../global/utils/apiUtil';
+interface Notice {
+  noticeId: number;
+  noticeTitle: string;
+  noticeContent: string;
+  noticeViews: number;
+  noticeStatus: boolean;
+  createdAt: string;
 }
+
+// interface NoticeData {
+//   totalPages: number;
+//   totalElements: number;
+//   notices: Notice[];
+// }
+
+// interface ApiResponse {
+//   statusCode: string;
+//   data: NoticeData;
+// }
+
+const PaginationWrapper = styled.div`
+  position: fixed;
+  bottom: 5rem;
+  width: 69rem;
+  background-color: #fff;
+  padding: 10px 20px;
+  @media (max-width: 768px) {
+    padding: 5px 10px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 5px;
+  }
+`;
 
 function NoticePage() {
   const [activePanelIndex, setActivePanelIndex] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [startNoticeIndex, setStartNoticeIndex] = useState(0);
-
-  const itemsPerPage = 10;
-
+  const [currentPage, setCurrentPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+  const [notices, setNotices] = useState<Notice[]>([]);
+  const { fetchAPI } = useApi();
   const navigate = useNavigate();
-
+  useEffect(() => {
+    const fetchNotices = async () => {
+      try {
+        const notices = await fetchAPI(
+          '/api/notice?pageNo=0&criterion=createdAt',
+          'GET',
+        );
+        console.log('Notices:', notices);
+        setTotalPages(notices.data.totalPages);
+        setNotices(notices.data.notices);
+      } catch (error) {
+        console.error('Failed to fetch notices', error);
+      }
+    };
+    fetchNotices();
+  }, [currentPage]);
   const handlePanelToggle = (index) => {
     setActivePanelIndex(activePanelIndex === index ? null : index);
   };
@@ -30,63 +76,24 @@ function NoticePage() {
     navigate(-1);
   };
 
-  const handlePagination = (type) => {
-    if (type === 'prev') {
-      if (currentPage > 1) {
-        setCurrentPage(currentPage - 1);
-        setStartNoticeIndex((currentPage - 2) * itemsPerPage);
-      }
-    } else if (type === 'next') {
-      if (currentPage < totalPages) {
-        setCurrentPage(currentPage + 1);
-        setStartNoticeIndex(currentPage * itemsPerPage);
-      }
+  const handlePagination = (direction) => {
+    if (direction === 'prev' && currentPage > 0) {
+      setCurrentPage(currentPage - 1);
+    } else if (direction === 'next' && currentPage < totalPages - 1) {
+      setCurrentPage(currentPage + 1);
+    } else if (typeof direction === 'number') {
+      setCurrentPage(direction);
     }
   };
 
-  const noticeList: NoticeListProps[] = [...Array(itemsPerPage * 5)].map(
-    (_, index) => ({
-      date: `2024-01-0${index}`,
-      title: `[공지] 개인정보 처리방침 변경 사전 안내`,
-      content: `안녕하세요,
-기업 정보 QNA 서비스 코버플로우 입니다.
-코버플로우를 이용해주시는 회원님께 더 나은 서비스를 제공할 수 있도록
-개인정보 처리방침 문서를 변경할 예정임을 알려드립니다.
-변경 내용 (v.2.4.1)
-고객 지원을 위한 개인정보 수탁사가 변경됩니다.
-개인정보 파기 절차와 파기 예외 대상에 대한 내용을 보강했습니다.
-개인정보 보호 책임자가 변경됩니다.
-변경 시기
-변경된 개인정보 처리방침은 시행일인 2024년 3월 30일부터
-효력이 발생합니다.`,
-    }),
-  );
-
   // const totalNotice = noticeList.length;
-
-  const getPaginatedList = (
-    list: NoticeListProps[],
-    page: number,
-    startIndex: number,
-  ) => {
-    const endIndex = startIndex + itemsPerPage;
-    return list.slice(startIndex, endIndex);
-  };
-
-  const paginatedList = getPaginatedList(
-    noticeList,
-    currentPage,
-    startNoticeIndex,
-  );
-
-  const totalPages = Math.ceil(noticeList.length / itemsPerPage);
 
   return (
     <StyledPage className="main-page-container">
       <StyledHeader>
         <TitleHeader pageTitle="공지사항" handleGoBack={handleGoBack} />
         <div className="notice-wrapper">
-          {paginatedList.map((item, index) => (
+          {notices.map((notice, index) => (
             <div
               className={`notice-list ${activePanelIndex === index ? 'active' : ''} `}
               key={index}
@@ -94,52 +101,31 @@ function NoticePage() {
             >
               <div className="notice-item-container">
                 <div className="notice-item">
-                  <h3>{item.date}</h3>
-                  <h2>{item.title}</h2>
+                  <h3>{notice.createdAt}</h3>
+                  <h2>{notice.noticeTitle}</h2>
                 </div>
                 <img
                   src={activePanelIndex === index ? upArrow : downArrow}
-                  alt=""
+                  alt="toggle_icon"
+                  className="activePanel-toggle"
                 />
               </div>
               <div className="panel">
-                <div>
-                  <span>안녕하세요.</span>
-                  <span>기업 정보 QNA 서비스 코버플로우입니다.</span>
-                </div>
-                <div>
-                  <span>
-                    코버 플로우를 이용해주시는 회원님께 더 나은 서비스를 제공할
-                    수 있도록
-                  </span>
-                  <span>
-                    개인정보 처리 방침 문서를 변경할 예정임을 알려드립니다.
-                  </span>
-                </div>
-                <h3>변경 내용(v.2.4.1)</h3>
-                <div>
-                  <span>고객 지원을 위한 개인정보 수탁사가 변경됩니다.</span>
-                  <span>
-                    개인정보 파기 절차와 파기 예외 대상에 대한 내용을
-                    보강하였습니다.
-                  </span>
-                  <span>개인정보 보호 책임자가 변경됩니다.</span>
-                </div>
-                <h3>변경 시기</h3>
-                <span>
-                  변경된 개인정보 처리방침은 시행일인 2024년 3월 30일부터
-                </span>{' '}
-                <span>효력이 발생합니다.</span>
+                <span>{notice.noticeContent}</span>
               </div>
             </div>
           ))}
         </div>
-        <AdminPagination
-          className="notice-pagination"
-          totalPages={totalPages}
-          currentPage={currentPage}
-          handlePagination={handlePagination}
-        />
+        {notices.length > 0 && (
+          <PaginationWrapper>
+            <AdminPagination
+              className="notice-pagination"
+              totalPages={totalPages}
+              currentPage={currentPage}
+              handlePagination={handlePagination}
+            />
+          </PaginationWrapper>
+        )}
       </StyledHeader>
       <TabBar />
     </StyledPage>

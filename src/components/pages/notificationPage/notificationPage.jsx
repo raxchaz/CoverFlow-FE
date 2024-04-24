@@ -5,7 +5,7 @@ import TitleHeader from '../../ui/header/titleHeader.tsx';
 import TabBar from '../../ui/tabBar/tabBar';
 import NotificationList from './notificationList.jsx';
 import '../../../asset/sass/pages/notificationPage/notificationPage.scss';
-import { fetchAPI } from '../../global/utils/apiUtil.js';
+import { useApi } from '../../global/utils/apiUtil.js';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useDispatch } from 'react-redux';
 import { alertCount } from '../../../store/actions/alertActions.js';
@@ -13,6 +13,7 @@ import { showErrorToast } from '../../ui/toast/toast.tsx';
 
 function NotificationPage() {
   const dispatch = useDispatch();
+  const { fetchAPI } = useApi();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 

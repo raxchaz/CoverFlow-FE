@@ -10,7 +10,7 @@ import { ReactComponent as AdminContact } from '../../../asset/image/admin-conta
 import { ReactComponent as AdminReport } from '../../../asset/image/admin-report.svg';
 import { ReactComponent as AdminNotice } from '../../../asset/image/admin-notice.svg';
 import { ACCESS_TOKEN, REFRESH_TOKEN } from '../../global/constants/index.ts';
-import { fetchAPI } from '../../global/utils/apiUtil.js';
+import { useApi } from '../../global/utils/apiUtil.js';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setLoggedIn } from '../../../store/actions/userActions.js';
@@ -23,7 +23,7 @@ interface AdminSideTapProps {
 export default function AdminSideTap({ loadSection }: AdminSideTapProps) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const { fetchAPI } = useApi();
   const [selectedSection, setSelectedSection] = useState<string>('');
 
   const handleSectionClick = (sectionName: string) => {

@@ -21,13 +21,14 @@ const StatusTab = styled.div<{ $current: boolean }>`
   text-align: center;
   padding: 10px 0;
   cursor: pointer;
-  color: #d9d9d9;
+  color: ${({ $current }) => ($current ? 'black' : 'gray')};
   border-bottom: 8px solid transparent;
+  border-bottom: ${({ $current }) =>
+    $current ? '8px solid black' : '8px solid transparent'};
   margin-bottom: -8px;
   transition:
     border-bottom 0.3s ease-in-out,
     color 0.3s ease-in-out;
-  ${($current) => $current && 'color: black; border-bottom: 8px solid black;  '}
 `;
 // ======================= 스타일드 컴포넌트
 
