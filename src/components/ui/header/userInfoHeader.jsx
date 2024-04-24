@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Reward from '../../../asset/image/reward.svg';
 import Loginuser from '../../../asset/image/loginuser.svg';
 import '../../../asset/sass/etc/header/userInfoHeader.scss';
-import { fetchAPI } from '../../global/utils/apiUtil.js';
+import { useApi } from '../../global/utils/apiUtil.js';
 // import { useInitializeSSE } from '../../global/utils/eventApiUtils.js';
 import {
   setLoggedIn,
@@ -18,9 +18,11 @@ import {
 } from '../../global/constants/index.ts';
 
 function UserInfoHeader() {
+  const { fetchAPI } = useApi();
   const { isLoggedIn, rewardCount, isDropdownOpen } = useSelector(
     (state) => state.user,
   );
+  const { setAlertCount } = useSelector((state) => state.alert);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
@@ -116,6 +118,7 @@ function UserInfoHeader() {
       localStorage.removeItem(ACCESS_TOKEN);
       localStorage.removeItem(REFRESH_TOKEN);
       dispatch(setLoggedIn(false));
+      dispatch(setAlertCount(0));
       navigate('/');
     } catch (error) {
       console.error('로그아웃 처리 중 에러 발생:', error.message);

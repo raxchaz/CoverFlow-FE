@@ -3,7 +3,7 @@ import './myComponent.scss';
 import AdminPagination from '../adminSelection/adminPagination';
 import { showErrorToast } from '../toast/toast';
 import { useNavigate } from 'react-router-dom';
-import { fetchAPI } from '../../global/utils/apiUtil';
+import { useApi } from '../../global/utils/apiUtil';
 
 interface Answer {
   answerId: number;
@@ -37,6 +37,7 @@ export default function MyAnswer({
   initiateAnswer,
 }: MyAnswerProps) {
   const navigate = useNavigate();
+  const { fetchAPI } = useApi();
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [answer, setAnswer] = useState<Answer[]>(initiateAnswer);

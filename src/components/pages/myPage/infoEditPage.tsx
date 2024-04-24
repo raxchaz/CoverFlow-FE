@@ -10,7 +10,7 @@ import UserInfoHeader from '../../ui/header/userInfoHeader.jsx';
 import TabBar from '../../ui/tabBar/tabBar.jsx';
 import { ACCESS_TOKEN } from '../../global/constants';
 import { showErrorToast, showSuccessToast } from '../../ui/toast/toast.tsx';
-import { fetchAPI } from '../../global/utils/apiUtil.js';
+import { useApi } from '../../global/utils/apiUtil.js';
 import Button from '../../ui/button/Button/Button.jsx';
 
 interface UserData {
@@ -42,6 +42,7 @@ const Divider = styled.div`
 function InfoEditPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { fetchAPI } = useApi();
   // const [userInfo, setUserInfo] = useState({ socialType: ' ' });
   const [nickname, setNickname] = useState('');
   const [selectedTag, setSelectedTag] = useState('');

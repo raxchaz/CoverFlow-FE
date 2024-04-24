@@ -1,7 +1,8 @@
 .answer-container {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 527px;
+  height: 308px;
   margin-top: 5%;
   margin-bottom: 5%;
   cursor: pointer;
@@ -9,11 +10,13 @@
   padding: 0 20px;
   :nth-child(1) {
     font-weight: bold;
-    margin: 20px 0;
+    margin: 10px 0;
   }
   :nth-child(2) {
     margin-bottom: 10px;
   }
+  border: 1px solid #cacaca;
+  border-radius: 20px;
 }
 
 .user-container {

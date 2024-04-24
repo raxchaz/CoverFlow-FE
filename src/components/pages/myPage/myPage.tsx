@@ -12,7 +12,7 @@ import { ReactComponent as PremiumIcon } from '../../../asset/image/premium.svg'
 import { ReactComponent as NoticeIcon } from '../../../asset/image/notice.svg';
 
 import { StyledHeader, StyledPage } from '../../../styledComponent';
-import { fetchAPI } from '../../global/utils/apiUtil';
+import { useApi } from '../../global/utils/apiUtil';
 import { ACCESS_TOKEN } from '../../global/constants';
 import TabBar from '../../ui/tabBar/tabBar';
 import TitleHeader from '../../ui/header/titleHeader';
@@ -71,7 +71,7 @@ function Mypage() {
       loadUserQuestion();
     }
   }, [navigate]);
-
+  const { fetchAPI } = useApi();
   const loadUserData = async () => {
     try {
       const data = await fetchAPI('/api/member/me', 'GET');

@@ -9,8 +9,9 @@ import Finger from '../../../asset/image/fingerprint.svg';
 // import Home from '../../../asset/image/group.svg';
 import Money from '../../../asset/image/money.svg';
 import { showErrorToast, showSuccessToast } from '../../ui/toast/toast';
-import { fetchAPI } from '../../global/utils/apiUtil';
+import { useApi } from '../../global/utils/apiUtil';
 function QuestionWritePage() {
+  const { fetchAPI } = useApi();
   const navigate = useNavigate();
   const { state } = useLocation();
   const [content, setContent] = useState('');

@@ -7,7 +7,7 @@ import {
   type,
 } from '../../global/constants/companyOption';
 import Button from '../button/Button/Button';
-import { fetchAPI } from '../../global/utils/apiUtil';
+import { useApi } from '../../global/utils/apiUtil';
 interface Company {
   companyId: number;
   companyName: string;
@@ -30,7 +30,7 @@ export default function CompanyDetail({
 }: CompanyDetailProps) {
   const [editedCompany, setEditedCompany] = useState(company);
   const [districtOptions, setDistrictOptions] = useState<string[]>([]);
-
+  const { fetchAPI } = useApi();
   useEffect(() => {
     const districts = district[editedCompany.companyCity] || [];
     setDistrictOptions(districts);

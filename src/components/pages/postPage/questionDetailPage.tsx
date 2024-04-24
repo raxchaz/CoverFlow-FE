@@ -12,7 +12,7 @@ import Reward from '../../../asset/image/reward.svg';
 import Dot from '../../../asset/image/dots-vertical.svg';
 
 import { showErrorToast, showSuccessToast } from '../../ui/toast/toast.tsx';
-import { fetchAPI } from '../../global/utils/apiUtil.js';
+import { useApi } from '../../global/utils/apiUtil.js';
 import Pagination from '../../ui/Pagination.tsx';
 
 const Questioner = styled.div`
@@ -43,7 +43,14 @@ const FirstLine = styled.div`
   margin: 5% 0% 0% 0%;
 `;
 
-const AnswerList = styled.div``;
+const AnswerList = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+
+  margin: 0px auto;
+`;
 
 export interface AnswerProps {
   answerId: string;
@@ -67,6 +74,7 @@ export interface CommentProps {
 }
 
 function QuestionDetailPage() {
+  const { fetchAPI } = useApi();
   const navigate = useNavigate();
   const { state } = useLocation();
   // console.log('state: ', state);
@@ -126,13 +134,13 @@ function QuestionDetailPage() {
     }
   };
 
-  const handlePagination = async (direction: string | number) => {
+  const handlePagination = (direction: string | number) => {
     if (direction === 'prev' && currentPage > 0) {
       setCurrentPage(currentPage - 1);
     } else if (direction === 'next' && currentPage < totalPages - 1) {
       setCurrentPage(currentPage + 1);
     } else if (typeof direction === 'number') {
-      setCurrentPage(currentPage);
+      setCurrentPage(direction);
     }
   };
 
@@ -150,12 +158,16 @@ function QuestionDetailPage() {
   };
 
   useEffect(() => {
-    const fetchData = async (pageNo: number) => {
+    const fetchData = async () => {
       const response = await fetchAPI(
-        `/api/question/${questionId}?pageNo=${pageNo}&criterion=createdAt`,
+        `/api/question/${questionId}?pageNo=${currentPage}&criterion=createdAt`,
         'GET',
         null,
       );
+
+      const {
+        data: { totalPages },
+      } = response;
       setLoadAnswer(response);
       setTotalPages(totalPages);
 
@@ -165,8 +177,8 @@ function QuestionDetailPage() {
       setNickName(nickname);
     };
 
-    fetchData(currentPage);
-  }, [questionId, postAnswer]);
+    fetchData();
+  }, [questionId, postAnswer, currentPage]);
 
   const reportReasons = [
     '욕설 혹은 비방표현이 있어요',
@@ -271,7 +283,6 @@ function QuestionDetailPage() {
       </AnswerList>
       <TabBar />
       <Pagination
-        className="my-question-pagination"
         currentPage={currentPage}
         totalPages={totalPages}
         handlePagination={handlePagination}
