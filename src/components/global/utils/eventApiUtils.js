@@ -1,9 +1,10 @@
 import { EventSourcePolyfill } from 'event-source-polyfill';
 import { BASE_URL, ACCESS_TOKEN, REFRESH_TOKEN } from '../constants/index.ts';
 import { showSuccessToast } from '../../ui/toast/toast.tsx';
+import { fetchAPI } from './apiUtil.js';
 
 export const initializeSSE = () => {
-  const accessToken = localStorage.getItem(ACCESS_TOKEN);
+  let accessToken = localStorage.getItem(ACCESS_TOKEN);
   let lastEventId = null;
 
   if (!accessToken) {
@@ -34,10 +35,16 @@ export const initializeSSE = () => {
     showSuccessToast(data);
   });
 
-  sse.onerror = (event) => {
-    console.log('onerror', event);
-    sse.close();
-    setTimeout(initializeSSE, 5000);
+  sse.onerror = async (event) => {
+    console.log('SSE 오류', event);
+
+    try {
+      await fetchAPI('/api/auth/reissue', 'GET');
+      accessToken = localStorage.getItem(ACCESS_TOKEN);
+      setTimeout(initializeSSE, 5000);
+    } catch (error) {
+      console.error('토큰 재발급 실패: ', error);
+    }
   };
 
   return sse;
