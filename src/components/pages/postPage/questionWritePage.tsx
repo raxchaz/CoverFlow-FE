@@ -155,6 +155,7 @@ function QuestionWritePage() {
           name="title"
           value={title}
           onChange={handleTitleChange}
+          maxLength={100}
         />
         <textarea
           className="question-input"
@@ -167,6 +168,7 @@ function QuestionWritePage() {
           onChange={handleTextAreaChange}
           rows={30}
           cols={40}
+          maxLength={1000}
         ></textarea>
         <TagInput reward={reward} setReward={setReward} />
         <button
