@@ -261,6 +261,7 @@ function QuestionDetailPage() {
           className="comment-input"
           rows={4}
           ref={answerRef}
+          maxLength={500}
         ></textarea>
         <button className="submit-comment" onClick={handleAnswerSubmit}>
           등록
@@ -270,15 +271,14 @@ function QuestionDetailPage() {
       <AnswerList>
         <div className="answer-title">답변 {loadAnswer?.data.answerCount}</div>
         {loadAnswer?.data.answers.map((answer) => (
-          <>
-            <Answer
-              createAt={answer.createAt}
-              answerContent={answer.answerContent}
-              answererNickname={answer.answererNickname}
-              answererTag={answer.answererTag}
-              answerId={answer.answerId}
-            />
-          </>
+          <Answer
+            key={answer.answerId}
+            createAt={answer.createAt}
+            answerContent={answer.answerContent}
+            answererNickname={answer.answererNickname}
+            answererTag={answer.answererTag}
+            answerId={answer.answerId}
+          />
         ))}
       </AnswerList>
       <TabBar />

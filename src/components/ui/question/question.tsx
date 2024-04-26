@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../../asset/sass/etc/question/question.scss';
 import styled, { css } from 'styled-components';
-import Chat from '../../../asset/image/chat.svg';
 import View from '../../../asset/image/view.svg';
 import Questitle from '../../../asset/image/questitle.svg';
 import { ACCESS_TOKEN } from '../../global/constants/index.ts';
 import Tree from '../../../asset/image/nature-ecology-tree-3--tree-plant-cloud-shape-park.svg';
 import { CompanInfoProps } from '../../pages/searchPage/companyInfoPage.tsx';
+import ChatAll from '../../../asset/image/chat2.svg';
 
 const Line = styled.div`
   height: 1px;
@@ -85,6 +85,7 @@ interface QuestionModulesProps {
   questionContent: string;
   reward: number;
   companyData: CompanInfoProps;
+  viewCount: number;
 }
 
 function QuestionModule({
@@ -98,6 +99,7 @@ function QuestionModule({
   createAt,
   reward,
   companyData,
+  viewCount,
 }: QuestionModulesProps) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
@@ -144,11 +146,6 @@ function QuestionModule({
             </div>
           </div>
 
-          <div className="view-container">
-            <img className="chat-img" src={Chat} />
-            <span className="chat-count">{answerCount}</span>
-            <img className="view-img" src={View} />
-          </div>
           <div className="field">
             <span className="question-title">
               <img className="question-img" src={Questitle} />{' '}
@@ -158,7 +155,13 @@ function QuestionModule({
             <span className="question-content">
               {truncateContent(questionContent)}
             </span>
-
+            <div className="view-container">
+              <img className="view-img" src={View} />
+              <span className="chat-count">{viewCount}</span>
+              <img className="chat-img" src={ChatAll} />
+              <span className="chat-count">{answerCount}</span>
+              {<span className="reward">{reward}</span>}
+            </div>
             <span className="question-answer-day">{formattedDate}</span>
           </div>
         </div>
