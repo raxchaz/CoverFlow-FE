@@ -6,8 +6,11 @@ import TitleHeader from '../../ui/header/titleHeader';
 import TabBar from '../../ui/tabBar/tabBar';
 import { StyledHeader, StyledPage } from '../../../styledComponent';
 import Finger from '../../../asset/image/fingerprint.svg';
-// import Home from '../../../asset/image/group.svg';
+import Home from '../../../asset/image/group.svg';
 import Money from '../../../asset/image/money.svg';
+import Search from '../../../asset/image/search.svg';
+import Justice from '../../../asset/image/justice.svg';
+import GraphBar from '../../../asset/image/graph_bar.svg';
 import { showErrorToast, showSuccessToast } from '../../ui/toast/toast';
 import { fetchAPI } from '../../global/utils/apiUtil';
 function QuestionWritePage() {
@@ -21,11 +24,15 @@ function QuestionWritePage() {
   const { companyId } = useParams();
 
   const tagName = [
-    { name: '사내 문화가 궁금해요', value: 'CULTURE' },
-    { name: '급여 정보가 궁금해요', value: 'SALARY' },
-    { name: '업무 방식이 궁금해요', value: 'BUSINESS' },
-    { name: '승진이나 커리어가 궁금해요', value: 'CAREER' },
-    { name: '직무,워라밸이 궁금해요', value: 'WORKLIFEBALANCE' },
+    { name: '사내 문화가 궁금해요', value: 'CULTURE', image: Home },
+    { name: '급여 정보가 궁금해요', value: 'SALARY', image: Money },
+    { name: '업무 방식이 궁금해요', value: 'BUSINESS', image: Search },
+    { name: '승진이나 커리어가 궁금해요', value: 'CAREER', image: GraphBar },
+    {
+      name: '직무,워라밸이 궁금해요',
+      value: 'WORKLIFEBALANCE',
+      image: Justice,
+    },
   ];
   const categoryName = [
     '서비스',
@@ -124,7 +131,7 @@ function QuestionWritePage() {
               key={tag.value}
               onClick={() => handleTagSelect(tag.value)}
             >
-              <img src={Money} alt="money" />
+              <img src={tag.image} alt="money" />
               <span>{tag.name}</span>
             </div>
           ))}
@@ -144,7 +151,6 @@ function QuestionWritePage() {
               key={index}
               onClick={() => handleCategorySelect(category)}
             >
-              <img src={Money} alt="money" />
               <span>{category}</span>
             </div>
           ))}
