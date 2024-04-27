@@ -11,6 +11,9 @@ import { StyledHeader, StyledPage } from '../../../styledComponent.ts';
 import SearchInput from '../../ui/searchInput/searchInput.tsx';
 import { showErrorToast } from '../../ui/toast/toast.tsx';
 import axios from 'axios';
+import Pagination from '../../ui/Pagination.tsx';
+import '../../../asset/sass/pages/notificationPage/notificationList.scss';
+
 const CompanyContainer = styled.div`
   background-color: #ffffff;
   margin: 5% 0% 5% 15%;
@@ -94,19 +97,51 @@ function CompanyInfoPage() {
   const [companyData, setCompanyData] = useState<CompanInfoProps>();
   const { companyId } = useParams();
 
+  const [currentPage, setCurrentPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+
   const [selectedCategories, setSelectedCategories] = useState(['']);
 
-  const handleCategoryClick = (category: string) => {
+  const handleCategoryClick = async (category: string) => {
     if (selectedCategories.includes(category)) {
       setSelectedCategories(
         selectedCategories.filter((item) => item !== category),
       );
     } else {
-      setSelectedCategories([...selectedCategories, category]);
+      setSelectedCategories([category]);
+    }
+
+    const questionTag = companyData?.questions.forEach(
+      (question) => question.questionTag,
+    );
+
+    try {
+      const { data } = await axios.get(
+        `${BASE_URL}/api/company/${companyId}?pageNo=0&criterion=createdAt&questionTag=${questionTag}`,
+      );
+
+      if (data) {
+        setCompanyData(data.data);
+      } else {
+        throw new Error('데이터가 존재하지 않습니다.');
+      }
+    } catch (error) {
+      if (error instanceof Error) showErrorToast(error.message);
+      navigate(-1);
     }
   };
 
   localStorage.setItem('prevPage', window.location.pathname);
+
+  const handlePagination = (direction: string | number) => {
+    if (direction === 'next') {
+      setCurrentPage(currentPage + 1);
+    } else if (direction === 'prev') {
+      setCurrentPage(currentPage - 1);
+    } else if (typeof direction === 'number') {
+      setCurrentPage(direction);
+    }
+  };
 
   useEffect(() => {
     async function fetchCompanyData() {
@@ -117,6 +152,7 @@ function CompanyInfoPage() {
 
         if (data) {
           setCompanyData(data.data);
+          setTotalPages(data.totalPages);
         } else {
           throw new Error('데이터가 존재하지 않습니다.');
         }
@@ -148,7 +184,7 @@ function CompanyInfoPage() {
   return (
     <StyledPage className="main-page-container">
       <StyledHeader>
-        <TitleHeader pageTitle="검색 결과" handleGoBack={handleGoBack} />
+        <TitleHeader pageTitle="기업 상세" handleGoBack={handleGoBack} />
         <UserInfoHeader />
         <SearchInput />
       </StyledHeader>
@@ -236,8 +272,15 @@ function CompanyInfoPage() {
                 createAt={question.createAt}
                 reward={question.reward}
                 companyData={companyData}
+                viewCount={question.questionViewCount}
               />
             ))}
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              handlePagination={handlePagination}
+              className="pagination-container"
+            />
           </QuestionList>
         </>
       )}
