@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../../../asset/sass/etc/question/answer.scss';
 import styled from 'styled-components';
 import Trophy from '../../../asset/image/trophy.svg';
@@ -37,16 +37,19 @@ function AnswerModule({
   answererNickname,
   answerId,
 }: AnswerDetailProps) {
+  const [isAdopted, setIsAdopted] = useState(false);
   const handleAdoptAnswer = async () => {
     await fetchAPI(`/api/answer/selection/${answerId}`, 'PATCH', {
       selection: true,
     });
+
+    setIsAdopted(true);
     if (confirm('채택하시겠습니까?'))
       showSuccessToast('답변이 채택되었습니다.');
   };
 
   return (
-    <div className="answer-container">
+    <div className={`answer-container ${isAdopted ? 'adopted' : ''}`}>
       <div>
         <div>{answererNickname}</div>
         <div>{answerContent}</div>
