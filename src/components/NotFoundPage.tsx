@@ -61,10 +61,10 @@ export const StyledPage = styled.div`
 `;
 
 const NotFoundPage = () => {
-  const navigatge = useNavigate();
+  const navigate = useNavigate();
 
   const goHome = () => {
-    navigatge('/');
+    navigate('/home');
   };
   return (
     <>

@@ -7,11 +7,11 @@ import SELECTION from '../../../asset/image/notification-adopt.svg';
 import DAILY from '../../../asset/image/notification-fishbun.svg';
 import { fetchAPI } from '../../global/utils/apiUtil';
 import { useQueryClient } from '@tanstack/react-query';
-import { initializeSSE } from '../../global/utils/eventApiUtils';
+import { useNavigate } from 'react-router-dom';
 
 function NotificationList({ notifications, isLoading }) {
   const queryClient = useQueryClient();
-
+  const navigate = useNavigate();
   const getNotificationDetails = (type) => {
     switch (type) {
       case 'DAILY':
@@ -27,11 +27,16 @@ function NotificationList({ notifications, isLoading }) {
     }
   };
 
-  const checkNotification = (index) => {
+  const checkNotification = (index, uri, type) => {
     fetchAPI('/api/notification', 'PATCH', [{ notificationId: index }])
       .then(() => {
-        console.log('알림 읽음');
+        console.log(uri);
         queryClient.invalidateQueries(['notifications']);
+        if (type !== 'DAILY' && uri) {
+          navigate(uri);
+        } else {
+          console.log('땡');
+        }
       })
       .catch((error) => {
         console.error('읽기 실패', error);
@@ -48,12 +53,17 @@ function NotificationList({ notifications, isLoading }) {
 
   return (
     <div className="notification-list">
-      <button onClick={() => initializeSSE(queryClient)}>알림 연결</button>
       {notifications.map((notification, index) => (
         <div
           key={index}
           className={`notification-item ${notification.read ? 'checked' : 'unchecked'}`}
-          onClick={() => checkNotification(notification.id)}
+          onClick={() =>
+            checkNotification(
+              notification.id,
+              notification.uri,
+              notification.type,
+            )
+          }
         >
           <img
             src={getNotificationDetails(notification.type).icon}
