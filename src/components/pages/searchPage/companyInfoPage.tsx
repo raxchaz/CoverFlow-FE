@@ -103,6 +103,23 @@ function CompanyInfoPage() {
   const [selectedCategories, setSelectedCategories] = useState(['']);
 
   const handleCategoryClick = async (category: string) => {
+    const getCategoryClick = (category: string) => {
+      switch (category) {
+        case '사내문화':
+          return 'CULTURE';
+        case '급여연봉':
+          return 'SALARY';
+        case '업무방식':
+          return 'BUSINESS';
+        case '승진커리어':
+          return 'CAREER';
+        case '직무워라밸':
+          return 'WORKLIFEBALANCE';
+      }
+    };
+
+    const selectedCategory = getCategoryClick(category);
+
     if (selectedCategories.includes(category)) {
       setSelectedCategories(
         selectedCategories.filter((item) => item !== category),
@@ -111,13 +128,9 @@ function CompanyInfoPage() {
       setSelectedCategories([category]);
     }
 
-    const questionTag = companyData?.questions.forEach(
-      (question) => question.questionTag,
-    );
-
     try {
       const { data } = await axios.get(
-        `${BASE_URL}/api/company/${companyId}?pageNo=0&criterion=createdAt&questionTag=${questionTag}`,
+        `${BASE_URL}/api/company/${companyId}?pageNo=0&criterion=createdAt&questionTag=${selectedCategory}`,
       );
 
       if (data) {
@@ -134,10 +147,10 @@ function CompanyInfoPage() {
   localStorage.setItem('prevPage', window.location.pathname);
 
   const handlePagination = (direction: string | number) => {
-    if (direction === 'next') {
-      setCurrentPage(currentPage + 1);
-    } else if (direction === 'prev') {
+    if (direction === 'prev' && currentPage > 0) {
       setCurrentPage(currentPage - 1);
+    } else if (direction === 'next' && currentPage < totalPages - 1) {
+      setCurrentPage(currentPage + 1);
     } else if (typeof direction === 'number') {
       setCurrentPage(direction);
     }
@@ -147,12 +160,12 @@ function CompanyInfoPage() {
     async function fetchCompanyData() {
       try {
         const { data } = await axios.get(
-          `${BASE_URL}/api/company/${companyId}?pageNo=0&criterion=createdAt`,
+          `${BASE_URL}/api/company/${companyId}?pageNo=${currentPage}&criterion=createdAt`,
         );
 
         if (data) {
           setCompanyData(data.data);
-          setTotalPages(data.totalPages);
+          setTotalPages(data.data.totalPages);
         } else {
           throw new Error('데이터가 존재하지 않습니다.');
         }
@@ -163,7 +176,7 @@ function CompanyInfoPage() {
     }
 
     fetchCompanyData();
-  }, [companyId]);
+  }, [companyId, currentPage]);
 
   const handleQuestionClick = () => {
     const token = localStorage.getItem(ACCESS_TOKEN);
@@ -275,16 +288,16 @@ function CompanyInfoPage() {
                 viewCount={question.questionViewCount}
               />
             ))}
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              handlePagination={handlePagination}
-              className="pagination-container"
-            />
           </QuestionList>
+          <TabBar />
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            handlePagination={handlePagination}
+            className="pagination-container"
+          />
         </>
       )}
-      <TabBar />
     </StyledPage>
   );
 }
