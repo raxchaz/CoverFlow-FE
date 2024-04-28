@@ -7,9 +7,11 @@ import SELECTION from '../../../asset/image/notification-adopt.svg';
 import DAILY from '../../../asset/image/notification-fishbun.svg';
 import { fetchAPI } from '../../global/utils/apiUtil';
 import { useQueryClient } from '@tanstack/react-query';
+import { initializeSSE } from '../../global/utils/eventApiUtils';
 
 function NotificationList({ notifications, isLoading }) {
   const queryClient = useQueryClient();
+
   const getNotificationDetails = (type) => {
     switch (type) {
       case 'DAILY':
@@ -26,14 +28,13 @@ function NotificationList({ notifications, isLoading }) {
   };
 
   const checkNotification = (index) => {
-    console.log('Notification index:', index);
     fetchAPI('/api/notification', 'PATCH', [{ notificationId: index }])
       .then(() => {
-        // console.log('Notification updated successfully:', response);
+        console.log('알림 읽음');
         queryClient.invalidateQueries(['notifications']);
       })
       .catch((error) => {
-        console.error('Failed to update notification:', error);
+        console.error('읽기 실패', error);
       });
   };
 
@@ -47,6 +48,7 @@ function NotificationList({ notifications, isLoading }) {
 
   return (
     <div className="notification-list">
+      <button onClick={() => initializeSSE(queryClient)}>알림 연결</button>
       {notifications.map((notification, index) => (
         <div
           key={index}
