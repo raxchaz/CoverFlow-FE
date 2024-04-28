@@ -7,7 +7,6 @@ import SELECTION from '../../../asset/image/notification-adopt.svg';
 import DAILY from '../../../asset/image/notification-fishbun.svg';
 import { fetchAPI } from '../../global/utils/apiUtil';
 import { useQueryClient } from '@tanstack/react-query';
-import { initializeSSE } from '../../global/utils/eventApiUtils';
 
 function NotificationList({ notifications, isLoading }) {
   const queryClient = useQueryClient();
@@ -48,7 +47,6 @@ function NotificationList({ notifications, isLoading }) {
 
   return (
     <div className="notification-list">
-      <button onClick={() => initializeSSE(queryClient)}>알림 연결</button>
       {notifications.map((notification, index) => (
         <div
           key={index}
