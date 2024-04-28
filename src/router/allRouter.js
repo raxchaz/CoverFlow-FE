@@ -60,6 +60,7 @@ const AllRouter = () => {
     <div className="app">
       <Routes>
         <Route path="/" element={<MainPage />} />
+        <Route path="/home" element={<MainPage />} />
         <Route path="/auth/token" element={<TokenManagement />} />
 
         <Route path="/login" element={<LoginPage />} />
@@ -91,6 +92,7 @@ const AllRouter = () => {
         />
 
         <Route path="*" element={<NotFoundPage />} />
+        <Route path="/notfound" element={<NotFoundPage />} />
         <Route path="/work-progress" element={<WIL />} />
 
         {/* <Route element={<PrivateRoute authentication={true} />}> */}
