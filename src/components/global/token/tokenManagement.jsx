@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { setTokens } from '../../../store/actions/authActions';
 // import { store } from '../../../store';
 import { initializeSSE } from '../utils/eventApiUtils.js';
+import { useQueryClient } from '@tanstack/react-query';
 
 const decodeToken = (token) => {
   const payload = token.split('.')[1];
@@ -31,6 +32,7 @@ const TokenManagement = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     const query = new URLSearchParams(location.search);
@@ -76,7 +78,7 @@ const TokenManagement = () => {
         } else if (['MEMBER', 'PREMIUM', 'ADMIN'].includes(userRole)) {
           console.log('회원 정보가 존재합니다. 메인 페이지로 이동합니다.');
           navigate(prevPage);
-          initializeSSE();
+          initializeSSE(queryClient);
         } else {
           alert('로그인에 실패하였습니다. 다시 시도해주세요.');
           navigate('/login');
