@@ -6,7 +6,7 @@ import { StyledPage, StyledHeader } from '../../../styledComponent';
 import TitleHeader from '../../ui/header/titleHeader';
 import Answer from '../../ui/question/answer.tsx';
 import TabBar from '../../ui/tabBar/tabBar';
-import { ACCESS_TOKEN } from '../../global/constants';
+import { ACCESS_TOKEN, BASE_URL } from '../../global/constants';
 import Tree from '../../../asset/image/nature-ecology-tree-3--tree-plant-cloud-shape-park.svg';
 import Reward from '../../../asset/image/reward.svg';
 import Dot from '../../../asset/image/dots-vertical.svg';
@@ -16,6 +16,7 @@ import { showErrorToast, showSuccessToast } from '../../ui/toast/toast.tsx';
 import { fetchAPI } from '../../global/utils/apiUtil.js';
 import Pagination from '../../ui/Pagination.tsx';
 import { useSelector } from 'react-redux';
+import axios from 'axios';
 
 const ContentBlur = styled.span<{ $isLoggedIn: boolean }>`
   ${({ $isLoggedIn }) =>
@@ -201,10 +202,8 @@ function QuestionDetailPage() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetchAPI(
-        `/api/question/${questionId}?pageNo=${currentPage}&criterion=createdAt`,
-        'GET',
-        null,
+      const response = await axios.get(
+        `${BASE_URL}/api/question/${questionId}?pageNo=${currentPage}&criterion=createdAt`,
       );
 
       const {
@@ -216,6 +215,7 @@ function QuestionDetailPage() {
       const {
         data: { nickname },
       } = await fetchAPI('/api/member/me', 'GET');
+
       setNickName(nickname);
     };
 

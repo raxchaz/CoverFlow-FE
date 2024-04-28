@@ -25,10 +25,16 @@ const CompanyContainer = styled.div`
 `;
 
 const CompanyName = styled.div`
-  font-size: 1.8rem;
+  font-size: 3rem;
   letter-spacing: -1px;
   font-weight: 800;
   margin-bottom: 0.6rem;
+  font-family: 'Pretendard-ExtraBold';
+  span {
+    font-size: 1.4rem;
+    color: #474646;
+    font-family: 'Pretendard-Medium';
+  }
 `;
 
 // const CompanyType = styled.div`
@@ -58,9 +64,14 @@ const QuestionButton = styled.button`
   /* border-radius: 7px; */
   /* padding: 1% 2% 1% 2%; */
   /* margin: 10% 13% 5% 0%; */
+  width: 105px;
+  height: 35px;
+  border-radius: 2px;
+  font-size: 1.8rem;
+  color: #ffffff;
+  letter-spacing: -1px;
 
-  border-radius: 0;
-  font-family: 'Pretendard-ExtraLight' !important;
+  font-family: 'Pretendard-ExtraBold';
 `;
 
 const QuestionList = styled.div`
