@@ -106,6 +106,7 @@ function QuestionDetailPage() {
   const answerRef = useRef<HTMLTextAreaElement>(null);
   const [postAnswer, setPostAnswer] = useState('');
   const [loadAnswer, setLoadAnswer] = useState<CommentProps>();
+
   const { isLoggedIn } = useSelector((state: AppState) => state.user);
 
   const [isShowEdit, setIsShowEdit] = useState(false);
@@ -152,11 +153,14 @@ function QuestionDetailPage() {
     if (
       state.questioner !== nickName &&
       data.statusCode === 'CREATED' &&
-      answerRef.current &&
-      !isLoggedIn
+      answerRef.current
     ) {
       setPostAnswer(answerRef.current?.value);
       showSuccessToast('답변이 등록되었습니다.');
+
+      if (answerRef.current) {
+        answerRef.current.value = '';
+      }
     }
   };
 
@@ -331,11 +335,13 @@ function QuestionDetailPage() {
         </AnswerList>
       </ContentBlur>
       <TabBar />
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        handlePagination={handlePagination}
-      />
+      {loadAnswer?.data.answers && loadAnswer.data.answers.length > 0 && (
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          handlePagination={handlePagination}
+        />
+      )}
     </StyledPage>
   );
 }
