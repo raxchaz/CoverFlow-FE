@@ -10,6 +10,7 @@ import { ACCESS_TOKEN } from '../../global/constants';
 import Tree from '../../../asset/image/nature-ecology-tree-3--tree-plant-cloud-shape-park.svg';
 import Reward from '../../../asset/image/reward.svg';
 import Dot from '../../../asset/image/dots-vertical.svg';
+import '../../../asset/sass/etc/header/userInfoHeader.scss';
 
 import { showErrorToast, showSuccessToast } from '../../ui/toast/toast.tsx';
 import { fetchAPI } from '../../global/utils/apiUtil.js';
@@ -177,6 +178,10 @@ function QuestionDetailPage() {
     }
   };
 
+  const handleEdit = () => {
+    setIsShowEdit((isEdit) => !isEdit);
+  };
+
   const handleReportSubmit = async () => {
     toggleReportPopup();
     await fetchAPI(`/api/report`, 'POST', {
@@ -237,6 +242,13 @@ function QuestionDetailPage() {
           </span>
 
           <img onClick={toggleReportPopup} src={Dot} alt="dot" />
+          {isShowEdit && (
+            <div className="dropdown-menu">
+              <ul style={{ right: '10px' }} onClick={handleEdit}>
+                <li className="dropdown-item-edit">수정</li>
+              </ul>
+            </div>
+          )}
         </div>
         <QuestionTitle>{state.questionTitle}</QuestionTitle>
         <div className="questioner-info">
@@ -255,7 +267,6 @@ function QuestionDetailPage() {
           </div>
         </div>
         <FirstLine />
-        {isShowEdit && <div className="">수정</div>}
         {showReport && (
           <div className="report-popup-overlay">
             <div className="report-popup">
