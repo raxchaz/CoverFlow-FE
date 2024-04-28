@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import '../../../asset/sass/pages/postPage/questionDetailPage.scss';
 import { StyledPage, StyledHeader } from '../../../styledComponent';
 import TitleHeader from '../../ui/header/titleHeader';
@@ -14,6 +14,20 @@ import Dot from '../../../asset/image/dots-vertical.svg';
 import { showErrorToast, showSuccessToast } from '../../ui/toast/toast.tsx';
 import { fetchAPI } from '../../global/utils/apiUtil.js';
 import Pagination from '../../ui/Pagination.tsx';
+import { useSelector } from 'react-redux';
+
+const ContentBlur = styled.span<{ $isLoggedIn: boolean }>`
+  ${({ $isLoggedIn }) =>
+    !$isLoggedIn &&
+    css`
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      overflow: hidden;
+      filter: blur(5px);
+      text-overflow: ellipsis;
+    `}
+`;
 
 const Questioner = styled.div`
   letter-spacing: -1px;
@@ -73,6 +87,12 @@ export interface CommentProps {
   };
 }
 
+interface AppState {
+  user: {
+    isLoggedIn: boolean;
+  };
+}
+
 function QuestionDetailPage() {
   const navigate = useNavigate();
   const { state } = useLocation();
@@ -85,7 +105,11 @@ function QuestionDetailPage() {
   const answerRef = useRef<HTMLTextAreaElement>(null);
   const [postAnswer, setPostAnswer] = useState('');
   const [loadAnswer, setLoadAnswer] = useState<CommentProps>();
-  const [showReportPopup, setShowReportPopup] = useState(false);
+  const { isLoggedIn } = useSelector((state: AppState) => state.user);
+
+  const [isShowEdit, setIsShowEdit] = useState(false);
+
+  const [showReport, setShowReport] = useState(false);
 
   const { questionId } = useParams();
 
@@ -127,7 +151,8 @@ function QuestionDetailPage() {
     if (
       state.questioner !== nickName &&
       data.statusCode === 'CREATED' &&
-      answerRef.current
+      answerRef.current &&
+      !isLoggedIn
     ) {
       setPostAnswer(answerRef.current?.value);
       showSuccessToast('답변이 등록되었습니다.');
@@ -145,7 +170,11 @@ function QuestionDetailPage() {
   };
 
   const toggleReportPopup = () => {
-    setShowReportPopup((isToggled) => !isToggled);
+    if (state.questioner === nickName) {
+      setIsShowEdit((isEdit) => !isEdit);
+    } else {
+      setShowReport(true);
+    }
   };
 
   const handleReportSubmit = async () => {
@@ -155,6 +184,10 @@ function QuestionDetailPage() {
       type: 'QUESTION',
       id: state.questionId,
     });
+  };
+
+  const handleCloseReportPopup = () => {
+    setShowReport(false);
   };
 
   useEffect(() => {
@@ -222,7 +255,8 @@ function QuestionDetailPage() {
           </div>
         </div>
         <FirstLine />
-        {showReportPopup && (
+        {isShowEdit && <div className="">수정</div>}
+        {showReport && (
           <div className="report-popup-overlay">
             <div className="report-popup">
               <div className="report-title">사용자 신고</div>
@@ -242,7 +276,7 @@ function QuestionDetailPage() {
               <div className="reportBtn">
                 <button
                   className="close-report-popup"
-                  onClick={toggleReportPopup}
+                  onClick={handleCloseReportPopup}
                 >
                   닫기
                 </button>
@@ -268,19 +302,23 @@ function QuestionDetailPage() {
         </button>
       </div>
 
-      <AnswerList>
-        <div className="answer-title">답변 {loadAnswer?.data.answerCount}</div>
-        {loadAnswer?.data.answers.map((answer) => (
-          <Answer
-            key={answer.answerId}
-            createAt={answer.createAt}
-            answerContent={answer.answerContent}
-            answererNickname={answer.answererNickname}
-            answererTag={answer.answererTag}
-            answerId={answer.answerId}
-          />
-        ))}
-      </AnswerList>
+      <ContentBlur $isLoggedIn={isLoggedIn}>
+        <AnswerList>
+          <div className="answer-title">
+            답변 {loadAnswer?.data.answerCount}
+          </div>
+          {loadAnswer?.data.answers.map((answer) => (
+            <Answer
+              key={answer.answerId}
+              createAt={answer.createAt}
+              answerContent={answer.answerContent}
+              answererNickname={answer.answererNickname}
+              answererTag={answer.answererTag}
+              answerId={answer.answerId}
+            />
+          ))}
+        </AnswerList>
+      </ContentBlur>
       <TabBar />
       <Pagination
         currentPage={currentPage}
