@@ -180,12 +180,31 @@ function SearchResultPage() {
         setSearchData(data.data.companyList);
         setCompanyCnt(data.data.totalElements);
         setPageCnt(data.data.totalPages);
-        // console.log('페이지 내 결과', data.data.companyList);
+        console.log('페이지 내 결과', data.data);
       } catch (error) {
         showErrorToast(`오류 발생: ${error}`);
         setSearchData([]);
       }
     };
+    // const fetchCnt = async () => {
+    //   if (!keyword) return;
+    //   try {
+    //     const response = await fetch(
+    //       `${BASE_URL}/api/company?pageNo=${currentPage}&name=${keyword}`,
+    //       {
+    //         method: 'GET',
+    //       },
+    //     );
+    //     const data = await response.json();
+    //     setSearchData(data.data.companyList);
+    //     setCompanyCnt(data.data.totalElements);
+    //     setPageCnt(data.data.totalPages);
+    //     // console.log('페이지 내 결과', data.data.companyList);
+    //   } catch (error) {
+    //     showErrorToast(`오류 발생: ${error}`);
+    //     setSearchData([]);
+    //   }
+    // };
 
     fetchData();
   }, [keyword, currentPage]);

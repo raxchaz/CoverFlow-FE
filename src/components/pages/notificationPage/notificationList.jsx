@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import '../../../asset/sass/pages/notificationPage/notificationList.scss';
 import INQUIRY from '../../../asset/image/notification-question.svg';
@@ -9,7 +9,12 @@ import { fetchAPI } from '../../global/utils/apiUtil';
 import { useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
-function NotificationList({ notifications, isLoading }) {
+function NotificationList({
+  notifications,
+  isLoading,
+  fetchNextPage,
+  hasNextPage,
+}) {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const getNotificationDetails = (type) => {
@@ -27,29 +32,35 @@ function NotificationList({ notifications, isLoading }) {
     }
   };
 
+  const observer = useRef();
+  const lastNotificationRef = useCallback(
+    (node) => {
+      if (isLoading) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasNextPage) {
+          fetchNextPage();
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [isLoading, hasNextPage, fetchNextPage],
+  );
+
   const checkNotification = (index, uri, type) => {
     fetchAPI('/api/notification', 'PATCH', [{ notificationId: index }])
       .then(() => {
-        console.log(uri);
         queryClient.invalidateQueries(['notifications']);
         if (type !== 'DAILY' && uri) {
           navigate(uri);
         } else {
-          console.log('땡');
+          console.log('붕어빵 획득 알림은 이동이 불가능합니다.');
         }
       })
       .catch((error) => {
-        console.error('읽기 실패', error);
+        console.error('데이터 불러오기 실패', error);
       });
   };
-
-  if (isLoading) {
-    return <div>로딩 중</div>;
-  }
-
-  if (notifications.length === 0) {
-    return <div>현재는 알림이 없어요.</div>;
-  }
 
   return (
     <div className="notification-list">
@@ -57,6 +68,7 @@ function NotificationList({ notifications, isLoading }) {
         <div
           key={index}
           className={`notification-item ${notification.read ? 'checked' : 'unchecked'}`}
+          ref={index === notifications.length - 1 ? lastNotificationRef : null}
           onClick={() =>
             checkNotification(
               notification.id,
@@ -86,6 +98,7 @@ function NotificationList({ notifications, isLoading }) {
 NotificationList.propTypes = {
   notifications: PropTypes.array.isRequired,
   isLoading: PropTypes.bool,
+  fetchNextPage: PropTypes.func.isRequired,
+  hasNextPage: PropTypes.bool.isRequired,
 };
-
 export default NotificationList;
