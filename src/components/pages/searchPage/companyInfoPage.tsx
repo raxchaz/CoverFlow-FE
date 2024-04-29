@@ -207,8 +207,6 @@ function CompanyInfoPage() {
     navigate(-1);
   };
 
-  console.log('first', companyData);
-
   return (
     <StyledPage className="main-page-container">
       <StyledHeader>

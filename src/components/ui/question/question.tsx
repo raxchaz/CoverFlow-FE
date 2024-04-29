@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../../asset/sass/etc/question/question.scss';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import View from '../../../asset/image/view.svg';
 import Questitle from '../../../asset/image/questitle.svg';
-import { ACCESS_TOKEN } from '../../global/constants/index.ts';
-import Tree from '../../../asset/image/nature-ecology-tree-3--tree-plant-cloud-shape-park.svg';
+// import { ACCESS_TOKEN } from '../../global/constants/index.ts';
+// import Tree from '../../../asset/image/nature-ecology-tree-3--tree-plant-cloud-shape-park.svg';
 import { CompanInfoProps } from '../../pages/searchPage/companyInfoPage.tsx';
 import ChatAll from '../../../asset/image/chat2.svg';
 
@@ -16,16 +16,16 @@ const Line = styled.div`
   margin: 3% 0% 5% -1.5%;
 `;
 
-const LoginButton = styled.button`
-  letter-spacing: -0.7px;
-  background-color: #ff8d1d !important;
-  border-radius: 3px;
-  font-weight: 600;
-  font-size: 12px;
-  margin: 2% 10% 0% 48%;
-  padding: 5px 5px;
-  width: 15%;
-`;
+// const LoginButton = styled.button`
+//   letter-spacing: -0.7px;
+//   background-color: #ff8d1d !important;
+//   border-radius: 3px;
+//   font-weight: 600;
+//   font-size: 12px;
+//   margin: 2% 10% 0% 48%;
+//   padding: 5px 5px;
+//   width: 15%;
+// `;
 
 // const ContentBlur = styled.span`
 //   ${({ isLoggedIn }) =>
@@ -40,18 +40,18 @@ const LoginButton = styled.button`
 //     `}
 // `;
 
-const ContentBlur = styled.span<{ $isLoggedIn: boolean }>`
-  ${({ $isLoggedIn }) =>
-    !$isLoggedIn &&
-    css`
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 2;
-      overflow: hidden;
-      filter: blur(5px);
-      text-overflow: ellipsis;
-    `}
-`;
+// const ContentBlur = styled.span<{ $isLoggedIn: boolean }>`
+//   ${({ $isLoggedIn }) =>
+//     !$isLoggedIn &&
+//     css`
+//       display: -webkit-box;
+//       -webkit-box-orient: vertical;
+//       -webkit-line-clamp: 2;
+//       overflow: hidden;
+//       filter: blur(5px);
+//       text-overflow: ellipsis;
+//     `}
+// `;
 
 function truncateTitle(title, maxLength = 25) {
   return title?.length > maxLength
@@ -98,44 +98,34 @@ function QuestionModule({
   questionContent,
   createAt,
   reward,
-  companyData,
+
   viewCount,
 }: QuestionModulesProps) {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
-  const companyName = companyData.companyName;
-
-  const handleLoginClick = () => {
-    navigate('/login'); // 로그인 페이지로 이동
-  };
+  // const handleLoginClick = () => {
+  //   navigate('/login'); // 로그인 페이지로 이동
+  // };
 
   const goToDetail = () => {
     navigate(`/company-info/${companyId}/${questionId}`, {
       state: {
         questionId,
-        questioner,
-        questionerTag,
-        answerCount,
-        questionTitle,
-        questionContent,
-        createAt,
-        reward,
-        companyName,
       },
     });
   };
 
   useEffect(() => {
-    const token = localStorage.getItem(ACCESS_TOKEN);
-    setIsLoggedIn(!!token);
+    // const token = localStorage.getItem(ACCESS_TOKEN);
+    // setIsLoggedIn(!!token);
   }, []);
 
   const formattedDate = formatDate(createAt);
 
   return (
     <>
-      {isLoggedIn ? (
+      {/* {isLoggedIn ? (
         <div className="question-container" onClick={goToDetail}>
           <div className="questioner-container">
             <div className="questioner-info">
@@ -191,7 +181,36 @@ function QuestionModule({
             <LoginButton onClick={handleLoginClick}>로그인</LoginButton>
           </div>
         </div>
-      )}
+      )} */}
+      <div className="question-container" onClick={goToDetail}>
+        <div className="questioner-container">
+          <div className="questioner-info">
+            <span className="questioner">
+              {questioner} <span className="middle">•</span>
+            </span>
+            <span className="questioner-tag">{questionerTag}</span>
+          </div>
+        </div>
+
+        <div className="field">
+          <span className="question-title">
+            <img className="question-img" src={Questitle} />{' '}
+            {truncateTitle(questionTitle)}
+          </span>
+
+          <span className="question-content">
+            {truncateContent(questionContent)}
+          </span>
+          <div className="view-container">
+            <img className="view-img" src={View} />
+            <span className="chat-count">{viewCount}</span>
+            <img className="chat-img" src={ChatAll} />
+            <span className="chat-count">{answerCount}</span>
+            {<span className="reward">{reward}</span>}
+          </div>
+          <span className="question-answer-day">{formattedDate}</span>
+        </div>
+      </div>
       <Line />
     </>
   );
