@@ -107,6 +107,7 @@ function CompanyInfoPage() {
   const navigate = useNavigate();
   const [companyData, setCompanyData] = useState<CompanInfoProps>();
   const { companyId } = useParams();
+  const [questionsCount, setQuestionCount] = useState(0);
 
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
@@ -146,6 +147,7 @@ function CompanyInfoPage() {
 
       if (data) {
         setCompanyData(data.data);
+        setQuestionCount(data.data.totalElements);
       } else {
         throw new Error('데이터가 존재하지 않습니다.');
       }
@@ -204,6 +206,8 @@ function CompanyInfoPage() {
   const handleGoBack = () => {
     navigate(-1);
   };
+
+  console.log('first', companyData);
 
   return (
     <StyledPage className="main-page-container">
@@ -278,7 +282,7 @@ function CompanyInfoPage() {
           <div className="question-info-container">
             <div className="company-question-title">
               <span>질문</span>
-              <div className="question-count">{companyData.questionCount}</div>
+              <div className="question-count">{questionsCount}</div>
             </div>
           </div>
 
