@@ -4,6 +4,7 @@ import {
   ACCESS_TOKEN,
   REFRESH_TOKEN,
   TOKEN_EXPIRES_IN,
+  LAST_EVENT_ID,
 } from '../constants/index.ts';
 import { showSuccessToast } from '../../ui/toast/toast.tsx';
 import { setTokens } from '../../../store/actions/authActions.js';
@@ -48,7 +49,7 @@ export const initializeSSE = (queryClient) => {
 
     console.log('알림 타입', data.type);
     lastEventId = event.lastEventId;
-
+    localStorage.setItem(LAST_EVENT_ID, lastEventId);
     let message = '';
     if (data && data.type) {
       switch (data.type) {

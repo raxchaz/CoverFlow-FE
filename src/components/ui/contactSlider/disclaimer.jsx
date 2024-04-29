@@ -1,7 +1,7 @@
 import React from 'react';
 import './contactSlider.scss';
 
-export default function Disclamier() {
+export default function Disclaimer() {
   return (
     <div>
       <div className="disclaimer">상담 시간 : 월 ~ 금 09 : 00 ~ 18 : 00</div>

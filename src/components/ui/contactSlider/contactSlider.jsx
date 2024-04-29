@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import './contactSlider.scss';
-import Disclamier from './disclamier.jsx';
+import Disclaimer from './disclaimer.jsx';
 import ContactList from './contactList.jsx';
 import Button from '../button/Button/Button.jsx';
 import { fetchAPI } from '../../global/utils/apiUtil.js';
@@ -140,7 +140,7 @@ export default function ContactSlider() {
             </div>
 
             <div className="contact-input-field-container">
-              <Disclamier />
+              <Disclaimer />
 
               <input
                 type="text"
