@@ -78,14 +78,16 @@ export interface AnswerProps {
 
 export interface CommentProps {
   data: {
-    answerCount: number;
-    answers: {
-      answerId: string;
-      answererTag: string;
-      createAt: string;
-      answerContent: string;
-      answererNickname: string;
-    }[];
+    data: {
+      answerCount: number;
+      answers: {
+        answerId: string;
+        answererTag: string;
+        createAt: string;
+        answerContent: string;
+        answererNickname: string;
+      }[];
+    };
   };
 }
 
@@ -320,9 +322,9 @@ function QuestionDetailPage() {
       <ContentBlur $isLoggedIn={isLoggedIn}>
         <AnswerList>
           <div className="answer-title">
-            답변 {loadAnswer?.data.answerCount}
+            답변 {loadAnswer?.data?.data?.answerCount}
           </div>
-          {loadAnswer?.data.answers.map((answer) => (
+          {loadAnswer?.data?.data?.answers?.map((answer) => (
             <Answer
               key={answer.answerId}
               createAt={answer.createAt}
@@ -335,13 +337,14 @@ function QuestionDetailPage() {
         </AnswerList>
       </ContentBlur>
       <TabBar />
-      {loadAnswer?.data.answers && loadAnswer.data.answers.length > 0 && (
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          handlePagination={handlePagination}
-        />
-      )}
+      {loadAnswer?.data.data.answers &&
+        loadAnswer.data.data.answers.length > 0 && (
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            handlePagination={handlePagination}
+          />
+        )}
     </StyledPage>
   );
 }
