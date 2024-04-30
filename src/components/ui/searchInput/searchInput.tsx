@@ -63,7 +63,11 @@ interface CompanyProps {
   companyName: string;
 }
 
-function SearchInput() {
+interface SearchInputProps {
+  setCurrentPage?: (page: number) => void;
+}
+
+function SearchInput({ setCurrentPage }: SearchInputProps) {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const navigate = useNavigate();
   const [keyword, setKeyword] = useState('');
@@ -143,7 +147,7 @@ function SearchInput() {
 
     const params = new URLSearchParams();
     params.append('keyword', keyword);
-
+    setCurrentPage?.(0);
     navigate(`/search-result?${params.toString()}`, {
       state: { searchResults: autoCompleteValue, totalCompany, totalPages },
     });

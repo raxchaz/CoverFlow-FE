@@ -215,7 +215,7 @@ function SearchResultPage() {
   const handlePagination = (direction) => {
     if (direction === 'prev' && currentPage > 0) {
       setCurrentPage(currentPage - 1);
-    } else if (direction === 'next' && currentPage < totalPages - 1) {
+    } else if (direction === 'next') {
       setCurrentPage(currentPage + 1);
     } else if (typeof direction === 'number') {
       setCurrentPage(direction);
@@ -227,7 +227,7 @@ function SearchResultPage() {
       <StyledHeader>
         <ResultsContainer>
           <TitleHeader pageTitle="검색 결과" handleGoBack={handleGoBack} />
-          <SearchInput />
+          <SearchInput setCurrentPage={setCurrentPage} />
           <ResultCount>
             기업 검색 결과
             <span className="result-count">{companyCnt}</span>

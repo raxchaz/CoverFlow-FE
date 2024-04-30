@@ -40,6 +40,7 @@ export const initializeSSE = (queryClient) => {
   });
 
   sse.addEventListener('connect', (event) => {
+    queryClient.invalidateQueries(['notifications']);
     let data;
     try {
       data = JSON.parse(event.data);
