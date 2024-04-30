@@ -40,10 +40,11 @@ const StatusTab = styled.div`
 
 export default function ContactSlider() {
   const navigate = useNavigate();
-  useEffect(() => {
-    loadUserData();
-  }, [navigate]);
+  const [currentPage, setCurrentPage] = useState(0);
 
+  useEffect(() => {
+    loadUserData(currentPage);
+  }, [navigate, currentPage]);
   const [currentSection, setCurrentSection] = useState('contact');
   const [contact, setcontact] = useState({
     title: '',
@@ -51,16 +52,16 @@ export default function ContactSlider() {
   });
   const [contactList, setContactList] = useState([]);
   const [totalPage, setTotalPage] = useState(1);
-  const [currentPageAPI, setCurrentPageAPI] = useState(0);
 
-  const loadUserData = async () => {
+  const loadUserData = async (currentPage) => {
     try {
       const data = await fetchAPI(
-        `/api/inquiry/me?pageNo=${currentPageAPI}`,
+        `/api/inquiry/me?pageNo=${currentPage}`,
         'GET',
       );
+      console.log(data);
       setContactList(data.data.inquiries);
-      setTotalPage(data.data.totalPage);
+      setTotalPage(data.data.totalPages);
     } catch (error) {
       console.error('문의 내역 불러오기 실패:', error);
     }
@@ -75,7 +76,7 @@ export default function ContactSlider() {
           title: '',
           content: '',
         });
-        loadUserData();
+        loadUserData(0);
         showSuccessToast('문의 등록이 완료되었습니다!');
       }
     } catch (error) {
@@ -172,7 +173,8 @@ export default function ContactSlider() {
             contactList={contactList}
             totalPages={totalPage}
             setCurrentSection={setCurrentSection}
-            setCurrentPage={setCurrentPageAPI}
+            setCurrentPage={setCurrentPage}
+            currentPage={currentPage}
           />
         )}
       </div>
