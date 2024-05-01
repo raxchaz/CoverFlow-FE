@@ -108,7 +108,6 @@ function QuestionDetailPage() {
   const [answerCount, setAnswerCount] = useState(0);
   const [questionTitle, setQuestionTitle] = useState('');
   const [createAt, setCreateAt] = useState('');
-  console.log('createdAt: ', createAt);
   const [reward, setReward] = useState(0);
   const [companyName, setCompanyName] = useState('');
   const [questionContent, setQuestionContent] = useState('');
@@ -214,20 +213,30 @@ function QuestionDetailPage() {
         `${BASE_URL}/api/question/${questionId}?pageNo=${currentPage}&criterion=createdAt`,
       );
 
-      console.log(response);
       const {
-        data: { totalPages },
-      } = response;
-      setQuestionerNickname(response.data.data.questionerNickname);
+        data: {
+          questionerNickname,
+          questionerTag,
+          answerCount,
+          questionTitle,
+          createAt,
+          reward,
+          companyName,
+          questionContent,
+          answers,
+          totalPages,
+        },
+      } = response.data;
 
-      setQuestionerTag(response.data.data.questionerTag);
-      setAnswerCount(response.data.data.answerCount);
-      setQuestionTitle(response.data.data.questionTitle);
-      setCreateAt(response.data.data.createAt);
-      setReward(response.data.data.reward);
-      setCompanyName(response.data.data.companyName);
-      setQuestionContent(response.data.data.questionContent);
-      setAnswers(response.data.data.answers);
+      setQuestionerNickname(questionerNickname);
+      setQuestionerTag(questionerTag);
+      setAnswerCount(answerCount);
+      setQuestionTitle(questionTitle);
+      setCreateAt(createAt);
+      setReward(reward);
+      setCompanyName(companyName);
+      setQuestionContent(questionContent);
+      setAnswers(answers);
       setTotalPages(totalPages);
     };
 
@@ -346,13 +355,13 @@ function QuestionDetailPage() {
             />
           ))}
         </AnswerList>
+        <TabBar />
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          handlePagination={handlePagination}
+        />
       </ContentBlur>
-      <TabBar />
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        handlePagination={handlePagination}
-      />
     </StyledPage>
   );
 }
