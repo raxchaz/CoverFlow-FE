@@ -1,3 +1,6 @@
+$job-seeker: '취준생';
+$job-keeper: '현직자';
+
 .question-detail-container {
   margin-top: 5%;
   padding: 35px;
@@ -263,6 +266,11 @@
   width: 100%;
   span {
     margin-right: 60%;
+    @if $job-seeker == '취준생' {
+      color: #875100;
+    } @else {
+      color: #428238;
+    }
   }
   img:first-child {
     margin-right: 7px;
