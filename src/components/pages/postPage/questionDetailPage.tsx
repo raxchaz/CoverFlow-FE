@@ -33,20 +33,22 @@ const ContentBlur = styled.span<{ $isLoggedIn: boolean }>`
 
 const Questioner = styled.div`
   letter-spacing: -1px;
-  margin-left: 2%;
+  margin-left: 4.5%;
+  span:first-child {
+    font-family: 'Pretendard-Medium';
+  }
 `;
 
 const QuestionTitle = styled.div`
-  font-family: pretendard-semibold;
+  font-family: 'Pretendard-Bold';
   letter-spacing: -1px;
   font-size: 30px;
   padding: 10px;
+  margin: 0 0 2% 3%;
 `;
 
 const QuestionContent = styled.div`
-  margin-top: 3%;
-  margin-left: 2%;
-  margin-bottom: 2%;
+  margin: 3% 0% 2% 4%;
   letter-spacing: -1px;
   font-family: pretendard-light;
   line-height: 1.5;
@@ -105,7 +107,8 @@ function QuestionDetailPage() {
   const [questionerTag, setQuestionerTag] = useState('');
   const [answerCount, setAnswerCount] = useState(0);
   const [questionTitle, setQuestionTitle] = useState('');
-  const [createdAt, setCreatedAt] = useState('');
+  const [createAt, setCreateAt] = useState('');
+  console.log('createdAt: ', createAt);
   const [reward, setReward] = useState(0);
   const [companyName, setCompanyName] = useState('');
   const [questionContent, setQuestionContent] = useState('');
@@ -121,7 +124,6 @@ function QuestionDetailPage() {
   const [showReport, setShowReport] = useState(false);
 
   // const { questionId } = useParams();
-
   useEffect(() => {
     const loadAnswerList = async () => {
       try {
@@ -212,16 +214,16 @@ function QuestionDetailPage() {
         `${BASE_URL}/api/question/${questionId}?pageNo=${currentPage}&criterion=createdAt`,
       );
 
+      console.log(response);
       const {
         data: { totalPages },
       } = response;
-
       setQuestionerNickname(response.data.data.questionerNickname);
 
       setQuestionerTag(response.data.data.questionerTag);
       setAnswerCount(response.data.data.answerCount);
       setQuestionTitle(response.data.data.questionTitle);
-      setCreatedAt(response.data.data.createdAt);
+      setCreateAt(response.data.data.createAt);
       setReward(response.data.data.reward);
       setCompanyName(response.data.data.companyName);
       setQuestionContent(response.data.data.questionContent);
@@ -251,8 +253,8 @@ function QuestionDetailPage() {
           <img src={Tree} alt="" />
           <span>
             {questionerTag === '취준생'
-              ? `${questionerTag}이 남긴 글이에요.`
-              : `${questionerTag}가 남긴 질문이에요.`}
+              ? `${questionerTag}이 남긴 질문이에요`
+              : `${questionerTag}가 남긴 질문이에요`}
           </span>
 
           <img onClick={toggleReportPopup} src={Dot} alt="dot" />
@@ -267,9 +269,9 @@ function QuestionDetailPage() {
         <QuestionTitle>{questionTitle}</QuestionTitle>
         <div className="questioner-info">
           <Questioner>
-            {questionerNickname || 'Anonymous'}{' '}
+            <span>{questionerNickname || 'Anonymous'}</span>
             <span className="middle">•</span>
-            <span className="question-date">{createdAt}</span>
+            <span className="question-date">{createAt}</span>
           </Questioner>
         </div>
 
@@ -319,7 +321,6 @@ function QuestionDetailPage() {
         <textarea
           placeholder="답변을 입력해주세요.."
           className="comment-input"
-          rows={4}
           ref={answerRef}
           maxLength={500}
         ></textarea>
@@ -330,17 +331,10 @@ function QuestionDetailPage() {
 
       <ContentBlur $isLoggedIn={isLoggedIn}>
         <AnswerList>
-          <div className="answer-title">답변 {answerCount}</div>
-          {/* {answers?.map((answer) => (
-            <Answer
-              key={answer.answer}
-              createAt={answer.createAt}
-              answerContent={answer.answerContent}
-              answererNickname={answer.answererNickname}
-              answererTag={answer.answererTag}
-              answerId={answer.answerId}
-            />
-          ))} */}
+          <div className="answer-title">
+            <span>답변 {answerCount}</span>
+          </div>
+
           {answers?.map((answer) => (
             <Answer
               key={answer.answerId}
