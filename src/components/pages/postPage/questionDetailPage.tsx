@@ -100,6 +100,7 @@ interface AppState {
 function QuestionDetailPage() {
   const navigate = useNavigate();
   const { state } = useLocation();
+  console.log('state: ', state);
   // console.log('state: ', state);
   const { questionId } = useParams();
 
@@ -107,6 +108,7 @@ function QuestionDetailPage() {
   const [totalPages, setTotalPages] = useState(0);
 
   const [questionerNickname, setQuestionerNickname] = useState('');
+
   const [questionerTag, setQuestionerTag] = useState('');
   const [answerCount, setAnswerCount] = useState(0);
   const [questionTitle, setQuestionTitle] = useState('');
@@ -116,14 +118,18 @@ function QuestionDetailPage() {
   const [questionContent, setQuestionContent] = useState('');
   const [answers, setAnswers] = useState<CommentProps[]>([]);
 
+  const [myNickname, setMyNickname] = useState('');
+
   const answerRef = useRef<HTMLTextAreaElement>(null);
   const [postAnswer, setPostAnswer] = useState('');
 
   const { isLoggedIn } = useSelector((state: AppState) => state.user);
 
   const [isShowEdit, setIsShowEdit] = useState(false);
+  console.log('isShowEdit: ', isShowEdit);
 
   const [showReport, setShowReport] = useState(false);
+  console.log('showReport: ', showReport);
 
   // const { questionId } = useParams();
   useEffect(() => {
@@ -154,7 +160,7 @@ function QuestionDetailPage() {
       questionId: Number(questionId),
     };
 
-    if (state.questioner === questionerNickname) {
+    if (myNickname === questionerNickname) {
       showErrorToast('본인의 문의는 답변할 수 없습니다.');
       return;
     }
@@ -186,15 +192,12 @@ function QuestionDetailPage() {
   };
 
   const toggleReportPopup = () => {
-    if (state.questioner === questionerNickname) {
-      setIsShowEdit((isEdit) => !isEdit);
-    } else {
-      setShowReport(true);
-    }
+    setShowReport((show) => !show);
   };
 
   const handleEdit = () => {
-    setIsShowEdit((isEdit) => !isEdit);
+    setIsShowEdit((show) => !show);
+    setShowReport((show) => !show);
   };
 
   const handleReportSubmit = async () => {
@@ -207,7 +210,7 @@ function QuestionDetailPage() {
   };
 
   const handleCloseReportPopup = () => {
-    setShowReport(false);
+    setShowReport((show) => !show);
   };
 
   useEffect(() => {
@@ -215,7 +218,7 @@ function QuestionDetailPage() {
       const response = await axios.get(
         `${BASE_URL}/api/question/${questionId}?pageNo=${currentPage}&criterion=createdAt`,
       );
-
+      console.log(response);
       const {
         data: {
           questionerNickname,
@@ -241,6 +244,10 @@ function QuestionDetailPage() {
       setQuestionContent(questionContent);
       setAnswers(answers);
       setTotalPages(totalPages);
+
+      const res = await fetchAPI('/api/member/me', 'GET');
+
+      setMyNickname(res.data.nickname);
     };
 
     fetchData();
@@ -269,14 +276,17 @@ function QuestionDetailPage() {
               : `${questionerTag}가 남긴 질문이에요`}
           </span>
 
-          <img onClick={toggleReportPopup} src={Dot} alt="dot" />
-          {isShowEdit && (
-            <div className="dropdown-menu">
-              <ul style={{ right: '10px' }} onClick={handleEdit}>
+          <img onClick={handleEdit} src={Dot} alt="dot" />
+
+          {myNickname === questionerNickname && isShowEdit ? (
+            <div className="dropdown-question-detail-menu">
+              <ul style={{ right: '10px' }}>
                 <li className="dropdown-item-edit">수정</li>
+                <hr />
+                <li className="dropdown-item-delete">삭제</li>
               </ul>
             </div>
-          )}
+          ) : null}
         </div>
         <QuestionTitle>{questionTitle}</QuestionTitle>
         <div className="questioner-info">
@@ -296,7 +306,7 @@ function QuestionDetailPage() {
           </div>
         </div>
         <FirstLine />
-        {showReport && (
+        {myNickname !== questionerNickname && showReport ? (
           <div className="report-popup-overlay">
             <div className="report-popup">
               <div className="report-title">사용자 신고</div>
@@ -326,7 +336,7 @@ function QuestionDetailPage() {
               </div>
             </div>
           </div>
-        )}
+        ) : null}
       </div>
 
       <div className="comment-section">
