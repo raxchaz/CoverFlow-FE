@@ -34,6 +34,7 @@ const CompanyName = styled.div`
     font-size: 1.4rem;
     color: #474646;
     font-family: 'Pretendard-Medium';
+    letter-spacing: -1px;
   }
 `;
 
@@ -61,9 +62,6 @@ const QuestionButton = styled.button`
   /* border-radius: 3px; */
   font-weight: 600;
   font-size: 18px;
-  /* border-radius: 7px; */
-  /* padding: 1% 2% 1% 2%; */
-  /* margin: 10% 13% 5% 0%; */
   width: 105px;
   height: 35px;
   border-radius: 2px;
