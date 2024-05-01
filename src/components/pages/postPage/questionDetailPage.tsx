@@ -41,16 +41,19 @@ const Questioner = styled.div`
 
 const QuestionTitle = styled.div`
   font-family: 'Pretendard-Bold';
-  letter-spacing: -1px;
-  font-size: 30px;
+  letter-spacing: -1.5px;
+  font-size: 3rem;
   padding: 10px;
+  color: #000000;
   margin: 0 0 2% 3%;
 `;
 
 const QuestionContent = styled.div`
   margin: 3% 0% 2% 4%;
-  letter-spacing: -1px;
-  font-family: pretendard-light;
+  letter-spacing: -1.5px;
+  font-size: 2rem;
+  color: #000000;
+  font-family: 'Pretendard-Regular';
   line-height: 1.5;
 `;
 

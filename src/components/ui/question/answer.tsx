@@ -9,10 +9,14 @@ const AdoptButton = styled.button`
   display: flex;
   margin: -12% 6% 0% 82%;
   padding: 5px 5px;
+  width: 85px;
+  height: 25px;
+  color: #428238;
   position: relative;
-  font-size: 10px;
+  font-size: 1.2rem;
+  letter-spacing: -1px;
   border-radius: 5px;
-  font-family: pretendard-extraLight;
+  font-family: 'Pretendard-Medium';
   justify-content: space-evenly;
   border: 1px solid #428238;
   &:not(.selected) {
@@ -21,6 +25,10 @@ const AdoptButton = styled.button`
   }
   justify-content: space-around;
   align-items: center;
+  img {
+    width: 13px;
+    height: 13px;
+  }
 `;
 
 interface AnswerDetailProps {
