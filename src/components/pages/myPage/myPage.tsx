@@ -139,7 +139,7 @@ function Mypage() {
 
   return (
     <>
-      <StyledPage className="main-page-container">
+      <StyledPage className="my-page-container">
         <StyledHeader>
           <TitleHeader pageTitle="마이 페이지" handleGoBack={handleGoBack} />
 

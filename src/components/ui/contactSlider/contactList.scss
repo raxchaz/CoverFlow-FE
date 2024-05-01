@@ -14,8 +14,6 @@
   position: relative;
   width: 505px;
   margin: 0 auto;
-  max-height: 68vh;
-  min-height: 68vh;
   padding: 1rem 0;
   overflow-y: scroll;
   -ms-overflow-style: none;
@@ -190,4 +188,9 @@
   height: 20px;
   text-align: center;
   letter-spacing: -1px;
+}
+
+.mypage-pagination {
+  margin-bottom: 15rem;
+  width: 40rem !important;
 }

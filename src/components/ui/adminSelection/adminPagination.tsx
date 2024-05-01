@@ -13,6 +13,7 @@ const AdminPagination = ({
   handlePagination,
   className,
 }: PaginationProps) => {
+  console.log(totalPages, currentPage);
   const maxPagesToShow = 5; // 한 번에 보여줄 최대 페이지 수
   const halfWindow = Math.floor(maxPagesToShow / 2);
 
