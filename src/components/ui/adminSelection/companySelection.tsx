@@ -264,13 +264,15 @@ export default function CompanySelection() {
                     })}
                   </ul>
                 </div>
-                {companies && (
-                  <AdminPagination
-                    currentPage={currentPage}
-                    totalPages={totalPages}
-                    handlePagination={handlePagination}
-                  />
-                )}
+                <div className="ad-member-pagination">
+                  {companies && (
+                    <AdminPagination
+                      currentPage={currentPage}
+                      totalPages={totalPages}
+                      handlePagination={handlePagination}
+                    />
+                  )}
+                </div>
               </div>
             )}
           </div>
