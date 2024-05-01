@@ -6,7 +6,7 @@ import { StyledPage, StyledHeader } from '../../../styledComponent';
 import TitleHeader from '../../ui/header/titleHeader';
 import Answer from '../../ui/question/answer.tsx';
 import TabBar from '../../ui/tabBar/tabBar';
-import { ACCESS_TOKEN } from '../../global/constants';
+import { BASE_URL } from '../../global/constants';
 import Tree from '../../../asset/image/nature-ecology-tree-3--tree-plant-cloud-shape-park.svg';
 import Reward from '../../../asset/image/reward.svg';
 import Dot from '../../../asset/image/dots-vertical.svg';
@@ -16,6 +16,7 @@ import { showErrorToast, showSuccessToast } from '../../ui/toast/toast.tsx';
 import { fetchAPI } from '../../global/utils/apiUtil.js';
 import Pagination from '../../ui/Pagination.tsx';
 import { useSelector } from 'react-redux';
+import axios from 'axios';
 
 const ContentBlur = styled.span<{ $isLoggedIn: boolean }>`
   ${({ $isLoggedIn }) =>
@@ -76,16 +77,13 @@ export interface AnswerProps {
 }
 
 export interface CommentProps {
-  data: {
-    answerCount: number;
-    answers: {
-      answerId: string;
-      answererTag: string;
-      createAt: string;
-      answerContent: string;
-      answererNickname: string;
-    }[];
-  };
+  answerCount?: number;
+
+  answerId: string;
+  answererTag: string;
+  createAt: string;
+  answerContent: string;
+  answererNickname: string;
 }
 
 interface AppState {
@@ -98,14 +96,23 @@ function QuestionDetailPage() {
   const navigate = useNavigate();
   const { state } = useLocation();
   // console.log('state: ', state);
+  const { questionId } = useParams();
 
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
-  const [nickName, setNickName] = useState('');
+
+  const [questionerNickname, setQuestionerNickname] = useState('');
+  const [questionerTag, setQuestionerTag] = useState('');
+  const [answerCount, setAnswerCount] = useState(0);
+  const [questionTitle, setQuestionTitle] = useState('');
+  const [createdAt, setCreatedAt] = useState('');
+  const [reward, setReward] = useState(0);
+  const [companyName, setCompanyName] = useState('');
+  const [questionContent, setQuestionContent] = useState('');
+  const [answers, setAnswers] = useState<CommentProps[]>([]);
 
   const answerRef = useRef<HTMLTextAreaElement>(null);
   const [postAnswer, setPostAnswer] = useState('');
-  const [loadAnswer, setLoadAnswer] = useState<CommentProps>();
 
   const { isLoggedIn } = useSelector((state: AppState) => state.user);
 
@@ -113,16 +120,16 @@ function QuestionDetailPage() {
 
   const [showReport, setShowReport] = useState(false);
 
-  const { questionId } = useParams();
+  // const { questionId } = useParams();
 
   useEffect(() => {
     const loadAnswerList = async () => {
       try {
-        const token = localStorage.getItem(ACCESS_TOKEN);
-        if (!token) {
-          showErrorToast('로그인이 필요합니다.');
-          navigate(-1);
-        }
+        // const token = localStorage.getItem(ACCESS_TOKEN);
+        // if (!token) {
+        //   showErrorToast('로그인이 필요합니다.');
+        //   navigate(-1);
+        // }
       } catch (error) {
         if (error instanceof Error) showErrorToast(error.message);
       }
@@ -143,7 +150,7 @@ function QuestionDetailPage() {
       questionId: Number(questionId),
     };
 
-    if (state.questioner === nickName) {
+    if (state.questioner === questionerNickname) {
       showErrorToast('본인의 문의는 답변할 수 없습니다.');
       return;
     }
@@ -151,7 +158,7 @@ function QuestionDetailPage() {
     const data = await fetchAPI('/api/answer', 'POST', requestData);
 
     if (
-      state.questioner !== nickName &&
+      state.questioner !== questionerNickname &&
       data.statusCode === 'CREATED' &&
       answerRef.current
     ) {
@@ -175,7 +182,7 @@ function QuestionDetailPage() {
   };
 
   const toggleReportPopup = () => {
-    if (state.questioner === nickName) {
+    if (state.questioner === questionerNickname) {
       setIsShowEdit((isEdit) => !isEdit);
     } else {
       setShowReport(true);
@@ -201,22 +208,25 @@ function QuestionDetailPage() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetchAPI(
-        `/api/question/${questionId}?pageNo=${currentPage}&criterion=createdAt`,
-        'GET',
-        null,
+      const response = await axios.get(
+        `${BASE_URL}/api/question/${questionId}?pageNo=${currentPage}&criterion=createdAt`,
       );
 
       const {
         data: { totalPages },
       } = response;
-      setLoadAnswer(response);
-      setTotalPages(totalPages);
 
-      const {
-        data: { nickname },
-      } = await fetchAPI('/api/member/me', 'GET');
-      setNickName(nickname);
+      setQuestionerNickname(response.data.data.questionerNickname);
+
+      setQuestionerTag(response.data.data.questionerTag);
+      setAnswerCount(response.data.data.answerCount);
+      setQuestionTitle(response.data.data.questionTitle);
+      setCreatedAt(response.data.data.createdAt);
+      setReward(response.data.data.reward);
+      setCompanyName(response.data.data.companyName);
+      setQuestionContent(response.data.data.questionContent);
+      setAnswers(response.data.data.answers);
+      setTotalPages(totalPages);
     };
 
     fetchData();
@@ -240,9 +250,9 @@ function QuestionDetailPage() {
         <div className="job-info">
           <img src={Tree} alt="" />
           <span>
-            {state.questionerTag === '취준생'
-              ? `${state.questionerTag}이 남긴 글이에요.`
-              : `${state.questionerTag}가 남긴 질문이에요.`}
+            {questionerTag === '취준생'
+              ? `${questionerTag}이 남긴 글이에요.`
+              : `${questionerTag}가 남긴 질문이에요.`}
           </span>
 
           <img onClick={toggleReportPopup} src={Dot} alt="dot" />
@@ -254,20 +264,21 @@ function QuestionDetailPage() {
             </div>
           )}
         </div>
-        <QuestionTitle>{state.questionTitle}</QuestionTitle>
+        <QuestionTitle>{questionTitle}</QuestionTitle>
         <div className="questioner-info">
           <Questioner>
-            {state.questioner || 'Anonymous'} <span className="middle">•</span>
-            <span className="question-date">{state.createAt}</span>
+            {questionerNickname || 'Anonymous'}{' '}
+            <span className="middle">•</span>
+            <span className="question-date">{createdAt}</span>
           </Questioner>
         </div>
 
-        <QuestionContent>{state.questionContent}</QuestionContent>
+        <QuestionContent>{questionContent}</QuestionContent>
         <div className="company-fish-tag">
-          <div className="detailpage-company">{state.companyName}</div>
+          <div className="detailpage-company">{companyName}</div>
           <div className="detailpage-fishbuncount">
             <img src={Reward} alt="reward" />
-            {state.reward}
+            {reward}
           </div>
         </div>
         <FirstLine />
@@ -319,10 +330,18 @@ function QuestionDetailPage() {
 
       <ContentBlur $isLoggedIn={isLoggedIn}>
         <AnswerList>
-          <div className="answer-title">
-            답변 {loadAnswer?.data.answerCount}
-          </div>
-          {loadAnswer?.data.answers.map((answer) => (
+          <div className="answer-title">답변 {answerCount}</div>
+          {/* {answers?.map((answer) => (
+            <Answer
+              key={answer.answer}
+              createAt={answer.createAt}
+              answerContent={answer.answerContent}
+              answererNickname={answer.answererNickname}
+              answererTag={answer.answererTag}
+              answerId={answer.answerId}
+            />
+          ))} */}
+          {answers?.map((answer) => (
             <Answer
               key={answer.answerId}
               createAt={answer.createAt}
@@ -335,13 +354,11 @@ function QuestionDetailPage() {
         </AnswerList>
       </ContentBlur>
       <TabBar />
-      {loadAnswer?.data.answers && loadAnswer.data.answers.length > 0 && (
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          handlePagination={handlePagination}
-        />
-      )}
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        handlePagination={handlePagination}
+      />
     </StyledPage>
   );
 }
