@@ -36,11 +36,12 @@ export const initializeSSE = (queryClient) => {
           }
         : {}),
     },
-    heartbeatTimeout: 3600000,
+    heartbeatTimeout: 3660000,
   });
-
+  console.log(sse);
   sse.addEventListener('connect', (event) => {
     queryClient.invalidateQueries(['notifications']);
+
     let data;
     try {
       data = JSON.parse(event.data);

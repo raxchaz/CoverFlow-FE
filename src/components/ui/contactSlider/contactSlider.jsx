@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import './contactSlider.scss';
 import Disclaimer from './disclaimer.jsx';
@@ -40,11 +40,22 @@ const StatusTab = styled.div`
 
 export default function ContactSlider() {
   const navigate = useNavigate();
+  const { state } = useLocation();
   const [currentPage, setCurrentPage] = useState(0);
 
   useEffect(() => {
     loadUserData(currentPage);
   }, [navigate, currentPage]);
+
+  useEffect(() => {
+    console.log(state);
+    if (state) {
+      setCurrentSection('contactList');
+    } else {
+      setCurrentSection('contact');
+    }
+  }, [navigate]);
+
   const [currentSection, setCurrentSection] = useState('contact');
   const [contact, setcontact] = useState({
     title: '',

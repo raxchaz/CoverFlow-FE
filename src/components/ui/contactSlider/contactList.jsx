@@ -104,9 +104,7 @@ export default function ContactList({
                     </div>
                     {item.inquiryAnswer != null && (
                       <div className="inquiry-content-answer">
-                        <div className="inquiry-content-answer-tag">
-                          코버플로우
-                        </div>
+                        <div className="inquiry-content-answer-tag">관리자</div>
                         {item.inquiryAnswer}
                       </div>
                     )}
