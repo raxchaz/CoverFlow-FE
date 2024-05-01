@@ -51,10 +51,12 @@ function NotificationList({
     fetchAPI('/api/notification', 'PATCH', [{ notificationId: index }])
       .then(() => {
         queryClient.invalidateQueries(['notifications']);
-        if (type !== 'DAILY' && uri) {
+        if (type === 'INQUIRY') {
+          navigate(uri, { state: { list: 'list' } });
+        } else if (type !== 'DAILY' && uri) {
           navigate(uri);
         } else {
-          console.log('붕어빵 획득 알림은 이동이 불가능합니다.');
+          queryClient.invalidateQueries(['notifications']);
         }
       })
       .catch((error) => {
