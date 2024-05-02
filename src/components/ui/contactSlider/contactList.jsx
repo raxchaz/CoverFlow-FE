@@ -12,7 +12,7 @@ export default function ContactList({
   setCurrentPage,
   currentPage,
 }) {
-  console.log(totalPages);
+  // console.log(totalPages);
   const [activeToggleIndex, setActiveToggleIndex] = useState(null);
 
   const toggleFunction = (index) => {
@@ -25,9 +25,9 @@ export default function ContactList({
     } else if (direction === 'next' && currentPage < totalPages - 1) {
       setCurrentPage(currentPage + 1);
     } else if (typeof direction === 'number') {
-      console.log('전', direction);
+      // console.log('전', direction);
       setCurrentPage(direction);
-      console.log('후', direction);
+      // console.log('후', direction);
     }
   };
 

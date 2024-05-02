@@ -53,7 +53,7 @@ export default function FeedbackSelection() {
     )
       .then((response) => response.json())
       .then((data: ApiResponse) => {
-        console.log(data);
+        // console.log(data);
         setFeedback(data.data.feedbacks);
         setTotalPages(data.data.totalPages);
         setTotalFeedbackCount(data.data.totalElements);

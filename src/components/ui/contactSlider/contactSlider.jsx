@@ -48,7 +48,7 @@ export default function ContactSlider() {
   }, [navigate, currentPage]);
 
   useEffect(() => {
-    console.log(state);
+    // console.log(state);
     if (state) {
       setCurrentSection('contactList');
     } else {
@@ -70,7 +70,7 @@ export default function ContactSlider() {
         `/api/inquiry/me?pageNo=${currentPage}`,
         'GET',
       );
-      console.log(data);
+      // console.log(data);
       setContactList(data.data.inquiries);
       setTotalPage(data.data.totalPages);
     } catch (error) {
@@ -102,7 +102,7 @@ export default function ContactSlider() {
       ...prevInfo,
       [name]: value,
     }));
-    console.log(contact);
+    // console.log(contact);
   };
 
   return (
