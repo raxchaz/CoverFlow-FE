@@ -10,7 +10,8 @@ import { useQueryClient, useInfiniteQuery } from '@tanstack/react-query';
 import { useDispatch } from 'react-redux';
 import { alertCount } from '../../../store/actions/alertActions.js';
 import { showErrorToast } from '../../ui/toast/toast.tsx';
-// import { initializeSSE } from '../../global/utils/eventApiUtils.js';
+import { initializeSSE } from '../../global/utils/eventApiUtils.js';
+
 function fetchNotifications({ pageParam = '' }) {
   return fetchAPI(`/api/notification${pageParam}`, 'GET');
 }
@@ -36,8 +37,18 @@ function NotificationPage() {
 
       return lastId ? `?lastId=${lastId}` : undefined;
     },
+    onSuccess: (data) => {
+      if (data?.pages) {
+        const noReadElements = data.pages.reduce(
+          (total, page) => total + (page.data.noReadElements || 0),
+          0,
+        );
+        dispatch(alertCount(noReadElements));
+      }
+    },
   });
   const [noReadElements, setNoReadElements] = useState(0);
+
   useEffect(() => {
     if (data?.pages) {
       const noReadElements = data.pages.reduce(
@@ -88,9 +99,9 @@ function NotificationPage() {
     <StyledPage className="main-page-container">
       <StyledHeader>
         <TitleHeader pageTitle="알림" handleGoBack={handleGoBack} />
-        {/* <button onClick={() => initializeSSE(queryClient)}>
+        <button onClick={() => initializeSSE(queryClient)}>
           initializeSSE
-        </button> */}
+        </button>
         <div className="notification-controls">
           <div className="no-read">
             읽지 않은 알림{' '}

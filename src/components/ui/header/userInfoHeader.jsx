@@ -5,17 +5,12 @@ import Reward from '../../../asset/image/reward.svg';
 import Loginuser from '../../../asset/image/loginuser.svg';
 import '../../../asset/sass/etc/header/userInfoHeader.scss';
 import { fetchAPI } from '../../global/utils/apiUtil.js';
-// import { useInitializeSSE } from '../../global/utils/eventApiUtils.js';
 import {
   setLoggedIn,
   setRewardCount,
   toggleDropdown,
 } from '../../../store/actions/userActions';
-import {
-  BASE_URL,
-  ACCESS_TOKEN,
-  REFRESH_TOKEN,
-} from '../../global/constants/index.ts';
+import { ACCESS_TOKEN, REFRESH_TOKEN } from '../../global/constants/index.ts';
 
 function UserInfoHeader() {
   const { isLoggedIn, rewardCount, isDropdownOpen } = useSelector(
@@ -33,19 +28,11 @@ function UserInfoHeader() {
 03. 로그인이 되어있다면, 사용자의 붕어빵 개수를 서버에서 가져와서 `setRewardCount` 액션으로 상태 업데이트
 */
   useEffect(() => {
-    const token = localStorage.getItem(ACCESS_TOKEN);
-    const loggedInStatus = !!token;
+    const loggedInStatus = !!localStorage.getItem(ACCESS_TOKEN);
     dispatch(setLoggedIn(loggedInStatus));
 
     if (loggedInStatus) {
-      fetch(`${BASE_URL}/api/member/me`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-      })
-        .then((response) => response.json())
+      fetchAPI('/api/member/me', 'GET')
         .then((data) => {
           if (data && data.data && data.data.fishShapedBun !== undefined) {
             dispatch(setRewardCount(data.data.fishShapedBun));
@@ -54,12 +41,12 @@ function UserInfoHeader() {
             console.error('유효하지 않은 데이터를 받았습니다.', data);
           }
         })
-        .catch((error) =>
+        .catch((error) => {
           console.error(
             '붕어빵 데이터를 가져오는 데 오류가 발생했습니다.',
             error,
-          ),
-        );
+          );
+        });
     }
   }, [dispatch]);
 
