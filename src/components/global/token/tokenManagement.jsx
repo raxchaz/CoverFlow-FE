@@ -23,7 +23,7 @@ const fetchToken = async (code) => {
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
   }
-  console.log('fetchToken:', response);
+  // console.log('fetchToken:', response);
   return response.headers;
 };
 const prevPage = localStorage.getItem('prevPage');
@@ -73,10 +73,10 @@ const TokenManagement = () => {
         // console.log('decoded:', decoded);
 
         if (userRole === 'GUEST') {
-          console.log('약관 동의 페이지로 이동합니다.');
+          // console.log('약관 동의 페이지로 이동합니다.');
           navigate('/login/terms', { state: { code } });
         } else if (['MEMBER', 'PREMIUM', 'ADMIN'].includes(userRole)) {
-          console.log('회원 정보가 존재합니다. 메인 페이지로 이동합니다.');
+          // console.log('회원 정보가 존재합니다. 메인 페이지로 이동합니다.');
           navigate(prevPage);
           initializeSSE(queryClient);
         } else {

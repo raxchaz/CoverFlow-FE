@@ -59,11 +59,11 @@ function NoticePage() {
           '/api/notice?pageNo=0&criterion=createdAt',
           'GET',
         );
-        console.log('Notices:', notices);
+        // console.log('Notices:', notices);
         setTotalPages(notices.data.totalPages);
         setNotices(notices.data.notices);
       } catch (error) {
-        console.error('Failed to fetch notices', error);
+        console.error('공지사항 불러오기 실패', error);
       }
     };
     fetchNotices();

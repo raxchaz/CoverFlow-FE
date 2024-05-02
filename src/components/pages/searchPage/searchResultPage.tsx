@@ -186,7 +186,7 @@ function SearchResultPage() {
         const data = await response.json();
         setSearchData(data.data.companyList);
 
-        console.log('페이지 내 결과', data.data);
+        // console.log('페이지 내 결과', data.data);
       } catch (error) {
         showErrorToast(`오류 발생: ${error}`);
         setSearchData([]);

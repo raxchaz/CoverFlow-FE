@@ -96,16 +96,19 @@ function UserInfoHeader() {
   그리고, setLoggedIn(false) 액션을 디스패치하여 로그인 상태를 업데이트한 후, 홈페이지로 리다이렉트 합니다.
   */
   const logout = async () => {
-    console.log('로그아웃 요청 시작');
+    // console.log('로그아웃 요청 시작');
     try {
       await fetchAPI('/api/member/logout', 'PATCH');
-      console.log('로그아웃 성공');
       localStorage.removeItem(ACCESS_TOKEN);
       localStorage.removeItem(REFRESH_TOKEN);
       dispatch(setLoggedIn(false));
       navigate('/');
     } catch (error) {
-      console.error('로그아웃 처리 중 에러 발생:', error.message);
+      console.error(error);
+      localStorage.removeItem(ACCESS_TOKEN);
+      localStorage.removeItem(REFRESH_TOKEN);
+      dispatch(setLoggedIn(false));
+      navigate('/');
     }
   };
 

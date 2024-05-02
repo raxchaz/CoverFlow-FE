@@ -38,7 +38,7 @@ export const reissueTokens = async (queryClient) => {
       initializeSSE(queryClient);
     }
   } catch (error) {
-    console.error('토큰 재발급 오류:', error);
+    console.error('토큰 재발급 오류, 다시 시도합니다.', error);
     setTimeout(() => reissueTokens(queryClient), 5000);
   }
 };

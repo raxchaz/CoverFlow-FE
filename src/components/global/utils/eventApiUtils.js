@@ -48,7 +48,6 @@ export const initializeSSE = (queryClient) => {
       return;
     }
 
-    console.log('알림 타입', data.type);
     lastEventId = event.lastEventId;
     localStorage.setItem(LAST_EVENT_ID, lastEventId);
     let message = '';
