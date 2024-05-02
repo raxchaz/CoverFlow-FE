@@ -1,3 +1,6 @@
+$job-seeker: '취준생';
+$job-keeper: '현직자';
+
 .question-detail-container {
   margin-top: 5%;
   padding: 35px;
@@ -10,39 +13,41 @@
 }
 
 .detailpage-company {
-  font-size: 15px;
+  font-size: 1.5rem;
   letter-spacing: -1px;
-  display: inline-block;
-  color: white;
+  display: flex;
+  justify-content: space-evenly;
   background-color: #ff8d1d;
-  padding: 5px 15px;
+  border: 1px solid #ff8d1d;
   border-radius: 20px;
   margin-left: 1.5%;
-  font-family: pretendard-medium;
+  font-family: 'Pretendard-SemiBold';
+  padding: 1% 2.5% 1% 2.5%;
+  width: 83px;
+}
+
+.detailpage-fishbuncount {
+  font-size: 1.5rem;
+  letter-spacing: -1px;
+  display: flex;
+  justify-content: space-evenly;
+  color: #ff8d1d;
+  border: 1px solid #ff8d1d;
+  border-radius: 20px;
+  margin-left: 1.5%;
+  font-family: 'Pretendard-SemiBold';
+  padding: 1% 2.5% 1% 2.5%;
+  img {
+    padding: 0;
+    width: 25px;
+  }
+  width: 83px;
 }
 
 .company-fish-tag {
   display: flex;
   align-items: center;
   margin: 2.5% 0 0 2.5%;
-}
-
-.detailpage-fishbuncount {
-  font-size: 15px;
-  letter-spacing: -1px;
-  display: inline-flex;
-  justify-content: space-evenly;
-  color: #ff8d1d;
-  border: 1px solid #ff8d1d;
-  padding: 5px 8px;
-  border-radius: 20px;
-  margin-left: 1.5%;
-  font-family: pretendard-bold;
-  img {
-    padding: 0;
-    width: 25px;
-  }
-  width: 83px;
 }
 
 .questioner-info {
@@ -122,11 +127,11 @@
 
   .comment-input {
     resize: none;
-    width: 100%;
+    width: 525px;
     background: #f6f6f6;
+    margin: 0 auto;
     display: flex;
     padding: 15px 15px;
-    padding-right: 80px;
     border: 1px solid #cecece;
     border-radius: 10px;
 
@@ -147,7 +152,7 @@
 
   .submit-comment {
     position: absolute;
-    right: 2%;
+    right: 7%;
     transform: translateY(-50%);
     padding: 5px 3px;
     border: none;
@@ -263,6 +268,11 @@
   width: 100%;
   span {
     margin-right: 60%;
+    @if $job-seeker == '취준생' {
+      color: #875100;
+    } @else {
+      color: #428238;
+    }
   }
   img:first-child {
     margin-right: 7px;
