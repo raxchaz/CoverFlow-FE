@@ -42,7 +42,7 @@ export default function MyAnswer({
   const [answer, setAnswer] = useState<Answer[]>(initiateAnswer);
   useEffect(() => {
     loadUserAnswer(currentPage);
-    console.log('answer:', answer);
+    // console.log('answer:', answer);
   }, [currentPage]);
 
   const handlePagination = (direction) => {
@@ -61,7 +61,7 @@ export default function MyAnswer({
         `/api/answer/me?pageNo=${pageNo}&criterion=createdAt`,
         'GET',
       );
-      console.log('사용자 답변:', data);
+      // console.log('사용자 답변:', data);
       setAnswer(data.data.answers);
       setTotalPages(data.data.totalPages);
       setAnswerCnt(data.data.totalElements);

@@ -55,8 +55,6 @@ function NotificationList({
           navigate(uri, { state: { list: 'list' } });
         } else if (type !== 'DAILY' && uri) {
           navigate(uri);
-        } else {
-          queryClient.invalidateQueries(['notifications']);
         }
       })
       .catch((error) => {

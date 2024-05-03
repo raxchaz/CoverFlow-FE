@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { ACCESS_TOKEN, BASE_URL } from '../../global/constants';
+import { fetchAPI } from '../../global/utils/apiUtil';
 import AdminPagination from './adminPagination';
 import { ReactComponent as AdToggle } from '../../../asset/image/admin-toggle.svg';
+import { showSuccessToast } from '../toast/toast';
 interface Feedback {
   feedbackId: number;
   feedbackContent: string;
@@ -42,23 +43,17 @@ export default function FeedbackSelection() {
   };
 
   const fetchFeedback = (pageNo: number) => {
-    fetch(
-      `${BASE_URL}/api/feedback/admin?pageNo=${pageNo}&Wcriterion=createdAt`,
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
-          'Content-Type': 'application/json',
-        },
-      },
-    )
-      .then((response) => response.json())
+    fetchAPI(`/api/feedback/admin?pageNo=${pageNo}&Wcriterion=createdAt`, 'GET')
       .then((data: ApiResponse) => {
-        console.log(data);
         setFeedback(data.data.feedbacks);
         setTotalPages(data.data.totalPages);
         setTotalFeedbackCount(data.data.totalElements);
+        console.log(data);
       })
-      .catch((error) => console.error('Error:', error));
+      .catch((error) => {
+        console.error('Error:', error);
+        showSuccessToast('에러가 발생했습니다. 잠시 후 다시 시도 해주세요.');
+      });
   };
 
   return (

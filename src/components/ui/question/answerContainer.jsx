@@ -5,7 +5,7 @@ import { BASE_URL } from '../../global/constants/index';
 
 function AnswersContainer() {
   const [answers, setAnswers] = useState([]);
-  console.log('answers: ', answers);
+  // console.log('answers: ', answers);
 
   const adoptAnswer = async (answerId) => {
     try {

@@ -70,6 +70,7 @@ const reissueTokens = async () => {
       localStorage.setItem(REFRESH_TOKEN, newRefreshToken);
       const expiresAt = new Date().getTime() + TOKEN_EXPIRES_IN * 1000;
       store.dispatch(setTokens(newAccessToken, newRefreshToken, expiresAt));
+      console.log('토큰 재발급 성공');
     } else {
       throw new Error('새 토큰 정보를 받지 못했습니다.');
     }
