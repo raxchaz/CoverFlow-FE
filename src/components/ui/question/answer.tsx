@@ -47,13 +47,13 @@ function AnswerModule({
 }: AnswerDetailProps) {
   const [isAdopted, setIsAdopted] = useState(false);
   const handleAdoptAnswer = async () => {
-    await fetchAPI(`/api/answer/selection/${answerId}`, 'PATCH', {
-      selection: true,
-    });
-
-    setIsAdopted(true);
-    if (confirm('채택하시겠습니까?'))
+    if (confirm('채택하시겠습니까?')) {
+      await fetchAPI(`/api/answer/selection/${answerId}`, 'PATCH', {
+        selection: true,
+      });
+      setIsAdopted(true);
       showSuccessToast('답변이 채택되었습니다.');
+    }
   };
 
   return (
