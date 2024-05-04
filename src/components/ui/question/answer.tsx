@@ -1,10 +1,28 @@
 import React, { useState } from 'react';
 import '../../../asset/sass/etc/question/answer.scss';
 import styled from 'styled-components';
+import yellowTrophy from '../../../asset/image/yellow-trophy.svg';
 import Trophy from '../../../asset/image/trophy.svg';
 import { fetchAPI } from '../../global/utils/apiUtil';
 import { showSuccessToast } from '../toast/toast';
 
+const AdoptedTag = styled.div`
+  position: relative;
+  width: 95px;
+  height: 25px;
+  border: 1px solid #ff8d1d;
+  border-radius: 0.5rem;
+  font-size: 1.2rem;
+  color: #ff8d1d;
+  letter-spacing: -1px;
+  font-family: Pretendard-Medium;
+  top: -4.5rem;
+  left: 41rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0 1rem;
+`;
 const AdoptButton = styled.button`
   display: flex;
   margin: -12% 6% 0% 82%;
@@ -58,14 +76,23 @@ function AnswerModule({
 
   return (
     <div className={`answer-container ${isAdopted ? 'adopted' : ''}`}>
+      {isAdopted && (
+        <AdoptedTag>
+          <img src={yellowTrophy} alt="trophy" />
+          채택된 답변
+        </AdoptedTag>
+      )}
+
       <div>
         <div>{answererNickname}</div>
         <div>{answerContent}</div>
         <div className="user-container">{createAt}</div>
-        <AdoptButton onClick={handleAdoptAnswer}>
-          <img src={Trophy} alt="trophy" />
-          채택하기
-        </AdoptButton>
+        {isAdopted || (
+          <AdoptButton onClick={handleAdoptAnswer}>
+            <img src={Trophy} alt="trophy" />
+            채택하기
+          </AdoptButton>
+        )}
       </div>
     </div>
   );

@@ -133,21 +133,21 @@ function QuestionDetailPage() {
   // console.log('showReport: ', showReport);
 
   // const { questionId } = useParams();
-  useEffect(() => {
-    const loadAnswerList = async () => {
-      try {
-        // const token = localStorage.getItem(ACCESS_TOKEN);
-        // if (!token) {
-        //   showErrorToast('로그인이 필요합니다.');
-        //   navigate(-1);
-        // }
-      } catch (error) {
-        if (error instanceof Error) showErrorToast(error.message);
-      }
-    };
+  // useEffect(() => {
+  //   const loadAnswerList = async () => {
+  //     try {
+  //       // const token = localStorage.getItem(ACCESS_TOKEN);
+  //       // if (!token) {
+  //       //   showErrorToast('로그인이 필요합니다.');
+  //       //   navigate(-1);
+  //       // }
+  //     } catch (error) {
+  //       if (error instanceof Error) showErrorToast(error.message);
+  //     }
+  //   };
 
-    loadAnswerList();
-  }, [currentPage, questionId, navigate, postAnswer]);
+  //   loadAnswerList();
+  // }, [currentPage, questionId, navigate, postAnswer]);
 
   const handleGoBack = () => {
     navigate(-1);
