@@ -145,22 +145,13 @@ function SearchResultPage() {
   const {
     state: { searchResults, totalCompany, totalPages },
   } = useLocation() as SearchResultProps;
-  // console.log('searchResults', searchResults);
+
   const [searchData, setSearchData] =
     useState<SearchDataProps[]>(searchResults);
   const [companyCnt, setCompanyCnt] = useState(totalCompany);
   const [pageCnt, setPageCnt] = useState(totalPages);
 
-  // const keyword = queryParams.get('keyword');
-
   const [currentPage, setCurrentPage] = useState(0);
-
-  // const indexOfLastItem = currentPage * itemsPerPage;
-  // const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  // const currentItems = Array.from(searchResults)?.slice(
-  //   indexOfFirstItem,
-  //   indexOfLastItem,
-  // );
 
   const handleGoBack = () => {
     navigate('/search-company');

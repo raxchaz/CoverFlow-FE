@@ -117,7 +117,6 @@ select {
   left: 5rem;
   margin-top: 5%;
   span {
-    overflow-wrap: break-word;
     font-weight: 900;
     font-family: 'Pretendard-ExtraBold';
     font-size: 3.5rem;
@@ -155,8 +154,8 @@ select {
 }
 
 .finger-image {
-  width: 0.9rem;
-  height: 1.2rem;
+  width: 1.8rem;
+  height: 1.8rem;
 }
 
 .tag-select-wrapper {
@@ -164,6 +163,7 @@ select {
   flex-wrap: wrap-reverse;
   justify-content: center;
   row-gap: 10px;
+  margin-bottom: 4rem;
 }
 
 .tag-select {
@@ -180,7 +180,6 @@ select {
   letter-spacing: -1px;
 
   span {
-    width: 12rem;
     display: flex;
     justify-content: center;
     overflow-wrap: break-word;
