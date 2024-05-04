@@ -9,8 +9,24 @@ import AllRouter from '../src/router/allRouter.js';
 import ErrorFallback from './hooks/errorBoundary.tsx';
 import { ErrorBoundary } from 'react-error-boundary';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { alertCount } from './store/actions/alertActions.js';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      onSuccess: (data) => {
+        if (data.queryKey[0] === 'notifications') {
+          const noReadElements = data.pages.reduce(
+            (total, page) => total + (page.data.noReadElements || 0),
+            0,
+          );
+          store.dispatch(alertCount(noReadElements));
+          console.log('쿼리 성공적으로 실행');
+        }
+      },
+    },
+  },
+});
 
 function App() {
   return (
