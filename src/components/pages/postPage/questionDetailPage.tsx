@@ -8,6 +8,7 @@ import Answer from '../../ui/question/answer.tsx';
 import TabBar from '../../ui/tabBar/tabBar';
 import { BASE_URL } from '../../global/constants';
 import Tree from '../../../asset/image/nature-ecology-tree-3--tree-plant-cloud-shape-park.svg';
+import Leaf from '../../../asset/image/leaf.svg';
 import Reward from '../../../asset/image/reward.svg';
 import Dot from '../../../asset/image/dots-vertical.svg';
 import '../../../asset/sass/etc/header/userInfoHeader.scss';
@@ -49,7 +50,7 @@ const QuestionTitle = styled.div`
 `;
 
 const QuestionContent = styled.div`
-  margin: 3% 0% 2% 4%;
+  margin: 3% 0% 2% 4.5%;
   letter-spacing: -1.5px;
   font-size: 2rem;
   color: #000000;
@@ -269,7 +270,7 @@ function QuestionDetailPage() {
 
       <div className="question-detail-container">
         <div className="job-info">
-          <img src={Tree} alt="" />
+          <img src={questionerTag === '취준생' ? Tree : Leaf} alt="" />
           <span>
             {questionerTag === '취준생'
               ? `${questionerTag}이 남긴 질문이에요`
