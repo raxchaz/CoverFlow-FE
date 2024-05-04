@@ -101,7 +101,7 @@ interface AppState {
 function QuestionDetailPage() {
   const navigate = useNavigate();
   const { state } = useLocation();
-  console.log('state: ', state);
+
   // console.log('state: ', state);
   const { questionId } = useParams();
 
@@ -127,10 +127,10 @@ function QuestionDetailPage() {
   const { isLoggedIn } = useSelector((state: AppState) => state.user);
 
   const [isShowEdit, setIsShowEdit] = useState(false);
-  console.log('isShowEdit: ', isShowEdit);
+  // console.log('isShowEdit: ', isShowEdit);
 
   const [showReport, setShowReport] = useState(false);
-  console.log('showReport: ', showReport);
+  // console.log('showReport: ', showReport);
 
   // const { questionId } = useParams();
   useEffect(() => {
@@ -162,7 +162,7 @@ function QuestionDetailPage() {
     };
 
     if (myNickname === questionerNickname) {
-      showErrorToast('본인의 문의는 답변할 수 없습니다.');
+      showErrorToast('본인의 질문에는 답변할 수 없습니다.');
       return;
     }
 
@@ -219,7 +219,7 @@ function QuestionDetailPage() {
       const response = await axios.get(
         `${BASE_URL}/api/question/${questionId}?pageNo=${currentPage}&criterion=createdAt`,
       );
-      console.log(response);
+      console.log('응답', response);
       const {
         data: {
           questionerNickname,
