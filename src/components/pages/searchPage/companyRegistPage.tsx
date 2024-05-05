@@ -133,7 +133,7 @@ function CompanyRegistPage() {
             <input
               type="text"
               className="input-field-regist"
-              placeholder="시 /군 /구 (선택)"
+              placeholder="시/군/구"
               name="district"
               value={companyInfo.district}
               onChange={handleChange}
