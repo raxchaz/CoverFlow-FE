@@ -81,12 +81,8 @@ export default function MyAnswer({
           }
         >
           <div className="question-text">
-            <div className="answer-item-title" style={{ fontSize: '1.5rem' }}>
-              {q.questionTitle}
-            </div>
-            <div className="answer-item-content" style={{ fontSize: '1.8rem' }}>
-              {q.answerContent}
-            </div>
+            <div className="answer-item-title">{q.questionTitle}</div>
+            <div className="answer-item-content">{q.answerContent}</div>
           </div>
           <div className="quetion-tag">{q.companyName}</div>
         </div>

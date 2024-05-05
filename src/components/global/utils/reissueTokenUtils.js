@@ -8,7 +8,7 @@ import { setTokens } from '../../../store/actions/authActions';
 import { store } from '../../../store';
 import { initializeSSE } from './eventApiUtils';
 
-export const reissueTokens = async (queryClient) => {
+export const reissueTokens = async (queryClient, dispatch) => {
   try {
     const { expiresAt } = store.getState().auth;
 
@@ -30,7 +30,7 @@ export const reissueTokens = async (queryClient) => {
         store.dispatch(
           setTokens(newAccessToken, newRefreshToken, newExpiresAt),
         );
-        setTimeout(() => initializeSSE(queryClient), 1000);
+        setTimeout(() => initializeSSE(queryClient, dispatch), 1000);
       } else {
         throw new Error('토큰 재발급 실패');
       }
@@ -39,6 +39,6 @@ export const reissueTokens = async (queryClient) => {
     }
   } catch (error) {
     console.error('토큰 재발급 오류, 다시 시도합니다.', error);
-    setTimeout(() => reissueTokens(queryClient), 5000);
+    setTimeout(() => reissueTokens(queryClient, dispatch), 5000);
   }
 };

@@ -10,6 +10,7 @@ import {
   setRewardCount,
   toggleDropdown,
 } from '../../../store/actions/userActions';
+import { alertCount } from '../../../store/actions/alertActions.js';
 import { ACCESS_TOKEN, REFRESH_TOKEN } from '../../global/constants/index.ts';
 
 function UserInfoHeader() {
@@ -102,12 +103,14 @@ function UserInfoHeader() {
       localStorage.removeItem(ACCESS_TOKEN);
       localStorage.removeItem(REFRESH_TOKEN);
       dispatch(setLoggedIn(false));
+      dispatch(alertCount(0));
       navigate('/');
     } catch (error) {
       console.error(error);
       localStorage.removeItem(ACCESS_TOKEN);
       localStorage.removeItem(REFRESH_TOKEN);
       dispatch(setLoggedIn(false));
+      dispatch(alertCount(0));
       navigate('/');
     }
   };

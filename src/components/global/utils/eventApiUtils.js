@@ -7,10 +7,10 @@ import {
 } from '../constants/index.ts';
 import { showSuccessToast } from '../../ui/toast/toast.tsx';
 import { reissueTokens } from './reissueTokenUtils.js';
-
+import { fetchUnreadNotificationsCount } from './alertCountUtil.js';
 let isConnected = false;
 
-export const initializeSSE = (queryClient) => {
+export const initializeSSE = (queryClient, dispatch) => {
   if (isConnected) return;
   isConnected = true;
 
@@ -40,10 +40,12 @@ export const initializeSSE = (queryClient) => {
 
   sse.addEventListener('connect', (event) => {
     queryClient.invalidateQueries(['notifications']);
-
+    // console.log(event, 'sse');
+    fetchUnreadNotificationsCount(dispatch);
     let data;
     try {
       data = JSON.parse(event.data);
+      // console.log(data);
     } catch (error) {
       return;
     }
@@ -78,7 +80,7 @@ export const initializeSSE = (queryClient) => {
     console.log('onerror', event);
     sse.close();
     isConnected = false;
-    reissueTokens(queryClient);
+    reissueTokens(queryClient, dispatch);
   };
 
   return sse;

@@ -8,6 +8,8 @@ import DAILY from '../../../asset/image/notification-fishbun.svg';
 import { fetchAPI } from '../../global/utils/apiUtil';
 import { useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
+import { fetchUnreadNotificationsCount } from '../../global/utils/alertCountUtil';
+import { useDispatch } from 'react-redux';
 
 function NotificationList({
   notifications,
@@ -31,7 +33,7 @@ function NotificationList({
         return { icon: null, message: '' };
     }
   };
-
+  const dispatch = useDispatch();
   const observer = useRef();
   const lastNotificationRef = useCallback(
     (node) => {
@@ -51,6 +53,7 @@ function NotificationList({
     fetchAPI('/api/notification', 'PATCH', [{ notificationId: index }])
       .then(() => {
         queryClient.invalidateQueries(['notifications']);
+        fetchUnreadNotificationsCount(dispatch);
         if (type === 'INQUIRY') {
           navigate(uri, { state: { list: 'list' } });
         } else if (type !== 'DAILY' && uri) {

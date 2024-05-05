@@ -100,7 +100,7 @@ function NotificationPage() {
     <StyledPage className="main-page-container">
       <StyledHeader>
         <TitleHeader pageTitle="알림" handleGoBack={handleGoBack} />
-        {/* <button onClick={() => initializeSSE(queryClient)}>
+        {/* <button onClick={() => initializeSSE(queryClient, dispatch)}>
           initializeSSE
         </button> */}
         <div className="notification-controls">
