@@ -344,6 +344,7 @@ function QuestionDetailPage() {
           currentPage={currentPage}
           totalPages={totalPages}
           handlePagination={handlePagination}
+          className={answers.length === 0 ? 'hidden' : ''}
         />
       </ContentBlur>
     </StyledPage>
