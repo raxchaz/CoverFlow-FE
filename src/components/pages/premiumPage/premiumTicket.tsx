@@ -10,9 +10,11 @@ import { SectionProps } from '../../../types';
 import TitleHeader from '../../ui/header/titleHeader';
 const StatusBar = styled.div`
   display: flex;
+  width: 505px;
   justify-content: space-between;
-  border-bottom: 1px solid gray;
+  border-bottom: 5px solid gray;
   margin-top: 10%;
+  margin-left: 15%;
   font-family: pretendard-semibold;
 `;
 
@@ -23,12 +25,18 @@ const StatusTab = styled.div<{ $current: boolean }>`
   padding: 10px 0;
   cursor: pointer;
   color: gray;
-  border-bottom: 2px solid transparent;
+  border-bottom: 5px solid transparent;
+  margin-bottom: -5px;
   transition:
     border-bottom 0.3s ease-in-out,
     color 0.3s ease-in-out;
-  ${(props) =>
-    props.$current && 'color: black; border-bottom: 4px solid black;'}
+
+  ${({ $current }) =>
+    $current &&
+    `
+    color: black;
+    border-bottom: 5px solid black;
+  `}
 `;
 
 const PremiumTicket = () => {
@@ -72,6 +80,12 @@ const PremiumTicket = () => {
           <div className="button-group">
             <div className="tag">질문 열람 무제한</div>
             <div className="tag">질문 열람 무제한</div>
+            <img
+              className="premium-arrow"
+              onClick={handleBuyClick}
+              loading="lazy"
+              src={VectorIcon}
+            />
           </div>
           <div className="premium-info-wrapper">
             <div className="premium-info">
@@ -84,7 +98,6 @@ const PremiumTicket = () => {
                 <div className="value">무제한</div>
               </div>
             </div>
-            <img onClick={handleBuyClick} loading="lazy" src={VectorIcon} />
           </div>
         </div>
       ) : (
@@ -98,7 +111,7 @@ const PremiumTicket = () => {
             <div className="premium-info">
               <div className="price-info">
                 <div className="label">프리미엄 금액</div>
-                <div className="value">얼마였더라</div>
+                <div className="value">9,900</div>
               </div>
               <div className="duration-info">
                 <div className="label">이용 기간</div>

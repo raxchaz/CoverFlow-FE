@@ -5,7 +5,6 @@
   height: 308px;
   margin-top: 5%;
   margin-bottom: 5%;
-  cursor: pointer;
 
   padding: 0 20px;
   :nth-child(1) {
@@ -17,6 +16,9 @@
   }
   border: 1px solid #cacaca;
   border-radius: 20px;
+}
+.adopted {
+  border: 1px solid #ff8d1d;
 }
 
 .user-container {

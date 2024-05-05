@@ -3,20 +3,19 @@ import {
   BASE_URL,
   ACCESS_TOKEN,
   REFRESH_TOKEN,
-  TOKEN_EXPIRES_IN,
   LAST_EVENT_ID,
 } from '../constants/index.ts';
 import { showSuccessToast } from '../../ui/toast/toast.tsx';
-import { setTokens } from '../../../store/actions/authActions.js';
-import { store } from '../../../store/index.js';
+import { reissueTokens } from './reissueTokenUtils.js';
+import { fetchUnreadNotificationsCount } from './alertCountUtil.js';
 let isConnected = false;
 
-export const initializeSSE = (queryClient) => {
+export const initializeSSE = (queryClient, dispatch) => {
   if (isConnected) return;
   isConnected = true;
 
   const accessToken = localStorage.getItem(ACCESS_TOKEN);
-  let lastEventId = null;
+  let lastEventId = localStorage.getItem(LAST_EVENT_ID);
 
   if (!accessToken) {
     console.log('토큰이 없어서 연결을 시작할 수 없습니다.');
@@ -36,18 +35,21 @@ export const initializeSSE = (queryClient) => {
           }
         : {}),
     },
-    heartbeatTimeout: 3600000,
+    heartbeatTimeout: 3660000,
   });
 
   sse.addEventListener('connect', (event) => {
+    queryClient.invalidateQueries(['notifications']);
+    // console.log(event, 'sse');
+    fetchUnreadNotificationsCount(dispatch);
     let data;
     try {
       data = JSON.parse(event.data);
+      // console.log(data);
     } catch (error) {
       return;
     }
 
-    console.log('알림 타입', data.type);
     lastEventId = event.lastEventId;
     localStorage.setItem(LAST_EVENT_ID, lastEventId);
     let message = '';
@@ -78,35 +80,8 @@ export const initializeSSE = (queryClient) => {
     console.log('onerror', event);
     sse.close();
     isConnected = false;
-    reissueTokens();
+    reissueTokens(queryClient, dispatch);
   };
 
   return sse;
-};
-
-const reissueTokens = async () => {
-  try {
-    const response = await fetch(`${BASE_URL}/api/auth/reissue`, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
-        'Authorization-refresh': `Bearer ${localStorage.getItem(REFRESH_TOKEN)}`,
-      },
-    });
-
-    if (response.ok) {
-      const newAccessToken = response.headers.get('Authorization');
-      const newRefreshToken = response.headers.get('Authorization-refresh');
-      localStorage.setItem(ACCESS_TOKEN, newAccessToken);
-      localStorage.setItem(REFRESH_TOKEN, newRefreshToken);
-      const expiresAt = new Date().getTime() + TOKEN_EXPIRES_IN * 1000;
-      store.dispatch(setTokens(newAccessToken, newRefreshToken, expiresAt));
-      setTimeout(initializeSSE, 1000);
-    } else {
-      throw new Error('토큰 재발급 실패');
-    }
-  } catch (error) {
-    console.error('토큰 재발급 오류:', error);
-    setTimeout(reissueTokens, 5000);
-  }
 };

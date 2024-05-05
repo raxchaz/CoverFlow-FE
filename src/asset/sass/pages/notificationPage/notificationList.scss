@@ -29,6 +29,7 @@
       margin-bottom: 10px;
       font-family: Pretendard-SemiBold;
       font-size: 2rem;
+      width: 22rem;
     }
 
     .notification-time {
@@ -40,17 +41,22 @@
 
     .title-time {
       display: flex;
-      margin-left: -40%;
+      margin-left: -7%;
       flex-direction: column;
       letter-spacing: -1px;
     }
 
     .notification-company {
       letter-spacing: -1px;
-      font-family: pretendard-black;
+      // font-family: pretendard-Light;
       color: #333333;
-      font-size: 1.2rem;
-      // margin-right: 5%;
+      font-size: 1.8rem;
+      width: 20rem;
+      white-space: nowrap;
+      // overflow: hidden;
+      text-align: right;
+      margin-right: 4.5%;
+      text-overflow: ellipsis;
     }
   }
 }
