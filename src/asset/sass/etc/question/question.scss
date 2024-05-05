@@ -1,6 +1,12 @@
 .question-container {
   margin-top: 5%;
   cursor: pointer;
+  width: 541px;
+  height: 133px;
+  border-radius: 10px;
+  font-size: 1.6rem;
+  border: 1px solid #474c4c;
+  margin: 0 auto;
 }
 
 // 유저 닉네임 + 태그 부분 scss
@@ -8,7 +14,7 @@
   letter-spacing: -1px;
   display: flex;
   justify-content: space-between;
-  margin: -4% 0% -5% 13%;
+  // margin: -4% 0% -5% 13%;
 }
 
 .questioner-info {
@@ -21,18 +27,25 @@
 .questioner {
   font-weight: 900;
   color: #000;
+  display: flex;
+  width: 20rem;
+  margin-left: 1rem;
+  margin-top: 1rem;
+  span {
+    font-size: 1.2rem;
+    color: #000000;
+    letter-spacing: -1px;
+    font-family: 'Pretendard-SemiBold';
+  }
+  .questioner-tag {
+    border-radius: 4px;
+    font-size: 1rem;
+    color: #808080;
+  }
 }
 
 .middle {
   margin: 0 4% 0 2%;
-}
-
-.questioner-tag {
-  margin-left: 4%;
-  margin-top: 2%;
-  border-radius: 4px;
-  font-size: 0.8rem;
-  color: #666;
 }
 
 .question-img {
@@ -46,13 +59,15 @@
   display: flex;
   position: relative;
   white-space: nowrap;
-  margin: 0% 0% -5% 13%;
+  // margin: 0% 0% -5% 13%;
   align-items: center;
 }
 
 .chat-img {
   margin-top: 6%;
   margin-right: 1.5%;
+  width: 15px;
+  height: 15px;
 }
 
 .chat-count {
@@ -66,6 +81,8 @@
   white-space: nowrap;
   margin-right: 1.5%;
   margin-top: 6%;
+  width: 15px;
+  height: 15px;
 }
 
 .view-count {
@@ -97,28 +114,29 @@
   letter-spacing: -1.5px;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-size: 20px;
+  font-size: 1.6rem;
   white-space: nowrap;
-  margin: 8% 0% 0% 13%;
+  // margin: 8% 0% 0% 13%;
   align-items: center;
   gap: 10px;
 }
 
 .reward {
   border-radius: 5px;
-  background-color: #d9d9d9;
+  background-color: #ff8d1d;
   padding: 5px 5px;
   font-size: 12px;
   font-family: 'Pretendard';
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 7%;
+
+  margin-right: 1%;
 }
 
 .question-content {
   width: 90%;
-  margin: 5% 0% 0% 13%;
+  // margin: 5% 0% 0% 13%;
   font-family: pretendard-Light;
   font-size: 15px;
   letter-spacing: -0.5px;
