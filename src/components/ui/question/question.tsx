@@ -5,12 +5,12 @@ import styled from 'styled-components';
 import View from '../../../asset/image/view.svg';
 
 // import { ACCESS_TOKEN } from '../../global/constants/index.ts';
-// import Tree from '../../../asset/image/nature-ecology-tree-3--tree-plant-cloud-shape-park.svg';
+import Tree from '../../../asset/image/nature-ecology-tree-3--tree-plant-cloud-shape-park.svg';
+import Leaf from '../../../asset/image/leaf.svg';
 import { CompanInfoProps } from '../../pages/searchPage/companyInfoPage.tsx';
 import ChatAll from '../../../asset/image/chat2.svg';
 
 const Line = styled.div`
-  height: 1px;
   background-color: #f2f2f2;
   width: 102%;
   margin: 3% 0% 5% -1.5%;
@@ -86,7 +86,6 @@ interface QuestionModulesProps {
   reward: number;
   companyData: CompanInfoProps;
   viewCount: number;
-  questionCategory: string;
 }
 
 function QuestionModule({
@@ -97,9 +96,8 @@ function QuestionModule({
   questionTitle,
   createAt,
   reward,
-
+  questionerTag,
   viewCount,
-  questionCategory,
 }: QuestionModulesProps) {
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
@@ -127,6 +125,7 @@ function QuestionModule({
     <>
       <div className="question-container" onClick={goToDetail}>
         <span className="questioner">
+          <img src={questionerTag === '취준생' ? Tree : Leaf} alt="" />
           <span> {questioner}</span>
           <span className="middle">•</span>
           <div className="questioner-container">
@@ -135,12 +134,14 @@ function QuestionModule({
         </span>
 
         <div className="field">
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <div className="reward">{reward}</div>
-            <span className="question-title">
-              {truncateTitle(questionTitle)}
-            </span>
-            <span>{questionCategory}</span>
+          <div className="question-list-info">
+            <div>
+              <div className="reward">{reward}</div>
+              <span className="question-title">
+                {truncateTitle(questionTitle)}
+              </span>
+            </div>
+            <span className="category-select-hard-coding">개발/데이터</span>
           </div>
 
           <div className="view-container">

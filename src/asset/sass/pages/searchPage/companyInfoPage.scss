@@ -33,10 +33,10 @@
 
 .question-info-container {
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
   align-items: center;
   color: var(--color-primary);
+  margin-bottom: 1.4rem;
 }
 
 .question-count {
