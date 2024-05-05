@@ -1,6 +1,3 @@
-$job-seeker: '취준생';
-$job-keeper: '현직자';
-
 .question-detail-container {
   margin-top: 5%;
   padding: 35px;
@@ -83,15 +80,12 @@ $job-keeper: '현직자';
 
 .answer-title {
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   font-weight: 600;
   width: 88%;
   margin: 5% 0;
   letter-spacing: -1px;
   margin-right: 7%;
-  span {
+  span:last-child {
     width: 100%;
     color: #ff8d1d;
   }
@@ -267,19 +261,19 @@ $job-keeper: '현직자';
   display: flex;
   align-items: center;
   width: 100%;
-  span {
-    margin-right: 60%;
-    @if $job-seeker == '취준생' {
-      color: #875100;
-    } @else {
-      color: #428238;
-    }
-  }
+
   img:first-child {
     margin-right: 7px;
   }
   img:last-child {
     cursor: pointer;
   }
+}
+
+.job-seeker {
   color: #875100;
+}
+
+.job-keeper {
+  color: #428238;
 }

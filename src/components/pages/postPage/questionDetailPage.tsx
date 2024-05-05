@@ -119,7 +119,7 @@ function QuestionDetailPage() {
   const [questionContent, setQuestionContent] = useState('');
   const [answers, setAnswers] = useState<CommentProps[]>([]);
 
-  const [myNickname, setMyNickname] = useState('');
+  // const [myNickname, setMyNickname] = useState('');
 
   const answerRef = useRef<HTMLTextAreaElement>(null);
   const [postAnswer, setPostAnswer] = useState('');
@@ -161,10 +161,12 @@ function QuestionDetailPage() {
       questionId: Number(questionId),
     };
 
-    if (myNickname === questionerNickname) {
-      showErrorToast('본인의 질문에는 답변할 수 없습니다.');
-      return;
-    }
+
+    // if (myNickname === questionerNickname) {
+    //   showErrorToast('본인의 문의는 답변할 수 없습니다.');
+    //   return;
+    // }
+
 
     const data = await fetchAPI('/api/answer', 'POST', requestData);
 
@@ -219,7 +221,6 @@ function QuestionDetailPage() {
       const response = await axios.get(
         `${BASE_URL}/api/question/${questionId}?pageNo=${currentPage}&criterion=createdAt`,
       );
-      console.log('응답', response);
       const {
         data: {
           questionerNickname,
@@ -246,9 +247,9 @@ function QuestionDetailPage() {
       setAnswers(answers);
       setTotalPages(totalPages);
 
-      const res = await fetchAPI('/api/member/me', 'GET');
+      // const res = await fetchAPI('/api/member/me', 'GET');
 
-      setMyNickname(res.data.nickname);
+      // setMyNickname(res.data.nickname);
     };
 
     fetchData();
@@ -271,7 +272,9 @@ function QuestionDetailPage() {
       <div className="question-detail-container">
         <div className="job-info">
           <img src={questionerTag === '취준생' ? Tree : Leaf} alt="" />
-          <span>
+          <span
+            className={questionerTag === '취준생' ? 'job-seeker' : 'job-keeper'}
+          >
             {questionerTag === '취준생'
               ? `${questionerTag}이 남긴 질문이에요`
               : `${questionerTag}가 남긴 질문이에요`}
@@ -279,7 +282,7 @@ function QuestionDetailPage() {
 
           <img onClick={handleEdit} src={Dot} alt="dot" />
 
-          {myNickname === questionerNickname && isShowEdit ? (
+          {isShowEdit ? (
             <div className="dropdown-question-detail-menu">
               <ul style={{ right: '10px' }}>
                 <li className="dropdown-item-edit">수정</li>
@@ -307,7 +310,7 @@ function QuestionDetailPage() {
           </div>
         </div>
         <FirstLine />
-        {myNickname !== questionerNickname && showReport ? (
+        {showReport ? (
           <div className="report-popup-overlay">
             <div className="report-popup">
               <div className="report-title">사용자 신고</div>
@@ -355,7 +358,8 @@ function QuestionDetailPage() {
       <ContentBlur $isLoggedIn={isLoggedIn}>
         <AnswerList>
           <div className="answer-title">
-            <span>답변 {answerCount}</span>
+            <span>답변</span>
+            <span> {answerCount}</span>
           </div>
 
           {answers?.map((answer) => (

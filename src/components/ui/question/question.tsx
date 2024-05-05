@@ -3,14 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import '../../../asset/sass/etc/question/question.scss';
 import styled from 'styled-components';
 import View from '../../../asset/image/view.svg';
-import Questitle from '../../../asset/image/questitle.svg';
+
 // import { ACCESS_TOKEN } from '../../global/constants/index.ts';
-// import Tree from '../../../asset/image/nature-ecology-tree-3--tree-plant-cloud-shape-park.svg';
+import Tree from '../../../asset/image/nature-ecology-tree-3--tree-plant-cloud-shape-park.svg';
+import Leaf from '../../../asset/image/leaf.svg';
 import { CompanInfoProps } from '../../pages/searchPage/companyInfoPage.tsx';
 import ChatAll from '../../../asset/image/chat2.svg';
 
 const Line = styled.div`
-  height: 1px;
   background-color: #f2f2f2;
   width: 102%;
   margin: 3% 0% 5% -1.5%;
@@ -59,11 +59,11 @@ function truncateTitle(title, maxLength = 25) {
     : title;
 }
 
-function truncateContent(questionContent, maxLength = 30) {
-  return questionContent.length > maxLength
-    ? questionContent.substring(0, maxLength + 20) + '...'
-    : questionContent;
-}
+// function truncateContent(questionContent, maxLength = 30) {
+//   return questionContent.length > maxLength
+//     ? questionContent.substring(0, maxLength + 20) + '...'
+//     : questionContent;
+// }
 
 function formatDate(fullDate: string) {
   const date = new Date(fullDate);
@@ -92,13 +92,11 @@ function QuestionModule({
   companyId,
   questionId,
   questioner,
-  questionerTag,
   answerCount,
   questionTitle,
-  questionContent,
   createAt,
   reward,
-
+  questionerTag,
   viewCount,
 }: QuestionModulesProps) {
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -125,90 +123,33 @@ function QuestionModule({
 
   return (
     <>
-      {/* {isLoggedIn ? (
-        <div className="question-container" onClick={goToDetail}>
-          <div className="questioner-container">
-            <div className="questioner-info">
-              <span className="questioner">
-                {questioner} <span className="middle">•</span>
-              </span>
-              <span className="questioner-tag">{questionerTag}</span>
-            </div>
-          </div>
-
-          <div className="field">
-            <span className="question-title">
-              <img className="question-img" src={Questitle} />{' '}
-              {truncateTitle(questionTitle)}
-            </span>
-
-            <span className="question-content">
-              {truncateContent(questionContent)}
-            </span>
-            <div className="view-container">
-              <img className="view-img" src={View} />
-              <span className="chat-count">{viewCount}</span>
-              <img className="chat-img" src={ChatAll} />
-              <span className="chat-count">{answerCount}</span>
-              {<span className="reward">{reward}</span>}
-            </div>
-            <span className="question-answer-day">{formattedDate}</span>
-          </div>
-        </div>
-      ) : (
-        <div className="question-container">
-          <div className="questioner-container">
-            <div className="questioner-info">
-              <img src={Tree} alt="tree" />
-              <span className="questioner">{questioner}</span>
-              <span className="question-answer-day">{formattedDate}</span>
-            </div>
-          </div>
-
-          <div className="field">
-            <ContentBlur $isLoggedIn={isLoggedIn}>
-              <span className="question-title">
-                <div className="reward">{reward}</div>
-                {truncateTitle(questionTitle)}
-              </span>
-              <span className="question-content">{questionContent}</span>
-            </ContentBlur>
-
-            <span className="no-login-user">
-              이 기업의 질문과 답변이 궁금하신가요? <br /> 로그인하시고 기업의
-              더 자세한 정보를 열람하세요{' '}
-            </span>
-            <LoginButton onClick={handleLoginClick}>로그인</LoginButton>
-          </div>
-        </div>
-      )} */}
       <div className="question-container" onClick={goToDetail}>
-        <div className="questioner-container">
-          <div className="questioner-info">
-            <span className="questioner">
-              {questioner} <span className="middle">•</span>
-            </span>
-            <span className="questioner-tag">{questionerTag}</span>
+        <span className="questioner">
+          <img src={questionerTag === '취준생' ? Tree : Leaf} alt="" />
+          <span> {questioner}</span>
+          <span className="middle">•</span>
+          <div className="questioner-container">
+            <span className="questioner-tag">{formattedDate}</span>
           </div>
-        </div>
+        </span>
 
         <div className="field">
-          <span className="question-title">
-            <img className="question-img" src={Questitle} />{' '}
-            {truncateTitle(questionTitle)}
-          </span>
+          <div className="question-list-info">
+            <div>
+              <div className="reward">{reward}</div>
+              <span className="question-title">
+                {truncateTitle(questionTitle)}
+              </span>
+            </div>
+            <span className="category-select-hard-coding">개발/데이터</span>
+          </div>
 
-          <span className="question-content">
-            {truncateContent(questionContent)}
-          </span>
           <div className="view-container">
             <img className="view-img" src={View} />
             <span className="chat-count">{viewCount}</span>
             <img className="chat-img" src={ChatAll} />
             <span className="chat-count">{answerCount}</span>
-            {<span className="reward">{reward}</span>}
           </div>
-          <span className="question-answer-day">{formattedDate}</span>
         </div>
       </div>
       <Line />

@@ -125,10 +125,13 @@ function CompanyInfoPage() {
           return 'CAREER';
         case '직무워라밸':
           return 'WORKLIFEBALANCE';
+        default:
+          return '';
       }
     };
 
     const selectedCategory = getCategoryClick(category);
+    console.log('selectedCategory: ', selectedCategory);
 
     if (selectedCategories.includes(category)) {
       setSelectedCategories(
@@ -139,9 +142,14 @@ function CompanyInfoPage() {
     }
 
     try {
-      const { data } = await axios.get(
-        `${BASE_URL}/api/company/${companyId}?pageNo=0&criterion=createdAt&questionTag=${selectedCategory}`,
-      );
+      let apiUrl;
+      if (selectedCategory !== '') {
+        apiUrl = `${BASE_URL}/api/company/${companyId}?pageNo=0&criterion=createdAt&questionTag=${selectedCategory || null}`;
+      } else {
+        apiUrl = `${BASE_URL}/api/company/${companyId}?pageNo=0&criterion=createdAt`;
+      }
+      console.log(apiUrl);
+      const { data } = await axios.get(apiUrl);
 
       if (data) {
         setCompanyData(data.data);
