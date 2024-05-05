@@ -297,6 +297,7 @@ function CompanyInfoPage() {
                 reward={question.reward}
                 companyData={companyData}
                 viewCount={question.questionViewCount}
+                questionCategory={question.questionCategory}
               />
             ))}
           </QuestionList>
