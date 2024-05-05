@@ -13,7 +13,7 @@ import Reward from '../../../asset/image/reward.svg';
 import Dot from '../../../asset/image/dots-vertical.svg';
 import '../../../asset/sass/etc/header/userInfoHeader.scss';
 
-import { showErrorToast, showSuccessToast } from '../../ui/toast/toast.tsx';
+import { showSuccessToast } from '../../ui/toast/toast.tsx';
 import { fetchAPI } from '../../global/utils/apiUtil.js';
 import Pagination from '../../ui/Pagination.tsx';
 import { useSelector } from 'react-redux';
@@ -119,8 +119,6 @@ function QuestionDetailPage() {
   const [questionContent, setQuestionContent] = useState('');
   const [answers, setAnswers] = useState<CommentProps[]>([]);
 
-  // const [myNickname, setMyNickname] = useState('');
-
   const answerRef = useRef<HTMLTextAreaElement>(null);
   const [postAnswer, setPostAnswer] = useState('');
 
@@ -142,7 +140,7 @@ function QuestionDetailPage() {
         //   navigate(-1);
         // }
       } catch (error) {
-        if (error instanceof Error) showErrorToast(error.message);
+        // if (error instanceof Error) showErrorToast(error.message);
       }
     };
 
@@ -154,17 +152,10 @@ function QuestionDetailPage() {
   };
 
   const handleAnswerSubmit = async () => {
-    // const answerer = questionDetail.map((detail) => detail.questionerNickname);
-
     const requestData = {
       content: answerRef.current ? answerRef.current.value : '',
       questionId: Number(questionId),
     };
-
-    // if (myNickname === questionerNickname) {
-    //   showErrorToast('본인의 문의는 답변할 수 없습니다.');
-    //   return;
-    // }
 
     const data = await fetchAPI('/api/answer', 'POST', requestData);
 
@@ -245,10 +236,6 @@ function QuestionDetailPage() {
       setQuestionContent(questionContent);
       setAnswers(answers);
       setTotalPages(totalPages);
-
-      // const res = await fetchAPI('/api/member/me', 'GET');
-
-      // setMyNickname(res.data.nickname);
     };
 
     fetchData();
