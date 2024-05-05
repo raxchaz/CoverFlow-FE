@@ -13,6 +13,7 @@ import Justice from '../../../asset/image/justice.svg';
 import GraphBar from '../../../asset/image/graph_bar.svg';
 import { showErrorToast, showSuccessToast } from '../../ui/toast/toast';
 import { fetchAPI } from '../../global/utils/apiUtil';
+
 function QuestionWritePage() {
   const navigate = useNavigate();
   const { state } = useLocation();
@@ -22,10 +23,14 @@ function QuestionWritePage() {
   const [questionTag, setQuestionTag] = useState('');
   const [questionCategory, setQuestionCategory] = useState('');
   const { companyId } = useParams();
+  const [showAllTags, setShowAllTags] = useState(false); // State to toggle showing all tags
 
-  const tagName = [
+  const initialTags = [
     { name: '사내 문화가 궁금해요', value: 'CULTURE', image: Home },
     { name: '급여 정보가 궁금해요', value: 'SALARY', image: Money },
+  ];
+
+  const additionalTags = [
     { name: '업무 방식이 궁금해요', value: 'BUSINESS', image: Search },
     { name: '승진이나 커리어가 궁금해요', value: 'CAREER', image: GraphBar },
     {
@@ -34,6 +39,11 @@ function QuestionWritePage() {
       image: Justice,
     },
   ];
+
+  const tagName = showAllTags
+    ? [...initialTags, ...additionalTags]
+    : initialTags;
+
   const categoryName = [
     '서비스',
     '개발/데이터',
@@ -46,23 +56,15 @@ function QuestionWritePage() {
     navigate(-1);
   };
 
-  const handleTextAreaChange = (
-    event: React.ChangeEvent<HTMLTextAreaElement>,
-  ) => {
+  const handleTextAreaChange = (event) => {
     setContent(event.target.value);
   };
 
-  const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleTitleChange = (event) => {
     setTitle(event.target.value);
   };
 
-  const isRequired = (
-    category: string,
-    tag: string,
-    title: string,
-    content: string,
-    reward: number,
-  ): boolean => {
+  const isRequired = (category, tag, title, content, reward) => {
     return (
       Boolean(category) &&
       Boolean(tag) &&
@@ -96,17 +98,20 @@ function QuestionWritePage() {
         navigate(`/company-info/${companyId}`);
       }
     } catch (error) {
-      // console.log(error);
       showErrorToast(`에러 발생 ${error}`);
     }
   };
 
-  const handleTagSelect = (tag: string) => {
+  const handleTagSelect = (tag) => {
     setQuestionTag(tag);
   };
 
-  const handleCategorySelect = (category: string) => {
+  const handleCategorySelect = (category) => {
     setQuestionCategory(category);
+  };
+
+  const toggleShowAllTags = () => {
+    setShowAllTags(!showAllTags);
   };
 
   return (
@@ -135,6 +140,11 @@ function QuestionWritePage() {
               <span>{tag.name}</span>
             </div>
           ))}
+          {!showAllTags && (
+            <div className="tag-select" onClick={toggleShowAllTags}>
+              <span>+3</span>
+            </div>
+          )}
         </div>
 
         <div className="category-container">
@@ -165,10 +175,7 @@ function QuestionWritePage() {
         />
         <textarea
           className="question-input"
-          placeholder="질문 내용을 입력해주세요.&#13;&#10;
-						질문에 답변이 달릴 경우, 삭제가 불가능해집니다.&#13;&#10;
-						질문 작성 시 타인의 명예를 훼손하거나 허위 사실을 유포할 경우 형법 상 명예훼손죄&#13;&#10;
-						혐의를 받을 수 있습니다. 따라서 타인에 대한 존중과 배려를 기반으로 질문을 작성해주세요."
+          placeholder="질문 내용을 입력해주세요."
           name="content"
           value={content}
           onChange={handleTextAreaChange}

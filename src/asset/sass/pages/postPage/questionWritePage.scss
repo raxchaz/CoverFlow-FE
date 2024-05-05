@@ -182,6 +182,10 @@ select {
   border: 0.5px solid #808080;
   letter-spacing: -1px;
   color: #47474c;
+  &:nth-child(3) {
+    background-color: #bcbcbc;
+    color: #ffffff;
+  }
   span {
     display: flex;
     justify-content: center;
