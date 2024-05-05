@@ -21,6 +21,8 @@
   justify-content: space-between;
   align-items: center;
   padding-left: 3rem;
+  background-color: #ffffff;
+  cursor: pointer;
 }
 .answer-item {
   height: 100px;
@@ -34,6 +36,8 @@
   flex-direction: column;
   justify-content: center;
   padding-left: 3rem;
+  background-color: #ffffff;
+  cursor: pointer;
 }
 
 .answer-item-title {
@@ -45,10 +49,11 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  margin: 0% 0% 3% 0%;
 }
 
 .answer-item-content {
-  font-size: 1.2rem;
+  font-size: 1.8rem;
   color: #474646;
   letter-spacing: -1px;
   font-family: Pretendard-Light;

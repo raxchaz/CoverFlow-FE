@@ -34,9 +34,10 @@ function NotificationPage() {
     queryFn: ({ pageParam }) => fetchNotifications({ pageParam }),
     getNextPageParam: (lastPage) => {
       const lastId = lastPage.data?.notificationList?.slice(-1)[0]?.id;
-
       return lastId ? `?lastId=${lastId}` : undefined;
     },
+    staleTime: 0,
+    gcTime: 1000 * 60 * 5,
     onSuccess: (data) => {
       if (data?.pages) {
         const noReadElements = data.pages.reduce(

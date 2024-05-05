@@ -36,7 +36,7 @@ const StyledSearchInput = styled.input`
 const AutoCompleteContainer = styled.div`
   position: absolute;
   background-color: #fefefe;
-  width: 515px;
+  width: 490px;
   letter-spacing: -1px;
   margin-left: 14%;
   margin-top: 1%;
@@ -48,7 +48,7 @@ const AutoCompleteContainer = styled.div`
 `;
 
 const AutoCompleteItem = styled.div`
-  padding: 10px;
+  padding: 15px 10px;
   cursor: pointer;
   &:hover {
     background-color: #f2f2f2;

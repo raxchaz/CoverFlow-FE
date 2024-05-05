@@ -41,19 +41,21 @@
 
     .title-time {
       display: flex;
-      margin-left: -20rem;
+      margin-left: -5rem;
       flex-direction: column;
       letter-spacing: -1px;
     }
 
     .notification-company {
       letter-spacing: -1px;
-      font-family: pretendard-Light;
+      // font-family: pretendard-Light;
       color: #333333;
       font-size: 1.8rem;
-      width: 5rem;
+      width: 20rem;
       white-space: nowrap;
-      overflow: hidden;
+      // overflow: hidden;
+      text-align: right;
+      margin-right: 4.5%;
       text-overflow: ellipsis;
     }
   }
