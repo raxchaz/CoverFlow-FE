@@ -101,7 +101,7 @@ interface AppState {
 function QuestionDetailPage() {
   const navigate = useNavigate();
   const { state } = useLocation();
-  console.log('state: ', state);
+
   // console.log('state: ', state);
   const { questionId } = useParams();
 
@@ -127,27 +127,27 @@ function QuestionDetailPage() {
   const { isLoggedIn } = useSelector((state: AppState) => state.user);
 
   const [isShowEdit, setIsShowEdit] = useState(false);
-  console.log('isShowEdit: ', isShowEdit);
+  // console.log('isShowEdit: ', isShowEdit);
 
   const [showReport, setShowReport] = useState(false);
-  console.log('showReport: ', showReport);
+  // console.log('showReport: ', showReport);
 
   // const { questionId } = useParams();
-  useEffect(() => {
-    const loadAnswerList = async () => {
-      try {
-        // const token = localStorage.getItem(ACCESS_TOKEN);
-        // if (!token) {
-        //   showErrorToast('로그인이 필요합니다.');
-        //   navigate(-1);
-        // }
-      } catch (error) {
-        if (error instanceof Error) showErrorToast(error.message);
-      }
-    };
+  // useEffect(() => {
+  //   const loadAnswerList = async () => {
+  //     try {
+  //       // const token = localStorage.getItem(ACCESS_TOKEN);
+  //       // if (!token) {
+  //       //   showErrorToast('로그인이 필요합니다.');
+  //       //   navigate(-1);
+  //       // }
+  //     } catch (error) {
+  //       if (error instanceof Error) showErrorToast(error.message);
+  //     }
+  //   };
 
-    loadAnswerList();
-  }, [currentPage, questionId, navigate, postAnswer]);
+  //   loadAnswerList();
+  // }, [currentPage, questionId, navigate, postAnswer]);
 
   const handleGoBack = () => {
     navigate(-1);
@@ -161,10 +161,12 @@ function QuestionDetailPage() {
       questionId: Number(questionId),
     };
 
+
     // if (myNickname === questionerNickname) {
     //   showErrorToast('본인의 문의는 답변할 수 없습니다.');
     //   return;
     // }
+
 
     const data = await fetchAPI('/api/answer', 'POST', requestData);
 
@@ -219,7 +221,6 @@ function QuestionDetailPage() {
       const response = await axios.get(
         `${BASE_URL}/api/question/${questionId}?pageNo=${currentPage}&criterion=createdAt`,
       );
-
       const {
         data: {
           questionerNickname,

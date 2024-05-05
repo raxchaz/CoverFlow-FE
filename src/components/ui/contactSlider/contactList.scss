@@ -14,8 +14,6 @@
   position: relative;
   width: 505px;
   margin: 0 auto;
-  max-height: 68vh;
-  min-height: 68vh;
   padding: 1rem 0;
   overflow-y: scroll;
   -ms-overflow-style: none;
@@ -93,10 +91,10 @@
 
 .inquiry-content-answer {
   background-color: #f5f5f5;
-  width: 520px;
-  min-height: 210px;
+  width: 500px;
+  min-height: 150px;
   text-indent: 0.3rem;
-  padding: 0.3rem 0.8rem;
+  padding: 1rem 1.7rem;
   margin-bottom: 1rem;
   font-size: 1.5rem;
   letter-spacing: -1px;
@@ -108,7 +106,7 @@
   width: 19rem;
   min-height: 1rem;
   text-indent: 1rem;
-  padding-bottom: 1rem;
+  padding-bottom: 1.5rem;
   font-size: small;
 }
 
@@ -180,14 +178,19 @@
 
 .inquiry-content-answer-tag {
   background-color: #d9d9d9;
-  border-radius: 30px;
-  font-size: 1rem;
+  border-radius: 10px;
+  font-size: 1.5rem;
   font-family: pretendard-semiBold;
-  padding: 3px 0.3rem;
+  padding: 0 0.3rem;
   margin: 0.5rem 0px;
   color: black;
-  width: 80px;
+  width: 95px;
   height: 20px;
   text-align: center;
   letter-spacing: -1px;
+}
+
+.mypage-pagination {
+  margin-bottom: 15rem;
+  width: 40rem !important;
 }

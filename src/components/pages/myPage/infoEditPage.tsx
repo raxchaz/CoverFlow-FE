@@ -68,7 +68,7 @@ function InfoEditPage() {
   const loadUserData = async () => {
     try {
       const data = (await fetchAPI('/api/member/me', 'GET')) as UserResponse;
-      console.log('사용자 정보:', data);
+      // console.log('사용자 정보:', data);
       setNickname(data.data.nickname);
       dispatch(setRewardCount(data.data.fishShapedBun));
     } catch (error) {
@@ -108,8 +108,8 @@ function InfoEditPage() {
       };
 
       if (selectedTag && selectedAge && selectedGender) {
-        const data = await fetchAPI('/api/member', 'PATCH', body);
-        console.log('서버 응답:', data);
+        await fetchAPI('/api/member', 'PATCH', body);
+        // console.log('서버 응답:', data);
         showSuccessToast('성공적으로 정보를 수정했습니다.');
         navigate('/mypage');
       }

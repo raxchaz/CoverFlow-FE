@@ -14,7 +14,7 @@ import { fetchAPI } from '../../global/utils/apiUtil.js';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setLoggedIn } from '../../../store/actions/userActions.js';
-import { showErrorToast } from '../toast/toast.tsx';
+// import { showErrorToast } from '../toast/toast.tsx';
 
 interface AdminSideTapProps {
   loadSection: (sectionName: string) => void;
@@ -52,18 +52,21 @@ export default function AdminSideTap({ loadSection }: AdminSideTapProps) {
   // };
 
   const logout = async () => {
-    console.log('로그아웃 요청 시작');
+    // console.log('로그아웃 요청 시작');
     try {
       await fetchAPI('/api/member/logout', 'PATCH');
 
-      console.log('로그아웃 성공');
+      // console.log('로그아웃 성공');
       localStorage.removeItem(ACCESS_TOKEN);
       localStorage.removeItem(REFRESH_TOKEN);
       dispatch(setLoggedIn(false));
       navigate('/');
     } catch (error) {
-      console.error('로그아웃 실패:', error);
-      showErrorToast('로그아웃에 실패했습니다.');
+      console.error(error);
+      localStorage.removeItem(ACCESS_TOKEN);
+      localStorage.removeItem(REFRESH_TOKEN);
+      dispatch(setLoggedIn(false));
+      navigate('/');
     }
   };
 

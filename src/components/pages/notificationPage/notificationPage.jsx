@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { StyledPage, StyledHeader } from '../../../styledComponent';
 import TitleHeader from '../../ui/header/titleHeader.tsx';
@@ -10,6 +10,7 @@ import { useQueryClient, useInfiniteQuery } from '@tanstack/react-query';
 import { useDispatch } from 'react-redux';
 import { alertCount } from '../../../store/actions/alertActions.js';
 import { showErrorToast } from '../../ui/toast/toast.tsx';
+// import { initializeSSE } from '../../global/utils/eventApiUtils.js';
 
 function fetchNotifications({ pageParam = '' }) {
   return fetchAPI(`/api/notification${pageParam}`, 'GET');
@@ -33,10 +34,21 @@ function NotificationPage() {
     queryFn: ({ pageParam }) => fetchNotifications({ pageParam }),
     getNextPageParam: (lastPage) => {
       const lastId = lastPage.data?.notificationList?.slice(-1)[0]?.id;
-
       return lastId ? `?lastId=${lastId}` : undefined;
     },
+    staleTime: 0,
+    gcTime: 1000 * 60 * 5,
+    onSuccess: (data) => {
+      if (data?.pages) {
+        const noReadElements = data.pages.reduce(
+          (total, page) => total + (page.data.noReadElements || 0),
+          0,
+        );
+        dispatch(alertCount(noReadElements));
+      }
+    },
   });
+  const [noReadElements, setNoReadElements] = useState(0);
 
   useEffect(() => {
     if (data?.pages) {
@@ -44,6 +56,7 @@ function NotificationPage() {
         (total, page) => total + (page.data.noReadElements || 0),
         0,
       );
+      setNoReadElements(noReadElements);
       dispatch(alertCount(noReadElements));
     }
   }, [data, dispatch]);
@@ -87,12 +100,13 @@ function NotificationPage() {
     <StyledPage className="main-page-container">
       <StyledHeader>
         <TitleHeader pageTitle="알림" handleGoBack={handleGoBack} />
+        {/* <button onClick={() => initializeSSE(queryClient, dispatch)}>
+          initializeSSE
+        </button> */}
         <div className="notification-controls">
           <div className="no-read">
             읽지 않은 알림{' '}
-            <div className="no-read-count">
-              {data?.data?.noReadElements || 0}{' '}
-            </div>
+            <div className="no-read-count">{noReadElements || 0} </div>
           </div>
           <div className="all-read-btn" onClick={checkALLNotification}>
             모두 읽음

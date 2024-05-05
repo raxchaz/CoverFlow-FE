@@ -101,3 +101,9 @@
 
   color: rgba(109, 109, 109, 1);
 }
+
+.my-page-container {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  background-color: #fffdfb !important;
+}

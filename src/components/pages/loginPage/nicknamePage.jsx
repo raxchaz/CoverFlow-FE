@@ -157,8 +157,7 @@ const NicknamePage = () => {
         age: ageRange,
         gender: genderData,
       };
-      const data = await fetchAPI('/api/member/nickname', 'POST', body);
-      console.log('서버 응답', data);
+      await fetchAPI('/api/member/nickname', 'POST', body);
       navigate('/');
       showSuccessToast('환영합니다!');
     } catch (error) {
