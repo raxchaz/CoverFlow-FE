@@ -15,6 +15,7 @@ import allCheckGreen from '../../../asset/image/allCheck_green.svg';
 import { showErrorToast, showSuccessToast } from '../../ui/toast/toast.tsx';
 import { initializeSSE } from '../../global/utils/eventApiUtils.js';
 import { useQueryClient } from '@tanstack/react-query';
+import { useDispatch } from 'react-redux';
 
 interface LocationState {
   code?: string;
@@ -33,7 +34,7 @@ export default function TermsPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const queryClient = useQueryClient();
-
+  const dispatch = useDispatch();
   const { code } = (location.state || {}) as LocationState;
 
   // =========================================================== 약관 동의 확인을 위한 부분
@@ -140,7 +141,7 @@ export default function TermsPage() {
       localStorage.setItem(REFRESH_TOKEN, refreshToken);
       navigate('/login/member-info');
       showSuccessToast('회원 가입을 축하드립니다!');
-      initializeSSE(queryClient);
+      initializeSSE(queryClient, dispatch);
     } catch (error) {
       console.error(error);
       showErrorToast('토큰을 받아오는 중 오류가 발생했습니다.');

@@ -21,7 +21,6 @@ const queryClient = new QueryClient({
             0,
           );
           store.dispatch(alertCount(noReadElements));
-          console.log('쿼리 성공적으로 실행');
         }
       },
     },

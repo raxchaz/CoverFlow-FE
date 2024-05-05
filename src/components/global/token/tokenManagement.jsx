@@ -78,7 +78,7 @@ const TokenManagement = () => {
         } else if (['MEMBER', 'PREMIUM', 'ADMIN'].includes(userRole)) {
           // console.log('회원 정보가 존재합니다. 메인 페이지로 이동합니다.');
           navigate(prevPage);
-          initializeSSE(queryClient);
+          initializeSSE(queryClient, dispatch);
         } else {
           alert('로그인에 실패하였습니다. 다시 시도해주세요.');
           navigate('/login');
