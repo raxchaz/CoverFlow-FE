@@ -150,12 +150,6 @@ function QuestionDetailPage() {
     }
   };
 
-  const handleEnterKey = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (event.key === 'Enter') {
-      handleAnswerSubmit();
-    }
-  };
-
   const handlePagination = (direction: string | number) => {
     if (direction === 'prev' && currentPage > 0) {
       setCurrentPage(currentPage - 1);
@@ -182,8 +176,6 @@ function QuestionDetailPage() {
       type: 'QUESTION',
       id: questionId,
     });
-
-    showSuccessToast('신고 접수가 되었습니다.');
   };
 
   const handleCloseReportPopup = () => {
@@ -319,7 +311,6 @@ function QuestionDetailPage() {
             className="comment-input"
             ref={answerRef}
             maxLength={500}
-            onKeyDown={handleEnterKey}
           ></textarea>
           <button className="submit-comment" onClick={handleAnswerSubmit}>
             등록
@@ -354,7 +345,6 @@ function QuestionDetailPage() {
           currentPage={currentPage}
           totalPages={totalPages}
           handlePagination={handlePagination}
-          className={answers.length === 0 ? 'hidden' : ''}
         />
       </ContentBlur>
     </StyledPage>

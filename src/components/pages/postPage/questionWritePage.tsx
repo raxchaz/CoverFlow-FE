@@ -109,7 +109,7 @@ function QuestionWritePage() {
       showSuccessToast('질문이 등록되었습니다');
       navigate(`/company-info/${companyId}`);
     } catch (error) {
-      showErrorToast(`에러 발생 ${error}`);
+      showErrorToast('질문 내용에 비속어가 존재합니다.');
     }
   };
 
