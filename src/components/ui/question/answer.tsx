@@ -107,6 +107,7 @@ function AnswerModule({
 }: AnswerDetailProps) {
   const [questionerTag, setQuestionerTag] = useState('');
   console.log(setQuestionerTag);
+  //   console.log(setQuestionerTag);
   const handleAdoptAnswer = async () => {
     if (confirm('채택하시겠습니까?')) {
       await fetchAPI(`/api/answer/selection/${answerId}`, 'PATCH', {
