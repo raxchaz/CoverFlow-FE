@@ -264,20 +264,15 @@ $job-keeper: '현직자';
 }
 
 .job-info {
-  font-weight: 600;
   margin-left: 5%;
-  letter-spacing: -1px;
-
+  letter-spacing: -1.5px;
+  font-family: pretendard-semibold;
   display: flex;
   align-items: center;
   width: 100%;
   span {
     margin-right: 60%;
-    @if $job-seeker == '취준생' {
-      color: #875100;
-    } @else {
-      color: #428238;
-    }
+    color: #875100;
   }
   img:first-child {
     margin-right: 7px;
@@ -286,4 +281,8 @@ $job-keeper: '현직자';
     cursor: pointer;
   }
   color: #875100;
+
+  .leaf {
+    color: #428238;
+  }
 }

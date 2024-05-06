@@ -270,8 +270,8 @@ function QuestionDetailPage() {
 
       <div className="question-detail-container">
         <div className="job-info">
-          <img src={questionerTag === '취준생' ? Tree : Leaf} alt="" />
-          <span>
+          <img src={questionerTag === '취준생' ? Leaf : Tree} alt="" />
+          <span className={questionerTag === '취준생' ? `leaf` : ''}>
             {questionerTag === '취준생'
               ? `${questionerTag}이 남긴 질문이에요`
               : `${questionerTag}가 남긴 질문이에요`}
