@@ -84,7 +84,7 @@ export interface AnswerProps {
 
 export interface CommentProps {
   answerCount?: number;
-
+  isAdopted: boolean;
   answerId: string;
   answererTag: string;
   createAt: string;
@@ -130,25 +130,8 @@ function QuestionDetailPage() {
   // console.log('isShowEdit: ', isShowEdit);
 
   const [showReport, setShowReport] = useState(false);
-  // console.log('showReport: ', showReport);
-
-  // const { questionId } = useParams();
-  // useEffect(() => {
-  //   const loadAnswerList = async () => {
-  //     try {
-  //       // const token = localStorage.getItem(ACCESS_TOKEN);
-  //       // if (!token) {
-  //       //   showErrorToast('로그인이 필요합니다.');
-  //       //   navigate(-1);
-  //       // }
-  //     } catch (error) {
-  //       if (error instanceof Error) showErrorToast(error.message);
-  //     }
-  //   };
-
-  //   loadAnswerList();
-  // }, [currentPage, questionId, navigate, postAnswer]);
-
+  const [isAdopted, setIsAdopted] = useState(false);
+  const [anyAdopted, setAnyAdopted] = useState(false);
   const handleGoBack = () => {
     navigate(-1);
   };
@@ -213,44 +196,44 @@ function QuestionDetailPage() {
   const handleCloseReportPopup = () => {
     setShowReport((show) => !show);
   };
+  const fetchData = async () => {
+    const response = await axios.get(
+      `${BASE_URL}/api/question/${questionId}?pageNo=${currentPage}&criterion=createdAt`,
+    );
+    const data = response.data.data;
+
+    const sortedAnswers = data.answers.sort((a, b) => {
+      if (a.selection && !b.selection) return -1;
+      if (!a.selection && b.selection) return 1;
+      return 0;
+    });
+    const adoptedExists = data.answers.some(
+      (answer) => answer.selection === true,
+    );
+    setAnyAdopted(adoptedExists);
+    setAnswers(
+      sortedAnswers.map((answer) => ({
+        ...answer,
+        isAdopted: answer.selection,
+      })),
+    );
+
+    setQuestionerNickname(data.questionerNickname);
+    setQuestionerTag(data.questionerTag);
+    setAnswerCount(data.answerCount);
+    setQuestionTitle(data.questionTitle);
+    setCreateAt(data.createAt);
+    setReward(data.reward);
+    setCompanyName(data.companyName);
+    setQuestionContent(data.questionContent);
+    setTotalPages(data.totalPages);
+
+    const res = await fetchAPI('/api/member/me', 'GET');
+
+    setMyNickname(res.data.nickname);
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await axios.get(
-        `${BASE_URL}/api/question/${questionId}?pageNo=${currentPage}&criterion=createdAt`,
-      );
-      console.log('응답', response);
-      const {
-        data: {
-          questionerNickname,
-          questionerTag,
-          answerCount,
-          questionTitle,
-          createAt,
-          reward,
-          companyName,
-          questionContent,
-          answers,
-          totalPages,
-        },
-      } = response.data;
-
-      setQuestionerNickname(questionerNickname);
-      setQuestionerTag(questionerTag);
-      setAnswerCount(answerCount);
-      setQuestionTitle(questionTitle);
-      setCreateAt(createAt);
-      setReward(reward);
-      setCompanyName(companyName);
-      setQuestionContent(questionContent);
-      setAnswers(answers);
-      setTotalPages(totalPages);
-
-      const res = await fetchAPI('/api/member/me', 'GET');
-
-      setMyNickname(res.data.nickname);
-    };
-
     fetchData();
   }, [questionId, postAnswer, currentPage]);
 
@@ -340,17 +323,19 @@ function QuestionDetailPage() {
         ) : null}
       </div>
 
-      <div className="comment-section">
-        <textarea
-          placeholder="답변을 입력해주세요.."
-          className="comment-input"
-          ref={answerRef}
-          maxLength={500}
-        ></textarea>
-        <button className="submit-comment" onClick={handleAnswerSubmit}>
-          등록
-        </button>
-      </div>
+      {!isAdopted && (
+        <div className="comment-section">
+          <textarea
+            placeholder="답변을 입력해주세요.."
+            className="comment-input"
+            ref={answerRef}
+            maxLength={500}
+          ></textarea>
+          <button className="submit-comment" onClick={handleAnswerSubmit}>
+            등록
+          </button>
+        </div>
+      )}
 
       <ContentBlur $isLoggedIn={isLoggedIn}>
         <AnswerList>
@@ -358,7 +343,7 @@ function QuestionDetailPage() {
             <span>답변 {answerCount}</span>
           </div>
 
-          {answers?.map((answer) => (
+          {answers.map((answer) => (
             <Answer
               key={answer.answerId}
               createAt={answer.createAt}
@@ -366,6 +351,10 @@ function QuestionDetailPage() {
               answererNickname={answer.answererNickname}
               answererTag={answer.answererTag}
               answerId={answer.answerId}
+              isAdopted={answer.isAdopted}
+              setIsAdopted={setIsAdopted}
+              fetchData={fetchData}
+              anyAdopted={anyAdopted}
             />
           ))}
         </AnswerList>
