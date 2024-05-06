@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import '../../../asset/sass/pages/postPage/questionDetailPage.scss';
 import { StyledPage, StyledHeader } from '../../../styledComponent';
@@ -100,9 +100,7 @@ interface AppState {
 
 function QuestionDetailPage() {
   const navigate = useNavigate();
-  const { state } = useLocation();
 
-  // console.log('state: ', state);
   const { questionId } = useParams();
 
   const [currentPage, setCurrentPage] = useState(0);
@@ -140,17 +138,19 @@ function QuestionDetailPage() {
 
     const data = await fetchAPI('/api/answer', 'POST', requestData);
 
-    if (
-      state.questioner !== questionerNickname &&
-      data.statusCode === 'CREATED' &&
-      answerRef.current
-    ) {
+    if (data.statusCode === 'CREATED' && answerRef.current) {
       setPostAnswer(answerRef.current?.value);
       showSuccessToast('답변이 등록되었습니다.');
 
       if (answerRef.current) {
         answerRef.current.value = '';
       }
+    }
+  };
+
+  const handleEnterKey = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key === 'Enter') {
+      handleAnswerSubmit();
     }
   };
 
@@ -176,10 +176,12 @@ function QuestionDetailPage() {
   const handleReportSubmit = async () => {
     toggleReportPopup();
     await fetchAPI(`/api/report`, 'POST', {
-      content: state.questionContent,
+      content: questionContent,
       type: 'QUESTION',
-      id: state.questionId,
+      id: questionId,
     });
+
+    showSuccessToast('신고 접수가 되었습니다.');
   };
 
   const handleCloseReportPopup = () => {
@@ -237,7 +239,7 @@ function QuestionDetailPage() {
 
       <div className="question-detail-container">
         <div className="job-info">
-          <img src={questionerTag === '취준생' ? Tree : Leaf} alt="" />
+          <img src={questionerTag === '현업자' ? Leaf : Tree} alt="" />
           <span
             className={questionerTag === '취준생' ? 'job-seeker' : 'job-keeper'}
           >
@@ -315,6 +317,7 @@ function QuestionDetailPage() {
           className="comment-input"
           ref={answerRef}
           maxLength={500}
+          onKeyDown={handleEnterKey}
         ></textarea>
         <button className="submit-comment" onClick={handleAnswerSubmit}>
           등록
