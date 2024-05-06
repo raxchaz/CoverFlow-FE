@@ -8,8 +8,11 @@ $job-keeper: '현직자';
 
 .answer-button-container {
   display: flex;
-  justify-content: space-around;
-  height: 200px;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1.5rem auto 10rem auto;
+  height: 2rem;
+  width: 50rem;
 }
 
 .detailpage-company {
