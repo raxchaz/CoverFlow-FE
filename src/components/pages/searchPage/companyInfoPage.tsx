@@ -134,7 +134,6 @@ function CompanyInfoPage() {
     };
 
     const selectedCategory = getCategoryClick(category);
-    console.log('selectedCategory: ', selectedCategory);
 
     if (selectedCategories.includes(category)) {
       setSelectedCategories(
@@ -145,14 +144,9 @@ function CompanyInfoPage() {
     }
 
     try {
-      let apiUrl;
-      if (selectedCategory !== '') {
-        apiUrl = `${BASE_URL}/api/company/${companyId}?pageNo=0&criterion=createdAt&questionTag=${selectedCategory || null}`;
-      } else {
-        apiUrl = `${BASE_URL}/api/company/${companyId}?pageNo=0&criterion=createdAt`;
-      }
-      console.log(apiUrl);
-      const { data } = await axios.get(apiUrl);
+      const { data } = await axios.get(
+        `${BASE_URL}/api/company/${companyId}?pageNo=0&criterion=createdAt&questionTag=${selectedCategory}`,
+      );
 
       if (data) {
         setCompanyData(data.data);
@@ -188,6 +182,7 @@ function CompanyInfoPage() {
         if (data) {
           setCompanyData(data.data);
           setTotalPages(data.data.totalPages);
+          setQuestionCount(data.data.questionCount);
         } else {
           throw new Error('데이터가 존재하지 않습니다.');
         }
