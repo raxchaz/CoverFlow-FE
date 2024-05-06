@@ -61,18 +61,20 @@
 }
 
 .question-input {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  resize: none;
-  height: 200px;
-  width: 35rem;
+  color: #808080;
+  height: 270px;
+  width: 520px;
   margin: 0% 0% -0.7% 1%;
   font-family: 'Pretendard-Regular', sans-serif;
-  &::placeholder {
-    width: 33rem;
-    line-height: 2;
-  }
+  font-size: 1.5rem;
+  letter-spacing: -1px;
+  margin-left: 12%;
+  border-radius: 10px;
+  border: 0.5px solid #d9d9d9;
+
+  padding: 1.75rem;
+  line-height: 2.8;
+  text-align: left;
 }
 
 select {
@@ -111,12 +113,13 @@ select {
   display: flex;
   justify-content: center;
   box-sizing: border-box;
-  width: 182px;
-  height: 48px;
   position: relative;
+  // width: 100%;
+  height: 48px;
   left: 5rem;
   margin-top: 5%;
   span {
+    width: 100%;
     font-weight: 900;
     font-family: 'Pretendard-ExtraBold';
     font-size: 3.5rem;
@@ -136,7 +139,7 @@ select {
 
   span {
     overflow-wrap: break-word;
-    font-family: Pretendard;
+    font-family: 'Pretendard-Light';
     font-weight: 600;
     font-size: 1.8rem;
     letter-spacing: -0.1rem;
@@ -178,23 +181,63 @@ select {
   box-sizing: border-box;
   border: 0.5px solid #808080;
   letter-spacing: -1px;
-
+  color: #47474c;
   span {
     display: flex;
     justify-content: center;
     overflow-wrap: break-word;
-    font-family: 'Pretendard-Medium';
+    font-family: 'Pretendard-Light';
     font-weight: 600;
     font-size: 2rem;
+
     letter-spacing: -0.1rem;
-    color: #474646;
-    &:active {
-      color: #ff8d1d;
-      font-family: 'Pretendard-Bold';
-    }
+  }
+  &:active {
+    border: 2px solid #ff8d1d;
+    background-color: #ff8d1d;
+    color: #ffffff;
+    font-family: 'Pretendard-Bold';
   }
   button {
     width: 3rem;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &.selected {
+    border: 2px solid #ff8d1d;
+    background-color: #ff8d1d;
+    color: #ffffff;
+  }
+}
+
+.category-select {
+  font-size: 1.3rem;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1% 2.5% 1% 2.5%;
+  box-sizing: border-box;
+  border: 1px solid #bcbcbc;
+  color: #47474c;
+  span {
+    overflow-wrap: break-word;
+    font-family: Pretendard;
+    font-weight: 600;
+    font-size: 1.6rem;
+    letter-spacing: -0.1rem;
+
+    display: flex;
+    justify-content: center;
+
+    width: 7rem;
+  }
+  &:active {
+    background-color: #ff8d1d;
+    color: #ffffff;
   }
 
   &:hover {

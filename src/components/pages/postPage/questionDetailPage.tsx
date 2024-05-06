@@ -13,7 +13,7 @@ import Reward from '../../../asset/image/reward.svg';
 import Dot from '../../../asset/image/dots-vertical.svg';
 import '../../../asset/sass/etc/header/userInfoHeader.scss';
 
-import { showErrorToast, showSuccessToast } from '../../ui/toast/toast.tsx';
+import { showSuccessToast } from '../../ui/toast/toast.tsx';
 import { fetchAPI } from '../../global/utils/apiUtil.js';
 import Pagination from '../../ui/Pagination.tsx';
 import { useSelector } from 'react-redux';
@@ -119,35 +119,26 @@ function QuestionDetailPage() {
   const [questionContent, setQuestionContent] = useState('');
   const [answers, setAnswers] = useState<CommentProps[]>([]);
 
-  const [myNickname, setMyNickname] = useState('');
-
   const answerRef = useRef<HTMLTextAreaElement>(null);
   const [postAnswer, setPostAnswer] = useState('');
 
   const { isLoggedIn } = useSelector((state: AppState) => state.user);
 
   const [isShowEdit, setIsShowEdit] = useState(false);
-  // console.log('isShowEdit: ', isShowEdit);
 
   const [showReport, setShowReport] = useState(false);
   const [isAdopted, setIsAdopted] = useState(false);
   const [anyAdopted, setAnyAdopted] = useState(false);
+
   const handleGoBack = () => {
     navigate(-1);
   };
 
   const handleAnswerSubmit = async () => {
-    // const answerer = questionDetail.map((detail) => detail.questionerNickname);
-
     const requestData = {
       content: answerRef.current ? answerRef.current.value : '',
       questionId: Number(questionId),
     };
-
-    if (myNickname === questionerNickname) {
-      showErrorToast('본인의 질문에는 답변할 수 없습니다.');
-      return;
-    }
 
     const data = await fetchAPI('/api/answer', 'POST', requestData);
 
@@ -227,10 +218,6 @@ function QuestionDetailPage() {
     setCompanyName(data.companyName);
     setQuestionContent(data.questionContent);
     setTotalPages(data.totalPages);
-
-    const res = await fetchAPI('/api/member/me', 'GET');
-
-    setMyNickname(res.data.nickname);
   };
 
   useEffect(() => {
@@ -244,7 +231,7 @@ function QuestionDetailPage() {
     '스팸 혹은 홍보성 도배글이에요',
     '특정 이용자가 질문, 답변, 채택을 반복해요',
   ];
-
+  console.log(questionerTag);
   return (
     <StyledPage className="main-page-container">
       <StyledHeader>
@@ -262,7 +249,7 @@ function QuestionDetailPage() {
 
           <img onClick={handleEdit} src={Dot} alt="dot" />
 
-          {myNickname === questionerNickname && isShowEdit ? (
+          {isShowEdit ? (
             <div className="dropdown-question-detail-menu">
               <ul style={{ right: '10px' }}>
                 <li className="dropdown-item-edit">수정</li>
@@ -290,7 +277,7 @@ function QuestionDetailPage() {
           </div>
         </div>
         <FirstLine />
-        {myNickname !== questionerNickname && showReport ? (
+        {showReport ? (
           <div className="report-popup-overlay">
             <div className="report-popup">
               <div className="report-title">사용자 신고</div>
@@ -340,7 +327,8 @@ function QuestionDetailPage() {
       <ContentBlur $isLoggedIn={isLoggedIn}>
         <AnswerList>
           <div className="answer-title">
-            <span>답변 {answerCount}</span>
+            <span>답변</span>
+            <span> {answerCount}</span>
           </div>
 
           {answers.map((answer) => (
