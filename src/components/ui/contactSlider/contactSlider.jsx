@@ -80,6 +80,10 @@ export default function ContactSlider() {
 
   const submitContact = async () => {
     try {
+      if (contact.title.length > 20) {
+        showErrorToast('제목을 20자 이하로 작성해주세요.');
+        return;
+      }
       const res = await fetchAPI('/api/inquiry', 'POST', contact);
       if (res.statusCode === 'CREATED') {
         setCurrentSection('contactList');
@@ -168,6 +172,7 @@ export default function ContactSlider() {
                 name="content"
                 value={contact.content}
                 handleChange={handleChange}
+                maxLength={200}
               />
 
               <Button
