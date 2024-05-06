@@ -35,6 +35,10 @@ function QuestionWritePage() {
     },
   ];
   const categoryName = [
+    '경영/사무',
+    '연구개발/설계',
+    '무역/유통',
+    '디자인',
     '서비스',
     '개발/데이터',
     '마케팅/광고',
@@ -141,7 +145,7 @@ function QuestionWritePage() {
           <div className="category-wrapper">
             <img className="finger-image" src={Finger} alt="finger" />
           </div>
-          <span>질문 카테고리를 설정해주세요</span>
+          <span>질문의 직무 분류를 설정해주세요</span>
         </div>
 
         <div className="category-select-wrapper ">
