@@ -46,10 +46,11 @@ const QuestionTitle = styled.div`
     font-size: 3rem;
     padding: 10px;
     color: #000000;
-    margin: 0 78% 2% 3%;
   }
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  padding: 15px;
   img {
     cursor: pointer;
   }
@@ -131,6 +132,7 @@ function QuestionDetailPage() {
   const [isShowEdit, setIsShowEdit] = useState(false);
 
   const [isShowReport, setIsShowReport] = useState(false);
+  const [isShowReportModal, setIsShowReportModal] = useState(false);
   const [isAdopted, setIsAdopted] = useState(false);
   const [anyAdopted, setAnyAdopted] = useState(false);
 
@@ -177,15 +179,20 @@ function QuestionDetailPage() {
   };
 
   const toggleReportPopup = () => {
-    setIsShowReport((show) => !show);
+    setIsShowReport((showReport) => !showReport);
+    setIsShowReportModal((showReportModal) => !showReportModal);
   };
 
-  const handleEdit = () => {
-    console.log('click ');
-    setIsShowEdit((edit) => !edit);
-  };
+  const handleEdit = async () => {
+    const res = await fetchAPI('/api/member/me', 'GET');
 
-  console.log(isShowEdit);
+    if (res.data.nickname === questionerNickname) {
+      setIsShowEdit(true);
+      setIsShowReport(false);
+    } else if (res.data.nickname !== questionerNickname) {
+      setIsShowReport((showReport) => !showReport);
+    }
+  };
 
   const handleClickEdit = async () => {
     const editBody = {
@@ -227,8 +234,9 @@ function QuestionDetailPage() {
   };
 
   const handleCloseReportPopup = () => {
-    setIsShowReport((show) => !show);
+    setIsShowReportModal(false);
   };
+
   const fetchData = async () => {
     const response = await axios.get(
       `${BASE_URL}/api/question/${questionId}?pageNo=${currentPage}&criterion=createdAt`,
@@ -273,7 +281,6 @@ function QuestionDetailPage() {
     '스팸 혹은 홍보성 도배글이에요',
     '특정 이용자가 질문, 답변, 채택을 반복해요',
   ];
-  // console.log(questionerTag);
   return (
     <StyledPage className="main-page-container">
       <StyledHeader>
@@ -288,8 +295,11 @@ function QuestionDetailPage() {
               ? `${questionerTag}이 남긴 질문이에요`
               : `${questionerTag}가 남긴 질문이에요`}
           </span>
-
-          {!isShowEdit && (
+        </div>
+        <QuestionTitle>
+          <span>{questionTitle}</span>
+          <img onClick={handleEdit} src={Dot} alt="dot" />
+          {isShowEdit && (
             <div className="dropdown-question-detail-menu">
               <ul>
                 <li onClick={handleClickEdit} className="dropdown-item-edit">
@@ -303,19 +313,22 @@ function QuestionDetailPage() {
                   삭제
                 </li>
                 {/*
+                 */}
+              </ul>
+            </div>
+          )}
+          {isShowReport ? (
+            <div className="dropdown-question-detail-report-menu">
+              <ul>
                 <li
                   onClick={toggleReportPopup}
                   className="dropdown-item-report"
                 >
                   신고
-                </li> */}
+                </li>
               </ul>
             </div>
-          )}
-        </div>
-        <QuestionTitle>
-          <span>{questionTitle}</span>
-          <img onClick={handleEdit} src={Dot} alt="dot" />
+          ) : null}
         </QuestionTitle>
 
         <div className="questioner-info">
@@ -335,7 +348,7 @@ function QuestionDetailPage() {
           </div>
         </div>
         <FirstLine />
-        {isShowReport ? (
+        {isShowReportModal && (
           <div className="report-popup-overlay">
             <div className="report-popup">
               <div className="report-title">사용자 신고</div>
@@ -365,7 +378,7 @@ function QuestionDetailPage() {
               </div>
             </div>
           </div>
-        ) : null}
+        )}
       </div>
 
       {!isAdopted && (
