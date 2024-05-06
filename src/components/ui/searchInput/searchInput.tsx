@@ -17,7 +17,7 @@ const StyledSearchInput = styled.input`
   border: 2px solid #ffbd7c;
   background-color: #fff;
   border-radius: 3rem;
-  margin: 9% 0% 0% 14%;
+  margin: 9% 0% 0% 12.5%;
   outline: none;
 
   &:focus {
@@ -36,9 +36,9 @@ const StyledSearchInput = styled.input`
 const AutoCompleteContainer = styled.div`
   position: absolute;
   background-color: #fefefe;
-  width: 361px;
+  width: 490px;
   letter-spacing: -1px;
-  margin-left: 23%;
+  margin-left: 14%;
   margin-top: 1%;
   border-radius: 0 0 10px 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -48,7 +48,7 @@ const AutoCompleteContainer = styled.div`
 `;
 
 const AutoCompleteItem = styled.div`
-  padding: 10px;
+  padding: 15px 10px;
   cursor: pointer;
   &:hover {
     background-color: #f2f2f2;
@@ -63,7 +63,11 @@ interface CompanyProps {
   companyName: string;
 }
 
-function SearchInput() {
+interface SearchInputProps {
+  setCurrentPage?: (page: number) => void;
+}
+
+function SearchInput({ setCurrentPage }: SearchInputProps) {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const navigate = useNavigate();
   const [keyword, setKeyword] = useState('');
@@ -143,7 +147,7 @@ function SearchInput() {
 
     const params = new URLSearchParams();
     params.append('keyword', keyword);
-
+    setCurrentPage?.(0);
     navigate(`/search-result?${params.toString()}`, {
       state: { searchResults: autoCompleteValue, totalCompany, totalPages },
     });

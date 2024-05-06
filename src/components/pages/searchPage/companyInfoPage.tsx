@@ -6,11 +6,14 @@ import UserInfoHeader from '../../ui/header/userInfoHeader.jsx';
 import TabBar from '../../ui/tabBar/tabBar.tsx';
 import '../../../asset/sass/pages/searchPage/companyInfoPage.scss';
 import Question from '../../ui/question/question.tsx';
-import { ACCESS_TOKEN } from '../../global/constants/index.ts';
+import { ACCESS_TOKEN, BASE_URL } from '../../global/constants/index.ts';
 import { StyledHeader, StyledPage } from '../../../styledComponent.ts';
 import SearchInput from '../../ui/searchInput/searchInput.tsx';
 import { showErrorToast } from '../../ui/toast/toast.tsx';
-import { fetchAPI } from '../../global/utils/apiUtil.js';
+import axios from 'axios';
+import Pagination from '../../ui/Pagination.tsx';
+import '../../../asset/sass/pages/notificationPage/notificationList.scss';
+
 const CompanyContainer = styled.div`
   background-color: #ffffff;
   margin: 5% 0% 5% 15%;
@@ -22,10 +25,17 @@ const CompanyContainer = styled.div`
 `;
 
 const CompanyName = styled.div`
-  font-size: 1.8rem;
+  font-size: 3rem;
   letter-spacing: -1px;
   font-weight: 800;
   margin-bottom: 0.6rem;
+  font-family: 'Pretendard-ExtraBold';
+  span {
+    font-size: 1.4rem;
+    color: #474646;
+    font-family: 'Pretendard-Medium';
+    letter-spacing: -1px;
+  }
 `;
 
 // const CompanyType = styled.div`
@@ -52,12 +62,14 @@ const QuestionButton = styled.button`
   /* border-radius: 3px; */
   font-weight: 600;
   font-size: 18px;
-  /* border-radius: 7px; */
-  /* padding: 1% 2% 1% 2%; */
-  /* margin: 10% 13% 5% 0%; */
+  width: 105px;
+  height: 35px;
+  border-radius: 2px;
+  font-size: 1.8rem;
+  color: #ffffff;
+  letter-spacing: -1px;
 
-  border-radius: 0;
-  font-family: 'Pretendard-ExtraLight' !important;
+  font-family: 'Pretendard-ExtraBold';
 `;
 
 const QuestionList = styled.div`
@@ -93,32 +105,86 @@ function CompanyInfoPage() {
   const navigate = useNavigate();
   const [companyData, setCompanyData] = useState<CompanInfoProps>();
   const { companyId } = useParams();
+  const [questionsCount, setQuestionCount] = useState(0);
+
+  const [currentPage, setCurrentPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
 
   const [selectedCategories, setSelectedCategories] = useState(['']);
 
-  const handleCategoryClick = (category: string) => {
+  const handleCategoryClick = async (category: string) => {
+    const getCategoryClick = (category: string) => {
+      switch (category) {
+        case '사내문화':
+          return 'CULTURE';
+        case '급여연봉':
+          return 'SALARY';
+        case '업무방식':
+          return 'BUSINESS';
+        case '승진커리어':
+          return 'CAREER';
+        case '직무워라밸':
+          return 'WORKLIFEBALANCE';
+        default:
+          return '';
+      }
+    };
+
+    const selectedCategory = getCategoryClick(category);
+    console.log('selectedCategory: ', selectedCategory);
+
     if (selectedCategories.includes(category)) {
       setSelectedCategories(
         selectedCategories.filter((item) => item !== category),
       );
     } else {
-      setSelectedCategories([...selectedCategories, category]);
+      setSelectedCategories([category]);
+    }
+
+    try {
+      let apiUrl;
+      if (selectedCategory !== '') {
+        apiUrl = `${BASE_URL}/api/company/${companyId}?pageNo=0&criterion=createdAt&questionTag=${selectedCategory || null}`;
+      } else {
+        apiUrl = `${BASE_URL}/api/company/${companyId}?pageNo=0&criterion=createdAt`;
+      }
+      console.log(apiUrl);
+      const { data } = await axios.get(apiUrl);
+
+      if (data) {
+        setCompanyData(data.data);
+        setQuestionCount(data.data.totalElements);
+      } else {
+        throw new Error('데이터가 존재하지 않습니다.');
+      }
+    } catch (error) {
+      if (error instanceof Error) showErrorToast(error.message);
+      navigate(-1);
     }
   };
 
   localStorage.setItem('prevPage', window.location.pathname);
 
+  const handlePagination = (direction: string | number) => {
+    if (direction === 'prev' && currentPage > 0) {
+      setCurrentPage(currentPage - 1);
+    } else if (direction === 'next' && currentPage < totalPages - 1) {
+      setCurrentPage(currentPage + 1);
+    } else if (typeof direction === 'number') {
+      setCurrentPage(direction);
+    }
+  };
+
   useEffect(() => {
     async function fetchCompanyData() {
       try {
-        const data = await fetchAPI(
-          `/api/company/${companyId}?pageNo=0&criterion=createdAt`,
-          'GET',
-          null,
+        const { data } = await axios.get(
+          `${BASE_URL}/api/company/${companyId}?pageNo=${currentPage}&criterion=createdAt`,
         );
 
         if (data) {
           setCompanyData(data.data);
+          setTotalPages(data.data.totalPages);
         } else {
           throw new Error('데이터가 존재하지 않습니다.');
         }
@@ -129,7 +195,7 @@ function CompanyInfoPage() {
     }
 
     fetchCompanyData();
-  }, [companyId]);
+  }, [companyId, currentPage]);
 
   const handleQuestionClick = () => {
     const token = localStorage.getItem(ACCESS_TOKEN);
@@ -150,7 +216,7 @@ function CompanyInfoPage() {
   return (
     <StyledPage className="main-page-container">
       <StyledHeader>
-        <TitleHeader pageTitle="검색 결과" handleGoBack={handleGoBack} />
+        <TitleHeader pageTitle="기업 상세" handleGoBack={handleGoBack} />
         <UserInfoHeader />
         <SearchInput />
       </StyledHeader>
@@ -220,7 +286,7 @@ function CompanyInfoPage() {
           <div className="question-info-container">
             <div className="company-question-title">
               <span>질문</span>
-              <div className="question-count">{companyData.questionCount}</div>
+              <div className="question-count">{questionsCount}</div>
             </div>
           </div>
 
@@ -238,12 +304,19 @@ function CompanyInfoPage() {
                 createAt={question.createAt}
                 reward={question.reward}
                 companyData={companyData}
+                viewCount={question.questionViewCount}
               />
             ))}
           </QuestionList>
+          <TabBar />
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            handlePagination={handlePagination}
+            className="pagination-container"
+          />
         </>
       )}
-      <TabBar />
     </StyledPage>
   );
 }

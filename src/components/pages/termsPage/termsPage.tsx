@@ -14,6 +14,9 @@ import allCheckGrey from '../../../asset/image/allCheck_grey.svg';
 import allCheckGreen from '../../../asset/image/allCheck_green.svg';
 import { showErrorToast, showSuccessToast } from '../../ui/toast/toast.tsx';
 import { initializeSSE } from '../../global/utils/eventApiUtils.js';
+import { useQueryClient } from '@tanstack/react-query';
+import { useDispatch } from 'react-redux';
+
 interface LocationState {
   code?: string;
 }
@@ -30,6 +33,8 @@ interface TermText {
 export default function TermsPage() {
   const navigate = useNavigate();
   const location = useLocation();
+  const queryClient = useQueryClient();
+  const dispatch = useDispatch();
   const { code } = (location.state || {}) as LocationState;
 
   // =========================================================== 약관 동의 확인을 위한 부분
@@ -69,32 +74,32 @@ export default function TermsPage() {
   const termsText: Record<string, TermText> = {
     term1: {
       title: '[필수] 코버플로우 이용 약관',
-      link: 'https://fallacious-scowl-9f4.notion.site/eaa829b2e5ea4ebd98534c11b264d82b?pvs=4',
+      link: 'https://muddy-snowflake-048.notion.site/fd66b743735d4e59afd10c309cadb839?pvs=4',
     },
     term2: {
       title: '[필수] 유료 결제 관련 약관',
-      link: 'https://fallacious-scowl-9f4.notion.site/e5130a2a286d45039918314da3489ee6?pvs=4',
+      link: 'https://muddy-snowflake-048.notion.site/3065eafff7ec49acb4d45ca4261ba1cf?pvs=4',
     },
     term3: {
       title: '[필수] 개인정보 처리방침',
-      link: 'https://fallacious-scowl-9f4.notion.site/7b3f1d1338184881877fa0c68fb1694e?pvs=4',
+      link: 'https://muddy-snowflake-048.notion.site/4a6f97ae8c63499ebd57aab31c09f399?pvs=4',
     },
     term4: {
       title: '[필수] 커뮤니티 이용 규칙 동의',
-      link: 'https://fallacious-scowl-9f4.notion.site/25d4bdf5a49d47a6ae4e54ca6c685dc8?pvs=4',
+      link: 'https://muddy-snowflake-048.notion.site/d381d8e0a61548eaad106d4e96ddf8f5?pvs=4',
     },
     term5: {
       title: '[필수] 만 14세 이상 동의',
-      link: 'https://fallacious-scowl-9f4.notion.site/14-50fc59402e0a4aefb27944240d85fda0?pvs=4',
+      link: 'https://muddy-snowflake-048.notion.site/14-6d2bf537687c4814b94949143b786edf?pvs=4',
     },
 
     term6: {
       title: '[선택] 마케팅 및 광고 동의',
-      link: 'https://fallacious-scowl-9f4.notion.site/c88ab1a33a3943f3a9a378d0bfb6ae74?pvs=4',
+      link: 'https://muddy-snowflake-048.notion.site/403754e5e1b849d085cfbe25a13483e7?pvs=4',
     },
     term7: {
       title: '[선택] 개인정보 수집 및 이용 동의',
-      link: 'https://fallacious-scowl-9f4.notion.site/3-f63805b290054f0c94e526337c929ee8?pvs=4',
+      link: 'https://muddy-snowflake-048.notion.site/3-2ecbf6307cde4cadb5d296a3bd317ca6?pvs=4',
     },
   };
 
@@ -136,7 +141,7 @@ export default function TermsPage() {
       localStorage.setItem(REFRESH_TOKEN, refreshToken);
       navigate('/login/member-info');
       showSuccessToast('회원 가입을 축하드립니다!');
-      initializeSSE();
+      initializeSSE(queryClient, dispatch);
     } catch (error) {
       console.error(error);
       showErrorToast('토큰을 받아오는 중 오류가 발생했습니다.');

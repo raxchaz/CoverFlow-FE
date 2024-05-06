@@ -2,8 +2,8 @@
   width: 100px;
   height: 30px;
   margin-left: 53px;
-  margin-top: -0.3rem;
-  position: fixed;
+  // margin-top:-0.3rem;
+  margin-top: -0.5rem;
   font-size: 1.5rem;
   font-family: 'pretendard-Bold';
   border: 0.1px solid #fefefe;
@@ -33,7 +33,6 @@ img.loginuser {
 }
 
 .reward-fish {
-  height: 0;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -49,8 +48,87 @@ img.loginuser {
   font-family: Pretendard-Medium;
 }
 
+.dropdown-question-detail-menu {
+  position: relative;
+  z-index: 500;
+
+  ul {
+    position: absolute;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    width: 88px;
+    height: 72px;
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    align-items: center;
+
+    align-items: center;
+    max-height: 350px;
+    border-radius: 10px;
+    margin-left: 70%;
+    margin-top: 7%;
+    border-color: #d9d9d9;
+  }
+
+  .dropdown-item {
+    margin-top: 15%;
+  }
+
+  .dropdown-item-edit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .dropdown-item-delete {
+    margin-bottom: 5%;
+    margin-top: 5%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .dropdown-item-store {
+    margin-top: -10%;
+    margin-bottom: 0%;
+  }
+
+  .dropdown-item-logout {
+    margin-top: -10%;
+    margin-bottom: 10%;
+  }
+
+  hr {
+    border: none;
+    border-top: 1px solid #d9d9d9;
+    text-align: center;
+    overflow: visible;
+    z-index: 10;
+  }
+
+  hr:after {
+    content: '';
+    z-index: 1;
+    background: none;
+  }
+
+  .down-hr {
+    margin-top: 0%;
+    border-top: 1px solid #fff;
+  }
+
+  .up-hr {
+    margin-top: 0%;
+    border-top: 1px solid #fff;
+  }
+}
+
 .dropdown-menu {
   position: relative;
+  z-index: 500;
 
   ul {
     position: absolute;
@@ -92,6 +170,20 @@ img.loginuser {
 
   .dropdown-item {
     margin-top: 15%;
+  }
+
+  .dropdown-item-edit {
+    margin-bottom: 5%;
+    margin-top: 5%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .dropdown-item-delete {
+    margin-bottom: 5%;
+    margin-top: 5%;
+    display: flex;
+    justify-content: center;
   }
 
   .dropdown-item-store {

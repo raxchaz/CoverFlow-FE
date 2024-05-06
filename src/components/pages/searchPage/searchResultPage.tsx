@@ -58,6 +58,7 @@ const ResultItem = styled.li`
 const IndustryTagContainer = styled.div`
   display: flex;
   flex-direction: column;
+  padding: 2.5rem;
 `;
 
 const IndustryTag = styled.span`
@@ -77,7 +78,8 @@ const ResultsList = styled.ul`
 
 const ResultCount = styled.div`
   letter-spacing: -1px;
-  margin: 9% 0% -3% 11%;
+  margin: 7% 0% -7% 12.5%;
+  font-family: Pretendard-Bold;
   color: #333;
   font-size: 1.8rem;
   font-weight: 600;
@@ -94,22 +96,27 @@ const QuestionCount = styled.div`
   box-shadow:
     0 1px 2px rgba(0, 0, 0, 0.05),
     0 1px 2px rgba(0, 0, 0, 0.1);
-  padding: 0.6rem 1.2rem;
+  padding: 0.5rem 1.2rem;
   border-radius: 0.6rem;
-  border-bottom: #d9d9d9;
+  position: relative;
+
   &::before {
     content: '질문 수';
     display: block;
     font-size: 0.8em;
     color: #6c757d;
-    margin-bottom: 10%;
+    margin-bottom: 30%;
     font-weight: 400;
   }
 
   &::after {
     content: '';
-    display: block;
-    height: 1px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 50%;
+    width: 58.41px;
+    border-bottom: 1px solid #eaeaea;
   }
 `;
 
@@ -145,22 +152,13 @@ function SearchResultPage() {
   const {
     state: { searchResults, totalCompany, totalPages },
   } = useLocation() as SearchResultProps;
-  // console.log('searchResults', searchResults);
+
   const [searchData, setSearchData] =
     useState<SearchDataProps[]>(searchResults);
   const [companyCnt, setCompanyCnt] = useState(totalCompany);
   const [pageCnt, setPageCnt] = useState(totalPages);
 
-  // const keyword = queryParams.get('keyword');
-
   const [currentPage, setCurrentPage] = useState(0);
-
-  // const indexOfLastItem = currentPage * itemsPerPage;
-  // const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  // const currentItems = Array.from(searchResults)?.slice(
-  //   indexOfFirstItem,
-  //   indexOfLastItem,
-  // );
 
   const handleGoBack = () => {
     navigate('/search-company');
@@ -178,9 +176,26 @@ function SearchResultPage() {
         );
         const data = await response.json();
         setSearchData(data.data.companyList);
+
+        // console.log('페이지 내 결과', data.data);
+      } catch (error) {
+        showErrorToast(`오류 발생: ${error}`);
+        setSearchData([]);
+      }
+    };
+
+    const fetchCnt = async () => {
+      if (!keyword) return;
+      try {
+        const response = await fetch(
+          `${BASE_URL}/api/company/count?name=${keyword}`,
+          {
+            method: 'GET',
+          },
+        );
+        const data = await response.json();
         setCompanyCnt(data.data.totalElements);
         setPageCnt(data.data.totalPages);
-        // console.log('페이지 내 결과', data.data.companyList);
       } catch (error) {
         showErrorToast(`오류 발생: ${error}`);
         setSearchData([]);
@@ -188,6 +203,7 @@ function SearchResultPage() {
     };
 
     fetchData();
+    fetchCnt();
   }, [keyword, currentPage]);
 
   const goToResultDetailPage = (companyId: number) => {
@@ -197,7 +213,7 @@ function SearchResultPage() {
   const handlePagination = (direction) => {
     if (direction === 'prev' && currentPage > 0) {
       setCurrentPage(currentPage - 1);
-    } else if (direction === 'next' && currentPage < totalPages - 1) {
+    } else if (direction === 'next') {
       setCurrentPage(currentPage + 1);
     } else if (typeof direction === 'number') {
       setCurrentPage(direction);
@@ -209,7 +225,7 @@ function SearchResultPage() {
       <StyledHeader>
         <ResultsContainer>
           <TitleHeader pageTitle="검색 결과" handleGoBack={handleGoBack} />
-          <SearchInput />
+          <SearchInput setCurrentPage={setCurrentPage} />
           <ResultCount>
             기업 검색 결과
             <span className="result-count">{companyCnt}</span>
@@ -223,7 +239,7 @@ function SearchResultPage() {
                 >
                   <IndustryTagContainer>
                     <span>{item.companyName}</span>
-                    <IndustryTag>업종 : {item.companyType}</IndustryTag>
+                    <IndustryTag>{item.companyType}</IndustryTag>
                   </IndustryTagContainer>
                   <QuestionCount>{item.questionCount}</QuestionCount>
                 </ResultItem>

@@ -90,7 +90,7 @@ export default function MyQuestion({
 
       {question.length >= 1 ? (
         <AdminPagination
-          className="my-question-pagination"
+          className="rst-pagination"
           currentPage={currentPage}
           totalPages={totalPages}
           handlePagination={handlePagination}

@@ -1,57 +1,107 @@
 @mixin interact-color {
   background-color: #ff8d1d;
   color: #ffffff;
+  border: #ff8d1d;
+}
+.activePanel-toggle {
+  margin-right: 15%;
+}
+
+.notice-wrapper {
+  margin-top: 3rem;
+  max-height: 70vh;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  overflow-x: hidden;
+}
+
+.notice-wrapper::-webkit-scrollbar {
+  display: none;
 }
 
 .notice-list {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
   font-family: 'Pretendard-Regular';
-  gap: 8px;
   border-bottom: 1px solid rgba(125, 125, 125, 0.193);
   cursor: pointer;
   outline: none;
-  line-height: 1.5;
-  padding: 0 1.25rem;
+  padding-top: 4rem;
+}
 
+.notice-item-container {
+  width: 65rem;
+  display: flex;
+  align-items: center;
+  margin: 0% 0% 0% 10%;
+  img {
+    margin-top: 1rem;
+  }
+}
+
+.notice-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin: 0%, 0%, 0%, 12%;
+  width: 60rem;
+  height: 10px;
   h3 {
-    font-size: 12px;
-    margin-top: 13px;
+    font-size: 1.5rem;
+    color: #474646;
+    letter-spacing: -1px;
+    margin-top: 7.5rem;
   }
 
   h2 {
-    font-size: 16px;
+    font-size: 2rem;
+    margin: 3% 0% 10% 0%;
+    letter-spacing: -1px;
+    font-family: Pretendard-SemiBold;
   }
 }
 
 .panel {
-  background-color: #fafafa;
   padding: 0 1.25rem;
   display: flex;
   flex-direction: column;
   overflow: hidden;
   transition: max-height 0.4s ease-in-out;
   max-height: 0;
-  font-size: 12px;
-  width: 100%;
+  width: 95%;
   box-sizing: border-box;
-  margin-top: 0.625rem;
+  margin: 5% 0% 5% 8.2%;
   display: block;
+  font-size: 1.8rem;
+  letter-spacing: -1px;
+  color: #474646;
+  span {
+    font-size: 1.8rem;
+    letter-spacing: -1px;
+    color: #474646;
+    font-family: Pretendard-Light;
+    word-break: keep-all;
+  }
 
   > div:nth-child(1) {
     display: flex;
     flex-direction: column;
     margin-bottom: 0.8rem;
+    color: #474646;
   }
 
   > div:nth-child(2) {
     margin-bottom: 1.25rem;
+    color: #474646;
   }
 
   h3 {
-    font-weight: bold;
+    font-size: 1.8rem;
+    letter-spacing: -1px;
+    margin: 3% 0% 0.5% 3%;
+    font-family: Pretendard-Bold;
   }
 }
 
@@ -95,4 +145,11 @@
 
 .active-item {
   @include interact-color;
+}
+
+.notice-pagination {
+  position: sticky;
+  left: 21%;
+  bottom: -10rem;
+  width: 40rem !important;
 }

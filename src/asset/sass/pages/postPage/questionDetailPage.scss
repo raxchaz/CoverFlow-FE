@@ -3,39 +3,48 @@
   padding: 35px;
 }
 
-.detailpage-company {
-  font-size: 15px;
-  letter-spacing: -1px;
-  display: inline-block;
-  color: white;
-  background-color: #ff8d1d;
-  padding: 5px 15px;
-  border-radius: 20px;
-  margin-left: 1.5%;
-  font-family: pretendard-medium;
+.answer-button-container {
+  display: flex;
+  justify-content: space-around;
+  height: 200px;
 }
 
-.company-fish-tag {
+.detailpage-company {
+  font-size: 1.5rem;
+  letter-spacing: -1px;
   display: flex;
-  align-items: center;
+  justify-content: space-evenly;
+  background-color: #ff8d1d;
+  border: 1px solid #ff8d1d;
+  border-radius: 20px;
+  margin-left: 1.5%;
+  font-family: 'Pretendard-SemiBold';
+  padding: 1% 2.5% 1% 2.5%;
+  width: 83px;
 }
 
 .detailpage-fishbuncount {
-  font-size: 15px;
+  font-size: 1.5rem;
   letter-spacing: -1px;
-  display: inline-flex;
+  display: flex;
   justify-content: space-evenly;
   color: #ff8d1d;
   border: 1px solid #ff8d1d;
-  padding: 5px 8px;
   border-radius: 20px;
   margin-left: 1.5%;
-  font-family: pretendard-bold;
+  font-family: 'Pretendard-SemiBold';
+  padding: 1% 2.5% 1% 2.5%;
   img {
     padding: 0;
     width: 25px;
   }
   width: 83px;
+}
+
+.company-fish-tag {
+  display: flex;
+  align-items: center;
+  margin: 2.5% 0 0 2.5%;
 }
 
 .questioner-info {
@@ -50,10 +59,12 @@
 
 .question-date {
   color: #666;
-  font-size: 13px;
+  font-size: 1.5rem;
+  font-size: 'Pretendard-Medium';
   letter-spacing: -1px;
   margin-right: 3.5%;
   margin-top: 1%;
+  color: #474646;
 }
 
 .view-info-container {
@@ -69,13 +80,15 @@
 
 .answer-title {
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   font-weight: 600;
   width: 88%;
-  margin-left: 7%;
-  margin-top: 5%;
+  margin: 5% 0;
+  letter-spacing: -1px;
+  margin-right: 7%;
+  span:last-child {
+    width: 100%;
+    color: #ff8d1d;
+  }
 }
 
 .answer-count {
@@ -100,6 +113,7 @@
 
 .comment-section {
   position: relative;
+  top: 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -108,14 +122,13 @@
 
   .comment-input {
     resize: none;
-    width: 100%;
+    width: 525px;
     background: #f6f6f6;
-    padding: 20px 15px;
-    padding-right: 80px;
+    margin: 0 auto;
+    display: flex;
+    padding: 15px 15px;
     border: 1px solid #cecece;
     border-radius: 10px;
-    font-size: 15px;
-    letter-spacing: -1px;
 
     &:focus {
       outline: none;
@@ -123,8 +136,9 @@
     }
     &::placeholder {
       letter-spacing: -1px;
-      font-size: 13px;
+      font-size: 1.5rem;
       color: #ccc;
+      letter-spacing: -1px;
     }
     &:not(.selected) {
       background-color: transparent;
@@ -133,16 +147,15 @@
 
   .submit-comment {
     position: absolute;
-    right: 2%;
-    top: 53%;
+    right: 7%;
     transform: translateY(-50%);
     padding: 5px 3px;
     border: none;
-    background-color: #474646;
-    color: white;
-    border-radius: 4px;
+    background-color: #000000;
+    color: #ffffff;
+    border-radius: 5px;
     cursor: pointer;
-    font-size: 10px;
+    font-size: 1.3rem;
   }
 }
 
@@ -242,18 +255,25 @@
 
 .job-info {
   font-weight: 600;
+  margin-left: 5%;
+  letter-spacing: -1px;
 
   display: flex;
   align-items: center;
   width: 100%;
-  span {
-    margin-right: 60%;
-  }
+
   img:first-child {
     margin-right: 7px;
   }
   img:last-child {
     cursor: pointer;
   }
+}
+
+.job-seeker {
   color: #875100;
+}
+
+.job-keeper {
+  color: #428238;
 }

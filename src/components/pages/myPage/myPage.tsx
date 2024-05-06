@@ -22,7 +22,7 @@ import { showErrorToast } from '../../ui/toast/toast';
 const StatusBar = styled.div`
   display: flex;
   justify-content: space-between;
-  border-top: 8px solid rgba(255, 249, 244, 1);
+  border-top: 8px solid #fff9f4;
   margin: 10% auto 0 auto;
   font-family: pretendard-semibold;
   width: 520px;
@@ -35,15 +35,14 @@ const StatusTab = styled.div<{ $current: boolean }>`
   padding: 15px 0;
   margin-top: -8px;
   cursor: pointer;
-  color: gray;
+  color: ${({ $current }) => ($current ? 'black' : 'gray')};
   font-family: Pretendard-Bold;
-  border-top: 8px solid transparent;
+  border-top: ${({ $current }) =>
+    $current ? '8px solid #FF8D1D' : '8px solid transparent'};
   font-size: 2rem;
   transition:
     border-top 0.3s ease-in-out,
     color 0.3s ease-in-out;
-  ${($current) =>
-    $current && 'color: black; border-top: 8px solid rgba(255, 141, 29, 1);'}
 `;
 
 /* ========================================================= */
@@ -59,27 +58,23 @@ function Mypage() {
   const navigate = useNavigate();
   // const dispatch = useDispatch();
 
-  /* 사용자의 토큰이 존재한다면, 사용자의 정보를 가져옵니다. */
   useEffect(() => {
-    setNickname(''); // 렌덜이 전에 사용자의 nickname을 초기화!
+    setNickname('');
     const token = localStorage.getItem(ACCESS_TOKEN);
 
     if (!token) {
       localStorage.setItem('mypageURL', '/mypage');
       navigate('/login');
     } else {
-      console.log('사용자 정보 로딩 시작');
       loadUserData();
       loadUserAnswer();
       loadUserQuestion();
     }
   }, [navigate]);
 
-  /* 사용자의 닉네임과 붕어빵 개수를 불러옵니다. */
   const loadUserData = async () => {
     try {
       const data = await fetchAPI('/api/member/me', 'GET');
-      console.log('사용자 정보:', data);
       setNickname(data.data.nickname);
       mySocialType(data.data.socialType);
     } catch (error) {
@@ -144,7 +139,7 @@ function Mypage() {
 
   return (
     <>
-      <StyledPage className="main-page-container">
+      <StyledPage className="my-page-container">
         <StyledHeader>
           <TitleHeader pageTitle="마이 페이지" handleGoBack={handleGoBack} />
 

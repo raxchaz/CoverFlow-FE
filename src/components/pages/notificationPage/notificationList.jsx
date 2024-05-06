@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import '../../../asset/sass/pages/notificationPage/notificationList.scss';
 import INQUIRY from '../../../asset/image/notification-question.svg';
@@ -7,9 +7,18 @@ import SELECTION from '../../../asset/image/notification-adopt.svg';
 import DAILY from '../../../asset/image/notification-fishbun.svg';
 import { fetchAPI } from '../../global/utils/apiUtil';
 import { useQueryClient } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
+import { fetchUnreadNotificationsCount } from '../../global/utils/alertCountUtil';
+import { useDispatch } from 'react-redux';
 
-function NotificationList({ notifications, isLoading }) {
+function NotificationList({
+  notifications,
+  isLoading,
+  fetchNextPage,
+  hasNextPage,
+}) {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const getNotificationDetails = (type) => {
     switch (type) {
       case 'DAILY':
@@ -24,26 +33,37 @@ function NotificationList({ notifications, isLoading }) {
         return { icon: null, message: '' };
     }
   };
+  const dispatch = useDispatch();
+  const observer = useRef();
+  const lastNotificationRef = useCallback(
+    (node) => {
+      if (isLoading) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasNextPage) {
+          fetchNextPage();
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [isLoading, hasNextPage, fetchNextPage],
+  );
 
-  const checkNotification = (index) => {
-    console.log('Notification index:', index);
+  const checkNotification = (index, uri, type) => {
     fetchAPI('/api/notification', 'PATCH', [{ notificationId: index }])
       .then(() => {
-        // console.log('Notification updated successfully:', response);
         queryClient.invalidateQueries(['notifications']);
+        fetchUnreadNotificationsCount(dispatch);
+        if (type === 'INQUIRY') {
+          navigate(uri, { state: { list: 'list' } });
+        } else if (type !== 'DAILY' && uri) {
+          navigate(uri);
+        }
       })
       .catch((error) => {
-        console.error('Failed to update notification:', error);
+        console.error('데이터 불러오기 실패', error);
       });
   };
-
-  if (isLoading) {
-    return <div>로딩 중</div>;
-  }
-
-  if (notifications.length === 0) {
-    return <div>현재는 알림이 없어요.</div>;
-  }
 
   return (
     <div className="notification-list">
@@ -51,7 +71,14 @@ function NotificationList({ notifications, isLoading }) {
         <div
           key={index}
           className={`notification-item ${notification.read ? 'checked' : 'unchecked'}`}
-          onClick={() => checkNotification(notification.id)}
+          ref={index === notifications.length - 1 ? lastNotificationRef : null}
+          onClick={() =>
+            checkNotification(
+              notification.id,
+              notification.uri,
+              notification.type,
+            )
+          }
         >
           <img
             src={getNotificationDetails(notification.type).icon}
@@ -74,6 +101,7 @@ function NotificationList({ notifications, isLoading }) {
 NotificationList.propTypes = {
   notifications: PropTypes.array.isRequired,
   isLoading: PropTypes.bool,
+  fetchNextPage: PropTypes.func.isRequired,
+  hasNextPage: PropTypes.bool.isRequired,
 };
-
 export default NotificationList;

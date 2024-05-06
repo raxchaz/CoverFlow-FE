@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import './contactSlider.scss';
-import Disclamier from './disclamier.jsx';
+import Disclaimer from './disclaimer.jsx';
 import ContactList from './contactList.jsx';
 import Button from '../button/Button/Button.jsx';
 import { fetchAPI } from '../../global/utils/apiUtil.js';
@@ -28,19 +28,32 @@ const StatusTab = styled.div`
   padding: 10px 0;
   margin-bottom: -8px;
   cursor: pointer;
-  color: gray;
-  border-bottom: 8px solid transparent;
+  color: ${({ $current }) => ($current ? 'black' : 'gray')};
+  border-bottom: ${({ $current }) =>
+    $current ? '8px solid black' : '8px solid transparent'};
   transition:
     border-bottom 0.3s ease-in-out,
     color 0.3s ease-in-out;
-  ${($current) => $current && 'color: black; border-bottom: 8px solid black;'}
 `;
+
 // ======================= 스타일드 컴포넌트
 
 export default function ContactSlider() {
   const navigate = useNavigate();
+  const { state } = useLocation();
+  const [currentPage, setCurrentPage] = useState(0);
+
   useEffect(() => {
-    loadUserData();
+    loadUserData(currentPage);
+  }, [navigate, currentPage]);
+
+  useEffect(() => {
+    // console.log(state);
+    if (state) {
+      setCurrentSection('contactList');
+    } else {
+      setCurrentSection('contact');
+    }
   }, [navigate]);
 
   const [currentSection, setCurrentSection] = useState('contact');
@@ -50,16 +63,16 @@ export default function ContactSlider() {
   });
   const [contactList, setContactList] = useState([]);
   const [totalPage, setTotalPage] = useState(1);
-  const [currentPageAPI, setCurrentPageAPI] = useState(0);
 
-  const loadUserData = async () => {
+  const loadUserData = async (currentPage) => {
     try {
       const data = await fetchAPI(
-        `/api/inquiry/me?pageNo=${currentPageAPI}`,
+        `/api/inquiry/me?pageNo=${currentPage}`,
         'GET',
       );
+      // console.log(data);
       setContactList(data.data.inquiries);
-      setTotalPage(data.data.totalPage);
+      setTotalPage(data.data.totalPages);
     } catch (error) {
       console.error('문의 내역 불러오기 실패:', error);
     }
@@ -74,7 +87,7 @@ export default function ContactSlider() {
           title: '',
           content: '',
         });
-        loadUserData();
+        loadUserData(0);
         showSuccessToast('문의 등록이 완료되었습니다!');
       }
     } catch (error) {
@@ -89,22 +102,21 @@ export default function ContactSlider() {
       ...prevInfo,
       [name]: value,
     }));
-    console.log(contact);
+    // console.log(contact);
   };
 
   return (
     <div>
-      {currentSection === 'contact' && <div className="contact-border"></div>}
       <div className="slider-container">
         <StatusBar>
           <StatusTab
-            current={currentSection === 'contact'}
+            $current={currentSection === 'contact'}
             onClick={() => setCurrentSection('contact')}
           >
             문의 하기
           </StatusTab>
           <StatusTab
-            current={currentSection === 'contactList'}
+            $current={currentSection === 'contactList'}
             onClick={() => setCurrentSection('contactList')}
           >
             문의 내역 확인
@@ -140,7 +152,7 @@ export default function ContactSlider() {
             </div>
 
             <div className="contact-input-field-container">
-              <Disclamier />
+              <Disclaimer />
 
               <input
                 type="text"
@@ -172,7 +184,8 @@ export default function ContactSlider() {
             contactList={contactList}
             totalPages={totalPage}
             setCurrentSection={setCurrentSection}
-            setCurrentPage={setCurrentPageAPI}
+            setCurrentPage={setCurrentPage}
+            currentPage={currentPage}
           />
         )}
       </div>

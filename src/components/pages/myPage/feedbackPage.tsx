@@ -7,11 +7,7 @@ import TabBar from '../../ui/tabBar/tabBar.jsx';
 import Button from '../../ui/button/Button/Button.jsx';
 import TextArea from '../../ui/inputbox/TextArea.jsx';
 import { showErrorToast, showSuccessToast } from '../../ui/toast/toast.tsx';
-import { fetchAPI } from '../../global/utils/apiUtil.js';
-
-interface Feedback {
-  content: string;
-}
+import { BASE_URL, ACCESS_TOKEN } from '../../global/constants/index.ts';
 
 function FeedbackPage() {
   const navigate = useNavigate();
@@ -33,18 +29,30 @@ function FeedbackPage() {
         return;
       }
 
-      const body: Feedback = { content: contact };
-      const data = await fetchAPI('/api/feedback', 'POST', body);
+      const body = { content: contact };
+      const response = await fetch(`${BASE_URL}/api/feedback`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
+        },
+        body: JSON.stringify(body),
+      });
+
+      const data = await response.json();
 
       if (data.statusCode === 'CREATED') {
         showSuccessToast('피드백 등록이 완료되었습니다!');
         navigate('/');
+      } else {
+        throw new Error(`Server responded with status: ${response.status}`);
       }
     } catch (error) {
       console.error('피드백 등록 실패:', error);
       showErrorToast('피드백 등록에 실패했습니다.');
     }
   };
+
   return (
     <StyledPage className="main-page-container">
       <StyledHeader>

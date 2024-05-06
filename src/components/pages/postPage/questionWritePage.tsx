@@ -6,8 +6,11 @@ import TitleHeader from '../../ui/header/titleHeader';
 import TabBar from '../../ui/tabBar/tabBar';
 import { StyledHeader, StyledPage } from '../../../styledComponent';
 import Finger from '../../../asset/image/fingerprint.svg';
-// import Home from '../../../asset/image/group.svg';
+import Home from '../../../asset/image/group.svg';
 import Money from '../../../asset/image/money.svg';
+import Search from '../../../asset/image/search.svg';
+import Justice from '../../../asset/image/justice.svg';
+import GraphBar from '../../../asset/image/graph_bar.svg';
 import { showErrorToast, showSuccessToast } from '../../ui/toast/toast';
 import { fetchAPI } from '../../global/utils/apiUtil';
 function QuestionWritePage() {
@@ -21,11 +24,15 @@ function QuestionWritePage() {
   const { companyId } = useParams();
 
   const tagName = [
-    { name: '사내 문화가 궁금해요', value: 'CULTURE' },
-    { name: '급여 정보가 궁금해요', value: 'SALARY' },
-    { name: '업무 방식이 궁금해요', value: 'BUSINESS' },
-    { name: '승진이나 커리어가 궁금해요', value: 'CAREER' },
-    { name: '직무,워라밸이 궁금해요', value: 'WORKLIFEBALANCE' },
+    { name: '사내 문화가 궁금해요', value: 'CULTURE', image: Home },
+    { name: '급여 정보가 궁금해요', value: 'SALARY', image: Money },
+    { name: '업무 방식이 궁금해요', value: 'BUSINESS', image: Search },
+    { name: '승진이나 커리어가 궁금해요', value: 'CAREER', image: GraphBar },
+    {
+      name: '직무,워라밸이 궁금해요',
+      value: 'WORKLIFEBALANCE',
+      image: Justice,
+    },
   ];
   const categoryName = [
     '서비스',
@@ -124,7 +131,7 @@ function QuestionWritePage() {
               key={tag.value}
               onClick={() => handleTagSelect(tag.value)}
             >
-              <img src={Money} alt="money" />
+              <img src={tag.image} alt="money" />
               <span>{tag.name}</span>
             </div>
           ))}
@@ -144,7 +151,6 @@ function QuestionWritePage() {
               key={index}
               onClick={() => handleCategorySelect(category)}
             >
-              <img src={Money} alt="money" />
               <span>{category}</span>
             </div>
           ))}
@@ -155,18 +161,20 @@ function QuestionWritePage() {
           name="title"
           value={title}
           onChange={handleTitleChange}
+          maxLength={100}
         />
         <textarea
           className="question-input"
           placeholder="질문 내용을 입력해주세요.&#13;&#10;
-					질문에 답변이 달릴 경우, 삭제가 불가능해집니다.&#13;&#10;
-					질문 작성 시 타인의 명예를 훼손하거나 허위 사실을 유포할 경우 형법 상 명예훼손죄&#13;&#10;
-					혐의를 받을 수 있습니다. 따라서 타인에 대한 존중과 배려를 기반으로 질문을 작성해주세요."
+						질문에 답변이 달릴 경우, 삭제가 불가능해집니다.&#13;&#10;
+						질문 작성 시 타인의 명예를 훼손하거나 허위 사실을 유포할 경우 형법 상 명예훼손죄&#13;&#10;
+						혐의를 받을 수 있습니다. 따라서 타인에 대한 존중과 배려를 기반으로 질문을 작성해주세요."
           name="content"
           value={content}
           onChange={handleTextAreaChange}
           rows={30}
           cols={40}
+          maxLength={1000}
         ></textarea>
         <TagInput reward={reward} setReward={setReward} />
         <button

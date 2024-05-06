@@ -1,38 +1,60 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import '../../../asset/sass/pages/postPage/questionDetailPage.scss';
 import { StyledPage, StyledHeader } from '../../../styledComponent';
 import TitleHeader from '../../ui/header/titleHeader';
 import Answer from '../../ui/question/answer.tsx';
 import TabBar from '../../ui/tabBar/tabBar';
-import { ACCESS_TOKEN } from '../../global/constants';
+import { BASE_URL } from '../../global/constants';
 import Tree from '../../../asset/image/nature-ecology-tree-3--tree-plant-cloud-shape-park.svg';
+import Leaf from '../../../asset/image/leaf.svg';
 import Reward from '../../../asset/image/reward.svg';
 import Dot from '../../../asset/image/dots-vertical.svg';
+import '../../../asset/sass/etc/header/userInfoHeader.scss';
 
-import { showErrorToast, showSuccessToast } from '../../ui/toast/toast.tsx';
+import { showSuccessToast } from '../../ui/toast/toast.tsx';
 import { fetchAPI } from '../../global/utils/apiUtil.js';
 import Pagination from '../../ui/Pagination.tsx';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
+
+const ContentBlur = styled.span<{ $isLoggedIn: boolean }>`
+  ${({ $isLoggedIn }) =>
+    !$isLoggedIn &&
+    css`
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      overflow: hidden;
+      filter: blur(5px);
+      text-overflow: ellipsis;
+    `}
+`;
 
 const Questioner = styled.div`
   letter-spacing: -1px;
-  margin-left: 2%;
+  margin-left: 4.5%;
+  span:first-child {
+    font-family: 'Pretendard-Medium';
+  }
 `;
 
 const QuestionTitle = styled.div`
-  font-family: pretendard-semibold;
-  letter-spacing: -1px;
-  font-size: 30px;
+  font-family: 'Pretendard-Bold';
+  letter-spacing: -1.5px;
+  font-size: 3rem;
   padding: 10px;
+  color: #000000;
+  margin: 0 0 2% 3%;
 `;
 
 const QuestionContent = styled.div`
-  margin-top: 3%;
-  margin-left: 2%;
-  margin-bottom: 2%;
-  letter-spacing: -1px;
-  font-family: pretendard-light;
+  margin: 3% 0% 2% 4.5%;
+  letter-spacing: -1.5px;
+  font-size: 2rem;
+  color: #000000;
+  font-family: 'Pretendard-Regular';
   line-height: 1.5;
 `;
 
@@ -43,14 +65,14 @@ const FirstLine = styled.div`
   margin: 5% 0% 0% 0%;
 `;
 
-// const LastLine = styled.div`
-//   height: 0.5px;
-//   background-color: #cecece;
-//   width: 85%;
-//   margin: 10% 0% 0% 9%;
-// `;
+const AnswerList = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
 
-const AnswerList = styled.div``;
+  margin: 0px auto;
+`;
 
 export interface AnswerProps {
   answerId: string;
@@ -60,33 +82,19 @@ export interface AnswerProps {
   answererNickname: string;
 }
 
-interface QuestionDetailProps {
-  title: string;
-  questionContent: string;
-  answerCount: number;
-  reward: number;
-  questionerNickname: string;
-  questionTag: string;
+export interface CommentProps {
+  answerCount?: number;
+
+  answerId: string;
+  answererTag: string;
   createAt: string;
-  answers: AnswerProps[];
-  answerer?: string;
-  companyName?: string;
-  totalPages?: number;
-  viewCount?: number;
-  onAdopt?: () => void;
-  content?: string;
+  answerContent: string;
+  answererNickname: string;
 }
 
-export interface CommentProps {
-  data: {
-    answerCount: number;
-    answers: {
-      answerId: string;
-      answererTag: string;
-      createAt: string;
-      answerContent: string;
-      answererNickname: string;
-    }[];
+interface AppState {
+  user: {
+    isLoggedIn: boolean;
   };
 }
 
@@ -94,92 +102,31 @@ function QuestionDetailPage() {
   const navigate = useNavigate();
   const { state } = useLocation();
 
+  // console.log('state: ', state);
+  const { questionId } = useParams();
+
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
 
+  const [questionerNickname, setQuestionerNickname] = useState('');
+
+  const [questionerTag, setQuestionerTag] = useState('');
+  const [answerCount, setAnswerCount] = useState(0);
+  const [questionTitle, setQuestionTitle] = useState('');
+  const [createAt, setCreateAt] = useState('');
+  const [reward, setReward] = useState(0);
+  const [companyName, setCompanyName] = useState('');
+  const [questionContent, setQuestionContent] = useState('');
+  const [answers, setAnswers] = useState<CommentProps[]>([]);
+
   const answerRef = useRef<HTMLTextAreaElement>(null);
   const [postAnswer, setPostAnswer] = useState('');
-  const [loadAnswer, setLoadAnswer] = useState<CommentProps>();
-  const [showReportPopup, setShowReportPopup] = useState(false);
-  const [questionDetail, setQuestionDetail] = useState<QuestionDetailProps[]>([
-    {
-      title: '',
-      questionContent: '',
-      answerCount: 0,
-      reward: 0,
-      questionerNickname: '',
-      questionTag: '',
-      createAt: '',
-      answers: [],
-      companyName: '',
-      totalPages: 0,
-      viewCount: 0,
-    },
-  ]);
 
-  const { questionId } = useParams();
+  const { isLoggedIn } = useSelector((state: AppState) => state.user);
 
-  useEffect(() => {
-    const loadAnswerList = async (pageNo: number) => {
-      try {
-        const token = localStorage.getItem(ACCESS_TOKEN);
+  const [isShowEdit, setIsShowEdit] = useState(false);
 
-        if (!token) {
-          showErrorToast('로그인이 필요합니다.');
-          navigate(-1);
-        }
-
-        const res = await fetchAPI(
-          `/api/question/${questionId}?pageNo=${pageNo}&criterion=createdAt`,
-          'GET',
-          null,
-        );
-        const {
-          data: {
-            answerCount,
-            answers,
-            companyName,
-            questionContent,
-            createAt,
-            questionTag,
-            questionTitle,
-            questionerNickname,
-            reward,
-            totalPages,
-            viewCount,
-          },
-        } = res;
-
-        setQuestionDetail([
-          {
-            title: questionTitle,
-            questionContent,
-            answerCount,
-            reward,
-            questionerNickname,
-            questionTag,
-            createAt,
-            answers: answers.map((answer: AnswerProps) => ({
-              answerId: answer.answerId,
-              answererNickname: answer.answererNickname,
-              answererTag: answer.answererTag,
-              createAt: answer.createAt,
-              answerContent: answer.answerContent,
-            })),
-            companyName,
-            totalPages,
-            viewCount,
-          },
-        ]);
-
-        setTotalPages(totalPages);
-      } catch (error) {
-        if (error instanceof Error) showErrorToast(error.message);
-      }
-    };
-
-    loadAnswerList(currentPage);
-  }, [currentPage, questionId, navigate, postAnswer]);
+  const [showReport, setShowReport] = useState(false);
 
   const handleGoBack = () => {
     navigate(-1);
@@ -191,39 +138,39 @@ function QuestionDetailPage() {
       questionId: Number(questionId),
     };
 
-    const answerer =
-      questionDetail &&
-      questionDetail.map((detail) => detail.questionerNickname);
-
-    if (state.questioner === answerer[0]) {
-      showErrorToast('본인의 질문에 답변을 달 수 없습니다.');
-      return;
-    }
-
     const data = await fetchAPI('/api/answer', 'POST', requestData);
 
     if (
-      state.questioner !== answerer[0] &&
+      state.questioner !== questionerNickname &&
       data.statusCode === 'CREATED' &&
       answerRef.current
     ) {
       setPostAnswer(answerRef.current?.value);
       showSuccessToast('답변이 등록되었습니다.');
+
+      if (answerRef.current) {
+        answerRef.current.value = '';
+      }
     }
   };
 
-  const handlePagination = async (direction: string | number) => {
+  const handlePagination = (direction: string | number) => {
     if (direction === 'prev' && currentPage > 0) {
       setCurrentPage(currentPage - 1);
     } else if (direction === 'next' && currentPage < totalPages - 1) {
       setCurrentPage(currentPage + 1);
     } else if (typeof direction === 'number') {
-      setCurrentPage(currentPage);
+      setCurrentPage(direction);
     }
   };
 
   const toggleReportPopup = () => {
-    setShowReportPopup((isToggled) => !isToggled);
+    setShowReport((show) => !show);
+  };
+
+  const handleEdit = () => {
+    setIsShowEdit((show) => !show);
+    setShowReport((show) => !show);
   };
 
   const handleReportSubmit = async () => {
@@ -235,17 +182,44 @@ function QuestionDetailPage() {
     });
   };
 
+  const handleCloseReportPopup = () => {
+    setShowReport((show) => !show);
+  };
+
   useEffect(() => {
-    const fetchComment = async () => {
-      const response = await fetchAPI(
-        `/api/question/${questionId}?pageNo=0&criterion=createdAt`,
-        'GET',
-        null,
+    const fetchData = async () => {
+      const response = await axios.get(
+        `${BASE_URL}/api/question/${questionId}?pageNo=${currentPage}&criterion=createdAt`,
       );
-      setLoadAnswer(response);
+      const {
+        data: {
+          questionerNickname,
+          questionerTag,
+          answerCount,
+          questionTitle,
+          createAt,
+          reward,
+          companyName,
+          questionContent,
+          answers,
+          totalPages,
+        },
+      } = response.data;
+
+      setQuestionerNickname(questionerNickname);
+      setQuestionerTag(questionerTag);
+      setAnswerCount(answerCount);
+      setQuestionTitle(questionTitle);
+      setCreateAt(createAt);
+      setReward(reward);
+      setCompanyName(companyName);
+      setQuestionContent(questionContent);
+      setAnswers(answers);
+      setTotalPages(totalPages);
     };
-    fetchComment();
-  }, []);
+
+    fetchData();
+  }, [questionId, postAnswer, currentPage]);
 
   const reportReasons = [
     '욕설 혹은 비방표현이 있어요',
@@ -263,33 +237,46 @@ function QuestionDetailPage() {
 
       <div className="question-detail-container">
         <div className="job-info">
-          <img src={Tree} alt="" />
-          <span>
-            {state.questionerTag === '취준생'
-              ? `${state.questionerTag}이 남긴 글이에요.`
-              : `${state.questionerTag}가 남긴 질문이에요.`}
+          <img src={questionerTag === '취준생' ? Tree : Leaf} alt="" />
+          <span
+            className={questionerTag === '취준생' ? 'job-seeker' : 'job-keeper'}
+          >
+            {questionerTag === '취준생'
+              ? `${questionerTag}이 남긴 질문이에요`
+              : `${questionerTag}가 남긴 질문이에요`}
           </span>
 
-          <img onClick={toggleReportPopup} src={Dot} alt="dot" />
+          <img onClick={handleEdit} src={Dot} alt="dot" />
+
+          {isShowEdit ? (
+            <div className="dropdown-question-detail-menu">
+              <ul style={{ right: '10px' }}>
+                <li className="dropdown-item-edit">수정</li>
+                <hr />
+                <li className="dropdown-item-delete">삭제</li>
+              </ul>
+            </div>
+          ) : null}
         </div>
-        <QuestionTitle>{state.questionTitle}</QuestionTitle>
+        <QuestionTitle>{questionTitle}</QuestionTitle>
         <div className="questioner-info">
           <Questioner>
-            {state.questioner || 'Anonymous'} <span className="middle">•</span>
-            <span className="question-date">{state.createAt}</span>
+            <span>{questionerNickname || 'Anonymous'}</span>
+            <span className="middle">•</span>
+            <span className="question-date">{createAt}</span>
           </Questioner>
         </div>
 
-        <QuestionContent>{state.questionContent}</QuestionContent>
+        <QuestionContent>{questionContent}</QuestionContent>
         <div className="company-fish-tag">
-          <div className="detailpage-company">{state.companyName}</div>
+          <div className="detailpage-company">{companyName}</div>
           <div className="detailpage-fishbuncount">
             <img src={Reward} alt="reward" />
-            {state.reward}
+            {reward}
           </div>
         </div>
         <FirstLine />
-        {showReportPopup && (
+        {showReport ? (
           <div className="report-popup-overlay">
             <div className="report-popup">
               <div className="report-title">사용자 신고</div>
@@ -309,7 +296,7 @@ function QuestionDetailPage() {
               <div className="reportBtn">
                 <button
                   className="close-report-popup"
-                  onClick={toggleReportPopup}
+                  onClick={handleCloseReportPopup}
                 >
                   닫기
                 </button>
@@ -319,43 +306,46 @@ function QuestionDetailPage() {
               </div>
             </div>
           </div>
-        )}
+        ) : null}
       </div>
 
       <div className="comment-section">
         <textarea
           placeholder="답변을 입력해주세요.."
           className="comment-input"
-          rows={4}
           ref={answerRef}
+          maxLength={500}
         ></textarea>
         <button className="submit-comment" onClick={handleAnswerSubmit}>
           등록
         </button>
       </div>
-      {/* <LastLine /> */}
 
-      <AnswerList>
-        <div className="answer-title">답변 {loadAnswer?.data.answerCount}</div>
-        {loadAnswer?.data.answers.map((answer) => (
-          <>
+      <ContentBlur $isLoggedIn={isLoggedIn}>
+        <AnswerList>
+          <div className="answer-title">
+            <span>답변</span>
+            <span> {answerCount}</span>
+          </div>
+
+          {answers?.map((answer) => (
             <Answer
+              key={answer.answerId}
               createAt={answer.createAt}
               answerContent={answer.answerContent}
               answererNickname={answer.answererNickname}
               answererTag={answer.answererTag}
               answerId={answer.answerId}
             />
-          </>
-        ))}
-      </AnswerList>
-      <TabBar />
-      <Pagination
-        className="my-question-pagination"
-        currentPage={currentPage}
-        totalPages={totalPages}
-        handlePagination={handlePagination}
-      />
+          ))}
+        </AnswerList>
+        <TabBar />
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          handlePagination={handlePagination}
+        />
+      </ContentBlur>
     </StyledPage>
   );
 }
