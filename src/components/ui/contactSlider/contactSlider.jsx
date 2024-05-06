@@ -172,6 +172,7 @@ export default function ContactSlider() {
                 name="content"
                 value={contact.content}
                 handleChange={handleChange}
+                maxLength={200}
               />
 
               <Button

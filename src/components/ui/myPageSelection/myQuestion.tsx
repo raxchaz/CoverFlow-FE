@@ -84,7 +84,9 @@ export default function MyQuestion({
           }
         >
           <div className="answer-item-title">{q.companyName}</div>
-          <div className="answer-item-content">{q.questionTitle}</div>
+          <div className="answer-item-content" style={{ width: '48rem' }}>
+            {q.questionTitle}
+          </div>
         </div>
       ))}
 

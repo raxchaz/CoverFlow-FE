@@ -7,6 +7,7 @@ export default function TextArea({
   value,
   variant,
   handleChange,
+  maxLength,
 }) {
   let variantClass;
   switch (variant) {
@@ -27,6 +28,7 @@ export default function TextArea({
       name={name}
       value={value}
       onChange={handleChange}
+      maxLength={maxLength}
     />
   );
 }
@@ -37,6 +39,7 @@ TextArea.propTypes = {
   value: PropTypes.string,
   handleChange: PropTypes.func,
   variant: PropTypes.oneOf(['default', 'round']),
+  maxLength: PropTypes.number,
 };
 
 TextArea.defaultProps = {
