@@ -290,25 +290,57 @@ select {
   display: flex;
   justify-content: center;
   gap: 14px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
+  overflow-x: scroll;
+  // scroll-snap-type: x mandatory;
 
-  // margin-left: 10%;
-  width: 100%;
-  padding-bottom: 10px;
+  margin-left: 15%;
+  width: 70%;
+  padding: 0 10px 10px 37rem;
 
   &::-webkit-scrollbar {
-    height: 10px;
+    height: 5px;
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: #ffa54d;
+    background-color: #000000;
     border-radius: 10px;
   }
 
   &::-webkit-scrollbar-track {
-    background-color: #ffe9d3;
+    background-color: #eaeaea;
     border-radius: 10px;
+  }
+}
+
+.category-select {
+  border-radius: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1% 2.5% 1% 2.5%;
+  box-sizing: border-box;
+  border: 0.5px solid #d1d5db;
+
+  span {
+    overflow-wrap: normal;
+    font-family: Pretendard-SemiBold;
+    font-size: 1.6rem;
+    letter-spacing: -0.1rem;
+    color: #474646;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 10rem;
+    height: 3rem;
+  }
+  &:hover {
+    cursor: pointer;
+  }
+
+  &.selected {
+    border: 2px solid #ff8d1d;
+    background-color: #ff8d1d;
+    color: #ffffff;
   }
 }
 

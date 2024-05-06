@@ -48,7 +48,7 @@ export default function FeedbackSelection() {
         setFeedback(data.data.feedbacks);
         setTotalPages(data.data.totalPages);
         setTotalFeedbackCount(data.data.totalElements);
-        console.log(data);
+        // console.log(data);
       })
       .catch((error) => {
         console.error('Error:', error);

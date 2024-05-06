@@ -147,6 +147,7 @@ function CompanyInfoPage() {
       const { data } = await axios.get(
         `${BASE_URL}/api/company/${companyId}?pageNo=0&criterion=createdAt&questionTag=${selectedCategory}`,
       );
+      console.log('data: ', data);
 
       if (data) {
         setCompanyData(data.data);
@@ -182,7 +183,7 @@ function CompanyInfoPage() {
         if (data) {
           setCompanyData(data.data);
           setTotalPages(data.data.totalPages);
-          setQuestionCount(data.data.questionCount);
+          setQuestionCount(data.data.totalElements);
         } else {
           throw new Error('데이터가 존재하지 않습니다.');
         }

@@ -49,7 +49,8 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0% 0% 3% 0%;
+
+  width: 30rem;
 }
 
 .answer-item-content {
@@ -60,7 +61,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0% 0% 1% 0%;
+  width: 30rem;
 }
 
 .quetion-tag {

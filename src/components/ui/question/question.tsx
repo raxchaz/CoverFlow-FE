@@ -125,7 +125,7 @@ function QuestionModule({
     <>
       <div className="question-container" onClick={goToDetail}>
         <span className="questioner">
-          <img src={questionerTag === '취준생' ? Tree : Leaf} alt="" />
+          <img src={questionerTag === '취준생' ? Leaf : Tree} alt="" />
           <span> {questioner}</span>
           <span className="middle">•</span>
           <div className="questioner-container">

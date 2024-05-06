@@ -90,7 +90,6 @@ export default function MyAnswer({
 
       {initiateAnswer.length >= 1 ? (
         <AdminPagination
-          className="rst-pagination"
           currentPage={currentPage}
           totalPages={totalPages}
           handlePagination={handlePagination}

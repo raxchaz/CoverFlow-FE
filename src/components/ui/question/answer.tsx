@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import '../../../asset/sass/etc/question/answer.scss';
 import styled from 'styled-components';
 import yellowTrophy from '../../../asset/image/yellow-trophy.svg';
@@ -54,7 +54,11 @@ interface AnswerDetailProps {
   answerContent: string;
   answererNickname: string;
   answererTag?: string;
-  answerId: string;
+  answerId?: string;
+  isAdopted: boolean;
+  setIsAdopted: (isAdopted: boolean) => void;
+  fetchData: () => void;
+  anyAdopted: boolean;
 }
 
 function AnswerModule({
@@ -62,14 +66,18 @@ function AnswerModule({
   answerContent,
   answererNickname,
   answerId,
+  isAdopted,
+  setIsAdopted,
+  fetchData,
+  anyAdopted,
 }: AnswerDetailProps) {
-  const [isAdopted, setIsAdopted] = useState(false);
   const handleAdoptAnswer = async () => {
     if (confirm('채택하시겠습니까?')) {
       await fetchAPI(`/api/answer/selection/${answerId}`, 'PATCH', {
         selection: true,
       });
       setIsAdopted(true);
+      fetchData();
       showSuccessToast('답변이 채택되었습니다.');
     }
   };
@@ -87,7 +95,7 @@ function AnswerModule({
         <div>{answererNickname}</div>
         <div>{answerContent}</div>
         <div className="user-container">{createAt}</div>
-        {isAdopted || (
+        {isAdopted || anyAdopted ? null : (
           <AdoptButton onClick={handleAdoptAnswer}>
             <img src={Trophy} alt="trophy" />
             채택하기
