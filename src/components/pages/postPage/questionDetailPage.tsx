@@ -114,6 +114,7 @@ function QuestionDetailPage() {
   const [totalPages, setTotalPages] = useState(0);
 
   const [questionerNickname, setQuestionerNickname] = useState('');
+  // const [answererNickname, setAnswererNickname] = useState('');
 
   const [questionerTag, setQuestionerTag] = useState('');
   const [answerCount, setAnswerCount] = useState(0);
@@ -147,9 +148,13 @@ function QuestionDetailPage() {
     };
 
     try {
-      const data = await fetchAPI('/api/answer', 'POST', requestData);
+      // 답변 내용이 비어있을 경우 에러 던지기
+      if (answerRef.current?.value === '') {
+        throw new Error('크기가 1에서 500 사이여야 합니다');
+      }
 
-      if (data.statusCode === 'CREATED' && answerRef.current) {
+      const answerResponse = await fetchAPI('/api/answer', 'POST', requestData);
+      if (answerResponse.statusCode === 'CREATED' && answerRef.current) {
         setPostAnswer(answerRef.current?.value);
         showSuccessToast('답변이 등록되었습니다.');
 
@@ -158,7 +163,12 @@ function QuestionDetailPage() {
         }
       }
     } catch (error) {
-      if (error instanceof Error) showErrorToast('비속어가 존재합니다.');
+      if (error instanceof Error) {
+        showErrorToast('질문 작성자는 답변 작성이 불가능합니다.');
+        if (error.message === '크기가 1에서 500 사이여야 합니다') {
+          showErrorToast(error.message);
+        }
+      }
     }
   };
 
