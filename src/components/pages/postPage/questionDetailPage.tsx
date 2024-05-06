@@ -85,7 +85,7 @@ export interface AnswerProps {
 
 export interface CommentProps {
   answerCount?: number;
-
+  isAdopted: boolean;
   answerId: string;
   answererTag: string;
   createAt: string;
@@ -128,6 +128,8 @@ function QuestionDetailPage() {
   const [isShowEdit, setIsShowEdit] = useState(false);
 
   const [showReport, setShowReport] = useState(false);
+  const [isAdopted, setIsAdopted] = useState(false);
+  const [anyAdopted, setAnyAdopted] = useState(false);
 
   const handleGoBack = () => {
     navigate(-1);
@@ -186,39 +188,40 @@ function QuestionDetailPage() {
   const handleCloseReportPopup = () => {
     setShowReport((show) => !show);
   };
+  const fetchData = async () => {
+    const response = await axios.get(
+      `${BASE_URL}/api/question/${questionId}?pageNo=${currentPage}&criterion=createdAt`,
+    );
+    const data = response.data.data;
+
+    const sortedAnswers = data.answers.sort((a, b) => {
+      if (a.selection && !b.selection) return -1;
+      if (!a.selection && b.selection) return 1;
+      return 0;
+    });
+    const adoptedExists = data.answers.some(
+      (answer) => answer.selection === true,
+    );
+    setAnyAdopted(adoptedExists);
+    setAnswers(
+      sortedAnswers.map((answer) => ({
+        ...answer,
+        isAdopted: answer.selection,
+      })),
+    );
+
+    setQuestionerNickname(data.questionerNickname);
+    setQuestionerTag(data.questionerTag);
+    setAnswerCount(data.answerCount);
+    setQuestionTitle(data.questionTitle);
+    setCreateAt(data.createAt);
+    setReward(data.reward);
+    setCompanyName(data.companyName);
+    setQuestionContent(data.questionContent);
+    setTotalPages(data.totalPages);
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await axios.get(
-        `${BASE_URL}/api/question/${questionId}?pageNo=${currentPage}&criterion=createdAt`,
-      );
-      const {
-        data: {
-          questionerNickname,
-          questionerTag,
-          answerCount,
-          questionTitle,
-          createAt,
-          reward,
-          companyName,
-          questionContent,
-          answers,
-          totalPages,
-        },
-      } = response.data;
-
-      setQuestionerNickname(questionerNickname);
-      setQuestionerTag(questionerTag);
-      setAnswerCount(answerCount);
-      setQuestionTitle(questionTitle);
-      setCreateAt(createAt);
-      setReward(reward);
-      setCompanyName(companyName);
-      setQuestionContent(questionContent);
-      setAnswers(answers);
-      setTotalPages(totalPages);
-    };
-
     fetchData();
   }, [questionId, postAnswer, currentPage]);
 
@@ -229,7 +232,7 @@ function QuestionDetailPage() {
     '스팸 혹은 홍보성 도배글이에요',
     '특정 이용자가 질문, 답변, 채택을 반복해요',
   ];
-
+  // console.log(questionerTag);
   return (
     <StyledPage className="main-page-container">
       <StyledHeader>
@@ -238,10 +241,8 @@ function QuestionDetailPage() {
 
       <div className="question-detail-container">
         <div className="job-info">
-          <img src={questionerTag === '취준생' ? Tree : Leaf} alt="" />
-          <span
-            className={questionerTag === '취준생' ? 'job-seeker' : 'job-keeper'}
-          >
+          <img src={questionerTag === '취준생' ? Leaf : Tree} alt="" />
+          <span className={questionerTag === '취준생' ? `leaf` : ''}>
             {questionerTag === '취준생'
               ? `${questionerTag}이 남긴 질문이에요`
               : `${questionerTag}가 남긴 질문이에요`}
@@ -310,17 +311,19 @@ function QuestionDetailPage() {
         ) : null}
       </div>
 
-      <div className="comment-section">
-        <textarea
-          placeholder="답변을 입력해주세요.."
-          className="comment-input"
-          ref={answerRef}
-          maxLength={500}
-        ></textarea>
-        <button className="submit-comment" onClick={handleAnswerSubmit}>
-          등록
-        </button>
-      </div>
+      {!isAdopted && (
+        <div className="comment-section">
+          <textarea
+            placeholder="답변을 입력해주세요.."
+            className="comment-input"
+            ref={answerRef}
+            maxLength={500}
+          ></textarea>
+          <button className="submit-comment" onClick={handleAnswerSubmit}>
+            등록
+          </button>
+        </div>
+      )}
 
       <ContentBlur $isLoggedIn={isLoggedIn}>
         <AnswerList>
@@ -329,7 +332,7 @@ function QuestionDetailPage() {
             <span> {answerCount}</span>
           </div>
 
-          {answers?.map((answer) => (
+          {answers.map((answer) => (
             <Answer
               key={answer.answerId}
               createAt={answer.createAt}
@@ -337,6 +340,10 @@ function QuestionDetailPage() {
               answererNickname={answer.answererNickname}
               answererTag={answer.answererTag}
               answerId={answer.answerId}
+              isAdopted={answer.isAdopted}
+              setIsAdopted={setIsAdopted}
+              fetchData={fetchData}
+              anyAdopted={anyAdopted}
             />
           ))}
         </AnswerList>

@@ -92,10 +92,6 @@ function NotificationPage() {
       });
   };
 
-  if (isLoading || !data?.pages) {
-    return <div>로딩 중</div>;
-  }
-
   return (
     <StyledPage className="main-page-container">
       <StyledHeader>
@@ -113,14 +109,18 @@ function NotificationPage() {
           </div>
         </div>
       </StyledHeader>
-      <NotificationList
-        notifications={data.pages
-          .map((page) => page.data.notificationList)
-          .flat()}
-        isLoading={isLoading || isFetchingNextPage}
-        fetchNextPage={fetchNextPage}
-        hasNextPage={hasNextPage}
-      />
+      {isLoading || !data ? (
+        <div>로딩 중...</div>
+      ) : (
+        <NotificationList
+          notifications={data.pages
+            .map((page) => page.data.notificationList)
+            .flat()}
+          isLoading={isLoading || isFetchingNextPage}
+          fetchNextPage={fetchNextPage}
+          hasNextPage={hasNextPage}
+        />
+      )}
       <TabBar />
     </StyledPage>
   );

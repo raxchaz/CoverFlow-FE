@@ -38,21 +38,25 @@ function FeedbackPage() {
         },
         body: JSON.stringify(body),
       });
-
-      const data = await response.json();
-
-      if (data.statusCode === 'CREATED') {
-        showSuccessToast('피드백 등록이 완료되었습니다!');
-        navigate('/');
+      if (!response.ok) {
+        const errorData = await response.json();
+        if (response.status === 400) {
+          showErrorToast(errorData.error || '알 수 없는 에러가 발생했습니다.');
+        } else {
+          throw new Error(`서버 응답: ${response.status}`);
+        }
       } else {
-        throw new Error(`Server responded with status: ${response.status}`);
+        const data = await response.json();
+        if (data.statusCode === 'CREATED') {
+          showSuccessToast('피드백 등록이 완료되었습니다!');
+          navigate('/');
+        }
       }
     } catch (error) {
-      console.error('피드백 등록 실패:', error);
-      showErrorToast('피드백 등록에 실패했습니다.');
+      console.log('피드백 등록 실패:', error);
+      showErrorToast('피드백 등록 중 문제가 발생했습니다.');
     }
   };
-
   return (
     <StyledPage className="main-page-container">
       <StyledHeader>

@@ -5,8 +5,11 @@
 
 .answer-button-container {
   display: flex;
-  justify-content: space-around;
-  height: 200px;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1.5rem auto 10rem auto;
+  height: 2rem;
+  width: 50rem;
 }
 
 .detailpage-company {
@@ -21,6 +24,7 @@
   font-family: 'Pretendard-SemiBold';
   padding: 1% 2.5% 1% 2.5%;
   width: 83px;
+  color: white;
 }
 
 .detailpage-fishbuncount {
@@ -254,13 +258,16 @@
 }
 
 .job-info {
-  font-weight: 600;
   margin-left: 5%;
-  letter-spacing: -1px;
-
+  letter-spacing: -1.5px;
+  font-family: pretendard-semibold;
   display: flex;
   align-items: center;
   width: 100%;
+  span {
+    margin-right: 60%;
+    color: #875100;
+  }
 
   img:first-child {
     margin-right: 7px;
@@ -268,12 +275,20 @@
   img:last-child {
     cursor: pointer;
   }
+
+  .leaf {
+    color: #428238;
+  }
 }
 
-.job-seeker {
-  color: #875100;
-}
+// .job-seeker {
+//   color: #875100;
 
-.job-keeper {
-  color: #428238;
-}
+//   .leaf {
+//     color: #428238;
+//   }
+// }
+
+// .job-keeper {
+//   color: #428238;
+// }

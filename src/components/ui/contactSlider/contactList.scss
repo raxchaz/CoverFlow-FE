@@ -103,11 +103,15 @@
 }
 
 .inquiry-content-question {
-  width: 19rem;
-  min-height: 1rem;
-  text-indent: 1rem;
+  width: 50rem;
+  line-height: 2.6rem;
   padding-bottom: 1.5rem;
-  font-size: small;
+  font-size: 1.6rem;
+  margin: 3% 0% 0% 0%;
+  letter-spacing: -1px;
+  color: #474646;
+  white-space: wrap;
+  word-break: break-all;
 }
 
 .inquiry-button-container {
@@ -192,5 +196,4 @@
 
 .mypage-pagination {
   margin-bottom: 15rem;
-  width: 40rem !important;
 }
