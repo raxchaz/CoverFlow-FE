@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import '../../../asset/sass/pages/postPage/questionDetailPage.scss';
 import { StyledPage, StyledHeader } from '../../../styledComponent';
@@ -100,9 +100,7 @@ interface AppState {
 
 function QuestionDetailPage() {
   const navigate = useNavigate();
-  const { state } = useLocation();
 
-  // console.log('state: ', state);
   const { questionId } = useParams();
 
   const [currentPage, setCurrentPage] = useState(0);
@@ -142,11 +140,7 @@ function QuestionDetailPage() {
 
     const data = await fetchAPI('/api/answer', 'POST', requestData);
 
-    if (
-      state.questioner !== questionerNickname &&
-      data.statusCode === 'CREATED' &&
-      answerRef.current
-    ) {
+    if (data.statusCode === 'CREATED' && answerRef.current) {
       setPostAnswer(answerRef.current?.value);
       showSuccessToast('답변이 등록되었습니다.');
 
@@ -178,9 +172,9 @@ function QuestionDetailPage() {
   const handleReportSubmit = async () => {
     toggleReportPopup();
     await fetchAPI(`/api/report`, 'POST', {
-      content: state.questionContent,
+      content: questionContent,
       type: 'QUESTION',
-      id: state.questionId,
+      id: questionId,
     });
   };
 

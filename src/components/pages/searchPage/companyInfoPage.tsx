@@ -14,6 +14,8 @@ import axios from 'axios';
 import Pagination from '../../ui/Pagination.tsx';
 import '../../../asset/sass/pages/notificationPage/notificationList.scss';
 
+import Hot from '../../../asset/image/hot.svg';
+
 const CompanyContainer = styled.div`
   background-color: #ffffff;
   margin: 5% 0% 5% 15%;
@@ -50,6 +52,7 @@ const Line = styled.div`
   background-color: #f2f2f2;
   width: 80%;
   margin: 10% 0% 5% 10%;
+  stroke: 5px solid #fff9f4;
 `;
 
 // const CompanyAddress = styled.div`
@@ -64,7 +67,7 @@ const QuestionButton = styled.button`
   font-size: 18px;
   width: 105px;
   height: 35px;
-  border-radius: 2px;
+  border-radius: 5px;
   font-size: 1.8rem;
   color: #ffffff;
   letter-spacing: -1px;
@@ -131,7 +134,6 @@ function CompanyInfoPage() {
     };
 
     const selectedCategory = getCategoryClick(category);
-    // console.log('selectedCategory: ', selectedCategory);
 
     if (selectedCategories.includes(category)) {
       setSelectedCategories(
@@ -142,14 +144,9 @@ function CompanyInfoPage() {
     }
 
     try {
-      let apiUrl;
-      if (selectedCategory !== '') {
-        apiUrl = `${BASE_URL}/api/company/${companyId}?pageNo=0&criterion=createdAt&questionTag=${selectedCategory || null}`;
-      } else {
-        apiUrl = `${BASE_URL}/api/company/${companyId}?pageNo=0&criterion=createdAt`;
-      }
-      // console.log(apiUrl);
-      const { data } = await axios.get(apiUrl);
+      const { data } = await axios.get(
+        `${BASE_URL}/api/company/${companyId}?pageNo=0&criterion=createdAt&questionTag=${selectedCategory}`,
+      );
 
       if (data) {
         setCompanyData(data.data);
@@ -185,6 +182,7 @@ function CompanyInfoPage() {
         if (data) {
           setCompanyData(data.data);
           setTotalPages(data.data.totalPages);
+          setQuestionCount(data.data.questionCount);
         } else {
           throw new Error('데이터가 존재하지 않습니다.');
         }
@@ -240,26 +238,35 @@ function CompanyInfoPage() {
                 onClick={() => handleCategoryClick('사내문화')}
                 className={`selected-category-item ${selectedCategories.includes('사내문화') ? 'active' : ''}`}
               >
-                사내
+                {selectedCategories.includes('사내문화') && (
+                  <img className="hot-image" src={Hot} alt="Hot" />
+                )}
+                <span>사내</span>
                 <br />
-                문화
+                <span>문화</span>
               </div>
 
               <div
                 onClick={() => handleCategoryClick('급여연봉')}
                 className={`selected-category-item ${selectedCategories.includes('급여연봉') ? 'active' : ''}`}
               >
-                급여
+                {selectedCategories.includes('급여연봉') && (
+                  <img className="hot-image" src={Hot} alt="Hot" />
+                )}
+                <span>급여</span>
                 <br />
-                연봉
+                <span>연봉</span>
               </div>
               <div
                 onClick={() => handleCategoryClick('업무방식')}
                 className={`selected-category-item ${selectedCategories.includes('업무방식') ? 'active' : ''}`}
               >
-                업무
+                {selectedCategories.includes('업무방식') && (
+                  <img className="hot-image" src={Hot} alt="Hot" />
+                )}
+                <span>업무</span>
                 <br />
-                방식
+                <span>방식</span>
               </div>
             </div>
             <div className="selected-category-wrapper">
@@ -267,17 +274,23 @@ function CompanyInfoPage() {
                 onClick={() => handleCategoryClick('승진커리어')}
                 className={`selected-category-item ${selectedCategories.includes('승진커리어') ? 'active' : ''}`}
               >
-                승진
+                {selectedCategories.includes('승진커리어') && (
+                  <img className="hot-image" src={Hot} alt="Hot" />
+                )}
+                <span>승진</span>
                 <br />
-                커리어
+                <span>커리어</span>
               </div>
               <div
                 onClick={() => handleCategoryClick('직무워라밸')}
                 className={`selected-category-item ${selectedCategories.includes('직무워라밸') ? 'active' : ''}`}
               >
-                직무
+                {selectedCategories.includes('직무워라밸') && (
+                  <img className="hot-image" src={Hot} alt="Hot" />
+                )}
+                <span>직무</span>
                 <br />
-                워라밸
+                <span>워라밸</span>
               </div>
             </div>
           </div>
