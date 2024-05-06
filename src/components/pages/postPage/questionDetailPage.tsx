@@ -87,6 +87,7 @@ export interface AnswerProps {
   createAt: string;
   answerContent: string;
   answererNickname: string;
+  answerTag?: string;
 }
 
 export interface CommentProps {

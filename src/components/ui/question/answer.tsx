@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../../../asset/sass/etc/question/answer.scss';
 import styled from 'styled-components';
 import yellowTrophy from '../../../asset/image/yellow-trophy.svg';
 import Trophy from '../../../asset/image/trophy.svg';
 import { fetchAPI } from '../../global/utils/apiUtil';
 import { showSuccessToast } from '../toast/toast';
+import Tree from '../../../asset/image/nature-ecology-tree-3--tree-plant-cloud-shape-park.svg';
+import Leaf from '../../../asset/image/leaf.svg';
 
 const AdoptedTag = styled.div`
   position: relative;
@@ -49,6 +51,38 @@ const AdoptButton = styled.button`
   }
 `;
 
+const NameContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  /* margin-top: 1.5rem; */
+`;
+const ImageContainer = styled.img`
+  padding-right: 5px;
+  vertical-align: middle;
+`;
+
+const AnswerName = styled.span`
+  font-size: 1.7rem;
+  color: #000000;
+  letter-spacing: -1px;
+  vertical-align: middle;
+`;
+
+const AnswerContent = styled.div`
+  white-space: pre-line;
+  font-size: 1.8rem;
+  letter-spacing: -1px;
+  font-family: Pretendard-Regular;
+  margin-top: 1.5rem;
+  height: 180px;
+`;
+
+const BottomContainer = styled.div`
+  /* vertical-align: middle; */
+  flex-direction: row;
+  padding-top: 3.5rem;
+`;
+
 interface AnswerDetailProps {
   createAt: string;
   answerContent: string;
@@ -71,6 +105,8 @@ function AnswerModule({
   fetchData,
   anyAdopted,
 }: AnswerDetailProps) {
+  const [questionerTag, setQuestionerTag] = useState('');
+  console.log(setQuestionerTag);
   const handleAdoptAnswer = async () => {
     if (confirm('채택하시겠습니까?')) {
       await fetchAPI(`/api/answer/selection/${answerId}`, 'PATCH', {
@@ -83,7 +119,7 @@ function AnswerModule({
   };
 
   return (
-    <div className={`answer-container ${isAdopted ? 'adopted' : ''}`}>
+    <div className={`answer-container ${isAdopted ? 'adopted' : 'notadopted'}`}>
       {isAdopted && (
         <AdoptedTag>
           <img src={yellowTrophy} alt="trophy" />
@@ -92,15 +128,23 @@ function AnswerModule({
       )}
 
       <div>
-        <div>{answererNickname}</div>
-        <div>{answerContent}</div>
-        <div className="user-container">{createAt}</div>
-        {isAdopted || anyAdopted ? null : (
-          <AdoptButton onClick={handleAdoptAnswer}>
-            <img src={Trophy} alt="trophy" />
-            채택하기
-          </AdoptButton>
-        )}
+        <NameContainer>
+          <ImageContainer
+            src={questionerTag === '취준생' ? Leaf : Tree}
+            alt=""
+          />
+          <AnswerName>{answererNickname}</AnswerName>
+        </NameContainer>
+        <AnswerContent className="user-contents">{answerContent}</AnswerContent>
+        <BottomContainer>
+          <div className="user-container">{createAt}</div>
+          {isAdopted || anyAdopted ? null : (
+            <AdoptButton onClick={handleAdoptAnswer}>
+              <img src={Trophy} alt="trophy" />
+              채택하기
+            </AdoptButton>
+          )}
+        </BottomContainer>
       </div>
     </div>
   );

@@ -3,10 +3,9 @@
   flex-direction: column;
   width: 527px;
   height: 308px;
-  margin-top: 5%;
+  margin-top: 20%;
   margin-bottom: 5%;
-
-  padding: 0 50px;
+  padding: 0px 50px;
   :nth-child(1) {
     font-weight: bold;
     margin: 3px 6px 0 0;
@@ -25,6 +24,16 @@
 .adopted {
   border: 1px solid #ff8d1d;
 }
+.notadopted {
+  padding-top: 1.5rem;
+  .user-contents {
+    white-space: pre-line;
+    font-size: 1.8rem;
+    letter-spacing: -1px;
+    font-weight: normal;
+    font-family: Pretendard-Regular;
+  }
+}
 
 .user-container {
   letter-spacing: -1px;
@@ -32,12 +41,15 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
+  top: -4.5rem;
+  margin: auto;
+  padding-bottom: 25px;
+  // margin: -12% 6% 0% 82%;
   color: #808080;
-  // margin: 5% 0% -5% 15%;
   white-space: nowrap;
   gap: 20px;
-  font-size: 1rem;
-  font-family: 'Pretendard-Medium';
+  font-size: 1.3rem;
+  font-family: 'Pretendard-Regular';
 }
 
 .answerer {
