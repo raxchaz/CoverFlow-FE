@@ -7,6 +7,7 @@ import { fetchAPI } from '../../global/utils/apiUtil';
 import { showSuccessToast } from '../toast/toast';
 import Tree from '../../../asset/image/nature-ecology-tree-3--tree-plant-cloud-shape-park.svg';
 import Leaf from '../../../asset/image/leaf.svg';
+
 const AdoptedTag = styled.div`
   position: relative;
   width: 95px;
@@ -53,6 +54,7 @@ const AdoptButton = styled.button`
 const NameContainer = styled.div`
   display: flex;
   flex-direction: row;
+  /* margin-top: 1.5rem; */
 `;
 const ImageContainer = styled.img`
   padding-right: 5px;
@@ -71,6 +73,14 @@ const AnswerContent = styled.div`
   font-size: 1.8rem;
   letter-spacing: -1px;
   font-family: Pretendard-Regular;
+  margin-top: 1.5rem;
+  height: 180px;
+`;
+
+const BottomContainer = styled.div`
+  /* vertical-align: middle; */
+  flex-direction: row;
+  padding-top: 3.5rem;
 `;
 
 interface AnswerDetailProps {
@@ -109,7 +119,7 @@ function AnswerModule({
   };
 
   return (
-    <div className={`answer-container ${isAdopted ? 'adopted' : ''}`}>
+    <div className={`answer-container ${isAdopted ? 'adopted' : 'notadopted'}`}>
       {isAdopted && (
         <AdoptedTag>
           <img src={yellowTrophy} alt="trophy" />
@@ -125,14 +135,16 @@ function AnswerModule({
           />
           <AnswerName>{answererNickname}</AnswerName>
         </NameContainer>
-        <AnswerContent>{answerContent}</AnswerContent>
-        <div className="user-container">{createAt}</div>
-        {isAdopted || anyAdopted ? null : (
-          <AdoptButton onClick={handleAdoptAnswer}>
-            <img src={Trophy} alt="trophy" />
-            채택하기
-          </AdoptButton>
-        )}
+        <AnswerContent className="user-contents">{answerContent}</AnswerContent>
+        <BottomContainer>
+          <div className="user-container">{createAt}</div>
+          {isAdopted || anyAdopted ? null : (
+            <AdoptButton onClick={handleAdoptAnswer}>
+              <img src={Trophy} alt="trophy" />
+              채택하기
+            </AdoptButton>
+          )}
+        </BottomContainer>
       </div>
     </div>
   );
