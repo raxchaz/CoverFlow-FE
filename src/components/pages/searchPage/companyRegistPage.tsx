@@ -150,7 +150,7 @@ function CompanyRegistPage() {
               companyInfo.type === ''
             }
           >
-            등록하기
+            <span>등록하기</span>
           </button>
         </form>
       </StyledHeader>
