@@ -86,19 +86,26 @@ function QuestionWritePage() {
         companyId: Number(companyId),
         reward: Number(reward),
       };
+
+      if (body.title.length > 100) {
+        showErrorToast('제목은 100자 이하로 작성해주세요.');
+        return;
+      }
+      if (body.content.length > 1000) {
+        showErrorToast('내용은 1000자 이하로 작성해주세요.');
+        return;
+      }
+
       const isValid = Object.values(body).every(
         (value) => value !== null && value !== '',
       );
-
       if (!isValid) {
         throw new Error('모든 필드를 채워주세요.');
-      } else {
-        await fetchAPI('/api/question', 'POST', body);
-
-        showSuccessToast('질문이 등록되었습니다');
-
-        navigate(`/company-info/${companyId}`);
       }
+
+      await fetchAPI('/api/question', 'POST', body);
+      showSuccessToast('질문이 등록되었습니다');
+      navigate(`/company-info/${companyId}`);
     } catch (error) {
       // console.log(error);
       showErrorToast(`에러 발생 ${error}`);

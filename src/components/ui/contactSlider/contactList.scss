@@ -103,11 +103,13 @@
 }
 
 .inquiry-content-question {
-  width: 19rem;
-  min-height: 1rem;
-  text-indent: 1rem;
+  width: 100%;
+  line-height: 2.6rem;
   padding-bottom: 1.5rem;
-  font-size: small;
+  font-size: 1.6rem;
+  margin: 3% 0% 0% 0%;
+  letter-spacing: -1px;
+  color: #474646;
 }
 
 .inquiry-button-container {
