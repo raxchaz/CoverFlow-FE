@@ -231,7 +231,7 @@ function QuestionDetailPage() {
     '스팸 혹은 홍보성 도배글이에요',
     '특정 이용자가 질문, 답변, 채택을 반복해요',
   ];
-  console.log(questionerTag);
+  // console.log(questionerTag);
   return (
     <StyledPage className="main-page-container">
       <StyledHeader>

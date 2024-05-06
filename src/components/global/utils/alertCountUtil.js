@@ -4,9 +4,9 @@ import { alertCount } from '../../../store/actions/alertActions';
 export const fetchUnreadNotificationsCount = async (dispatch) => {
   try {
     const data = await fetchAPI('/api/notification', 'GET');
-    console.log(data);
+    // console.log(data);
     if (data) {
-      console.log(data.data.noReadElements);
+      // console.log(data.data.noReadElements);
       dispatch(alertCount(data.data.noReadElements));
     } else {
       throw new Error('알림 카운트 변경 실패 ');

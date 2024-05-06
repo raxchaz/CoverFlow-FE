@@ -131,7 +131,7 @@ function CompanyInfoPage() {
     };
 
     const selectedCategory = getCategoryClick(category);
-    console.log('selectedCategory: ', selectedCategory);
+    // console.log('selectedCategory: ', selectedCategory);
 
     if (selectedCategories.includes(category)) {
       setSelectedCategories(
@@ -148,7 +148,7 @@ function CompanyInfoPage() {
       } else {
         apiUrl = `${BASE_URL}/api/company/${companyId}?pageNo=0&criterion=createdAt`;
       }
-      console.log(apiUrl);
+      // console.log(apiUrl);
       const { data } = await axios.get(apiUrl);
 
       if (data) {
