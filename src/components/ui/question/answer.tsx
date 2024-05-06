@@ -6,6 +6,9 @@ import Trophy from '../../../asset/image/trophy.svg';
 import { fetchAPI } from '../../global/utils/apiUtil';
 import { showSuccessToast } from '../toast/toast';
 
+import Tree from '../../../asset/image/nature-ecology-tree-3--tree-plant-cloud-shape-park.svg';
+import Leaf from '../../../asset/image/leaf.svg';
+
 const AdoptedTag = styled.div`
   position: relative;
   width: 95px;
@@ -62,6 +65,7 @@ function AnswerModule({
   answerContent,
   answererNickname,
   answerId,
+  answererTag,
 }: AnswerDetailProps) {
   const [isAdopted, setIsAdopted] = useState(false);
   const handleAdoptAnswer = async () => {
@@ -83,10 +87,15 @@ function AnswerModule({
         </AdoptedTag>
       )}
 
-      <div>
+      <div className="user-info-container">
+        <img src={answererTag === '현업자' ? Tree : Leaf} alt="" />
         <div>{answererNickname}</div>
-        <div>{answerContent}</div>
+        <span className="middle">•</span>
         <div className="user-container">{createAt}</div>
+      </div>
+      <div>
+        <div>{answerContent}</div>
+
         {isAdopted || (
           <AdoptButton onClick={handleAdoptAnswer}>
             <img src={Trophy} alt="trophy" />
