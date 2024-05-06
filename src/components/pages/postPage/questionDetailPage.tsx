@@ -46,7 +46,7 @@ const QuestionTitle = styled.div`
     font-size: 3rem;
     padding: 10px;
     color: #000000;
-    margin: 0 37% 2% 3%;
+    margin: 0 78% 2% 3%;
   }
   display: flex;
   align-items: center;
