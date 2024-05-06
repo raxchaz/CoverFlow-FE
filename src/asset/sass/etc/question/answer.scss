@@ -6,16 +6,21 @@
   margin-top: 5%;
   margin-bottom: 5%;
 
-  padding: 0 20px;
+  padding: 0 50px;
   :nth-child(1) {
     font-weight: bold;
-    margin: 10px 0;
+    margin: 3px 6px 0 0;
   }
-  :nth-child(2) {
-    margin-bottom: 10px;
-  }
+
   border: 1px solid #cacaca;
   border-radius: 20px;
+
+  .user-info-container {
+    display: flex;
+    align-items: center;
+    margin-top: 24px;
+    margin-bottom: 17px;
+  }
 }
 .adopted {
   border: 1px solid #ff8d1d;
@@ -27,11 +32,14 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
-  color: #cacaca;
+  // color: #cacaca;
   margin: 40% 0% 5% 0%;
+  color: #808080;
+  // margin: 5% 0% -5% 15%;
   white-space: nowrap;
   gap: 20px;
-  font-size: 13px;
+  font-size: 1rem;
+  font-family: 'Pretendard-Medium';
 }
 
 .answerer {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import '../../../asset/sass/pages/postPage/questionDetailPage.scss';
 import { StyledPage, StyledHeader } from '../../../styledComponent';
@@ -13,12 +13,11 @@ import Reward from '../../../asset/image/reward.svg';
 import Dot from '../../../asset/image/dots-vertical.svg';
 import '../../../asset/sass/etc/header/userInfoHeader.scss';
 
-import { showSuccessToast } from '../../ui/toast/toast.tsx';
+import { showErrorToast, showSuccessToast } from '../../ui/toast/toast.tsx';
 import { fetchAPI } from '../../global/utils/apiUtil.js';
 import Pagination from '../../ui/Pagination.tsx';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
-
 const ContentBlur = styled.span<{ $isLoggedIn: boolean }>`
   ${({ $isLoggedIn }) =>
     !$isLoggedIn &&
@@ -41,12 +40,19 @@ const Questioner = styled.div`
 `;
 
 const QuestionTitle = styled.div`
-  font-family: 'Pretendard-Bold';
-  letter-spacing: -1.5px;
-  font-size: 3rem;
-  padding: 10px;
-  color: #000000;
-  margin: 0 0 2% 3%;
+  span {
+    font-family: 'Pretendard-Bold';
+    letter-spacing: -1.5px;
+    font-size: 3rem;
+    padding: 10px;
+    color: #000000;
+    margin: 0 78% 2% 3%;
+  }
+  display: flex;
+  align-items: center;
+  img {
+    cursor: pointer;
+  }
 `;
 
 const QuestionContent = styled.div`
@@ -101,9 +107,7 @@ interface AppState {
 
 function QuestionDetailPage() {
   const navigate = useNavigate();
-  const { state } = useLocation();
 
-  // console.log('state: ', state);
   const { questionId } = useParams();
 
   const [currentPage, setCurrentPage] = useState(0);
@@ -127,7 +131,7 @@ function QuestionDetailPage() {
 
   const [isShowEdit, setIsShowEdit] = useState(false);
 
-  const [showReport, setShowReport] = useState(false);
+  const [isShowReport, setIsShowReport] = useState(false);
   const [isAdopted, setIsAdopted] = useState(false);
   const [anyAdopted, setAnyAdopted] = useState(false);
 
@@ -141,19 +145,25 @@ function QuestionDetailPage() {
       questionId: Number(questionId),
     };
 
-    const data = await fetchAPI('/api/answer', 'POST', requestData);
+    try {
+      const data = await fetchAPI('/api/answer', 'POST', requestData);
 
-    if (
-      state.questioner !== questionerNickname &&
-      data.statusCode === 'CREATED' &&
-      answerRef.current
-    ) {
-      setPostAnswer(answerRef.current?.value);
-      showSuccessToast('답변이 등록되었습니다.');
+      if (data.statusCode === 'CREATED' && answerRef.current) {
+        setPostAnswer(answerRef.current?.value);
+        showSuccessToast('답변이 등록되었습니다.');
 
-      if (answerRef.current) {
-        answerRef.current.value = '';
+        if (answerRef.current) {
+          answerRef.current.value = '';
+        }
       }
+    } catch (error) {
+      if (error instanceof Error) showErrorToast('비속어가 존재합니다.');
+    }
+  };
+
+  const handleEnterKey = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key === 'Enter' && event.shiftKey === false) {
+      handleAnswerSubmit();
     }
   };
 
@@ -168,25 +178,57 @@ function QuestionDetailPage() {
   };
 
   const toggleReportPopup = () => {
-    setShowReport((show) => !show);
+    setIsShowReport((show) => !show);
   };
 
   const handleEdit = () => {
-    setIsShowEdit((show) => !show);
-    setShowReport((show) => !show);
+    console.log('click ');
+    setIsShowEdit((edit) => !edit);
+  };
+
+  console.log(isShowEdit);
+
+  const handleClickEdit = async () => {
+    const editBody = {
+      title: questionTitle,
+      content: questionContent,
+      questionStatus: false,
+    };
+    // console.log('edit');
+    try {
+      await fetchAPI(`/api/question/${questionId}`, 'PATCH', editBody);
+    } catch (error) {
+      if (error instanceof Error) showErrorToast(error.message);
+    }
+  };
+
+  const handleClickDelete = async () => {
+    // console.log('delete');
+    const deleteBody = {
+      title: questionTitle,
+      content: questionContent,
+      questionStatus: false,
+    };
+    try {
+      await fetchAPI(`/api/question/${questionId}`, 'DELETE', deleteBody);
+    } catch (error) {
+      if (error instanceof Error) showErrorToast(error.message);
+    }
   };
 
   const handleReportSubmit = async () => {
     toggleReportPopup();
     await fetchAPI(`/api/report`, 'POST', {
-      content: state.questionContent,
+      content: questionContent,
       type: 'QUESTION',
-      id: state.questionId,
+      id: questionId,
     });
+
+    showSuccessToast('신고 접수가 되었습니다.');
   };
 
   const handleCloseReportPopup = () => {
-    setShowReport((show) => !show);
+    setIsShowReport((show) => !show);
   };
   const fetchData = async () => {
     const response = await axios.get(
@@ -248,19 +290,35 @@ function QuestionDetailPage() {
               : `${questionerTag}가 남긴 질문이에요`}
           </span>
 
-          <img onClick={handleEdit} src={Dot} alt="dot" />
-
-          {isShowEdit ? (
+          {!isShowEdit && (
             <div className="dropdown-question-detail-menu">
-              <ul style={{ right: '10px' }}>
-                <li className="dropdown-item-edit">수정</li>
-                <hr />
-                <li className="dropdown-item-delete">삭제</li>
+              <ul>
+                <li onClick={handleClickEdit} className="dropdown-item-edit">
+                  수정
+                </li>
+
+                <li
+                  onClick={handleClickDelete}
+                  className="dropdown-item-delete"
+                >
+                  삭제
+                </li>
+                {/*
+                <li
+                  onClick={toggleReportPopup}
+                  className="dropdown-item-report"
+                >
+                  신고
+                </li> */}
               </ul>
             </div>
-          ) : null}
+          )}
         </div>
-        <QuestionTitle>{questionTitle}</QuestionTitle>
+        <QuestionTitle>
+          <span>{questionTitle}</span>
+          <img onClick={handleEdit} src={Dot} alt="dot" />
+        </QuestionTitle>
+
         <div className="questioner-info">
           <Questioner>
             <span>{questionerNickname || 'Anonymous'}</span>
@@ -278,7 +336,7 @@ function QuestionDetailPage() {
           </div>
         </div>
         <FirstLine />
-        {showReport ? (
+        {isShowReport ? (
           <div className="report-popup-overlay">
             <div className="report-popup">
               <div className="report-title">사용자 신고</div>
@@ -318,6 +376,7 @@ function QuestionDetailPage() {
             className="comment-input"
             ref={answerRef}
             maxLength={500}
+            onKeyDown={handleEnterKey}
           ></textarea>
           <button className="submit-comment" onClick={handleAnswerSubmit}>
             등록
@@ -352,6 +411,7 @@ function QuestionDetailPage() {
           currentPage={currentPage}
           totalPages={totalPages}
           handlePagination={handlePagination}
+          className={answers.length === 0 ? 'hidden' : ''}
         />
       </ContentBlur>
     </StyledPage>

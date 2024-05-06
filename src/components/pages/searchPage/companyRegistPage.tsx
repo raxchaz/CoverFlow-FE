@@ -87,7 +87,7 @@ function CompanyRegistPage() {
         <TitleHeader pageTitle="기업 등록" handleGoBack={handleGoBack} />
         <form onSubmit={handleSubmit} className="company-form">
           <div className="regist-company-name">
-            기업명 <div className="neccessary"> * 필수</div>
+            <span>기업명</span> <div className="neccessary"> * 필수</div>
           </div>
           <input
             type="text"
@@ -98,9 +98,10 @@ function CompanyRegistPage() {
             onChange={handleChange}
           />
           <div className="regist-company-industry">
-            업종 <div className="neccessary"> * 필수</div>
+            <span>업종</span> <div className="neccessary"> * 필수</div>
           </div>
           <select
+            id="type"
             className="option-field"
             name="type"
             value={companyInfo.type}
@@ -115,9 +116,10 @@ function CompanyRegistPage() {
           </select>
           <div className="location-container">
             <div className="regist-company-province">
-              지역 <div className="neccessary"> * 필수</div>
+              <span>지역</span> <div className="neccessary"> * 필수</div>
             </div>
             <select
+              id="city"
               className="option-field"
               name="city"
               value={companyInfo.city}
@@ -133,7 +135,7 @@ function CompanyRegistPage() {
             <input
               type="text"
               className="input-field-regist"
-              placeholder="시 /군 /구 (선택)"
+              placeholder="시/군/구"
               name="district"
               value={companyInfo.district}
               onChange={handleChange}
@@ -148,7 +150,7 @@ function CompanyRegistPage() {
               companyInfo.type === ''
             }
           >
-            등록하기
+            <span>등록하기</span>
           </button>
         </form>
       </StyledHeader>

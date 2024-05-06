@@ -17,6 +17,15 @@ $color-primary: #ff8d1d;
   align-self: flex-start;
 }
 
+.regist-company-name span,
+.regist-company-industry span,
+.regist-company-province span {
+  font-size: 2.5rem;
+  color: #000000;
+  letter-spacing: -1px;
+  font-family: 'Pretendard-Bold';
+}
+
 .input-field-regist,
 .option-field {
   letter-spacing: -1px;
@@ -28,13 +37,19 @@ $color-primary: #ff8d1d;
   background-color: transparent;
   transition: border-color 0.3s;
   padding: 8px 0;
+  height: 50px;
 }
 
 .input-field-regist::placeholder,
-.option-field::placeholder {
-  color: #474646;
+.option-field::placeholder,
+#type,
+#city {
+  color: #cacaca;
   opacity: 1;
   padding: 0 8px;
+  font-size: 1.8rem;
+  letter-spacing: -1px;
+  font-family: 'Pretendard-Regular';
 }
 
 .input-field-regist:focus,
@@ -46,6 +61,7 @@ $color-primary: #ff8d1d;
 .input-field-regist:hover,
 .option-field:hover {
   border-color: $color-primary;
+  background-color: transparent;
 }
 
 .regist-company-name,
@@ -55,17 +71,19 @@ $color-primary: #ff8d1d;
 }
 
 .submit-regist {
-  font-weight: 100;
-  font-size: 16px;
-  letter-spacing: 0px;
-  width: 82%;
-  margin-top: 13%;
-  margin-left: 2%;
-  border-radius: 5px;
+  width: 520px;
+  height: 45px;
+  border-radius: 0;
   background-color: $color-primary;
+  span {
+    font-size: 2rem;
+    color: #ffffff;
+    letter-spacing: -1px;
+    font-family: 'Pretendard-Bold';
+  }
 
   &:disabled {
-    background-color: #ccc;
+    background-color: #d9d9d9;
     color: #fff;
     cursor: not-allowed;
     box-shadow: none;
