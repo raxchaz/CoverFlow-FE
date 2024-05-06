@@ -51,7 +51,7 @@ img.loginuser {
 .dropdown-question-detail-menu {
   position: relative;
   z-index: 500;
-  right: -12rem;
+  right: 5rem;
   top: 6rem;
 
   ul {
@@ -84,11 +84,11 @@ img.loginuser {
   .dropdown-item-edit,
   .dropdown-item-delete {
     margin-bottom: 5%;
-    margin-top: 5%;
+
     display: flex;
     justify-content: center;
     cursor: pointer;
-    padding: 6px 0;
+    padding: 8px 0;
     width: 88px;
   }
 
