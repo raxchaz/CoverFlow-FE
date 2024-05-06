@@ -49,6 +49,20 @@ const AdoptButton = styled.button`
   }
 `;
 
+const AnswerName = styled.div`
+  font-size: 1.7rem;
+  color: #000000;
+  letter-spacing: -1px;
+  margin-top: 15px;
+`;
+
+const AnswerContent = styled.div`
+  white-space: pre-line;
+  font-size: 1.8rem;
+  letter-spacing: -1px;
+  margin-top: 20px;
+`;
+
 interface AnswerDetailProps {
   createAt: string;
   answerContent: string;
@@ -84,8 +98,8 @@ function AnswerModule({
       )}
 
       <div>
-        <div>{answererNickname}</div>
-        <div>{answerContent}</div>
+        <AnswerName>{answererNickname}</AnswerName>
+        <AnswerContent>{answerContent}</AnswerContent>
         <div className="user-container">{createAt}</div>
         {isAdopted || (
           <AdoptButton onClick={handleAdoptAnswer}>
