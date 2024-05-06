@@ -161,7 +161,7 @@ function QuestionDetailPage() {
   };
 
   const handleEnterKey = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter' && event.shiftKey === false) {
       handleAnswerSubmit();
     }
   };
