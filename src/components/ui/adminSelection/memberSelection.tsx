@@ -29,7 +29,7 @@ export default function MemberSelection() {
   console.log(fetchMember(0));
 
   return (
-    <div className="ad-Selection-container">
+    <div className="ad-memberSelection-container">
       <div className="ad-search">
         <div className="search-container">
           <div className="search-row">
@@ -48,7 +48,7 @@ export default function MemberSelection() {
       </div>
       <>
         <div className="ad-memberOption">
-          <div className="ad-item-direction">
+          <div className="ad-memberitem-direction">
             <div className="ad-memberOption-maxitem">
               <span className="ad-member-title">가입일</span>
               <input type="checkbox" className="ad-member-checkbox" />
@@ -71,7 +71,7 @@ export default function MemberSelection() {
               <option value=""></option>
             </select>
           </div>
-          <div className="ad-item-direction">
+          <div className="ad-memberitem-direction">
             <div className="ad-memberOption-maxend">
               <span className="ad-member-title">최종로그인</span>
               <div className="ad-member-Calendar">
@@ -90,9 +90,9 @@ export default function MemberSelection() {
             </Button>
           </div>
 
-          <div className="ad-result">
+          <div className="ad-member-result">
             <ul>
-              <li className="ad-searchResult-header">
+              <li className="ad-memberResult-header">
                 <input type="checkbox" />
                 <span>번호</span>
                 <span>계정</span>
