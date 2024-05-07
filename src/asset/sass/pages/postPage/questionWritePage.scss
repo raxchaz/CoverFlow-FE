@@ -1,17 +1,17 @@
 @mixin button-style {
-  width: 80%;
+  width: 70%;
   padding: 12px 0;
-  margin-left: 10%;
+  margin-left: 14%;
   font-size: 16px;
   color: #ffffff;
   background-color: #ff8d1d;
   border: none;
-  border-radius: 10px;
+  border-radius: 0;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: 'Pretendard-Medium', sans-serif;
+  font-family: Pretendard-Bold;
   transition:
     background-color 0.3s ease,
     transform 0.2s ease;
@@ -33,8 +33,8 @@
 }
 
 .question-title-input {
-  width: 80%;
-  margin-left: 10%;
+  width: 70%;
+  margin-left: 14%;
   margin-bottom: 2%;
   padding: 10px 0;
   font-size: 16px;
@@ -57,25 +57,32 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: 'Pretendard-Regular', sans-serif;
+  font-family: Pretendard-Light;
 }
 
 .question-input {
+  scrollbar-width: none;
   color: #808080;
   height: 270px;
-  width: 520px;
-  margin: 0% 0% -0.7% 1%;
-  font-family: 'Pretendard-Regular', sans-serif;
+  width: 485px;
+  margin: 2% 0% -0.7% 1%;
+  font-family: Pretendard-Light;
   font-size: 1.5rem;
   letter-spacing: -1px;
-  margin-left: 12%;
+  margin-left: 14%;
   border-radius: 10px;
   border: 0.5px solid #d9d9d9;
-
   padding: 1.75rem;
   line-height: 2.8;
   text-align: left;
   resize: none;
+}
+.question-input::placeholder {
+  font-size: 1.5rem;
+  color: #808080;
+  letter-spacing: -1.5px;
+  font-family: Pretendard-Light;
+  line-height: 3rem;
 }
 
 select {
@@ -117,8 +124,8 @@ select {
   position: relative;
   // width: 100%;
   height: 48px;
-  left: 5rem;
-  margin-top: 5%;
+  left: 9rem;
+  margin: 4% 0;
   span {
     width: 100%;
     font-weight: 900;
@@ -132,10 +139,10 @@ select {
   display: flex;
   justify-content: flex-start;
   margin-bottom: 2rem;
-  align-items: flex-end;
+  align-items: center;
   width: 100%;
   position: relative;
-  left: 10rem;
+  left: 9.5rem;
   letter-spacing: -1.2px;
 
   span {
@@ -169,6 +176,25 @@ select {
   row-gap: 10px;
   margin-bottom: 4rem;
 }
+.centered-tag {
+  margin-left: -5rem;
+}
+.gray-tag-selects {
+  border-radius: 20px;
+  position: relative;
+  margin-right: 0.6rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 1% 2.5% 1% 2.5%;
+  box-sizing: border-box;
+  border: 0.05rem solid #d1d5db;
+  letter-spacing: -1px;
+  color: #47474c;
+  background-color: #bcbcbc;
+  color: #ffffff;
+}
 
 .tag-select {
   border-radius: 20px;
@@ -180,28 +206,23 @@ select {
   gap: 10px;
   padding: 1% 2.5% 1% 2.5%;
   box-sizing: border-box;
-  border: 0.5px solid #808080;
+  border: 0.05rem solid #d1d5db;
   letter-spacing: -1px;
   color: #47474c;
-  &:nth-child(3) {
-    background-color: #bcbcbc;
-    color: #ffffff;
-  }
+
   span {
     display: flex;
     justify-content: center;
     overflow-wrap: break-word;
-    font-family: 'Pretendard-Light';
-    font-weight: 600;
-    font-size: 2rem;
-
+    font-family: 'Pretendard-semiBold';
+    font-size: 1.6rem;
     letter-spacing: -0.1rem;
   }
   &:active {
-    border: 2px solid #ff8d1d;
+    border: 0.05rem solid #ff8d1d;
     background-color: #ff8d1d;
     color: #ffffff;
-    font-family: 'Pretendard-Bold';
+    // font-family: 'Pretendard-Bold';
   }
   button {
     width: 3rem;
@@ -212,7 +233,7 @@ select {
   }
 
   &.selected {
-    border: 2px solid #ff8d1d;
+    border: 0.05rem solid #ff8d1d;
     background-color: #ff8d1d;
     color: #ffffff;
   }
@@ -263,7 +284,7 @@ select {
   width: 100%;
   box-sizing: border-box;
   position: relative;
-  left: 7rem;
+  left: 6.5rem;
   span {
     overflow-wrap: break-word;
     font-family: Pretendard;
@@ -286,19 +307,17 @@ select {
 }
 
 .category-select-wrapper {
-  // margin: -1.1rem 1.1rem 1.1rem 0;
   display: flex;
   justify-content: center;
   gap: 14px;
   overflow-x: scroll;
-  // scroll-snap-type: x mandatory;
-
-  margin-left: 15%;
+  margin-left: 14%;
+  margin-bottom: 5%;
   width: 70%;
   padding: 0 10px 10px 37rem;
 
   &::-webkit-scrollbar {
-    height: 5px;
+    height: 8px;
   }
 
   &::-webkit-scrollbar-thumb {
@@ -320,21 +339,18 @@ select {
   padding: 1% 2.5% 1% 2.5%;
   box-sizing: border-box;
   border: 0.5px solid #d1d5db;
-
+  color: #474646;
   span {
     overflow-wrap: normal;
     font-family: Pretendard-SemiBold;
     font-size: 1.6rem;
     letter-spacing: -0.1rem;
-    color: #474646;
+
     display: flex;
     justify-content: center;
     align-items: center;
     min-width: 10rem;
     height: 3rem;
-  }
-  &:hover {
-    cursor: pointer;
   }
 
   &.selected {
@@ -342,12 +358,20 @@ select {
     background-color: #ff8d1d;
     color: #ffffff;
   }
+  &:active {
+    background-color: #ff8d1d;
+    color: #ffffff;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .register-question-button {
   @include button-style;
   margin-top: 3%;
-  margin-bottom: 10%;
+  margin-bottom: 15%;
 
   &.selected {
     border: 2px solid #ff8d1d;
