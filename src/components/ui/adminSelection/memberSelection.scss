@@ -20,7 +20,7 @@
   padding-left: 10rem;
 }
 
-.ad-item-direction {
+.ad-memberitem-direction {
   display: flex;
   flex-direction: column;
   height: 20rem;
@@ -56,6 +56,7 @@
   align-items: center;
 }
 
+// 검색창
 .ad-search {
   width: 100%;
   height: 16%;
@@ -174,8 +175,8 @@
   letter-spacing: -1.5px;
 }
 
-.ad-searchResult-header,
-.ad-searchResult-item {
+.ad-memberResult-header,
+.ad-memberResult-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -217,7 +218,7 @@
   font-size: 1.2rem;
 }
 
-.ad-result {
+.ad-member-result {
   border: 1px solid #ccc;
 }
 

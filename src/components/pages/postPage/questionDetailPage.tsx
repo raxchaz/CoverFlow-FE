@@ -44,13 +44,17 @@ const QuestionTitle = styled.div`
     font-family: 'Pretendard-Bold';
     letter-spacing: -1.5px;
     font-size: 3rem;
-    padding: 10px;
+    /* padding: 10px; */
+    text-align: center;
+    padding: 1% 3% 1% 1.5%;
     color: #000000;
+    margin: 0 78% 2% 3%;
+    overflow: hiddlen;
+    white-space: nowrap;
   }
   display: flex;
+  /* padding: 1% 2.5% 1% 2.5%; */
   align-items: center;
-  justify-content: space-between;
-  padding: 15px;
   img {
     cursor: pointer;
   }
