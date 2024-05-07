@@ -12,7 +12,7 @@ import { showErrorToast } from '../../ui/toast/toast.tsx';
 import axios from 'axios';
 import Pagination from '../../ui/Pagination.tsx';
 import '../../../asset/sass/pages/notificationPage/notificationList.scss';
-
+import NoContentsComponent from '../../ui/noContentsComponent/noContentsComponent.tsx';
 // import Hot from '../../../asset/image/hot.svg';
 
 const CompanyContainer = styled.div`
@@ -300,31 +300,43 @@ function CompanyInfoPage() {
             </div>
           </div>
 
-          <QuestionList>
-            {companyData.questions.map((question, index) => (
-              <Question
-                key={index}
-                companyId={companyId}
-                questionId={question.questionId}
-                questioner={question.questionerNickname}
-                questionerTag={question.questionerTag}
-                answerCount={question.answerCount}
-                questionTitle={question.questionTitle}
-                questionContent={question.questionContent}
-                createAt={question.createAt}
-                reward={question.reward}
-                companyData={companyData}
-                viewCount={question.questionViewCount}
-              />
-            ))}
-          </QuestionList>
+          {companyData.questions.length > 0 ? (
+            <QuestionList>
+              {companyData.questions.map((question, index) => (
+                <Question
+                  key={index}
+                  companyId={companyId}
+                  questionId={question.questionId}
+                  questioner={question.questionerNickname}
+                  questionerTag={question.questionerTag}
+                  answerCount={question.answerCount}
+                  questionTitle={question.questionTitle}
+                  questionContent={question.questionContent}
+                  createAt={question.createAt}
+                  reward={question.reward}
+                  companyData={companyData}
+                  viewCount={question.questionViewCount}
+                />
+              ))}
+            </QuestionList>
+          ) : (
+            <NoContentsComponent
+              onClick={handleQuestionClick}
+              content1="해당 기업에 대한 질문이"
+              content2="존재하지 않습니다"
+              theme="질문"
+            />
+          )}
+
           <TabBar />
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            handlePagination={handlePagination}
-            className="pagination-container"
-          />
+          {companyData.questions.length > 0 && (
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              handlePagination={handlePagination}
+              className="pagination-container"
+            />
+          )}
         </>
       )}
     </StyledPage>

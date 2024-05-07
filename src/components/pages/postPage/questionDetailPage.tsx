@@ -260,17 +260,19 @@ function QuestionDetailPage() {
     );
     const data = response.data.data;
 
-    const sortedAnswers = data.answers.sort((a, b) => {
-      if (a.selection && !b.selection) return -1;
-      if (!a.selection && b.selection) return 1;
-      return 0;
-    });
+    // const sortedAnswers = data.answers.sort((a, b) => {
+    //   if (a.selection && !b.selection) return -1;
+    //   if (!a.selection && b.selection) return 1;
+    //   return 0;
+    // });
     const adoptedExists = data.answers.some(
       (answer) => answer.selection === true,
     );
     setAnyAdopted(adoptedExists);
+    setIsAdopted(adoptedExists);
+
     setAnswers(
-      sortedAnswers.map((answer) => ({
+      data.answers.map((answer) => ({
         ...answer,
         isAdopted: answer.selection,
       })),
@@ -286,10 +288,9 @@ function QuestionDetailPage() {
     setQuestionContent(data.questionContent);
     setTotalPages(data.totalPages);
   };
-
   useEffect(() => {
     fetchData();
-  }, [questionId, postAnswer, currentPage]);
+  }, [questionId, postAnswer, currentPage, navigate]);
 
   const reportReasons = [
     '욕설 혹은 비방표현이 있어요',
@@ -390,7 +391,7 @@ function QuestionDetailPage() {
         )}
       </div>
 
-      {isAdopted && (
+      {!isAdopted ? (
         <div className="comment-section">
           <textarea
             placeholder="답변을 입력해주세요."
@@ -403,7 +404,7 @@ function QuestionDetailPage() {
             등록
           </button>
         </div>
-      )}
+      ) : null}
 
       <ContentBlur $isLoggedIn={isLoggedIn}>
         <AnswerList>

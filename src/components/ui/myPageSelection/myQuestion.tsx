@@ -4,6 +4,7 @@ import AdminPagination from '../adminSelection/adminPagination';
 import { showErrorToast } from '../toast/toast';
 import { useNavigate } from 'react-router-dom';
 import { fetchAPI } from '../../global/utils/apiUtil';
+import NoContentsComponent from '../noContentsComponent/noContentsComponent';
 
 interface Questions {
   questionId: number;
@@ -73,31 +74,40 @@ export default function MyQuestion({
     }
   };
 
+  const goToSearch = () => navigate('/search-company');
+
   return (
     <div className="my-component-width">
-      {question?.map((q) => (
-        <div
-          className="answer-item"
-          key={q.questionId}
-          onClick={() =>
-            navigate(`/company-info/${q.companyId}/${q.questionId}`)
-          }
-        >
-          <div className="answer-item-title">{q.companyName}</div>
-          <div className="answer-item-content" style={{ width: '48rem' }}>
-            {q.questionTitle}
+      {question.length > 0 ? (
+        question.map((q) => (
+          <div
+            className="answer-item"
+            key={q.questionId}
+            onClick={() =>
+              navigate(`/company-info/${q.companyId}/${q.questionId}`)
+            }
+          >
+            <div className="answer-item-title">{q.companyName}</div>
+            <div className="answer-item-content" style={{ width: '48rem' }}>
+              {q.questionTitle}
+            </div>
           </div>
-        </div>
-      ))}
+        ))
+      ) : (
+        <NoContentsComponent
+          onClick={goToSearch}
+          content1="내가 남긴 질문이"
+          content2="존재하지 않습니다"
+          theme="질문"
+        />
+      )}
 
-      {question.length >= 1 ? (
+      {question.length >= 1 && (
         <AdminPagination
           currentPage={currentPage}
           totalPages={totalPages}
           handlePagination={handlePagination}
         />
-      ) : (
-        <div></div>
       )}
     </div>
   );
