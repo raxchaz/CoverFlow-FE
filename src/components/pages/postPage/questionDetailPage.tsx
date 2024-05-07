@@ -18,6 +18,7 @@ import { fetchAPI } from '../../global/utils/apiUtil.js';
 import Pagination from '../../ui/Pagination.tsx';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
+
 const ContentBlur = styled.span<{ $isLoggedIn: boolean }>`
   ${({ $isLoggedIn }) =>
     !$isLoggedIn &&
@@ -33,7 +34,7 @@ const ContentBlur = styled.span<{ $isLoggedIn: boolean }>`
 
 const Questioner = styled.div`
   letter-spacing: -1px;
-  margin-left: 4.5%;
+  margin: 2rem 0 2rem 4.5%;
   span:first-child {
     font-family: 'Pretendard-Medium';
   }
@@ -48,7 +49,7 @@ const QuestionTitle = styled.div`
     text-align: center;
     padding: 1% 3% 1% 1.5%;
     color: #000000;
-    margin: 0 78% 2% 3%;
+    margin: 1rem 78% 2% 3%;
     overflow: hiddlen;
     white-space: nowrap;
   }
@@ -61,7 +62,7 @@ const QuestionTitle = styled.div`
 `;
 
 const QuestionContent = styled.div`
-  margin: 3% 0% 2% 4.5%;
+  margin: 3% 0% 7% 4.5%;
   letter-spacing: -1.5px;
   font-size: 2rem;
   color: #000000;
@@ -70,10 +71,10 @@ const QuestionContent = styled.div`
 `;
 
 const FirstLine = styled.div`
-  height: 1px;
-  background-color: #cecece;
-  width: 100%;
-  margin: 5% 0% 0% 0%;
+  height: 5px;
+  background-color: #fff9f4;
+  width: 700px;
+  margin: 8% 0% 0% -7.5rem;
 `;
 
 const AnswerList = styled.div`
@@ -81,8 +82,7 @@ const AnswerList = styled.div`
   flex-direction: column;
   align-items: center;
   width: 80%;
-
-  margin: 0px auto;
+  margin: 0px 0px 0px 7.8rem;
 `;
 
 export interface AnswerProps {
@@ -303,7 +303,6 @@ function QuestionDetailPage() {
       <StyledHeader>
         <TitleHeader pageTitle="상세보기" handleGoBack={handleGoBack} />
       </StyledHeader>
-
       <div className="question-detail-container">
         <div className="job-info">
           <img src={questionerTag === '취준생' ? Leaf : Tree} alt="" />
@@ -391,10 +390,10 @@ function QuestionDetailPage() {
         )}
       </div>
 
-      {!isAdopted && (
+      {isAdopted && (
         <div className="comment-section">
           <textarea
-            placeholder="답변을 입력해주세요.."
+            placeholder="답변을 입력해주세요."
             className="comment-input"
             ref={answerRef}
             maxLength={500}
@@ -409,8 +408,8 @@ function QuestionDetailPage() {
       <ContentBlur $isLoggedIn={isLoggedIn}>
         <AnswerList>
           <div className="answer-title">
-            <span>답변</span>
-            <span> {answerCount}</span>
+            <span className="question-detail-answer-tag">답변</span>
+            <span className="question-detail-answer-cnt"> {answerCount}</span>
           </div>
 
           {answers.map((answer) => (
