@@ -48,8 +48,8 @@ const CompanyName = styled.div`
 // `;
 
 const Line = styled.div`
-  height: 1px;
-  background-color: #f2f2f2;
+  height: 5px;
+  background-color: #fff9f4;
   width: 80%;
   margin: 10% 0% 5% 10%;
   stroke: 5px solid #fff9f4;
