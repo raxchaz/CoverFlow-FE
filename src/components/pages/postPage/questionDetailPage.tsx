@@ -46,16 +46,17 @@ const QuestionTitle = styled.div`
     letter-spacing: -1.5px;
     font-size: 3rem;
     /* padding: 10px; */
-    text-align: center;
-    padding: 1% 3% 1% 1.5%;
+    text-align: start;
+    padding: 1% 0 1% 1.5%;
     color: #000000;
-    margin: 1rem 78% 2% 3%;
-    overflow: hiddlen;
-    white-space: nowrap;
+    margin: 1rem 0 2% 3%;
+    overflow: visible;
+    white-space: normal;
+    width: 500px;
   }
   display: flex;
   /* padding: 1% 2.5% 1% 2.5%; */
-  align-items: center;
+  align-items: flex-start;
   img {
     cursor: pointer;
   }
@@ -82,7 +83,7 @@ const AnswerList = styled.div`
   flex-direction: column;
   align-items: center;
   width: 80%;
-  margin: 0px 0px 0px 7.8rem;
+  margin: 0px 0px 10rem 7.8rem;
 `;
 
 export interface AnswerProps {
