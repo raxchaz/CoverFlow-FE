@@ -205,7 +205,7 @@ function QuestionWritePage() {
         ></textarea>
         <TagInput reward={reward} setReward={setReward} />
         <button
-          className={`register-question-button ${isRequired(questionCategory, questionTag, title, content, reward) ? 'selected' : ''}`}
+          className={`register-question-button ${isRequired(questionCategory, questionTag, title, content, reward) ? 'selected' : 'disabled'}`}
           onClick={handleRegister}
         >
           등록

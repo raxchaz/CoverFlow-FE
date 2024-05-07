@@ -354,4 +354,21 @@ select {
     background-color: #ff8d1d;
     color: #ffffff;
   }
+
+  // &:disabled {
+  //   background-color: #d9d9d9;
+  //   color: #fff;
+  //   cursor: not-allowed;
+  //   box-shadow: none;
+  // }
+}
+.disabled {
+  background-color: #d9d9d9;
+  color: #fff;
+  cursor: not-allowed;
+  &:hover {
+    background-color: #d9d9d9;
+    color: #fff;
+    cursor: not-allowed;
+  }
 }
