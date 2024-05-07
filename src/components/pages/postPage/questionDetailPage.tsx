@@ -228,6 +228,8 @@ function QuestionDetailPage() {
     };
     try {
       await fetchAPI(`/api/question/${questionId}`, 'DELETE', deleteBody);
+      if (confirm('삭제하시겠습니까?'))
+        showSuccessToast('질문이 삭제되었습니다.');
     } catch (error) {
       if (error instanceof Error) showErrorToast(error.message);
     }
@@ -310,38 +312,31 @@ function QuestionDetailPage() {
         <QuestionTitle>
           <span>{questionTitle}</span>
           <img onClick={handleEdit} src={Dot} alt="dot" />
-          {isShowEdit && (
-            <div className="dropdown-question-detail-menu">
-              <ul>
-                <li onClick={handleClickEdit} className="dropdown-item-edit">
-                  수정
-                </li>
-
-                <li
-                  onClick={handleClickDelete}
-                  className="dropdown-item-delete"
-                >
-                  삭제
-                </li>
-                {/*
-                 */}
-              </ul>
-            </div>
-          )}
-          {isShowReport ? (
-            <div className="dropdown-question-detail-report-menu">
-              <ul>
-                <li
-                  onClick={toggleReportPopup}
-                  className="dropdown-item-report"
-                >
-                  신고
-                </li>
-              </ul>
-            </div>
-          ) : null}
         </QuestionTitle>
+        {isShowEdit && (
+          <div className="dropdown-question-detail-menu">
+            <ul>
+              <li onClick={handleClickEdit} className="dropdown-item-edit">
+                수정
+              </li>
 
+              <li onClick={handleClickDelete} className="dropdown-item-delete">
+                삭제
+              </li>
+              {/*
+               */}
+            </ul>
+          </div>
+        )}
+        {isShowReport ? (
+          <div className="dropdown-question-detail-report-menu">
+            <ul>
+              <li onClick={toggleReportPopup} className="dropdown-item-report">
+                신고
+              </li>
+            </ul>
+          </div>
+        ) : null}
         <div className="questioner-info">
           <Questioner>
             <span>{questionerNickname || 'Anonymous'}</span>

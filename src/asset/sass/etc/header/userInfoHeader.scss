@@ -5,7 +5,7 @@
   // margin-top:-0.3rem;
   margin-top: -0.5rem;
   font-size: 1.5rem;
-  font-family: 'pretendard-Bold';
+  font-family: 'Pretendard-Bold';
   border: 0.1px solid #fefefe;
   background-color: #ff8d1d;
   color: #fff;
@@ -70,14 +70,16 @@ img.loginuser {
 
     border-radius: 10px;
     border-color: #d9d9d9;
+    margin-left: 92%;
+    margin-top: -12%;
   }
 }
 
 .dropdown-question-detail-menu {
   position: relative;
   z-index: 500;
-  right: 6rem;
-  top: 6rem;
+  // right: 6rem;
+  // top: 6rem;
 
   ul {
     position: absolute;
@@ -96,6 +98,8 @@ img.loginuser {
 
     border-radius: 10px;
     border-color: #d9d9d9;
+    margin-left: 82%;
+    margin-top: -3%;
   }
 
   .dropdown-item {
