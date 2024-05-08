@@ -216,7 +216,7 @@ function QuestionDetailPage() {
       content: questionContent,
       questionStatus: false,
     };
-    // console.log('edit');
+    console.log(questionId);
     try {
       await fetchAPI(`/api/question/${questionId}`, 'PATCH', editBody);
     } catch (error) {
@@ -225,18 +225,28 @@ function QuestionDetailPage() {
   };
 
   const handleClickDelete = async () => {
-    // console.log('delete');
+  
     const deleteBody = {
       title: questionTitle,
       content: questionContent,
       questionStatus: false,
     };
+    console.log(questionId);
     try {
-      await fetchAPI(`/api/question/${questionId}`, 'DELETE', deleteBody);
-      if (confirm('삭제하시겠습니까?'))
+        fetchAPI(`/api/question/${questionId}`, 'DELETE', deleteBody);
+       if (confirm('삭제하시겠습니까?')){
         showSuccessToast('질문이 삭제되었습니다.');
+        const pathSegments = window.location.pathname.split('/');
+        const companyId = pathSegments[2];
+
+        navigate(`/company-info/${companyId}`);
+      
+      }
     } catch (error) {
-      if (error instanceof Error) showErrorToast(error.message);
+      if (error instanceof Error) 
+      
+      showErrorToast(error.message);
+      console.log(error)
     }
   };
 

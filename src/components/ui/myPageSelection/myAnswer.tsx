@@ -80,7 +80,7 @@ export default function MyAnswer({
             className="question-item"
             key={q.answerId}
             onClick={() =>
-              navigate(`/company-info/${q.companyId}/${q.questionId}`)
+              navigate(`/company-info/${q.companyId}/${q.questionId}`,{state:{questionId: q.questionId}})
             }
           >
             <div className="question-text">
