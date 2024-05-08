@@ -106,8 +106,9 @@ export interface CompanInfoProps {
 function CompanyInfoPage() {
   const navigate = useNavigate();
   const [companyData, setCompanyData] = useState<CompanInfoProps>();
+
   const { companyId } = useParams();
-  const [questionsCount, setQuestionCount] = useState(0);
+  const [questionsCount, setQuestionsCount] = useState(0);
 
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
@@ -138,24 +139,30 @@ function CompanyInfoPage() {
       setSelectedCategories(
         selectedCategories.filter((item) => item !== category),
       );
-    } else {
-      setSelectedCategories([category]);
-    }
-
-    try {
+      // 같은 카테고리를 중복해서 클릭했을 때는 `${BASE_URL}/api/company/${companyId}?pageNo=0&criterion=createdAt`으로 전체 질문 조회
       const { data } = await axios.get(
-        `${BASE_URL}/api/company/${companyId}?pageNo=0&criterion=createdAt&questionTag=${selectedCategory}`,
+        `${BASE_URL}/api/company/${companyId}?pageNo=0&criterion=createdAt`,
       );
 
-      if (data) {
-        setCompanyData(data.data);
-        setQuestionCount(data.data.totalElements);
-      } else {
-        throw new Error('데이터가 존재하지 않습니다.');
+      setQuestionsCount(data.data.questionCount);
+    } else {
+      setSelectedCategories([...selectedCategories, category]);
+
+      try {
+        const { data } = await axios.get(
+          `${BASE_URL}/api/company/${companyId}?pageNo=0&criterion=createdAt&questionTag=${selectedCategory}`,
+        );
+
+        if (data) {
+          setCompanyData(data.data);
+          setQuestionsCount(data.data.totalElements);
+        } else {
+          throw new Error('데이터가 존재하지 않습니다.');
+        }
+      } catch (error) {
+        if (error instanceof Error) showErrorToast(error.message);
+        navigate(-1);
       }
-    } catch (error) {
-      if (error instanceof Error) showErrorToast(error.message);
-      navigate(-1);
     }
   };
 
@@ -181,7 +188,7 @@ function CompanyInfoPage() {
         if (data) {
           setCompanyData(data.data);
           setTotalPages(data.data.totalPages);
-          setQuestionCount(data.data.questionCount);
+          setQuestionsCount(data.data.questionCount);
         } else {
           throw new Error('데이터가 존재하지 않습니다.');
         }
