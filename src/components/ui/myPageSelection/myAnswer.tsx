@@ -4,7 +4,7 @@ import AdminPagination from '../adminSelection/adminPagination';
 import { showErrorToast } from '../toast/toast';
 import { useNavigate } from 'react-router-dom';
 import { fetchAPI } from '../../global/utils/apiUtil';
-
+import NoContentsComponent from '../noContentsComponent/noContentsComponent';
 interface Answer {
   answerId: number;
   companyId: number;
@@ -70,33 +70,40 @@ export default function MyAnswer({
     }
   };
 
+  const goToSearch = () => navigate('/search-company');
+
   return (
     <div className="my-component-width">
-      {answer?.map((q) => (
-        <div
-          className="question-item"
-          key={q.answerId}
-          onClick={() =>
-            navigate(`/company-info/${q.companyId}/${q.questionId}`)
-          }
-        >
-          <div className="question-text">
-            <div className="answer-item-title">{q.questionTitle}</div>
-            <div className="answer-item-content">{q.answerContent}</div>
+      {answer.length > 0 ? (
+        answer.map((q) => (
+          <div
+            className="question-item"
+            key={q.answerId}
+            onClick={() =>
+              navigate(`/company-info/${q.companyId}/${q.questionId}`)
+            }
+          >
+            <div className="question-text">
+              <div className="answer-item-title">{q.questionTitle}</div>
+              <div className="answer-item-content">{q.answerContent}</div>
+            </div>
+            <div className="quetion-tag">{q.companyName}</div>
           </div>
-          <div className="quetion-tag">{q.companyName}</div>
-        </div>
-      ))}
-
-      {initiateAnswer.length >= 1 ? (
-        <AdminPagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          handlePagination={handlePagination}
-        />
+        ))
       ) : (
-        <div></div>
+        <NoContentsComponent
+          onClick={goToSearch}
+          content1="내가 남긴 답변"
+          content2="존재하지 않습니다"
+          theme="답변"
+        />
       )}
+
+      <AdminPagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        handlePagination={handlePagination}
+      />
     </div>
   );
 }

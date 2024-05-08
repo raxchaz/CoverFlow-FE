@@ -146,10 +146,12 @@ function QuestionWritePage() {
           <span>질문 태그를 설정해주세요</span>
         </div>
 
-        <div className="tag-select-wrapper">
+        <div
+          className={`tag-select-wrapper  ${!showAllTags ? 'centered-tag' : ''} `}
+        >
           {tagName.map((tag) => (
             <div
-              className={`tag-select ${questionTag === tag.value ? 'selected' : ''} `}
+              className={`tag-select ${questionTag === tag.value ? 'selected' : ''}`}
               key={tag.value}
               onClick={() => handleTagSelect(tag.value)}
             >
@@ -158,7 +160,7 @@ function QuestionWritePage() {
             </div>
           ))}
           {!showAllTags && (
-            <div className="tag-select" onClick={toggleShowAllTags}>
+            <div className="gray-tag-selects" onClick={toggleShowAllTags}>
               <span>+3</span>
             </div>
           )}
@@ -171,7 +173,7 @@ function QuestionWritePage() {
           <span>질문의 직무 분류를 설정해주세요</span>
         </div>
 
-        <div className="category-select-wrapper ">
+        <div className="category-select-wrapper">
           {categoryName.map((category, index) => (
             <div
               className={`category-select ${questionCategory === category ? 'selected' : ''} `}
@@ -184,7 +186,7 @@ function QuestionWritePage() {
         </div>
         <input
           className="question-title-input"
-          placeholder="질문 제목 입력.."
+          placeholder="질문 제목을 입력해주세요."
           name="title"
           value={title}
           onChange={handleTitleChange}
@@ -192,10 +194,10 @@ function QuestionWritePage() {
         />
         <textarea
           className="question-input"
-          placeholder="질문 내용을 입력해주세요.
-					&#13;&#10; 질문에 답변이 달릴 경우, 삭제가 불가능해집니다.
-					&#13;&#10; 질문 작성 시 타인의 명예를 훼손하거나 허위 사실을 유포할 경우 형법 상 명예훼손죄&#13;&#10;
-					혐의를 받을 수 있습니다. 따라서 타인에 대한 존중과 배려를 기반으로 질문을 작성해주세요."
+          placeholder="질문 내용을 입력해주세요. 질문에 답변이 달릴 경우, 삭제가 불가능해집니다.
+					질문 작성 시 타인의 명예를 훼손하거나 허위 사실을 유포할 경우
+          형법 상 명예훼손죄 혐의를 받을 수 있습니다.
+          따라서 타인에 대한 존중과 배려를 기반으로 질문을 작성해주세요."
           name="content"
           value={content}
           onChange={handleTextAreaChange}

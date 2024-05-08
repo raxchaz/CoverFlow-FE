@@ -18,6 +18,7 @@ import { fetchAPI } from '../../global/utils/apiUtil.js';
 import Pagination from '../../ui/Pagination.tsx';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
+
 const ContentBlur = styled.span<{ $isLoggedIn: boolean }>`
   ${({ $isLoggedIn }) =>
     !$isLoggedIn &&
@@ -33,7 +34,7 @@ const ContentBlur = styled.span<{ $isLoggedIn: boolean }>`
 
 const Questioner = styled.div`
   letter-spacing: -1px;
-  margin-left: 4.5%;
+  margin: 2rem 0 2rem 4.5%;
   span:first-child {
     font-family: 'Pretendard-Medium';
   }
@@ -45,23 +46,24 @@ const QuestionTitle = styled.div`
     letter-spacing: -1.5px;
     font-size: 3rem;
     /* padding: 10px; */
-    text-align: center;
-    padding: 1% 3% 1% 1.5%;
+    text-align: start;
+    padding: 1% 0 1% 1.5%;
     color: #000000;
-    margin: 0 78% 2% 3%;
-    overflow: hiddlen;
-    white-space: nowrap;
+    margin: 1rem 0 2% 3%;
+    overflow: visible;
+    white-space: normal;
+    width: 500px;
   }
   display: flex;
   /* padding: 1% 2.5% 1% 2.5%; */
-  align-items: center;
+  align-items: flex-start;
   img {
     cursor: pointer;
   }
 `;
 
 const QuestionContent = styled.div`
-  margin: 3% 0% 2% 4.5%;
+  margin: 3% 0% 7% 4.5%;
   letter-spacing: -1.5px;
   font-size: 2rem;
   color: #000000;
@@ -70,10 +72,10 @@ const QuestionContent = styled.div`
 `;
 
 const FirstLine = styled.div`
-  height: 1px;
-  background-color: #cecece;
-  width: 100%;
-  margin: 5% 0% 0% 0%;
+  height: 5px;
+  background-color: #fff9f4;
+  width: 700px;
+  margin: 8% 0% 0% -7.5rem;
 `;
 
 const AnswerList = styled.div`
@@ -81,8 +83,7 @@ const AnswerList = styled.div`
   flex-direction: column;
   align-items: center;
   width: 80%;
-
-  margin: 0px auto;
+  margin: 0px 0px 10rem 7.8rem;
 `;
 
 export interface AnswerProps {
@@ -260,17 +261,19 @@ function QuestionDetailPage() {
     );
     const data = response.data.data;
 
-    const sortedAnswers = data.answers.sort((a, b) => {
-      if (a.selection && !b.selection) return -1;
-      if (!a.selection && b.selection) return 1;
-      return 0;
-    });
+    // const sortedAnswers = data.answers.sort((a, b) => {
+    //   if (a.selection && !b.selection) return -1;
+    //   if (!a.selection && b.selection) return 1;
+    //   return 0;
+    // });
     const adoptedExists = data.answers.some(
       (answer) => answer.selection === true,
     );
     setAnyAdopted(adoptedExists);
+    setIsAdopted(adoptedExists);
+
     setAnswers(
-      sortedAnswers.map((answer) => ({
+      data.answers.map((answer) => ({
         ...answer,
         isAdopted: answer.selection,
       })),
@@ -286,10 +289,9 @@ function QuestionDetailPage() {
     setQuestionContent(data.questionContent);
     setTotalPages(data.totalPages);
   };
-
   useEffect(() => {
     fetchData();
-  }, [questionId, postAnswer, currentPage]);
+  }, [questionId, postAnswer, currentPage, navigate]);
 
   const reportReasons = [
     '욕설 혹은 비방표현이 있어요',
@@ -303,7 +305,6 @@ function QuestionDetailPage() {
       <StyledHeader>
         <TitleHeader pageTitle="상세보기" handleGoBack={handleGoBack} />
       </StyledHeader>
-
       <div className="question-detail-container">
         <div className="job-info">
           <img src={questionerTag === '취준생' ? Leaf : Tree} alt="" />
@@ -391,10 +392,10 @@ function QuestionDetailPage() {
         )}
       </div>
 
-      {!isAdopted && (
+      {!isAdopted ? (
         <div className="comment-section">
           <textarea
-            placeholder="답변을 입력해주세요.."
+            placeholder="답변을 입력해주세요."
             className="comment-input"
             ref={answerRef}
             maxLength={500}
@@ -404,13 +405,13 @@ function QuestionDetailPage() {
             등록
           </button>
         </div>
-      )}
+      ) : null}
 
       <ContentBlur $isLoggedIn={isLoggedIn}>
         <AnswerList>
           <div className="answer-title">
-            <span>답변</span>
-            <span> {answerCount}</span>
+            <span className="question-detail-answer-tag">답변</span>
+            <span className="question-detail-answer-cnt"> {answerCount}</span>
           </div>
 
           {answers.map((answer) => (

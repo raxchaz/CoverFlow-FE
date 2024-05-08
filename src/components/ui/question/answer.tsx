@@ -7,7 +7,15 @@ import { fetchAPI } from '../../global/utils/apiUtil';
 import { showSuccessToast } from '../toast/toast';
 import Tree from '../../../asset/image/nature-ecology-tree-3--tree-plant-cloud-shape-park.svg';
 import Leaf from '../../../asset/image/leaf.svg';
+import { useSelector } from 'react-redux';
 
+interface UserState {
+  myNickname: string;
+}
+
+interface AppState {
+  user: UserState;
+}
 const AdoptedTag = styled.div`
   position: relative;
   width: 95px;
@@ -18,8 +26,8 @@ const AdoptedTag = styled.div`
   color: #ff8d1d;
   letter-spacing: -1px;
   font-family: Pretendard-Medium;
-  top: -4.5rem;
-  left: 41rem;
+  top: 1rem;
+  left: 21.5rem;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -27,8 +35,8 @@ const AdoptedTag = styled.div`
 `;
 const AdoptButton = styled.button`
   display: flex;
-  margin: -12% 6% 0% 82%;
-  padding: 5px 5px;
+  margin: 0px !important;
+  padding: 5px;
   width: 85px;
   height: 25px;
   color: #428238;
@@ -54,11 +62,16 @@ const AdoptButton = styled.button`
 const NameContainer = styled.div`
   display: flex;
   flex-direction: row;
-  /* margin-top: 1.5rem; */
+  justify-contents: center;
+  align-items: center;
+  font-size: 1.7rem;
+  letter-spacing: -1px;
+  font-family: 'Pretendard-SemiBold';
 `;
 const ImageContainer = styled.img`
-  padding-right: 5px;
   vertical-align: middle;
+  width: 18px;
+  height: 16px;
 `;
 
 const AnswerName = styled.span`
@@ -74,11 +87,14 @@ const AnswerContent = styled.div`
   letter-spacing: -1px;
   font-family: Pretendard-Regular;
   margin-top: 1.5rem;
-  height: 180px;
 `;
 
 const BottomContainer = styled.div`
   /* vertical-align: middle; */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
   flex-direction: row;
   padding-top: 3.5rem;
 `;
@@ -106,8 +122,9 @@ function AnswerModule({
   anyAdopted,
 }: AnswerDetailProps) {
   const [questionerTag, setQuestionerTag] = useState('');
-  console.log(setQuestionerTag);
-  //   console.log(setQuestionerTag);
+  const { myNickname } = useSelector((state: AppState) => state.user);
+
+  console.log(setQuestionerTag); //
   const handleAdoptAnswer = async () => {
     if (confirm('채택하시겠습니까?')) {
       await fetchAPI(`/api/answer/selection/${answerId}`, 'PATCH', {
@@ -120,34 +137,41 @@ function AnswerModule({
   };
 
   return (
-    <div className={`answer-container ${isAdopted ? 'adopted' : 'notadopted'}`}>
+    <>
       {isAdopted && (
         <AdoptedTag>
           <img src={yellowTrophy} alt="trophy" />
           채택된 답변
         </AdoptedTag>
       )}
-
-      <div>
-        <NameContainer>
-          <ImageContainer
-            src={questionerTag === '취준생' ? Leaf : Tree}
-            alt=""
-          />
-          <AnswerName>{answererNickname}</AnswerName>
-        </NameContainer>
-        <AnswerContent className="user-contents">{answerContent}</AnswerContent>
-        <BottomContainer>
-          <div className="user-container">{createAt}</div>
-          {isAdopted || anyAdopted ? null : (
-            <AdoptButton onClick={handleAdoptAnswer}>
-              <img src={Trophy} alt="trophy" />
-              채택하기
-            </AdoptButton>
-          )}
-        </BottomContainer>
+      <div
+        className={`answer-container ${isAdopted ? 'adopted' : 'notadopted'}`}
+      >
+        <div>
+          <NameContainer>
+            <ImageContainer
+              src={questionerTag === '취준생' ? Leaf : Tree}
+              alt=""
+            />
+            <AnswerName>{answererNickname}</AnswerName>
+          </NameContainer>
+          <AnswerContent className="user-contents">
+            {answerContent}
+          </AnswerContent>
+          <BottomContainer>
+            <div className="user-container">{createAt}</div>
+            {isAdopted || anyAdopted || myNickname !== answererNickname ? (
+              <div style={{ height: '25px' }}></div>
+            ) : (
+              <AdoptButton onClick={handleAdoptAnswer}>
+                <img src={Trophy} alt="trophy" />
+                채택하기
+              </AdoptButton>
+            )}
+          </BottomContainer>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

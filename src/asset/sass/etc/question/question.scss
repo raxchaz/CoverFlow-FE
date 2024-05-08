@@ -7,16 +7,38 @@
   font-size: 1.6rem;
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
   margin: 0 auto;
+  .questionar-icon {
+    width: 14px;
+    height: 14px;
+    margin: 3% 3.5% 0% 3%;
+  }
+
+  .questionar-name-tag {
+    font-size: 1.6rem;
+    width: max-content;
+    margin: 3% 4% 0% -2%;
+  }
+  .questionar-point-tag {
+    font-size: 1.6rem;
+    width: max-content;
+    margin: 3% 6% 0% -2%;
+  }
 }
 
-.category-select-hard-coding {
+.category-select-style {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-radius: 20px;
-
+  letter-spacing: -1px;
+  margin: 0% 3% 0% 0%;
   padding: 1% 2.5% 1% 2.5%;
   box-sizing: border-box;
-  border: 1px solid #bcbcbc;
-  color: #47474c;
-  font-size: 1.3rem;
+  border: 1px solid #474646;
+  color: #000000;
+  font-size: 1.5rem;
+  font-family: Pretendard-Medium;
+  height: 3rem;
 }
 
 // 유저 닉네임 + 태그 부분 scss
@@ -35,10 +57,9 @@
 }
 
 .questioner {
-  font-weight: 900;
   color: #000;
   display: flex;
-  width: 20rem;
+  width: 100%;
   margin-left: 1rem;
   margin-top: 1rem;
   align-items: center;
@@ -53,8 +74,10 @@
   }
   .questioner-tag {
     border-radius: 4px;
-    font-size: 1rem;
     color: #808080;
+    font-size: 1.3rem;
+    font-family: 'Pretendard-refular';
+    margin: 1.5rem 0% -2% -2rem;
   }
 }
 
@@ -74,11 +97,11 @@
   position: relative;
   white-space: nowrap;
   // margin: 0% 0% -5% 13%;
+  margin-top: 4%;
   align-items: center;
 }
 
 .chat-img {
-  margin-top: 6%;
   margin-right: 1.5%;
   width: 15px;
   height: 15px;
@@ -88,20 +111,19 @@
   white-space: nowrap;
   margin-right: 2%;
   font-size: 12px;
-  margin-top: 7%;
 }
 
 .view-img {
   white-space: nowrap;
   margin-right: 1.5%;
-  margin-top: 6%;
+
   width: 15px;
   height: 15px;
 }
 
 .view-count {
   font-size: 12px;
-  margin-top: 7%;
+
   margin-left: -3%;
 }
 
@@ -132,19 +154,23 @@
   // margin: 8% 0% 0% 13%;
   align-items: center;
   gap: 10px;
+  margin-top: 1rem;
+  width: 30rem;
 }
 
 .reward {
   border-radius: 5px;
   background-color: #ff8d1d;
-  padding: 0 5px;
-  font-size: 12px;
+  padding: 0.3rem 1.2rem;
+  font-size: 1.2rem;
   font-family: 'Pretendard';
+  letter-spacing: -1px;
   display: flex;
   justify-content: center;
   align-items: center;
   color: #ffffff;
   margin-right: 4px;
+  width: min-content;
 }
 
 .question-content {
@@ -172,13 +198,17 @@
   display: flex;
   flex-direction: column;
   margin: 3% 0% 2.5% 10%;
+  padding-left: 1.5rem;
   width: 81%;
 }
 
 .question-list-info {
   display: flex;
   justify-content: space-between;
-  &:first-child div {
-    display: flex;
-  }
+}
+
+.question-reward-container {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
 }

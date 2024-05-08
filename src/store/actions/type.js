@@ -4,3 +4,4 @@ export const TOGGLE_DROPDOWN = 'TOGGLE_DROPDOWN';
 export const SET_TOKENS = 'SET_TOKENS';
 export const CLEAR_TOKENS = 'CLEAR_TOKENS';
 export const SET_ALERT_COUNT = 'SET_ALERT_COUNT';
+export const SET_MY_NICKNAME = 'SET_MY_NICKNAME';
