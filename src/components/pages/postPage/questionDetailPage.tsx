@@ -83,7 +83,7 @@ const AnswerList = styled.div`
   flex-direction: column;
   align-items: center;
   width: 80%;
-  margin: 0px 0px 10rem 7.8rem;
+  margin: 0px 0px 2rem 7.8rem;
 `;
 
 export interface AnswerProps {

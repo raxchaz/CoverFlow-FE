@@ -66,6 +66,7 @@ export default function MyQuestion({
         `/api/question/me?pageNo=${pageNo}&criterion=createdAt`,
         'GET',
       );
+      // console.log(data)
       setQuestion(data.data.questions);
       setTotalPages(data.data.totalPages);
       setQuestionCnt(data.data.totalElements);
@@ -98,7 +99,9 @@ export default function MyQuestion({
           onClick={goToSearch}
           content1="내가 남긴 질문이"
           content2="존재하지 않습니다"
-          theme="질문"
+          theme="질문을 남기고, 답변을 확인해보세요!"
+          extraMessage="기업 검색 후 "
+          className="my-component-css"
         />
       )}
 

@@ -93,9 +93,11 @@ export default function MyAnswer({
       ) : (
         <NoContentsComponent
           onClick={goToSearch}
-          content1="내가 남긴 답변"
+          content1="내가 남긴 답변이"
           content2="존재하지 않습니다"
-          theme="답변"
+          theme="답변을 남기고 확인해보세요."
+          noBtn={true}
+          className="my-component-css"
         />
       )}
 
