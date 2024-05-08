@@ -49,7 +49,7 @@ const QuestionTitle = styled.div`
     text-align: start;
     padding: 1% 0 1% 1.5%;
     color: #000000;
-    margin: 1rem 0 2% 3%;
+    margin: 2% 0 -1.5% 3%;
     overflow: visible;
     white-space: normal;
     width: 500px;
@@ -59,6 +59,7 @@ const QuestionTitle = styled.div`
   align-items: flex-start;
   img {
     cursor: pointer;
+    margin: 3.7% 0 0 2%;
   }
 `;
 
@@ -203,8 +204,7 @@ function QuestionDetailPage() {
     const res = await fetchAPI('/api/member/me', 'GET');
 
     if (res.data.nickname === questionerNickname) {
-      setIsShowEdit(true);
-      setIsShowReport(false);
+      setIsShowEdit((isShow) => !isShow);
     } else if (res.data.nickname !== questionerNickname) {
       setIsShowReport((showReport) => !showReport);
     }

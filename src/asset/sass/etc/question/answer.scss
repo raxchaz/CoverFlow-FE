@@ -9,7 +9,6 @@
   border-radius: 10px;
 
   :nth-child(1) {
-    font-weight: bold;
     margin: 0px 6px 0 0;
   }
 
@@ -129,4 +128,7 @@
 .answer-container-info {
   display: flex;
   justify-content: space-between;
+  img {
+    cursor: pointer;
+  }
 }
