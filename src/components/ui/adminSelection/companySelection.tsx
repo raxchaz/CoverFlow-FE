@@ -60,14 +60,6 @@ export default function CompanySelection() {
     }
   }, [selectedCity]);
 
-  // useEffect(() => {
-  //   if (companyType) {
-  //     setSelectedCompanyType(type[companyType]);
-  //   } else {
-  //     setSelectedCompanyType([]);
-  //   }
-  // }, [companyType]);
-
   const handlePagination = (direction) => {
     if (direction === 'prev' && currentPage > 0) {
       setCurrentPage(currentPage - 1);
@@ -108,6 +100,9 @@ export default function CompanySelection() {
       .then((response) => response.json())
       .then((data: ApiResponse) => {
         console.log(data);
+        setCompanies(data.data.companies);
+        setTotalPages(data.data.totalPages);
+        seTtotalCompanyCount(data.data.totalElements);
       })
       .catch((error) => {
         console.error('Error:', error);
@@ -125,8 +120,6 @@ export default function CompanySelection() {
       .then((data: ApiResponse) => {
         console.log(data);
         setCompanies(data.data.companies);
-        setTotalPages(data.data.totalPages);
-        seTtotalCompanyCount(data.data.totalElements);
         setIsLoading(false);
       })
       .catch((error) => {
@@ -247,6 +240,7 @@ export default function CompanySelection() {
               <Button
                 variant="admin-white"
                 onClick={() => {
+                  setcompanyType('');
                   setCompanyStatus('');
                   setSelectedDistrict('');
                   setSelectedCity('');
