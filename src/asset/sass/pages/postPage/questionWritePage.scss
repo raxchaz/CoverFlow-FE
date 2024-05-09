@@ -370,6 +370,10 @@ select {
   }
 }
 
+.cancel-question-button {
+  @include button-style;
+}
+
 .register-question-button {
   @include button-style;
   margin-top: 3%;
@@ -379,7 +383,7 @@ select {
     border: 2px solid #ff8d1d;
     background-color: #ff8d1d;
     color: #ffffff;
-    margin-top: 8%;
+    // margin-top: 8%;
   }
 
   // &:disabled {
