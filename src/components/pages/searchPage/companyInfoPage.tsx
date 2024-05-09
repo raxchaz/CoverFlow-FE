@@ -50,7 +50,7 @@ const Line = styled.div`
   height: 5px;
   background-color: #fff9f4;
   width: 100%;
-  margin: 10% 0%;
+  margin : 5% 0% 8% 0%;
   stroke: 5px solid #fff9f4;
 `;
 
@@ -331,7 +331,8 @@ function CompanyInfoPage() {
               onClick={handleQuestionClick}
               content1="해당 기업에 대한 질문이"
               content2="존재하지 않습니다"
-              theme="질문"
+              theme="질문을 남기고, 답변을 확인해 보세요!"
+              className='companyInfo-css'
             />
           )}
 
