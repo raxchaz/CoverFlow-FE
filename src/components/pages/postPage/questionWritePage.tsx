@@ -244,7 +244,7 @@ function QuestionWritePage() {
           취소
         </button>
         <button
-          className={`register-question-button ${reward <= 0 || isRequired(questionCategory, questionTag, title, content) ? 'disabled' : 'selected'}`}
+          className={`register-question-button ${!isRequired(questionCategory, questionTag, title, content) ? 'disabled' : 'selected'}`}
           onClick={handleRegister}
         >
           등록
