@@ -1,4 +1,9 @@
-import { SET_LOGGED_IN, SET_REWARD_COUNT, TOGGLE_DROPDOWN } from './type';
+import {
+  SET_LOGGED_IN,
+  SET_REWARD_COUNT,
+  TOGGLE_DROPDOWN,
+  SET_MY_NICKNAME,
+} from './type';
 
 // 로그인 상태 설정
 export const setLoggedIn = (isLoggedIn) => ({
@@ -17,6 +22,11 @@ export const toggleDropdown = () => ({
   type: TOGGLE_DROPDOWN,
 });
 
+// 닉네임 비교
+export const setNickname = (nickname) => ({
+  type: SET_MY_NICKNAME,
+  payload: nickname,
+});
 /*
 type : 변경의 종류
 payload : 변경에 필요한 추가 정보를 담는 곳

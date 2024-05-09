@@ -20,12 +20,12 @@
   display: flex;
   position: relative;
   letter-spacing: -1px;
-  margin: 10% 0% 0% 13%;
+  margin: -3% 0% 2% 13% ;
   font-size: 18px;
   color: var(--color-primary);
   font-family: 'Pretendard-Bold';
-  gap: 10px;
-  margin: -2% 0 5% 13%;
+  gap: 5px;
+  margin: -3% 0% 3% 13%;
 }
 
 .question-count {
@@ -55,10 +55,11 @@
   flex-direction: column;
   text-align: left;
   flex: 1;
-  span {
+  .company-info-question {
+    font-size: 1.4rem;
     color: #474646;
     letter-spacing: -1px;
-    font-family: 'Pretendard-Medium';
+    font-family: Pretendard-Medium;
   }
 }
 
@@ -88,6 +89,7 @@
 }
 
 .selected-category-item {
+  letter-spacing : -1px;
   position: relative;
   cursor: pointer;
   border-radius: 50%;
@@ -101,17 +103,22 @@
   align-items: center;
   padding: 0 8px;
   text-align: center;
+
   span {
     font-size: 2rem;
     color: #474646;
+
     font-family: 'Pretendard-Medium';
   }
 }
 
 .selected-category-item.active {
   border: 2px solid #ff8d1d;
+
   span {
     font-family: 'Pretendard-Bold';
+    color: #ff8d1d;
+    letter-spacing: -1px;
   }
 }
 
@@ -123,4 +130,8 @@
   width: 35px;
   height: 20px;
   border-radius: 10px;
+}
+
+.companyInfo-css{
+  margin: 5rem  0 10rem 7rem;
 }

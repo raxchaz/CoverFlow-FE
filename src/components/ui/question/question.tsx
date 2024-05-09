@@ -97,6 +97,7 @@ function QuestionModule({
   createAt,
   reward,
   questionerTag,
+  companyData,
   viewCount,
 }: QuestionModulesProps) {
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -125,9 +126,13 @@ function QuestionModule({
     <>
       <div className="question-container" onClick={goToDetail}>
         <span className="questioner">
-          <img src={questionerTag === '취준생' ? Leaf : Tree} alt="" />
-          <span> {questioner}</span>
-          <span className="middle">•</span>
+          <img
+            src={questionerTag === '취준생' ? Leaf : Tree}
+            className={'questionar-icon'}
+            alt="icon"
+          />
+          <span className="questionar-name-tag"> {questioner}</span>
+          <span className="questionar-point-tag">•</span>
           <div className="questioner-container">
             <span className="questioner-tag">{formattedDate}</span>
           </div>
@@ -135,13 +140,15 @@ function QuestionModule({
 
         <div className="field">
           <div className="question-list-info">
-            <div>
+            <div className="question-reward-container">
               <div className="reward">{reward}</div>
-              <span className="question-title">
+              <div className="question-title">
                 {truncateTitle(questionTitle)}
-              </span>
+              </div>
             </div>
-            <span className="category-select-hard-coding">개발/데이터</span>
+            <div className="category-select-style">
+              {companyData.companyType}
+            </div>
           </div>
 
           <div className="view-container">

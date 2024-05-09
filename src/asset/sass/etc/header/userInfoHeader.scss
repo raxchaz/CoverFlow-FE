@@ -72,6 +72,8 @@ img.loginuser {
     border-color: #d9d9d9;
     margin-left: 92%;
     margin-top: -12%;
+    letter-spacing: -1px;
+    font-family: 'Pretendard-Medium';
   }
 }
 
@@ -98,8 +100,9 @@ img.loginuser {
 
     border-radius: 10px;
     border-color: #d9d9d9;
-    margin-left: 82%;
-    margin-top: -3%;
+    // margin-left: 82%;
+    // margin-top: -3%;
+    left: 78%;
   }
 
   .dropdown-item {
@@ -112,7 +115,7 @@ img.loginuser {
 
   .dropdown-item-edit,
   .dropdown-item-delete {
-    margin-bottom: 5%;
+    margin-bottom: 0;
 
     display: flex;
     justify-content: center;

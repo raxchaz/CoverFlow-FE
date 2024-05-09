@@ -2,12 +2,14 @@ import {
   SET_LOGGED_IN,
   SET_REWARD_COUNT,
   TOGGLE_DROPDOWN,
+  SET_MY_NICKNAME,
 } from '../store/actions/type';
 
 const initialState = {
   isLoggedIn: false,
   rewardCount: 0,
   isDropdownOpen: false,
+  myNickName: '',
 };
 
 function userReducer(state = initialState, action) {
@@ -43,6 +45,11 @@ function userReducer(state = initialState, action) {
       return {
         ...state,
         isDropdownOpen: !state.isDropdownOpen,
+      };
+    case SET_MY_NICKNAME:
+      return {
+        ...state,
+        myNickName: action.payload,
       };
 
     default:

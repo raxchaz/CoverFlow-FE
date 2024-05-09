@@ -2,17 +2,15 @@
   display: flex;
   flex-direction: column;
   width: 527px;
-  height: 308px;
-  margin-top: 20%;
-  margin-bottom: 5%;
-  padding: 0px 50px;
-  :nth-child(1) {
-    font-weight: bold;
-    margin: 3px 6px 0 0;
-  }
 
-  border: 1px solid #cacaca;
-  border-radius: 20px;
+  margin: 15px 0px;
+  padding: 25px !important;
+  border: 1px solid #d9d9d9;
+  border-radius: 10px;
+
+  :nth-child(1) {
+    margin: 0px 6px 0 0;
+  }
 
   .user-info-container {
     display: flex;
@@ -32,6 +30,8 @@
     letter-spacing: -1px;
     font-weight: normal;
     font-family: Pretendard-Regular;
+    margin: 5% 0 -3% 0;
+    line-height: 2.5rem;
   }
 }
 
@@ -43,13 +43,14 @@
   align-items: flex-start;
   top: -4.5rem;
   margin: auto;
-  padding-bottom: 25px;
+  // padding-bottom: 25px;
   // margin: -12% 6% 0% 82%;
   color: #808080;
   white-space: nowrap;
   gap: 20px;
-  font-size: 1.3rem;
-  font-family: 'Pretendard-Regular';
+  font-size: 1.5rem;
+  font-family: 'Pretend-ExtraLight';
+  padding-top: 1rem;
 }
 
 .answerer {
@@ -122,4 +123,12 @@
   margin-top: 3%;
   margin-left: 2.5%;
   width: 95%;
+}
+
+.answer-container-info {
+  display: flex;
+  justify-content: space-between;
+  img {
+    cursor: pointer;
+  }
 }

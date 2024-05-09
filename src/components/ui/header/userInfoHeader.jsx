@@ -9,6 +9,7 @@ import {
   setLoggedIn,
   setRewardCount,
   toggleDropdown,
+  setNickname,
 } from '../../../store/actions/userActions';
 import { alertCount } from '../../../store/actions/alertActions.js';
 import { ACCESS_TOKEN, REFRESH_TOKEN } from '../../global/constants/index.ts';
@@ -37,6 +38,7 @@ function UserInfoHeader() {
         .then((data) => {
           if (data && data.data && data.data.fishShapedBun !== undefined) {
             dispatch(setRewardCount(data.data.fishShapedBun));
+            dispatch(setNickname(data.data.nickname));
             // console.log('붕어빵 개수:', data.data.fishShapedBun);
           } else {
             console.error('유효하지 않은 데이터를 받았습니다.', data);

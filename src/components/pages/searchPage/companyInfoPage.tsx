@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import TitleHeader from '../../ui/header/titleHeader.tsx';
-import UserInfoHeader from '../../ui/header/userInfoHeader.jsx';
 import TabBar from '../../ui/tabBar/tabBar.tsx';
 import '../../../asset/sass/pages/searchPage/companyInfoPage.scss';
 import Question from '../../ui/question/question.tsx';
@@ -13,8 +12,8 @@ import { showErrorToast } from '../../ui/toast/toast.tsx';
 import axios from 'axios';
 import Pagination from '../../ui/Pagination.tsx';
 import '../../../asset/sass/pages/notificationPage/notificationList.scss';
-
-import Hot from '../../../asset/image/hot.svg';
+import NoContentsComponent from '../../ui/noContentsComponent/noContentsComponent.tsx';
+// import Hot from '../../../asset/image/hot.svg';
 
 const CompanyContainer = styled.div`
   background-color: #ffffff;
@@ -50,8 +49,8 @@ const CompanyName = styled.div`
 const Line = styled.div`
   height: 5px;
   background-color: #fff9f4;
-  width: 80%;
-  margin: 10% 0% 5% 10%;
+  width: 100%;
+  margin : 5% 0% 8% 0%;
   stroke: 5px solid #fff9f4;
 `;
 
@@ -63,16 +62,16 @@ const QuestionButton = styled.button`
   letter-spacing: -0.7px;
   background-color: #ff8d1d !important;
   /* border-radius: 3px; */
+  margin: 5% -2% 0% 0%;
   font-weight: 600;
   font-size: 18px;
   width: 105px;
   height: 35px;
-  border-radius: 5px;
-  font-size: 1.8rem;
+  border-radius: 2px;
+  font-size: 1.6rem;
   color: #ffffff;
   letter-spacing: -1px;
-
-  font-family: 'Pretendard-ExtraBold';
+  font-family: 'Pretendard-SemiBold';
 `;
 
 const QuestionList = styled.div`
@@ -107,8 +106,9 @@ export interface CompanInfoProps {
 function CompanyInfoPage() {
   const navigate = useNavigate();
   const [companyData, setCompanyData] = useState<CompanInfoProps>();
+
   const { companyId } = useParams();
-  const [questionsCount, setQuestionCount] = useState(0);
+  const [questionsCount, setQuestionsCount] = useState(0);
 
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
@@ -139,24 +139,30 @@ function CompanyInfoPage() {
       setSelectedCategories(
         selectedCategories.filter((item) => item !== category),
       );
-    } else {
-      setSelectedCategories([category]);
-    }
-
-    try {
+      // 같은 카테고리를 중복해서 클릭했을 때는 `${BASE_URL}/api/company/${companyId}?pageNo=0&criterion=createdAt`으로 전체 질문 조회
       const { data } = await axios.get(
-        `${BASE_URL}/api/company/${companyId}?pageNo=0&criterion=createdAt&questionTag=${selectedCategory}`,
+        `${BASE_URL}/api/company/${companyId}?pageNo=0&criterion=createdAt`,
       );
 
-      if (data) {
-        setCompanyData(data.data);
-        setQuestionCount(data.data.totalElements);
-      } else {
-        throw new Error('데이터가 존재하지 않습니다.');
+      setQuestionsCount(data.data.questionCount);
+    } else {
+      setSelectedCategories([category]);
+
+      try {
+        const { data } = await axios.get(
+          `${BASE_URL}/api/company/${companyId}?pageNo=0&criterion=createdAt&questionTag=${selectedCategory}`,
+        );
+
+        if (data) {
+          setCompanyData(data.data);
+          setQuestionsCount(data.data.totalElements);
+        } else {
+          throw new Error('데이터가 존재하지 않습니다.');
+        }
+      } catch (error) {
+        if (error instanceof Error) showErrorToast(error.message);
+        navigate(-1);
       }
-    } catch (error) {
-      if (error instanceof Error) showErrorToast(error.message);
-      navigate(-1);
     }
   };
 
@@ -182,7 +188,7 @@ function CompanyInfoPage() {
         if (data) {
           setCompanyData(data.data);
           setTotalPages(data.data.totalPages);
-          setQuestionCount(data.data.questionCount);
+          setQuestionsCount(data.data.questionCount);
         } else {
           throw new Error('데이터가 존재하지 않습니다.');
         }
@@ -215,7 +221,7 @@ function CompanyInfoPage() {
     <StyledPage className="main-page-container">
       <StyledHeader>
         <TitleHeader pageTitle="기업 상세" handleGoBack={handleGoBack} />
-        <UserInfoHeader />
+
         <SearchInput />
       </StyledHeader>
 
@@ -225,7 +231,9 @@ function CompanyInfoPage() {
             <div className="company">
               <div className="main-company-info">
                 <CompanyName>{companyData?.companyName}</CompanyName>
-                <span>에 관련된 질문들을 모아봤어요</span>
+                <span className="company-info-question">
+                  에 관련된 질문들을 모아봤어요
+                </span>
               </div>
               <QuestionButton onClick={handleQuestionClick}>
                 질문하기
@@ -238,11 +246,10 @@ function CompanyInfoPage() {
                 onClick={() => handleCategoryClick('사내문화')}
                 className={`selected-category-item ${selectedCategories.includes('사내문화') ? 'active' : ''}`}
               >
-                {selectedCategories.includes('사내문화') && (
+                {/* {selectedCategories.includes('사내문화') && (
                   <img className="hot-image" src={Hot} alt="Hot" />
-                )}
+                )} */}
                 <span>사내</span>
-                <br />
                 <span>문화</span>
               </div>
 
@@ -250,22 +257,20 @@ function CompanyInfoPage() {
                 onClick={() => handleCategoryClick('급여연봉')}
                 className={`selected-category-item ${selectedCategories.includes('급여연봉') ? 'active' : ''}`}
               >
-                {selectedCategories.includes('급여연봉') && (
+                {/* {selectedCategories.includes('급여연봉') && (
                   <img className="hot-image" src={Hot} alt="Hot" />
-                )}
+                )} */}
                 <span>급여</span>
-                <br />
                 <span>연봉</span>
               </div>
               <div
                 onClick={() => handleCategoryClick('업무방식')}
                 className={`selected-category-item ${selectedCategories.includes('업무방식') ? 'active' : ''}`}
               >
-                {selectedCategories.includes('업무방식') && (
+                {/* {selectedCategories.includes('업무방식') && (
                   <img className="hot-image" src={Hot} alt="Hot" />
-                )}
+                )} */}
                 <span>업무</span>
-                <br />
                 <span>방식</span>
               </div>
             </div>
@@ -274,22 +279,21 @@ function CompanyInfoPage() {
                 onClick={() => handleCategoryClick('승진커리어')}
                 className={`selected-category-item ${selectedCategories.includes('승진커리어') ? 'active' : ''}`}
               >
-                {selectedCategories.includes('승진커리어') && (
+                {/* {selectedCategories.includes('승진커리어') && (
                   <img className="hot-image" src={Hot} alt="Hot" />
-                )}
+                )} */}
                 <span>승진</span>
-                <br />
+
                 <span>커리어</span>
               </div>
               <div
                 onClick={() => handleCategoryClick('직무워라밸')}
                 className={`selected-category-item ${selectedCategories.includes('직무워라밸') ? 'active' : ''}`}
               >
-                {selectedCategories.includes('직무워라밸') && (
+                {/* {selectedCategories.includes('직무워라밸') && (
                   <img className="hot-image" src={Hot} alt="Hot" />
-                )}
+                )} */}
                 <span>직무</span>
-                <br />
                 <span>워라밸</span>
               </div>
             </div>
@@ -303,31 +307,44 @@ function CompanyInfoPage() {
             </div>
           </div>
 
-          <QuestionList>
-            {companyData.questions.map((question, index) => (
-              <Question
-                key={index}
-                companyId={companyId}
-                questionId={question.questionId}
-                questioner={question.questionerNickname}
-                questionerTag={question.questionerTag}
-                answerCount={question.answerCount}
-                questionTitle={question.questionTitle}
-                questionContent={question.questionContent}
-                createAt={question.createAt}
-                reward={question.reward}
-                companyData={companyData}
-                viewCount={question.questionViewCount}
-              />
-            ))}
-          </QuestionList>
+          {companyData.questions.length > 0 ? (
+            <QuestionList>
+              {companyData.questions.map((question, index) => (
+                <Question
+                  key={index}
+                  companyId={companyId}
+                  questionId={question.questionId}
+                  questioner={question.questionerNickname}
+                  questionerTag={question.questionerTag}
+                  answerCount={question.answerCount}
+                  questionTitle={question.questionTitle}
+                  questionContent={question.questionContent}
+                  createAt={question.createAt}
+                  reward={question.reward}
+                  companyData={companyData}
+                  viewCount={question.questionViewCount}
+                />
+              ))}
+            </QuestionList>
+          ) : (
+            <NoContentsComponent
+              onClick={handleQuestionClick}
+              content1="해당 기업에 대한 질문이"
+              content2="존재하지 않습니다"
+              theme="질문을 남기고, 답변을 확인해 보세요!"
+              className='companyInfo-css'
+            />
+          )}
+
           <TabBar />
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            handlePagination={handlePagination}
-            className="pagination-container"
-          />
+          {companyData.questions.length > 0 && (
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              handlePagination={handlePagination}
+              className="pagination-container"
+            />
+          )}
         </>
       )}
     </StyledPage>
