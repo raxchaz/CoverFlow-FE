@@ -223,32 +223,33 @@ function QuestionDetailPage() {
       if (error instanceof Error) showErrorToast(error.message);
     }
   };
-
   const handleClickDelete = async () => {
-  
-    const deleteBody = {
-      title: questionTitle,
-      content: questionContent,
-      questionStatus: false,
-    };
-    console.log(questionId);
     try {
-        fetchAPI(`/api/question/${questionId}`, 'DELETE', deleteBody);
-       if (confirm('삭제하시겠습니까?')){
-        showSuccessToast('질문이 삭제되었습니다.');
-        const pathSegments = window.location.pathname.split('/');
-        const companyId = pathSegments[2];
+        const response = await fetchAPI(`/api/question/${questionId}`, 'DELETE');
 
-        navigate(`/company-info/${companyId}`);
-      
-      }
+        if (!response.ok) {
+          console.log(response)
+            if (response.status === 409) {
+                showErrorToast('이미 처리된 요청입니다. 새로고침 후 다시 시도해주세요.');
+                return;
+            }
+            throw new Error('요청 처리 중 오류가 발생했습니다.');
+        }
+
+        if (confirm('삭제하시겠습니까?')) {
+            showSuccessToast('질문이 삭제되었습니다.');
+            const pathSegments = window.location.pathname.split('/');
+            const companyId = pathSegments[2];
+            navigate(`/company-info/${companyId}`);
+        }
     } catch (error) {
-      if (error instanceof Error) 
-      
-      showErrorToast(error.message);
-      console.log(error)
+        if (error instanceof Error) {
+            showErrorToast(error.message);
+            console.log(error);
+        }
     }
-  };
+};
+
 
   const handleReportSubmit = async () => {
     toggleReportPopup();

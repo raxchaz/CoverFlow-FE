@@ -109,7 +109,11 @@ export const fetchAPI = async (endpoint, method, body) => {
   const responseData = await response.json();
 
   if (!response.ok) {
-    throw new Error('요청 처리 실패', response.message);
+    return {
+      error: true,
+      status: response.status,
+      message: responseData.message || '알 수 없는 오류'
+    };     
   }
 
   return responseData;
