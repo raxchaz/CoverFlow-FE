@@ -38,6 +38,7 @@ export default function CompanySelection() {
   const [selectedCompany, setSelectedCompany] = useState(null);
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
+  const [companyType, setcompanyType] = useState('');
   const [companyStatus, setCompanyStatus] = useState('');
   const [selectedCity, setSelectedCity] = useState('');
   const [selectedDistrictOptions, setSelectedDistrictOptions] = useState<
@@ -59,6 +60,14 @@ export default function CompanySelection() {
     }
   }, [selectedCity]);
 
+  // useEffect(() => {
+  //   if (companyType) {
+  //     setSelectedCompanyType(type[companyType]);
+  //   } else {
+  //     setSelectedCompanyType([]);
+  //   }
+  // }, [companyType]);
+
   const handlePagination = (direction) => {
     if (direction === 'prev' && currentPage > 0) {
       setCurrentPage(currentPage - 1);
@@ -76,6 +85,9 @@ export default function CompanySelection() {
       criterion: 'createdAt',
     });
 
+    if (companyType) {
+      queryParams.set('type', companyType);
+    }
     if (companyStatus) {
       queryParams.set('companyStatus', companyStatus);
     }
@@ -168,7 +180,11 @@ export default function CompanySelection() {
           <div className="ad-searchOption">
             <div className="ad-searchOption-item">
               <span className="ad-searchOption-title">기업 업종</span>
-              <select className="ad-searchOption-select">
+              <select
+                className="ad-searchOption-select"
+                value={companyType}
+                onChange={(e) => setcompanyType(e.target.value)}
+              >
                 <option value=""></option>
                 {type.map((companyType, index) => (
                   <option key={index} value={companyType}>
