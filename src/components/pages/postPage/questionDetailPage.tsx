@@ -55,8 +55,6 @@ const QuestionTitle = styled.div`
   display: flex;
   /* padding: 1% 2.5% 1% 2.5%; */
   align-items: center;
-  justify-content: space-between;
-  padding: 15px;
   img {
     cursor: pointer;
   }
