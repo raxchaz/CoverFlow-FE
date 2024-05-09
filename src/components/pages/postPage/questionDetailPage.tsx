@@ -124,6 +124,7 @@ function QuestionDetailPage() {
   // const [answererNickname, setAnswererNickname] = useState('');
 
   const [questionerTag, setQuestionerTag] = useState('');
+  // const [questionTag,setQuestiontag] = useState('');
   const [answerCount, setAnswerCount] = useState(0);
   const [questionTitle, setQuestionTitle] = useState('');
   const [createAt, setCreateAt] = useState('');
@@ -211,14 +212,33 @@ function QuestionDetailPage() {
   };
 
   const handleClickEdit = async () => {
-    const editBody = {
-      title: questionTitle,
-      content: questionContent,
-      questionStatus: false,
-    };
-    console.log(questionId);
     try {
-      await fetchAPI(`/api/question/${questionId}`, 'PATCH', editBody);
+      const pathSegments = window.location.pathname.split('/');
+      const companyId = pathSegments[2];
+
+      const response = await axios.get(
+        `${BASE_URL}/api/question/${questionId}?pageNo=${currentPage}&criterion=createdAt`,
+      );
+
+      const {
+        data: { data },
+      } = response;
+
+      setQuestionContent(data.questionContent);
+      setQuestionTitle(data.questionTitle);
+      setReward(data.reward);
+
+      navigate(`/company-info/${companyId}/question-write`, {
+        state: {
+          questionTitle,
+          questionContent,
+          reward,
+          companyName,
+          questionId,
+        },
+      });
+
+      // setQuestiontag(questionData.questionTag);
     } catch (error) {
       if (error instanceof Error) showErrorToast(error.message);
     }
@@ -243,10 +263,10 @@ function QuestionDetailPage() {
             navigate(`/company-info/${companyId}`);
         }
     } catch (error) {
-        if (error instanceof Error) {
-            showErrorToast(error.message);
-            console.log(error);
-        }
+      if (error instanceof Error) 
+      
+      showErrorToast(error.message);
+      console.log(error)
     }
 };
 
