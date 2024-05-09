@@ -146,7 +146,7 @@ function CompanyInfoPage() {
 
       setQuestionsCount(data.data.questionCount);
     } else {
-      setSelectedCategories([...selectedCategories, category]);
+      setSelectedCategories([category]);
 
       try {
         const { data } = await axios.get(
