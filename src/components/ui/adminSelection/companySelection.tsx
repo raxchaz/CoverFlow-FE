@@ -86,6 +86,22 @@ export default function CompanySelection() {
       queryParams.set('district', selectedDistrict);
     }
 
+    const item = `${BASE_URL}/api/company/admin/count?${queryParams.toString()}`;
+    fetch(item, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => response.json())
+      .then((data: ApiResponse) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+        setIsLoading(false);
+      });
+
     const url = `${BASE_URL}/api/company/admin?${queryParams.toString()}`;
     fetch(url, {
       headers: {
@@ -216,6 +232,8 @@ export default function CompanySelection() {
                 variant="admin-white"
                 onClick={() => {
                   setCompanyStatus('');
+                  setSelectedDistrict('');
+                  setSelectedCity('');
                   setCurrentPage(0);
                 }}
               >
