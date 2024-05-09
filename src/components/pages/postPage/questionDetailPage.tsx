@@ -124,6 +124,7 @@ function QuestionDetailPage() {
   // const [answererNickname, setAnswererNickname] = useState('');
 
   const [questionerTag, setQuestionerTag] = useState('');
+  // const [questionTag,setQuestiontag] = useState('');
   const [answerCount, setAnswerCount] = useState(0);
   const [questionTitle, setQuestionTitle] = useState('');
   const [createAt, setCreateAt] = useState('');
@@ -211,21 +212,41 @@ function QuestionDetailPage() {
   };
 
   const handleClickEdit = async () => {
-    const editBody = {
-      title: questionTitle,
-      content: questionContent,
-      questionStatus: false,
-    };
-    console.log(questionId);
     try {
-      await fetchAPI(`/api/question/${questionId}`, 'PATCH', editBody);
+      const pathSegments = window.location.pathname.split('/');
+      const companyId = pathSegments[2];
+
+      const response = await axios.get(
+        `${BASE_URL}/api/question/${questionId}?pageNo=${currentPage}&criterion=createdAt`,
+      );
+
+      const {
+        data: { data },
+      } = response;
+
+      setQuestionContent(data.questionContent);
+      setQuestionTitle(data.questionTitle);
+      setReward(data.reward);
+
+      navigate(`/company-info/${companyId}/question-write`, {
+        state: {
+          questionTitle,
+          questionContent,
+          reward,
+          companyName,
+          questionId,
+        },
+      });
+
+      // setQuestiontag(questionData.questionTag);
     } catch (error) {
       if (error instanceof Error) showErrorToast(error.message);
     }
   };
 
+  console.log(questionContent, questionTitle, reward);
+
   const handleClickDelete = async () => {
-  
     const deleteBody = {
       title: questionTitle,
       content: questionContent,
@@ -233,20 +254,17 @@ function QuestionDetailPage() {
     };
     console.log(questionId);
     try {
-        fetchAPI(`/api/question/${questionId}`, 'DELETE', deleteBody);
-       if (confirm('삭제하시겠습니까?')){
+      fetchAPI(`/api/question/${questionId}`, 'DELETE', deleteBody);
+      if (confirm('삭제하시겠습니까?')) {
         showSuccessToast('질문이 삭제되었습니다.');
         const pathSegments = window.location.pathname.split('/');
         const companyId = pathSegments[2];
 
         navigate(`/company-info/${companyId}`);
-      
       }
     } catch (error) {
-      if (error instanceof Error) 
-      
-      showErrorToast(error.message);
-      console.log(error)
+      if (error instanceof Error) showErrorToast(error.message);
+      console.log(error);
     }
   };
 
