@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './memberSelection.scss';
 import AdminSearch from '../../../asset/image/admin-search.svg';
 import Button from '../button/Button/Button';
-import { ACCESS_TOKEN, BASE_URL } from '../../global/constants';
+// import { ACCESS_TOKEN, BASE_URL } from '../../global/constants';
 import Calendar from '../calendar/calendar';
 
 export default function MemberSelection() {
