@@ -433,7 +433,7 @@ function QuestionDetailPage() {
       {!isAdopted ? (
         <div className="comment-section">
           <textarea
-            placeholder="답변을 입력해주세요."
+            placeholder="남긴 답변은 수정 및 삭제가 불가능하니 신중하게 작성해주세요."
             className="comment-input"
             ref={answerRef}
             maxLength={500}
