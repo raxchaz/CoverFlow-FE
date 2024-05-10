@@ -126,7 +126,8 @@ function Mypage() {
     navigate('/contact');
   };
   const goToPremium = () => {
-    navigate('/premium');
+    showErrorToast('준비중인 페이지입니다.')
+    // navigate('/premium');
   };
   const goToStore = () => {
     navigate('/store');
