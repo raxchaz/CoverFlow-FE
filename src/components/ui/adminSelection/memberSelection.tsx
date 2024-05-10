@@ -7,6 +7,7 @@ import Calendar from '../calendar/calendar';
 
 export default function MemberSelection() {
   const [isLoading, setIsLoading] = useState(false);
+
   const fetchMember = (pageNo: number) => {
     const queryParams = new URLSearchParams({
       pageNo: pageNo.toString(),
@@ -26,9 +27,14 @@ export default function MemberSelection() {
       .catch((error) => {
         // console.error('Error:', error);
         setIsLoading(false);
+        error;
+        {
+          isLoading;
+        }
       });
   };
   // console.log(fetchMember(0));
+  fetchMember;
 
   return (
     <div className="ad-memberSelection-container">
