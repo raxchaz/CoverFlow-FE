@@ -219,6 +219,9 @@ function QuestionDetailPage() {
   };
 
   const handleClickEdit = async () => {
+    if (answerCount > 0){
+      showErrorToast('답변이 있는 글은 수정할 수 없습니다.')
+    }else{
     try {
       const pathSegments = window.location.pathname.split('/');
       const companyId = pathSegments[2];
@@ -249,8 +252,11 @@ function QuestionDetailPage() {
     } catch (error) {
       if (error instanceof Error) showErrorToast(error.message);
     }
-  };
+  };}
   const handleClickDelete = async () => {
+    if (answerCount > 0){
+      showErrorToast('답변이 있는 글은 삭제할 수 없습니다.')
+    }else{
     try {
         const response = await fetchAPI(`/api/question/${questionId}`, 'DELETE');
        
@@ -275,7 +281,7 @@ function QuestionDetailPage() {
       showErrorToast(error.message);
       console.log(error)
     }
-};
+};}
 
 
   const handleReportSubmit = async () => {
