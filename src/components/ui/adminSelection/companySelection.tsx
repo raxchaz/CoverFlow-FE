@@ -99,13 +99,13 @@ export default function CompanySelection() {
     })
       .then((response) => response.json())
       .then((data: ApiResponse) => {
-        console.log(data);
+        // console.log(data);
         setCompanies(data.data.companies);
         setTotalPages(data.data.totalPages);
         seTtotalCompanyCount(data.data.totalElements);
       })
       .catch((error) => {
-        console.error('Error:', error);
+        // console.error('Error:', error);
         setIsLoading(false);
       });
 
@@ -118,12 +118,12 @@ export default function CompanySelection() {
     })
       .then((response) => response.json())
       .then((data: ApiResponse) => {
-        console.log(data);
+        // console.log(data);
         setCompanies(data.data.companies);
         setIsLoading(false);
       })
       .catch((error) => {
-        console.error('Error:', error);
+        // console.error('Error:', error);
         setIsLoading(false);
       });
   };

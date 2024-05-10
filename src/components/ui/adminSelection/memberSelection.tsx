@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './memberSelection.scss';
 import AdminSearch from '../../../asset/image/admin-search.svg';
 import Button from '../button/Button/Button';
@@ -6,6 +6,7 @@ import { ACCESS_TOKEN, BASE_URL } from '../../global/constants';
 import Calendar from '../calendar/calendar';
 
 export default function MemberSelection() {
+  const [isLoading, setIsLoading] = useState(false);
   const fetchMember = (pageNo: number) => {
     const queryParams = new URLSearchParams({
       pageNo: pageNo.toString(),
@@ -20,13 +21,14 @@ export default function MemberSelection() {
     })
       .then((response) => response.json())
       .then((data: Response) => {
-        console.log(data);
+        // console.log(data);
       })
       .catch((error) => {
-        console.error('Error:', error);
+        // console.error('Error:', error);
+        setIsLoading(false);
       });
   };
-  console.log(fetchMember(0));
+  // console.log(fetchMember(0));
 
   return (
     <div className="ad-memberSelection-container">
