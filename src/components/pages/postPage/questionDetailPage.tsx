@@ -159,9 +159,16 @@ function QuestionDetailPage() {
       // 답변 내용이 비어있을 경우 에러 던지기
       if (answerRef.current?.value === '') {
         throw new Error('크기가 1에서 500 사이여야 합니다');
+
       }
 
       const answerResponse = await fetchAPI('/api/answer', 'POST', requestData);
+
+      if (!answerResponse.ok){
+        if (answerResponse.status === 400) {
+          showErrorToast('질문 작성자는 답변 작성이 불가능합니다.')
+        } 
+      }
       if (answerResponse.statusCode === 'CREATED' && answerRef.current) {
         setPostAnswer(answerRef.current?.value);
         showSuccessToast('답변이 등록되었습니다.');
@@ -243,30 +250,33 @@ function QuestionDetailPage() {
       if (error instanceof Error) showErrorToast(error.message);
     }
   };
-
-  console.log(questionContent, questionTitle, reward);
-
   const handleClickDelete = async () => {
-    const deleteBody = {
-      title: questionTitle,
-      content: questionContent,
-      questionStatus: false,
-    };
-    console.log(questionId);
     try {
-      fetchAPI(`/api/question/${questionId}`, 'DELETE', deleteBody);
-      if (confirm('삭제하시겠습니까?')) {
-        showSuccessToast('질문이 삭제되었습니다.');
-        const pathSegments = window.location.pathname.split('/');
-        const companyId = pathSegments[2];
-
-        navigate(`/company-info/${companyId}`);
+        const response = await fetchAPI(`/api/question/${questionId}`, 'DELETE');
+       
+        if (response.error) {
+          console.log(response)
+            if (response.status === 409) {
+                showErrorToast('답변이 달린 게시물은 삭제할 수 없습니다. ');
+                return;
+            }
+            throw new Error('요청 처리 중 오류가 발생했습니다.');
+        } else if (confirm('삭제하시겠습니까?')) {
+          showSuccessToast('질문이 삭제되었습니다.');
+          const pathSegments = window.location.pathname.split('/');
+          const companyId = pathSegments[2];
+          navigate(`/company-info/${companyId}`);
       }
+
+       
     } catch (error) {
-      if (error instanceof Error) showErrorToast(error.message);
-      console.log(error);
+      if (error instanceof Error) 
+      
+      showErrorToast(error.message);
+      console.log(error)
     }
-  };
+};
+
 
   const handleReportSubmit = async () => {
     toggleReportPopup();

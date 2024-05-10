@@ -154,8 +154,14 @@ function AnswerModule({
 
   const handleClickDelete = async () => {
     try {
-      if (confirm('삭제하시겠습니까?'))
-        showSuccessToast('답변이 삭제되었습니다.');
+      if (confirm('삭제하시겠습니까?')){
+        const response = await fetchAPI(`/api/question/${answerId}`, 'DELETE');
+        if (response.error) {
+          showErrorToast('답변 삭제가 불가능합니다.')
+        }else{
+          showSuccessToast('답변이 삭제되었습니다.');}
+
+        }
     } catch (error) {
       if (error instanceof Error) showErrorToast(error.message);
     }
