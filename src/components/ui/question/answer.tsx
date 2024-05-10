@@ -119,11 +119,9 @@ function AnswerModule({
   setIsAdopted,
   fetchData,
   anyAdopted,
+  answererTag,
 }: AnswerDetailProps) {
-  const [questionerTag, setQuestionerTag] = useState('');
   const { myNickname } = useSelector((state: AppState) => state.user);
-
-  console.log(setQuestionerTag); //
 
   const [isShowEdit, setIsShowEdit] = useState(false);
 
@@ -147,8 +145,6 @@ function AnswerModule({
       }
     }
   };
-
-  console.log(answerId);
 
   const handleClickEdit = async () => {
     try {
@@ -227,7 +223,7 @@ function AnswerModule({
           <div className="answer-container-info">
             <NameContainer>
               <ImageContainer
-                src={questionerTag === '취준생' ? Leaf : Tree}
+                src={answererTag === '취준생' ? Leaf : Tree}
                 alt=""
               />
               <AnswerName>{answererNickname}</AnswerName>
