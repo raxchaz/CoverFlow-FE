@@ -105,9 +105,8 @@ export default function CompanySelection() {
         seTtotalCompanyCount(data.data.totalElements);
       })
       .catch((error) => {
-        // console.error('Error:', error);
+        console.error('Error:', error);
         setIsLoading(false);
-        error;
       });
 
     const url = `${BASE_URL}/api/company/admin?${queryParams.toString()}`;
@@ -125,7 +124,7 @@ export default function CompanySelection() {
       })
       .catch((error) => {
         // console.error('Error:', error);
-        error;
+        console.error('Error:', error);
         setIsLoading(false);
       });
   };
