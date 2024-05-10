@@ -133,13 +133,14 @@ function QuestionWritePage() {
 
       if (questionId) {
         await fetchAPI(`/api/question/${questionId}`, 'PATCH', editBody);
+        showSuccessToast('질문이 수정되었습니다');
       } else {
         await fetchAPI('/api/question', 'POST', body);
+        showSuccessToast('질문이 등록되었습니다');
       }
 
       // 질문 데이터가 수정되었다면 POST가 아니라 같은 엔드포인트로 PATCH 요청을 보낼 것
 
-      showSuccessToast('질문이 등록되었습니다');
       navigate(`/company-info/${companyId}`);
     } catch (error) {
       if (error instanceof Error) {
@@ -225,13 +226,13 @@ function QuestionWritePage() {
         />
         <textarea
           className="question-input"
-          placeholder="질문 내용을 입력해주세요.
+          placeholder=" 질문 내용을 입력해주세요.
+          질문에 답변이 달릴 경우, 수정 및  삭제가 불가능해집니다.
 
-질문에 답변이 달릴 경우, 수정 및  삭제가 불가능해집니다.
-
-질문 작성 시 타인의 명예를 훼손하거나
-허위 사실을 유포할 경우, 형법 상 명예훼손죄 혐의를 받을 수 있습니다.
-따라서 타인에 대한 존중과 배려를 기반으로 질문을 작성해주세요."
+          질문 작성 시 타인의 명예를 훼손하거나 
+          허위 사실을 유포할 경우, 형법 상 명예훼손죄 혐의를 받을 수 있습니다.
+          따라서 타인에 대한 존중과 배려를 기반으로 질문을 작성해주세요."
+          
           name="content"
           value={content}
           onChange={handleTextAreaChange}

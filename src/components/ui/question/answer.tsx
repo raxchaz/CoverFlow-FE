@@ -119,23 +119,30 @@ function AnswerModule({
   setIsAdopted,
   fetchData,
   anyAdopted,
+  answererTag,
 }: AnswerDetailProps) {
-  const [questionerTag, setQuestionerTag] = useState('');
   const { myNickname } = useSelector((state: AppState) => state.user);
-
-  console.log(setQuestionerTag); //
 
   const [isShowEdit, setIsShowEdit] = useState(false);
 
   const [isShowReport, setIsShowReport] = useState(false);
   const [isShowReportModal, setIsShowReportModal] = useState(false);
+  const [selectedAnswerId, setSelectAnswerId] = useState<string | undefined>(
+    '',
+  );
 
-  const handleEdit = async () => {
+  const handleEdit = async (id: string | undefined) => {
     const res = await fetchAPI('/api/member/me', 'GET');
     if (res.data.nickname === answererNickname) {
       setIsShowEdit((isShow) => !isShow);
     } else if (res.data.nickname !== answererNickname) {
       setIsShowReport((showReport) => !showReport);
+      if (selectedAnswerId === id) {
+        setIsShowReport((show) => !show);
+      } else {
+        setIsShowReport(true);
+        setSelectAnswerId(id);
+      }
     }
   };
 
@@ -154,14 +161,14 @@ function AnswerModule({
 
   const handleClickDelete = async () => {
     try {
-      if (confirm('삭제하시겠습니까?')){
+      if (confirm('삭제하시겠습니까?')) {
         const response = await fetchAPI(`/api/question/${answerId}`, 'DELETE');
         if (response.error) {
-          showErrorToast('답변 삭제가 불가능합니다.')
-        }else{
-          showSuccessToast('답변이 삭제되었습니다.');}
-
+          showErrorToast('답변 삭제가 불가능합니다.');
+        } else {
+          showSuccessToast('답변이 삭제되었습니다.');
         }
+      }
     } catch (error) {
       if (error instanceof Error) showErrorToast(error.message);
     }
@@ -169,7 +176,11 @@ function AnswerModule({
 
   const handleReportSubmit = async () => {
     toggleReportPopup();
-    await fetchAPI(`/api/report`, 'POST', {});
+    await fetchAPI(`/api/report`, 'POST', {
+      content: answerContent,
+      type: 'ANSWER',
+      id: answerId,
+    });
 
     showSuccessToast('신고 접수가 되었습니다.');
   };
@@ -212,18 +223,18 @@ function AnswerModule({
           <div className="answer-container-info">
             <NameContainer>
               <ImageContainer
-                src={questionerTag === '취준생' ? Leaf : Tree}
+                src={answererTag === '취준생' ? Leaf : Tree}
                 alt=""
               />
               <AnswerName>{answererNickname}</AnswerName>
             </NameContainer>
-            <img src={Dot} alt="dot" onClick={handleEdit} />
+            <img src={Dot} alt="dot" onClick={() => handleEdit(answerId)} />
           </div>
           <AnswerContent className="user-contents">
             {answerContent}
           </AnswerContent>
-          {isShowEdit && (
-            <div className="dropdown-question-detail-menu">
+          {isShowEdit && selectedAnswerId !== answerId && (
+            <div className="dropdown-question-detail-menu-answer">
               <ul>
                 <li onClick={handleClickEdit} className="dropdown-item-edit">
                   수정
@@ -238,11 +249,11 @@ function AnswerModule({
             </div>
           )}
           {isShowReport ? (
-            <div className="dropdown-question-detail-report-menu">
+            <div className="dropdown-question-detail-report-menu-answer">
               <ul>
                 <li
                   onClick={toggleReportPopup}
-                  className="dropdown-item-report"
+                  className="dropdown-item-report-answer"
                 >
                   신고
                 </li>

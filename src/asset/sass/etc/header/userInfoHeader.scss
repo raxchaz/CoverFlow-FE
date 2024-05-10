@@ -30,6 +30,7 @@ img.loginuser {
 
 .fishbun-reward {
   padding: 0;
+  cursor: pointer;
 }
 
 .reward-fish {
@@ -38,7 +39,7 @@ img.loginuser {
   flex-direction: column;
   margin-top: -3.5%;
   margin-left: 52%;
-  cursor: pointer;
+
   padding: 0;
 }
 
@@ -46,6 +47,7 @@ img.loginuser {
   font-size: 1.6rem;
   margin-top: 1.2%;
   font-family: Pretendard-Medium;
+  cursor: pointer;
 }
 
 .dropdown-question-detail-report-menu {
@@ -70,8 +72,65 @@ img.loginuser {
 
     border-radius: 10px;
     border-color: #d9d9d9;
-    margin-left: 92%;
-    margin-top: -12%;
+    left: 93%;
+    bottom: 14px;
+    letter-spacing: -1px;
+    font-family: 'Pretendard-Medium';
+  }
+}
+
+.dropdown-question-detail-menu-answer {
+  position: relative;
+  z-index: 500;
+
+  cursor: pointer;
+  ul {
+    position: absolute;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    width: 88px;
+    height: 72px;
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 6px 0 0;
+    border-radius: 10px;
+    border-color: #d9d9d9;
+    left: 78%;
+    top: -22px;
+    letter-spacing: -1px;
+    font-family: 'Pretendard-Medium';
+  }
+}
+
+.dropdown-question-detail-report-menu-answer {
+  position: relative;
+  z-index: 500;
+  right: 6rem;
+  top: 6rem;
+  cursor: pointer;
+  ul {
+    position: absolute;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    width: 88px;
+    height: 36px;
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    align-items: center;
+
+    border-radius: 10px;
+    border-color: #d9d9d9;
+    left: 93%;
+    bottom: 14px;
     letter-spacing: -1px;
     font-family: 'Pretendard-Medium';
   }
@@ -102,7 +161,9 @@ img.loginuser {
     border-color: #d9d9d9;
     // margin-left: 82%;
     // margin-top: -3%;
-    left: 78%;
+    // left: 78%;
+    left: 82%;
+    top: 17px;
   }
 
   .dropdown-item {
@@ -156,6 +217,30 @@ img.loginuser {
   .up-hr {
     margin-top: 0%;
     border-top: 1px solid #fff;
+  }
+}
+
+.dropdown-question-detail-report-menu-answer {
+  position: relative;
+  right: 6rem;
+  top: 6rem;
+  ul {
+    position: absolute;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    width: 88px;
+    height: 36px;
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 10px;
+    border-color: #d9d9d9;
+    right: -11%;
+    bottom: 45px;
   }
 }
 
