@@ -133,13 +133,14 @@ function QuestionWritePage() {
 
       if (questionId) {
         await fetchAPI(`/api/question/${questionId}`, 'PATCH', editBody);
+        showSuccessToast('질문이 수정되었습니다');
       } else {
         await fetchAPI('/api/question', 'POST', body);
+        showSuccessToast('질문이 등록되었습니다');
       }
 
       // 질문 데이터가 수정되었다면 POST가 아니라 같은 엔드포인트로 PATCH 요청을 보낼 것
 
-      showSuccessToast('질문이 등록되었습니다');
       navigate(`/company-info/${companyId}`);
     } catch (error) {
       if (error instanceof Error) {
