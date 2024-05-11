@@ -20,7 +20,7 @@ const fetchToken = async (code) => {
       'Content-Type': 'application/json',
     },
   });
-  console.log(response);
+  
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
   }
@@ -44,13 +44,11 @@ const TokenManagement = () => {
     console.log('role:', role);
 
     if (!code || !role) {
-      console.error('코드 또는 역할이 URL에 포함되어 있지 않습니다.');
       navigate('/login');
       return;
     }
 
     if (role === 'GUEST') {
-      console.log('약관 동의 페이지로 이동합니다.');
       navigate('/login/terms', { state: {code} });
     } else {
       fetchToken(code)
@@ -70,7 +68,6 @@ const TokenManagement = () => {
           const decoded = decodeToken(accessToken);
 
           if (['MEMBER', 'PREMIUM', 'ADMIN'].includes(decoded.role)) {
-            console.log('회원 정보가 존재합니다. 메인 페이지로 이동합니다.');
             navigate(prevPage || '/');
             initializeSSE(queryClient, dispatch);
           } else {

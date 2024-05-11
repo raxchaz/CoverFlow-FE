@@ -9,6 +9,10 @@ import TabBar from '../../ui/tabBar/tabBar';
 import SecessionWarning from '../../../asset/image/secessionWarning.svg';
 import { fetchAPI } from '../../global/utils/apiUtil.js';
 import { showErrorToast, showSuccessToast } from '../../ui/toast/toast.tsx';
+import {ACCESS_TOKEN, REFRESH_TOKEN} from '../../global/constants/index.ts'
+import {alertCount} from '../../../store/actions/alertActions.js'
+import { useDispatch } from 'react-redux';
+import {setLoggedIn} from'../../../store/actions/userActions';
 
 const Divider = styled.div`
   height: 0.3rem;
@@ -20,6 +24,7 @@ const Divider = styled.div`
 function SecessionPage() {
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
   const { nickname } = location.state as { nickname: string };
   const [isAgreed, setIsAgreed] = useState(false);
   const [secessionReason, setSecessionReason] = useState('');
@@ -49,7 +54,11 @@ function SecessionPage() {
     try {
       await fetchAPI('/api/member/leave', 'DELETE');
       showSuccessToast('성공적으로 탈퇴 처리되었습니다.');
-      navigate('/');
+      localStorage.removeItem(ACCESS_TOKEN);
+      localStorage.removeItem(REFRESH_TOKEN);
+      dispatch(setLoggedIn(false));
+      dispatch(alertCount(0));
+      navigate('/secessionComplete-page');
     } catch (error) {
       showErrorToast(`탈퇴 처리 중 오류가 발생했습니다: ${error}`);
     }
