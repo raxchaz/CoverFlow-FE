@@ -51,7 +51,7 @@ const TokenManagement = () => {
 
     if (role === 'GUEST') {
       console.log('약관 동의 페이지로 이동합니다.');
-      navigate('/login/terms', { state: code });
+      navigate('/login/terms', { state: {code} });
     } else {
       fetchToken(code)
         .then((headers) => {
