@@ -7,7 +7,6 @@ import { StyledPage, StyledHeader } from '../../../styledComponent.js';
 import TitleHeader from '../../ui/header/titleHeader';
 import TabBar from '../../ui/tabBar/tabBar';
 import { city, type } from '../../global/constants/companyOption.ts';
-import { setHeaders } from '../../../utils/utils';
 import { showErrorToast, showSuccessToast } from '../../ui/toast/toast.tsx';
 
 interface CompanyInfoProps {
@@ -20,7 +19,6 @@ interface CompanyInfoProps {
 
 function CompanyRegistPage() {
   const navigate = useNavigate();
-  const headers = setHeaders();
 
   const [companyInfo, setCompanyInfo] = useState({
     name: '',
@@ -69,7 +67,7 @@ function CompanyRegistPage() {
     checkRequiredFields(companyInfo);
 
     try {
-      await axios.post(`${BASE_URL}/api/company`, companyInfo, headers);
+      await axios.post(`${BASE_URL}/api/company`, companyInfo);
       showSuccessToast('기업 등록이 완료되었어요!');
       navigate('/search-company');
     } catch (error) {
