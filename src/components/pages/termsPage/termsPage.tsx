@@ -37,7 +37,7 @@ export default function TermsPage() {
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const { code } = location.state as LocationState;
-  console.log("코드",code)
+  
   // =========================================================== 약관 동의 확인을 위한 부분
   const [allAgreed, setAllAgreed] = useState<boolean>(false);
   const [termsAgreement, setTermsAgreement] = useState<TermsAgreement>({
