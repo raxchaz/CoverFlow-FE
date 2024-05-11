@@ -64,17 +64,13 @@ const TokenManagement = () => {
         dispatch(setTokens(accessToken, refreshToken));
         localStorage.setItem(ACCESS_TOKEN, accessToken);
         localStorage.setItem(REFRESH_TOKEN, refreshToken);
-        // console.log('redux 저장 상태', store.getState());
 
         const decoded = decodeToken(accessToken);
         const userRole = decoded.role;
 
-        // console.log('userRole:', userRole);
-        // console.log('decoded:', decoded);
-
         if (userRole === 'GUEST') {
           // console.log('약관 동의 페이지로 이동합니다.');
-          navigate('/login/terms', { state: { code } });
+          navigate('/login/terms', { state: code });
         } else if (['MEMBER', 'PREMIUM', 'ADMIN'].includes(userRole)) {
           // console.log('회원 정보가 존재합니다. 메인 페이지로 이동합니다.');
           navigate(prevPage);
