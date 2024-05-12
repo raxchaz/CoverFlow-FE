@@ -79,6 +79,24 @@ const reissueTokens = async () => {
     throw new Error('토큰 재발급 요청 실패');
   }
 };
+
+export const fetchAPINoToken = async (endpoint, method, body) => {
+  const apiLink = `${BASE_URL}${endpoint}`;
+  const response = await fetch(apiLink, {
+    method,
+    body: body ? JSON.stringify(body) : null,
+  });
+
+  if (!response.ok) {
+    return {
+      error: true,
+      status: response.status,
+      message: response.message || '알 수 없는 오류',
+    };
+  }
+
+  return response;
+};
 // API 요청을 위한 범용 함수
 // 사용예시
 
@@ -112,8 +130,8 @@ export const fetchAPI = async (endpoint, method, body) => {
     return {
       error: true,
       status: response.status,
-      message: responseData.message || '알 수 없는 오류'
-    };     
+      message: responseData.message || '알 수 없는 오류',
+    };
   }
 
   return responseData;
