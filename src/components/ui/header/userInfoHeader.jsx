@@ -13,6 +13,7 @@ import {
 } from '../../../store/actions/userActions';
 import { alertCount } from '../../../store/actions/alertActions.js';
 import { ACCESS_TOKEN, REFRESH_TOKEN } from '../../global/constants/index.ts';
+import { showErrorToast } from '../toast/toast.tsx';
 
 function UserInfoHeader() {
   const { isLoggedIn, rewardCount, isDropdownOpen } = useSelector(
@@ -70,7 +71,8 @@ function UserInfoHeader() {
 
   /* 붕어빵 아이콘을 클릭했을 경우, 상점으로 이동합니다. */
   const handleRewardClick = () => {
-    navigate('/store');
+    // navigate('/store');
+    showErrorToast("준비중인 페이지입니다.")
   };
 
   /*

@@ -107,18 +107,33 @@ export default function TermsPage() {
   // =========================================================== 토큰 발급을 위한 부분
 
   const fetchToken = async (code: string): Promise<Headers> => {
-    if (!code) throw new Error('Code is required');
-    const response = await fetch(`${BASE_URL}/api/auth/token?code=${code}`, {
+    if (!code) throw new Error('No Code');
+
+    let queryParams = `code=${code}`;
+
+    if (termsAgreement.term6) {
+      queryParams += '&agreeMarketing=true';
+    }
+    if (termsAgreement.term7) {
+      queryParams += '&agreeCollection=true';
+    }
+    const url = `${BASE_URL}/api/auth/token?${queryParams}`;
+  
+
+    const response = await fetch(url, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
     });
+  
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      throw new Error(`${response.status}`);
     }
+  
     return response.headers;
   };
+  
 
   const agreeToTerms = async (): Promise<void> => {
     try {
@@ -126,7 +141,8 @@ export default function TermsPage() {
         !termsAgreement.term1 ||
         !termsAgreement.term2 ||
         !termsAgreement.term3 ||
-        !termsAgreement.term4
+        !termsAgreement.term4 ||
+        !termsAgreement.term5
       ) {
         showErrorToast('필수 약관에 동의해주세요.');
       }
