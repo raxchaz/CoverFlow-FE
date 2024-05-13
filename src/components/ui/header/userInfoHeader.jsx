@@ -42,14 +42,11 @@ function UserInfoHeader() {
             dispatch(setNickname(data.data.nickname));
             // console.log('붕어빵 개수:', data.data.fishShapedBun);
           } else {
-            console.error('유효하지 않은 데이터를 받았습니다.', data);
+            console.error(data);
           }
         })
         .catch((error) => {
-          console.error(
-            '붕어빵 데이터를 가져오는 데 오류가 발생했습니다.',
-            error,
-          );
+          console.error(error);
         });
     }
   }, [dispatch]);

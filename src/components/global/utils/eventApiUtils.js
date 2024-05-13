@@ -18,7 +18,7 @@ export const initializeSSE = (queryClient, dispatch) => {
   let lastEventId = localStorage.getItem(LAST_EVENT_ID);
 
   if (!accessToken) {
-    console.log('토큰이 없어서 연결을 시작할 수 없습니다.');
+    console.log('NO_TOKEN');
     return;
   }
 

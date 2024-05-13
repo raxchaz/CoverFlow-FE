@@ -74,7 +74,7 @@ export default function ContactSlider() {
       setContactList(data.data.inquiries);
       setTotalPage(data.data.totalPages);
     } catch (error) {
-      console.error('문의 내역 불러오기 실패:', error);
+      console.error(error);
     }
   };
 
