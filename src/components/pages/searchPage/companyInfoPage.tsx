@@ -50,7 +50,7 @@ const Line = styled.div`
   height: 5px;
   background-color: #fff9f4;
   width: 100%;
-  margin : 5% 0% 8% 0%;
+  margin: 5% 0% 8% 0%;
   stroke: 5px solid #fff9f4;
 `;
 
@@ -109,6 +109,7 @@ function CompanyInfoPage() {
 
   const { companyId } = useParams();
   const [questionsCount, setQuestionsCount] = useState(0);
+  const [allQuestions, setAllQuestions] = useState<CompanInfoProps>();
 
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
@@ -141,10 +142,10 @@ function CompanyInfoPage() {
       );
       // 같은 카테고리를 중복해서 클릭했을 때는 `${BASE_URL}/api/company/${companyId}?pageNo=0&criterion=createdAt`으로 전체 질문 조회
       const { data } = await axios.get(
-        `${BASE_URL}/api/company/${companyId}?pageNo=0&criterion=createdAt`,
+        `${BASE_URL}/api/company/${companyId}?pageNo=${currentPage}&criterion=createdAt`,
       );
-
       setQuestionsCount(data.data.questionCount);
+      setAllQuestions(data.data);
     } else {
       setSelectedCategories([category]);
 
@@ -307,7 +308,26 @@ function CompanyInfoPage() {
             </div>
           </div>
 
-          {companyData.questions.length > 0 ? (
+          {selectedCategories.length === 0 ? (
+            <QuestionList>
+              {allQuestions?.questions.map((question, index) => (
+                <Question
+                  key={index}
+                  companyId={companyId}
+                  questionId={question.questionId}
+                  questioner={question.questionerNickname}
+                  questionerTag={question.questionerTag}
+                  answerCount={question.answerCount}
+                  questionTitle={question.questionTitle}
+                  questionContent={question.questionContent}
+                  createAt={question.createAt}
+                  reward={question.reward}
+                  companyData={companyData}
+                  viewCount={question.questionViewCount}
+                />
+              ))}
+            </QuestionList>
+          ) : companyData.questions.length > 0 ? (
             <QuestionList>
               {companyData.questions.map((question, index) => (
                 <Question
@@ -332,7 +352,7 @@ function CompanyInfoPage() {
               content1="해당 기업에 대한 질문이"
               content2="존재하지 않습니다"
               theme="질문을 남기고, 답변을 확인해 보세요!"
-              className='companyInfo-css'
+              className="companyInfo-css"
             />
           )}
 

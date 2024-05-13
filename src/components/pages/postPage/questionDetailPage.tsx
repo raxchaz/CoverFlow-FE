@@ -289,16 +289,13 @@ function QuestionDetailPage() {
     const response = await axios.get(
       `${BASE_URL}/api/question/${questionId}?pageNo=${currentPage}&criterion=createdAt`,
     );
-    const data = response.data.data;
 
-    // const sortedAnswers = data.answers.sort((a, b) => {
-    //   if (a.selection && !b.selection) return -1;
-    //   if (!a.selection && b.selection) return 1;
-    //   return 0;
-    // });
+    const { data } = response.data;
+
     const adoptedExists = data.answers.some(
       (answer) => answer.selection === true,
     );
+
     setAnyAdopted(adoptedExists);
     setIsAdopted(adoptedExists);
 
