@@ -40,8 +40,6 @@ const TokenManagement = () => {
     const code = query.get('code');
     const role = query.get('role');
 
-    console.log('code:', code);
-    console.log('role:', role);
 
     if (!code || !role) {
       navigate('/login');
@@ -72,13 +70,13 @@ const TokenManagement = () => {
             initializeSSE(queryClient, dispatch);
           } else {
             alert('로그인에 실패하였습니다. 다시 시도해주세요.');
-            navigate('/login');
+            navigate('/');
           }
         })
         .catch((error) => {
-          console.error('토큰 요청 중 오류가 발생했습니다:', error);
+          console.error(error);
           alert('로그인에 실패하였습니다. 다시 시도해주세요.');
-          navigate('/login');
+          navigate('/');
         });
     }
   }, [navigate, location, dispatch, queryClient]);

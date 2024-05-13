@@ -9,9 +9,9 @@ export const fetchUnreadNotificationsCount = async (dispatch) => {
       // console.log(data.data.noReadElements);
       dispatch(alertCount(data.data.noReadElements));
     } else {
-      throw new Error('알림 카운트 변경 실패 ');
+      throw new Error('realtime-alert-error');
     }
   } catch (error) {
-    console.error('알림 카운트 가져오기 실패', error);
+    console.error(error);
   }
 };

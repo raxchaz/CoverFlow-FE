@@ -13,6 +13,7 @@ import {
 } from '../../../store/actions/userActions';
 import { alertCount } from '../../../store/actions/alertActions.js';
 import { ACCESS_TOKEN, REFRESH_TOKEN } from '../../global/constants/index.ts';
+import { showErrorToast } from '../toast/toast.tsx';
 
 function UserInfoHeader() {
   const { isLoggedIn, rewardCount, isDropdownOpen } = useSelector(
@@ -41,14 +42,11 @@ function UserInfoHeader() {
             dispatch(setNickname(data.data.nickname));
             // console.log('붕어빵 개수:', data.data.fishShapedBun);
           } else {
-            console.error('유효하지 않은 데이터를 받았습니다.', data);
+            console.error(data);
           }
         })
         .catch((error) => {
-          console.error(
-            '붕어빵 데이터를 가져오는 데 오류가 발생했습니다.',
-            error,
-          );
+          console.error(error);
         });
     }
   }, [dispatch]);
@@ -70,7 +68,8 @@ function UserInfoHeader() {
 
   /* 붕어빵 아이콘을 클릭했을 경우, 상점으로 이동합니다. */
   const handleRewardClick = () => {
-    navigate('/store');
+    // navigate('/store');
+    showErrorToast("준비중인 페이지입니다.")
   };
 
   /*

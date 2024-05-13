@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../../asset/sass/pages/storePage/storePage.scss';
 
@@ -11,17 +11,18 @@ import { CurrentFishBanner } from '../../ui/banner/currentFishBanner';
 import { ACCESS_TOKEN } from '../../global/constants';
 import FishListItem from '../../ui/selection/fishListItem.tsx';
 import UserInfoHeader from '../../ui/header/userInfoHeader.jsx';
+import { showErrorToast } from '../../ui/toast/toast.tsx';
 
 function StorePage() {
   const navigate = useNavigate();
-  const [purchaseList, setPurchaseList] = useState([
-    { fishShapeBun: 0, price: 0, cnt: 0, date: '' },
-  ]);
+  // const [purchaseList, setPurchaseList] = useState([
+  //   { fishShapeBun: 0, price: 0, cnt: 0, date: '' },
+  // ]);
   useEffect(() => {
-    setPurchaseList(() => [
-      { fishShapeBun: 200, price: 2000, cnt: 2, date: '2024-03-02' },
-      { fishShapeBun: 200, price: 2000, cnt: 2, date: '2024-03-02' },
-    ]);
+    // setPurchaseList(() => [
+    //   { fishShapeBun: 200, price: 2000, cnt: 2, date: '2024-03-02' },
+    //   { fishShapeBun: 200, price: 2000, cnt: 2, date: '2024-03-02' },
+    // ]);
 
     const token = localStorage.getItem(ACCESS_TOKEN);
 
@@ -35,7 +36,8 @@ function StorePage() {
   };
 
   const goWIL = () => {
-    navigate('/work-progress');
+    showErrorToast("현재 준비중이에요")
+    // navigate('/work-progress');
   };
 
   return (
@@ -63,8 +65,8 @@ function StorePage() {
             <div className="store-wrapper">
               <CurrentFishBanner />
 
-              {purchaseList.length > 0 ? (
-                <div className="fish-purchase-list">
+              {/* {purchaseList.length > 0 ? ( */}
+                {/* <div className="fish-purchase-list">
                   {purchaseList.map((item, index) => (
                     <div key={index} className="fish-purchase-item">
                       <div>
@@ -81,7 +83,7 @@ function StorePage() {
                     </div>
                   ))}
                 </div>
-              ) : (
+              ) : ( */}
                 <div className="no-fish-purchase">
                   <img
                     src={FaceIcon}
@@ -90,7 +92,7 @@ function StorePage() {
                   />
                   <span className="fish-disclaimer">구매 내역이 없어요</span>
                 </div>
-              )}
+              {/* )} */}
             </div>
           </SelectSlider>
         </div>

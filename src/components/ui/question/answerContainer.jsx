@@ -31,7 +31,7 @@ function AnswersContainer() {
 
       setAnswers(newAnswers);
     } catch (error) {
-      console.error('답변 채택에 실패했습니다.', error);
+      console.error(error);
     }
   };
 

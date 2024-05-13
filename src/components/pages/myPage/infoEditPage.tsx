@@ -72,7 +72,7 @@ function InfoEditPage() {
       setNickname(data.data.nickname);
       dispatch(setRewardCount(data.data.fishShapedBun));
     } catch (error) {
-      console.error('회원 정보 불러오기 실패:', error);
+      console.error(error);
     }
   };
 
@@ -114,7 +114,7 @@ function InfoEditPage() {
         navigate('/mypage');
       }
     } catch (error) {
-      console.error('데이터 전송 중 오류:', error);
+      console.error(error);
       showErrorToast('정보 수정 중 오류가 발생했습니다.');
     }
   };

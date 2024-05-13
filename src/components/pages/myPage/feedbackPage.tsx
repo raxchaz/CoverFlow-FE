@@ -53,7 +53,7 @@ function FeedbackPage() {
         }
       }
     } catch (error) {
-      console.log('피드백 등록 실패:', error);
+      console.log(error);
       showErrorToast('피드백 등록 중 문제가 발생했습니다.');
     }
   };

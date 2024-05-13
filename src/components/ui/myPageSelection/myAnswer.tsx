@@ -100,12 +100,13 @@ export default function MyAnswer({
           className="my-component-css"
         />
       )}
-
+    {answer.length >= 1 && (
       <AdminPagination
         currentPage={currentPage}
         totalPages={totalPages}
         handlePagination={handlePagination}
       />
+    )}
     </div>
   );
 }
