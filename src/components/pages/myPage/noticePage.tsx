@@ -34,10 +34,10 @@ interface Notice {
 
 const PaginationWrapper = styled.div`
   position: fixed;
-  bottom: 5rem;
+  bottom: 1rem;
   width: 69rem;
   background-color: #fff;
-  padding: 10px 20px;
+  padding: 10px;
   @media (max-width: 768px) {
     padding: 5px 10px;
   }
