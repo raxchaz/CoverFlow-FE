@@ -29,6 +29,9 @@
   cursor: pointer;
   outline: none;
   padding-top: 4rem;
+  width : 91%;
+  line-height : 1.5rem;
+  white-space : pre-wrap;
 }
 
 .notice-item-container {
@@ -73,7 +76,7 @@
   max-height: 0;
   width: 95%;
   box-sizing: border-box;
-  margin: 5% 0% 5% 8.2%;
+  margin : 8% 0% 5% 8.1%;
   display: block;
   font-size: 1.8rem;
   letter-spacing: -1px;
@@ -109,6 +112,7 @@
 .notice-list.active .panel {
   max-height: 326px;
   font-size: 12px;
+
 }
 
 .notice-button-container {

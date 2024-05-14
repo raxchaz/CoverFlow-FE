@@ -53,22 +53,25 @@ function NoticePage() {
   const [totalPages, setTotalPages] = useState(0);
   const [notices, setNotices] = useState<Notice[]>([]);
   const navigate = useNavigate();
+
+  const fetchNotices = async () => {
+    try {
+      const notices = await fetchAPI(
+        `/api/notice?pageNo=${currentPage}&criterion=createdAt`,
+        'GET',
+      );
+      // console.log('Notices:', notices);
+      setTotalPages(notices.data.totalPages);
+      setNotices(notices.data.notices);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
-    const fetchNotices = async () => {
-      try {
-        const notices = await fetchAPI(
-          `/api/notice?pageNo=${currentPage}&criterion=createdAt`,
-          'GET',
-        );
-        // console.log('Notices:', notices);
-        setTotalPages(notices.data.totalPages);
-        setNotices(notices.data.notices);
-      } catch (error) {
-        console.error(error);
-      }
-    };
     fetchNotices();
-  }, [currentPage]);
+  }, [currentPage, navigate]);
+  
   const handlePanelToggle = (index) => {
     setActivePanelIndex(activePanelIndex === index ? null : index);
   };
