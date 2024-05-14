@@ -36,7 +36,7 @@ const Divider = styled.div`
   height: 1px;
   background-color: rgba(217, 217, 217, 1);
   width: 79%;
-  margin: 5% 0% 0% 12%;
+  margin: 3% 0% 0% 12%;
 `;
 
 function InfoEditPage() {
@@ -154,7 +154,9 @@ function InfoEditPage() {
               >
                 변경
               </div>
-            </div>
+            </div>        
+            <div className="nick-disclaimer">* 닉네임 변경 시, 붕어빵 20개가 차감됩니다 </div>
+
           </div>
         </div>
         <Divider />

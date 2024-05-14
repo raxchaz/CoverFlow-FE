@@ -22,7 +22,7 @@ const StatusBar = styled.div`
 `;
 
 const StatusTab = styled.div`
-  width: 245px;
+  width: 255px;
   letter-spacing: -1px;
   text-align: center;
   padding: 10px 0;
