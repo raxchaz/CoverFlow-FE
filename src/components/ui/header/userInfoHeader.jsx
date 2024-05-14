@@ -85,7 +85,8 @@ function UserInfoHeader() {
     if (menu === '마이페이지') {
       navigate('/mypage');
     } else if (menu === '상점') {
-      navigate('/store');
+      // navigate('/store');
+      showErrorToast("준비중인 페이지입니다.")
       // } else if (menu === '메인') {
       //   navigate('/');
     } else if (menu === '로그아웃') {
