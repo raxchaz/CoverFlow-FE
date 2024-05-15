@@ -61,7 +61,7 @@ function NotificationList({
         }
       })
       .catch((error) => {
-        console.error('데이터 불러오기 실패', error);
+        console.error(error);
       });
   };
 

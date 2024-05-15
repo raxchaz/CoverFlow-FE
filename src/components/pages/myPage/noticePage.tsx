@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../../asset/sass/pages/myPage/noticePage.scss';
+import WarningIcon from "../../../asset/image/faceicon.svg"
 import { StyledHeader, StyledPage } from '../../../styledComponent';
 import TitleHeader from '../../ui/header/titleHeader';
 import TabBar from '../../ui/tabBar/tabBar';
@@ -33,10 +34,10 @@ interface Notice {
 
 const PaginationWrapper = styled.div`
   position: fixed;
-  bottom: 5rem;
+  bottom: 1rem;
   width: 69rem;
   background-color: #fff;
-  padding: 10px 20px;
+  padding: 10px;
   @media (max-width: 768px) {
     padding: 5px 10px;
   }
@@ -52,22 +53,25 @@ function NoticePage() {
   const [totalPages, setTotalPages] = useState(0);
   const [notices, setNotices] = useState<Notice[]>([]);
   const navigate = useNavigate();
+
+  const fetchNotices = async () => {
+    try {
+      const notices = await fetchAPI(
+        `/api/notice?pageNo=${currentPage}&criterion=createdAt`,
+        'GET',
+      );
+      // console.log('Notices:', notices);
+      setTotalPages(notices.data.totalPages);
+      setNotices(notices.data.notices);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
-    const fetchNotices = async () => {
-      try {
-        const notices = await fetchAPI(
-          '/api/notice?pageNo=0&criterion=createdAt',
-          'GET',
-        );
-        // console.log('Notices:', notices);
-        setTotalPages(notices.data.totalPages);
-        setNotices(notices.data.notices);
-      } catch (error) {
-        console.error('공지사항 불러오기 실패', error);
-      }
-    };
     fetchNotices();
-  }, [currentPage]);
+  }, [currentPage, navigate]);
+  
   const handlePanelToggle = (index) => {
     setActivePanelIndex(activePanelIndex === index ? null : index);
   };
@@ -93,28 +97,35 @@ function NoticePage() {
       <StyledHeader>
         <TitleHeader pageTitle="공지사항" handleGoBack={handleGoBack} />
         <div className="notice-wrapper">
-          {notices.map((notice, index) => (
-            <div
-              className={`notice-list ${activePanelIndex === index ? 'active' : ''} `}
-              key={index}
-              onClick={() => handlePanelToggle(index)}
-            >
-              <div className="notice-item-container">
-                <div className="notice-item">
-                  <h3>{notice.createdAt}</h3>
-                  <h2>{notice.noticeTitle}</h2>
+          {notices.length > 0 ? (
+            notices.map((notice, index) => (
+              <div
+                className={`notice-list ${activePanelIndex === index ? 'active' : ''}`}
+                key={index}
+                onClick={() => handlePanelToggle(index)}
+              >
+                <div className="notice-item-container">
+                  <div className="notice-item">
+                    <h3>{notice.createdAt}</h3>
+                    <h2>{notice.noticeTitle}</h2>
+                  </div>
+                  <img
+                    src={activePanelIndex === index ? upArrow : downArrow}
+                    alt="toggle_icon"
+                    className="activePanel-toggle"
+                  />
                 </div>
-                <img
-                  src={activePanelIndex === index ? upArrow : downArrow}
-                  alt="toggle_icon"
-                  className="activePanel-toggle"
-                />
+                <div className="panel">
+                  <span>{notice.noticeContent}</span>
+                </div>
               </div>
-              <div className="panel">
-                <span>{notice.noticeContent}</span>
-              </div>
+            ))
+          ) : (
+            <div className="no-notice-wrapper">
+              <img src={WarningIcon} alt="no-notice"/> 
+              <h2>등록된 공지사항이 없습니다.</h2>
             </div>
-          ))}
+          )}
         </div>
         {notices.length > 0 && (
           <PaginationWrapper>
