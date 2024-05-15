@@ -443,6 +443,7 @@ function QuestionDetailPage() {
 
           {answers.map((answer) => (
             <Answer
+            questionerNickname={questionerNickname}
               key={answer.answerId}
               createAt={answer.createAt}
               answerContent={answer.answerContent}

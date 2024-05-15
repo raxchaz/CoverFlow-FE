@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux';
 import Dot from '../../../asset/image/dots-vertical.svg';
 
 interface UserState {
-  myNickname: string;
+  myNickName: string;
 }
 
 interface AppState {
@@ -108,6 +108,7 @@ interface AnswerDetailProps {
   setIsAdopted: (isAdopted: boolean) => void;
   fetchData: () => void;
   anyAdopted: boolean;
+  questionerNickname:string;
 }
 
 function AnswerModule({
@@ -120,8 +121,9 @@ function AnswerModule({
   fetchData,
   anyAdopted,
   answererTag,
+  questionerNickname
 }: AnswerDetailProps) {
-  const { myNickname } = useSelector((state: AppState) => state.user);
+  const { myNickName } = useSelector((state: AppState) => state.user);
 
   const [isShowEdit, setIsShowEdit] = useState(false);
 
@@ -130,6 +132,7 @@ function AnswerModule({
   const [selectedAnswerId, setSelectAnswerId] = useState<string | undefined>(
     '',
   );
+
 
   const handleEdit = async (id: string | undefined) => {
     const res = await fetchAPI('/api/member/me', 'GET');
@@ -262,7 +265,7 @@ function AnswerModule({
           ) : null}
           <BottomContainer>
             <div className="user-container">{createAt}</div>
-            {isAdopted || anyAdopted || myNickname !== answererNickname ? (
+            {isAdopted || anyAdopted || myNickName !== questionerNickname ? (
               <div style={{ height: '25px' }}></div>
             ) : (
               <AdoptButton onClick={handleAdoptAnswer}>

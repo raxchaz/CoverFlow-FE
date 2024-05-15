@@ -9,8 +9,7 @@ import upArrow from '../../../asset/image/notice-up-arrow.svg';
 import downArrow from '../../../asset/image/notice-down-arrow.svg';
 import AdminPagination from '../../ui/adminSelection/adminPagination';
 import styled from 'styled-components';
-// import { BASE_URL } from '../../global/constants';
-import { fetchAPI } from '../../global/utils/apiUtil';
+import { BASE_URL } from '../../global/constants';
 
 interface Notice {
   noticeId: number;
@@ -56,13 +55,17 @@ function NoticePage() {
 
   const fetchNotices = async () => {
     try {
-      const notices = await fetchAPI(
-        `/api/notice?pageNo=${currentPage}&criterion=createdAt`,
-        'GET',
+      const response = await fetch(
+        `${BASE_URL}/api/notice?pageNo=${currentPage}&criterion=createdAt`
       );
       // console.log('Notices:', notices);
-      setTotalPages(notices.data.totalPages);
-      setNotices(notices.data.notices);
+      if (!response.ok) {
+        throw new Error(` ${response.status}`); 
+      }
+      const data = await response.json();
+    
+      setTotalPages(data.data.totalPages);
+      setNotices(data.data.notices);
     } catch (error) {
       console.error(error);
     }
