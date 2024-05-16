@@ -99,7 +99,7 @@ export default function CompanySelection() {
     })
       .then((response) => response.json())
       .then((data: ApiResponse) => {
-        // console.log(data);
+        console.log(data);
         setCompanies(data.data.companies);
         setTotalPages(data.data.totalPages);
         seTtotalCompanyCount(data.data.totalElements);

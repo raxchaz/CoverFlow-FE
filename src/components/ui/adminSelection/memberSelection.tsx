@@ -1,36 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './memberSelection.scss';
 import AdminSearch from '../../../asset/image/admin-search.svg';
 import Button from '../button/Button/Button';
-// import { ACCESS_TOKEN, BASE_URL } from '../../global/constants';
+import { ACCESS_TOKEN, BASE_URL } from '../../global/constants';
 import Calendar from '../calendar/calendar';
 
 export default function MemberSelection() {
-  // const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  // const fetchMember = (pageNo: number) => {
-  //   const queryParams = new URLSearchParams({
-  //     pageNo: pageNo.toString(),
-  //     criterion: 'createdAt',
-  //   });
-  //   const url = `${BASE_URL}/api/member/admin?${queryParams.toString()}`;
-  //   fetch(url, {
-  //     headers: {
-  //       Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
-  //       'Content-Type': 'application/json',
-  //     },
-  //   })
-  //     .then((response) => response.json())
-  //     .then((data: Response) => {
-  //       // console.log(data);
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error:', error);
-  //       setIsLoading(false);
-  //     });
-  // };
-  // // console.log(fetchMember(0));
-  // fetchMember;
+  const fetchMember = (pageNo: number) => {
+    const queryParams = new URLSearchParams({
+      pageNo: pageNo.toString(),
+      criterion: 'createdAt',
+    });
+    const url = `${BASE_URL}/api/member/admin?${queryParams.toString()}`;
+    fetch(url, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => response.json())
+      .then((data: Response) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+        setIsLoading(false);
+      });
+  };
+  // console.log(fetchMember(0));
+  fetchMember;
 
   return (
     <div className="ad-memberSelection-container">
