@@ -217,6 +217,7 @@ function SearchInput({ setCurrentPage }: SearchInputProps) {
                 ],
               )
             : handleCompanySearch();
+          setShowAutoComplete(false);
         },
       },
     ];
