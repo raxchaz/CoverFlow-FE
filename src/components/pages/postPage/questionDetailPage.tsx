@@ -327,6 +327,12 @@ function QuestionDetailPage() {
     '스팸 혹은 홍보성 도배글이에요',
     '특정 이용자가 질문, 답변, 채택을 반복해요',
   ];
+
+  const handleOutSideClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (event?.target === event?.currentTarget) {
+      setIsShowReportModal(false);
+    }
+  };
   return (
     <StyledPage className="main-page-container">
       <StyledHeader>
@@ -361,11 +367,12 @@ function QuestionDetailPage() {
           </div>
         )}
         {isShowReport ? (
-          <div className="dropdown-question-detail-report-menu">
+          <div
+            onClick={toggleReportPopup}
+            className="dropdown-question-detail-report-menu"
+          >
             <ul>
-              <li onClick={toggleReportPopup} className="dropdown-item-report">
-                신고
-              </li>
+              <li className="dropdown-item-report">신고</li>
             </ul>
           </div>
         ) : null}
@@ -387,7 +394,7 @@ function QuestionDetailPage() {
         </div>
         <FirstLine />
         {isShowReportModal && (
-          <div className="report-popup-overlay">
+          <div onClick={handleOutSideClick} className="report-popup-overlay">
             <div className="report-popup">
               <div className="report-title">사용자 신고</div>
               <div className="report-sub-title">사유 선택</div>
@@ -443,7 +450,7 @@ function QuestionDetailPage() {
 
           {answers.map((answer) => (
             <Answer
-            questionerNickname={questionerNickname}
+              questionerNickname={questionerNickname}
               key={answer.answerId}
               createAt={answer.createAt}
               answerContent={answer.answerContent}
