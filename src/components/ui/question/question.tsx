@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../../asset/sass/etc/question/question.scss';
 import styled from 'styled-components';
@@ -59,12 +59,6 @@ function truncateTitle(title, maxLength = 25) {
     : title;
 }
 
-// function truncateContent(questionContent, maxLength = 30) {
-//   return questionContent.length > maxLength
-//     ? questionContent.substring(0, maxLength + 20) + '...'
-//     : questionContent;
-// }
-
 function formatDate(fullDate: string) {
   const date = new Date(fullDate);
   const year = date.getFullYear();
@@ -100,12 +94,7 @@ function QuestionModule({
   companyData,
   viewCount,
 }: QuestionModulesProps) {
-  // const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
-
-  // const handleLoginClick = () => {
-  //   navigate('/login'); // 로그인 페이지로 이동
-  // };
 
   const goToDetail = () => {
     navigate(`/company-info/${companyId}/${questionId}`, {
@@ -114,11 +103,6 @@ function QuestionModule({
       },
     });
   };
-
-  useEffect(() => {
-    // const token = localStorage.getItem(ACCESS_TOKEN);
-    // setIsLoggedIn(!!token);
-  }, []);
 
   const formattedDate = formatDate(createAt);
 
@@ -147,7 +131,9 @@ function QuestionModule({
               </div>
             </div>
             <div className="category-select-style">
-              {companyData.companyType}
+              {companyData?.questions?.map(
+                (question) => question.questionCategory,
+              )}
             </div>
           </div>
 
