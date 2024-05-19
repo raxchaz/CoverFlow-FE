@@ -19,6 +19,33 @@ import Pagination from '../../ui/Pagination.tsx';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 
+const LoginButton = styled.button`
+  letter-spacing: -0.7px;
+  background-color: #ff8d1d !important;
+  border-radius: 3px;
+  font-weight: 600;
+  font-size: 12px;
+  margin: 2% 10% 0% 48%;
+
+  padding: 5px 5px;
+  width: 15%;
+  cursor: pointer;
+  margin: 0;
+  z-index: 1;
+`;
+
+const IsNotLoggedIn = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  top: 17%;
+  gap: 5px;
+  span {
+    font-family: 'Pretendard-Semibold';
+  }
+`;
+
 const ContentBlur = styled.span<{ $isLoggedIn: boolean }>`
   ${({ $isLoggedIn }) =>
     !$isLoggedIn &&
@@ -114,6 +141,9 @@ interface AppState {
 
 function QuestionDetailPage() {
   const navigate = useNavigate();
+  const handleClickLogin = () => {
+    navigate('/login');
+  };
 
   const { questionId } = useParams();
 
@@ -393,6 +423,7 @@ function QuestionDetailPage() {
           </div>
         </div>
         <FirstLine />
+
         {isShowReportModal && (
           <div onClick={handleOutSideClick} className="report-popup-overlay">
             <div className="report-popup">
@@ -440,7 +471,13 @@ function QuestionDetailPage() {
           </button>
         </div>
       ) : null}
-
+      {!isLoggedIn && (
+        <IsNotLoggedIn>
+          <span>이 질문의 답변이 궁금하신가요?</span>
+          <span>로그인 하시고 답변을 확인해보세요</span>
+          <LoginButton onClick={handleClickLogin}>로그인 하러가기</LoginButton>
+        </IsNotLoggedIn>
+      )}
       <ContentBlur $isLoggedIn={isLoggedIn}>
         <AnswerList>
           <div className="answer-title">
@@ -464,14 +501,15 @@ function QuestionDetailPage() {
             />
           ))}
         </AnswerList>
-        <TabBar />
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          handlePagination={handlePagination}
-          className={answers.length === 0 ? 'hidden' : ''}
-        />
       </ContentBlur>
+
+      <TabBar />
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        handlePagination={handlePagination}
+        className={answers.length === 0 ? 'hidden' : ''}
+      />
     </StyledPage>
   );
 }
