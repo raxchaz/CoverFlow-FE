@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import yellowTrophy from '../../../asset/image/yellow-trophy.svg';
 import Trophy from '../../../asset/image/trophy.svg';
 import { fetchAPI } from '../../global/utils/apiUtil';
-import { showErrorToast, showSuccessToast } from '../toast/toast';
+import { showSuccessToast } from '../toast/toast';
 import Tree from '../../../asset/image/nature-ecology-tree-3--tree-plant-cloud-shape-park.svg';
 import Leaf from '../../../asset/image/leaf.svg';
 import { useSelector } from 'react-redux';
@@ -108,7 +108,7 @@ interface AnswerDetailProps {
   setIsAdopted: (isAdopted: boolean) => void;
   fetchData: () => void;
   anyAdopted: boolean;
-  questionerNickname:string;
+  questionerNickname: string;
 }
 
 function AnswerModule({
@@ -121,11 +121,9 @@ function AnswerModule({
   fetchData,
   anyAdopted,
   answererTag,
-  questionerNickname
+  questionerNickname,
 }: AnswerDetailProps) {
   const { myNickName } = useSelector((state: AppState) => state.user);
-
-  const [isShowEdit, setIsShowEdit] = useState(false);
 
   const [isShowReport, setIsShowReport] = useState(false);
   const [isShowReportModal, setIsShowReportModal] = useState(false);
@@ -133,12 +131,9 @@ function AnswerModule({
     '',
   );
 
-
-  const handleEdit = async (id: string | undefined) => {
+  const handleReportModal = async (id: string | undefined) => {
     const res = await fetchAPI('/api/member/me', 'GET');
-    if (res.data.nickname === answererNickname) {
-      setIsShowEdit((isShow) => !isShow);
-    } else if (res.data.nickname !== answererNickname) {
+    if (res.data.nickname !== answererNickname) {
       setIsShowReport((showReport) => !showReport);
       if (selectedAnswerId === id) {
         setIsShowReport((show) => !show);
@@ -149,32 +144,9 @@ function AnswerModule({
     }
   };
 
-  const handleClickEdit = async () => {
-    try {
-      await fetchAPI(`/api/question/${answerId}`, 'PATCH');
-    } catch (error) {
-      if (error instanceof Error) showErrorToast(error.message);
-    }
-  };
-
   const toggleReportPopup = () => {
     setIsShowReport((showReport) => !showReport);
     setIsShowReportModal((showReportModal) => !showReportModal);
-  };
-
-  const handleClickDelete = async () => {
-    try {
-      if (confirm('삭제하시겠습니까?')) {
-        const response = await fetchAPI(`/api/question/${answerId}`, 'DELETE');
-        if (response.error) {
-          showErrorToast('답변 삭제가 불가능합니다.');
-        } else {
-          showSuccessToast('답변이 삭제되었습니다.');
-        }
-      }
-    } catch (error) {
-      if (error instanceof Error) showErrorToast(error.message);
-    }
   };
 
   const handleReportSubmit = async () => {
@@ -231,26 +203,16 @@ function AnswerModule({
               />
               <AnswerName>{answererNickname}</AnswerName>
             </NameContainer>
-            <img src={Dot} alt="dot" onClick={() => handleEdit(answerId)} />
+            <img
+              src={Dot}
+              alt="dot"
+              onClick={() => handleReportModal(answerId)}
+            />
           </div>
           <AnswerContent className="user-contents">
             {answerContent}
           </AnswerContent>
-          {isShowEdit && selectedAnswerId !== answerId && (
-            <div className="dropdown-question-detail-menu-answer">
-              <ul>
-                <li onClick={handleClickEdit} className="dropdown-item-edit">
-                  수정
-                </li>
-                <li
-                  onClick={handleClickDelete}
-                  className="dropdown-item-delete"
-                >
-                  삭제
-                </li>
-              </ul>
-            </div>
-          )}
+
           {isShowReport ? (
             <div className="dropdown-question-detail-report-menu-answer">
               <ul>
