@@ -5,6 +5,7 @@ import AdminSideTap from '../../ui/adminSelection/adminSideTap';
 import FeedbackSelection from '../../ui/adminSelection/feedbackSelection';
 import MemberSelection from '../../ui/adminSelection/memberSelection';
 import ContactSelection from '../../ui/adminSelection/contactSelection';
+import NoticeSelection from '../../ui/adminSelection/noticeSelection';
 
 function AdminPage() {
   const [currentSection, setCurrentSection] = useState<string>('users');
@@ -19,7 +20,7 @@ function AdminPage() {
       <div className="section">
         {currentSection === 'users' && <MemberSelection />}
         {currentSection === 'company' && <CompanySelection />}
-
+        {currentSection === 'notification' && <NoticeSelection/>}
         {currentSection === 'questions' && <div>질문관리 섹션</div>}
         {currentSection === 'answers' && <div>답변관리 섹션</div>}
         {currentSection === 'comments' && <div>댓글관리 섹션</div>}
