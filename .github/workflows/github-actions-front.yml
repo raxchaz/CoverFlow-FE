@@ -24,7 +24,7 @@ permissions:
 
 jobs:
   build:
-    if: github.repository == 'COFLLL/CoverFlow-FE'
+    if: github.repository == 'Team-Coverflow/CoverFlow-FE'
     runs-on: ubuntu-latest
     steps:
       ## Repo checkout
