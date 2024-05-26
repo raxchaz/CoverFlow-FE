@@ -164,6 +164,7 @@ function QuestionDetailPage() {
   const [answers, setAnswers] = useState<CommentProps[]>([]);
 
   const answerRef = useRef<HTMLTextAreaElement>(null);
+  const reportMenuRef = useRef<HTMLDivElement>(null);
   const [postAnswer, setPostAnswer] = useState('');
 
   const { isLoggedIn } = useSelector((state: AppState) => state.user);
@@ -237,8 +238,29 @@ function QuestionDetailPage() {
     setIsShowReportModal((showReportModal) => !showReportModal);
   };
 
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (
+        reportMenuRef.current &&
+        !reportMenuRef.current.contains(event.target)
+      ) {
+        setIsShowReport(false);
+      }
+    };
+
+    if (isShowReport) {
+      window.addEventListener('click', handleOutsideClick);
+    } else {
+      window.removeEventListener('click', handleOutsideClick);
+    }
+
+    return () => {
+      window.removeEventListener('click', handleOutsideClick);
+    };
+  }, [isShowReport]);
+
   const handleEdit = async () => {
-    const res = await fetchAPI('/api/member/me', 'GET');
+    const res = await axios.get(`${BASE_URL}/api/member/me`);
 
     if (res.data.nickname === questionerNickname) {
       setIsShowEdit((isShow) => !isShow);
@@ -382,7 +404,10 @@ function QuestionDetailPage() {
           <img onClick={handleEdit} src={Dot} alt="dot" />
         </QuestionTitle>
         {isShowEdit && (
-          <div className="dropdown-question-detail-menu">
+          <div
+            onClick={handleOutSideClick}
+            className="dropdown-question-detail-menu"
+          >
             <ul>
               <li onClick={handleClickEdit} className="dropdown-item-edit">
                 수정
@@ -391,13 +416,12 @@ function QuestionDetailPage() {
               <li onClick={handleClickDelete} className="dropdown-item-delete">
                 삭제
               </li>
-              {/*
-               */}
             </ul>
           </div>
         )}
         {isShowReport ? (
           <div
+            ref={reportMenuRef}
             onClick={toggleReportPopup}
             className="dropdown-question-detail-report-menu"
           >
