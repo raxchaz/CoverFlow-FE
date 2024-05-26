@@ -416,8 +416,6 @@ function QuestionDetailPage() {
               <li onClick={handleClickDelete} className="dropdown-item-delete">
                 삭제
               </li>
-              {/*
-               */}
             </ul>
           </div>
         )}
