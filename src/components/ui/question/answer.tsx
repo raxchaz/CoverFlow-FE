@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import '../../../asset/sass/etc/question/answer.scss';
 import styled from 'styled-components';
 import yellowTrophy from '../../../asset/image/yellow-trophy.svg';
@@ -124,6 +124,7 @@ function AnswerModule({
   questionerNickname,
 }: AnswerDetailProps) {
   const { myNickName } = useSelector((state: AppState) => state.user);
+  const reportMenuRef = useRef<HTMLDivElement>(null);
 
   const [isShowReport, setIsShowReport] = useState(false);
   const [isShowReportModal, setIsShowReportModal] = useState(false);
@@ -183,6 +184,27 @@ function AnswerModule({
     '특정 이용자가 질문, 답변, 채택을 반복해요',
   ];
 
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (
+        reportMenuRef.current &&
+        !reportMenuRef.current.contains(event.target)
+      ) {
+        setIsShowReport(false);
+      }
+    };
+
+    if (isShowReport) {
+      window.addEventListener('click', handleOutsideClick);
+    } else {
+      window.removeEventListener('click', handleOutsideClick);
+    }
+
+    return () => {
+      window.removeEventListener('click', handleOutsideClick);
+    };
+  }, [isShowReport]);
+
   return (
     <>
       {isAdopted && (
@@ -214,7 +236,10 @@ function AnswerModule({
           </AnswerContent>
 
           {isShowReport ? (
-            <div className="dropdown-question-detail-report-menu-answer">
+            <div
+              ref={reportMenuRef}
+              className="dropdown-question-detail-report-menu-answer"
+            >
               <ul>
                 <li
                   onClick={toggleReportPopup}
