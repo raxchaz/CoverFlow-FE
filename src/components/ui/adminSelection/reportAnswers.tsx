@@ -1,41 +1,41 @@
 import React, { useEffect, useState } from 'react';
-import './memberSelection.scss';
+import './reportStyling.scss';
 import AdminSearch from '../../../asset/image/admin-search.svg';
 import Button from '../button/Button/Button';
 import { ACCESS_TOKEN, BASE_URL } from '../../global/constants';
 import Calendar from '../calendar/calendar';
 import AdminPagination from './adminPagination';
 
-interface Member {
-  id: string;
-  nickname: string;
-  email: string;
-  gender: string;
-  memberType: string;
-  role: string;
-  status: string;
-  fishShapedBun: number;
-  age: string;
+interface Reports {
+  reportId: number;
+  reportContent: string;
+  reportType: string;
+  reportStatus: boolean;
+  reporterNickname?: string;
+  questionId?: string;
+  createdAt?: number;
 }
 
 interface ApiResponse {
   statusCode: string;
   data: {
     totalPages: number;
-    members: Member[];
+    reports: Reports[];
     totalElements: number;
   };
 }
 
-export default function MemberSelection() {
+export default function ReportAnswers() {
   // const [isLoading, setIsLoading] = useState(false);
-  const [members, setMembers] = useState<Member[]>([]);
+  const [reports, setReportss] = useState<Reports[]>([]);
+  console.log(setReportss);
+  // console.log(questions);
   const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
 
   useEffect(() => {
-    fetchMember(currentPage);
+    fetchQuestions(currentPage);
   }, [currentPage]);
 
   const handlePagination = (direction) => {
@@ -48,14 +48,14 @@ export default function MemberSelection() {
     }
   };
 
-  const fetchMember = (pageNo: number) => {
+  const fetchQuestions = (pageNo: number) => {
     // setIsLoading(true);
     const queryParams = new URLSearchParams({
       pageNo: pageNo.toString(),
       criterion: 'createdAt',
     });
-    const url = `${BASE_URL}/api/member/admin?${queryParams.toString()}`;
-    fetch(url, {
+    const urls = `${BASE_URL}/api/report/admin?${queryParams.toString()}`;
+    fetch(urls, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
         'Content-Type': 'application/json',
@@ -64,7 +64,7 @@ export default function MemberSelection() {
       .then((response) => response.json())
       .then((data: ApiResponse) => {
         console.log(data);
-        setMembers(data.data.members);
+        setReportss(data.data.reports);
         setTotalPages(data.data.totalPages);
       })
       .catch((error) => {
@@ -73,9 +73,10 @@ export default function MemberSelection() {
       });
   };
 
-  // console.log(fetchMember(0));
+  // console.log(fetchQuestions(0));
+
   return (
-    <div className="ad-memberSelection-container">
+    <div className="ad-reportSelection-container">
       <div className="ad-search">
         <div className="search-container">
           <div className="search-row">
@@ -93,37 +94,29 @@ export default function MemberSelection() {
         </div>
       </div>
       <>
-        <div className="ad-memberOption">
-          <div className="ad-memberitem-direction">
-            <div className="ad-memberOption-maxitem">
-              <span className="ad-member-title">가입일</span>
+        <div className="ad-reportOption">
+          <div className="ad-reportitem-direction">
+            <div className="ad-reportOption-maxitem">
+              <span className="ad-report-title">신고일</span>
               <input type="checkbox" className="ad-member-checkbox" />
-              <span className="ad-member-total">전체</span>
+              <span className="ad-report-total">전체</span>
             </div>
-            <div className="ad-memberSelection-Calendar">
+            <div className="ad-reportSelection-Calendar">
               <Calendar />
             </div>
           </div>
 
-          <div className="ad-memberOption-item">
-            <span className="ad-member-title">회원상태</span>
+          <div className="ad-reportOption-item">
+            <span className="ad-report-title">신고사유</span>
             <select className="ad-searchOption-select">
               <option value=""></option>
             </select>
           </div>
-          <div className="ad-memberOption-item">
-            <span className="ad-member-title">회원권한</span>
+          <div className="ad-reportOption-item">
+            <span className="ad-report-title">신고상태</span>
             <select className="ad-searchOption-select">
               <option value=""></option>
             </select>
-          </div>
-          <div className="ad-memberitem-direction">
-            <div className="ad-memberOption-maxend">
-              <span className="ad-member-title">최종로그인</span>
-              <div className="ad-member-Calendar">
-                <Calendar />
-              </div>
-            </div>
           </div>
         </div>
         <div className="ad-searchResult">
@@ -139,41 +132,36 @@ export default function MemberSelection() {
             <p>로딩 중...</p>
           ) : (
             <div> */}
-          <div className="ad-member-result">
+          <div className="ad-report-result">
             <ul>
-              <li className="ad-memberResult-header">
+              <li className="ad-reportResult-header">
                 <input type="checkbox" />
-                <span>번호</span>
-                <span>UUID</span>
-                <span>계정</span>
-                <span>닉네임</span>
-                <span>붕어빵</span>
-                <span>성별</span>
-                <span>연령대</span>
-                <span>관리</span>
+                <span>질문번호</span>
+                <span>답변번호</span>
+                <span>작성자</span>
+                <span>신고자</span>
+                <span>신고일</span>
+                <span>상태관리</span>
               </li>
-              {members.map((member, index) => {
+              {reports.map((reports, index) => {
                 const itemNumber = index + 1 + currentPage * itemsPerPage;
                 return (
-                  <li key={member.id} className="ad-memberResult-item">
+                  <li key={reports.reportId} className="ad-reportResult-item">
                     <input type="checkbox" />
                     <span>{itemNumber}</span>
-                    <span>{member.id}</span>
-                    <span>{member.email}</span>
-                    <span>{member.nickname}</span>
-                    <span>{member.fishShapedBun}</span>
-                    <span>{member.gender}</span>
-                    <span>{member.age}</span>
+                    <span>{reports.reportId}</span>
+                    <span>{reports.reporterNickname}</span>
+                    <span>{reports.createdAt}</span>
                     <span onClick={() => {}}>
-                      <span className="ad-memberdetail">관리 변경</span>
+                      <span className="ad-reportdetail">관리 변경</span>
                     </span>
                   </li>
                 );
               })}
             </ul>
           </div>
-          <div className="ad-member-pagination">
-            {members && (
+          <div className="ad-report-pagination">
+            {reports && (
               <AdminPagination
                 currentPage={currentPage}
                 totalPages={totalPages}

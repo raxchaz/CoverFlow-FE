@@ -60,7 +60,7 @@ export default function FeedbackSelection() {
     <div className="ad-feedbackSelection-container ">
       <div className="ad-feedbackSelection">
         <p className="ad-cnt">
-          <span className="ad-cnt-num">{totalFeedbackCount}</span>건의 기업이
+          <span className="ad-cnt-num">{totalFeedbackCount}</span>건의 피드백이
           검색되었습니다.
         </p>
 
