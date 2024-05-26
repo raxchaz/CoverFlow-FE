@@ -83,11 +83,9 @@ function SearchInput({ setCurrentPage }: SearchInputProps) {
   const debouncedKeyword = useDebounce(keyword, 300);
 
   // 유효한 문자열 검사 (한글, 영문, 숫자)
-  // const isSyllable = (character) => {
-  //   const syllableRegex = /^[가-힣a-zA-Z0-9]$/;
-
-  //   return syllableRegex.test(character);
-  // };
+  const isSyllable = (character) => {
+    return /^[가-힣a-zA-Z0-9]$/.test(character);
+  };
 
   useEffect(() => {
     inputRef.current?.focus();
@@ -104,11 +102,7 @@ function SearchInput({ setCurrentPage }: SearchInputProps) {
   }, [activeIndex, autoCompleteValue]);
 
   useEffect(() => {
-    if (debouncedKeyword !== '') {
-      fetchAutoCompleteData(debouncedKeyword);
-    } else {
-      setAutoCompleteValue([]);
-    }
+    fetchAutoCompleteData(debouncedKeyword);
   }, [debouncedKeyword]);
 
   useEffect(() => {
@@ -120,9 +114,13 @@ function SearchInput({ setCurrentPage }: SearchInputProps) {
   // 입력값 변경 핸들러
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newInputValue = event.target.value.trim();
+
     setShowAutoComplete(true);
-    setKeyword(newInputValue);
     setActiveIndex(-1);
+
+    setKeyword(newInputValue);
+    if (isSyllable(newInputValue)) fetchAutoCompleteData(newInputValue);
+    else setAutoCompleteValue([]);
   };
 
   // 자동완성 데이터 요청
@@ -148,7 +146,7 @@ function SearchInput({ setCurrentPage }: SearchInputProps) {
     const params = new URLSearchParams();
     params.append('keyword', keyword);
     setCurrentPage?.(0);
-    navigate(`/search-result?${params.toString()}`, {
+    navigate(`/search-result?${params}`, {
       state: { searchResults: autoCompleteValue, totalCompany, totalPages },
     });
   };
@@ -219,6 +217,7 @@ function SearchInput({ setCurrentPage }: SearchInputProps) {
                 ],
               )
             : handleCompanySearch();
+          setShowAutoComplete(false);
         },
       },
     ];
@@ -235,7 +234,7 @@ function SearchInput({ setCurrentPage }: SearchInputProps) {
         placeholder="기업 명을 검색하세요"
         value={keyword || ''}
         onChange={handleInputChange}
-        onKeyDown={enteredKey}
+        onKeyUp={enteredKey}
       />
       <img
         className="search"

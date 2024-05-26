@@ -22,7 +22,7 @@ const StatusBar = styled.div`
 `;
 
 const StatusTab = styled.div`
-  width: 245px;
+  width: 255px;
   letter-spacing: -1px;
   text-align: center;
   padding: 10px 0;
@@ -74,7 +74,7 @@ export default function ContactSlider() {
       setContactList(data.data.inquiries);
       setTotalPage(data.data.totalPages);
     } catch (error) {
-      console.error('문의 내역 불러오기 실패:', error);
+      console.error(error);
     }
   };
 

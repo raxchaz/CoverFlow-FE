@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../../../asset/sass/pages/searchPage/companyRegistPage.scss';
-import { BASE_URL } from '../../global/constants';
 import { StyledPage, StyledHeader } from '../../../styledComponent.js';
 import TitleHeader from '../../ui/header/titleHeader';
 import TabBar from '../../ui/tabBar/tabBar';
 import { city, type } from '../../global/constants/companyOption.ts';
-import { setHeaders } from '../../../utils/utils';
 import { showErrorToast, showSuccessToast } from '../../ui/toast/toast.tsx';
+import { fetchAPINoToken } from '../../global/utils/apiUtil.js';
 
 interface CompanyInfoProps {
   name: string;
@@ -20,7 +18,6 @@ interface CompanyInfoProps {
 
 function CompanyRegistPage() {
   const navigate = useNavigate();
-  const headers = setHeaders();
 
   const [companyInfo, setCompanyInfo] = useState({
     name: '',
@@ -69,7 +66,7 @@ function CompanyRegistPage() {
     checkRequiredFields(companyInfo);
 
     try {
-      await axios.post(`${BASE_URL}/api/company`, companyInfo, headers);
+      await fetchAPINoToken(`/api/company`, 'POST', companyInfo);
       showSuccessToast('기업 등록이 완료되었어요!');
       navigate('/search-company');
     } catch (error) {

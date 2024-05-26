@@ -130,7 +130,8 @@ function Mypage() {
     // navigate('/premium');
   };
   const goToStore = () => {
-    navigate('/store');
+    // navigate('/store');
+    showErrorToast("준비중인 페이지입니다.")
   };
   const goToEdit = () => {
     navigate('/info-edit', { state: { nickname } });

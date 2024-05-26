@@ -20,6 +20,7 @@ const fetchToken = async (code) => {
       'Content-Type': 'application/json',
     },
   });
+  
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
   }
@@ -39,57 +40,46 @@ const TokenManagement = () => {
     const code = query.get('code');
     const role = query.get('role');
 
-    // console.log('code:', code);
-    // console.log('role:', role);
 
     if (!code || !role) {
-      console.error('코드 또는 역할이 URL에 포함되어 있지 않습니다.');
       navigate('/login');
       return;
     }
 
-    fetchToken(code, role)
-      .then((headers) => {
-        const accessToken = headers.get('Authorization');
-        const refreshToken = headers.get('Authorization-refresh');
+    if (role === 'GUEST') {
+      navigate('/login/terms', { state: {code} });
+    } else {
+      fetchToken(code)
+        .then((headers) => {
+          const accessToken = headers.get('Authorization');
+          const refreshToken = headers.get('Authorization-refresh');
 
-        // console.log('accessToken:', accessToken);
-        // console.log('refreshToken:', refreshToken);
+          if (!accessToken || !refreshToken) {
+            alert('토큰을 받아오는 데 실패하였습니다. 다시 시도해주세요.');
+            navigate('/login');
+            return;
+          }
+          dispatch(setTokens(accessToken, refreshToken));
+          localStorage.setItem(ACCESS_TOKEN, accessToken);
+          localStorage.setItem(REFRESH_TOKEN, refreshToken);
 
-        if (!accessToken || !refreshToken) {
-          alert('토큰을 받아오는 데 실패하였습니다. 다시 시도해주세요.');
-          navigate('/login');
-          return;
-        }
-        dispatch(setTokens(accessToken, refreshToken));
-        localStorage.setItem(ACCESS_TOKEN, accessToken);
-        localStorage.setItem(REFRESH_TOKEN, refreshToken);
-        // console.log('redux 저장 상태', store.getState());
+          const decoded = decodeToken(accessToken);
 
-        const decoded = decodeToken(accessToken);
-        const userRole = decoded.role;
-
-        // console.log('userRole:', userRole);
-        // console.log('decoded:', decoded);
-
-        if (userRole === 'GUEST') {
-          // console.log('약관 동의 페이지로 이동합니다.');
-          navigate('/login/terms', { state: { code } });
-        } else if (['MEMBER', 'PREMIUM', 'ADMIN'].includes(userRole)) {
-          // console.log('회원 정보가 존재합니다. 메인 페이지로 이동합니다.');
-          navigate(prevPage);
-          initializeSSE(queryClient, dispatch);
-        } else {
+          if (['MEMBER', 'PREMIUM', 'ADMIN'].includes(decoded.role)) {
+            navigate(prevPage || '/');
+            initializeSSE(queryClient, dispatch);
+          } else {
+            alert('로그인에 실패하였습니다. 다시 시도해주세요.');
+            navigate('/');
+          }
+        })
+        .catch((error) => {
+          console.error(error);
           alert('로그인에 실패하였습니다. 다시 시도해주세요.');
-          navigate('/login');
-        }
-      })
-      .catch((error) => {
-        console.error('토큰 요청 중 오류가 발생했습니다:', error);
-        alert('로그인에 실패하였습니다. 다시 시도해주세요.');
-        navigate('/login');
-      });
-  }, [navigate, location, dispatch]);
+          navigate('/');
+        });
+    }
+  }, [navigate, location, dispatch, queryClient]);
   return null;
 };
 

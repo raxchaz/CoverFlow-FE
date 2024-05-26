@@ -157,11 +157,11 @@ const NicknamePage = () => {
         age: ageRange,
         gender: genderData,
       };
-      await fetchAPI('/api/member/nickname', 'POST', body);
+      await fetchAPI('/api/member', 'POST', body);
       navigate('/');
       showSuccessToast('환영합니다!');
     } catch (error) {
-      console.error('데이터 전송 중 오류:', error);
+      console.error(error);
       showErrorToast('데이터 전송에 실패했습니다.');
     }
   };

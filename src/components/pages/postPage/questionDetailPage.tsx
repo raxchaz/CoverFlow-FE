@@ -19,6 +19,33 @@ import Pagination from '../../ui/Pagination.tsx';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 
+const LoginButton = styled.button`
+  letter-spacing: -0.7px;
+  background-color: #ff8d1d !important;
+  border-radius: 3px;
+  font-weight: 600;
+  font-size: 12px;
+  margin: 2% 10% 0% 48%;
+
+  padding: 5px 5px;
+  width: 15%;
+  cursor: pointer;
+  margin: 0;
+  z-index: 1;
+`;
+
+const IsNotLoggedIn = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  top: 17%;
+  gap: 5px;
+  span {
+    font-family: 'Pretendard-Semibold';
+  }
+`;
+
 const ContentBlur = styled.span<{ $isLoggedIn: boolean }>`
   ${({ $isLoggedIn }) =>
     !$isLoggedIn &&
@@ -114,6 +141,9 @@ interface AppState {
 
 function QuestionDetailPage() {
   const navigate = useNavigate();
+  const handleClickLogin = () => {
+    navigate('/login');
+  };
 
   const { questionId } = useParams();
 
@@ -289,16 +319,13 @@ function QuestionDetailPage() {
     const response = await axios.get(
       `${BASE_URL}/api/question/${questionId}?pageNo=${currentPage}&criterion=createdAt`,
     );
-    const data = response.data.data;
 
-    // const sortedAnswers = data.answers.sort((a, b) => {
-    //   if (a.selection && !b.selection) return -1;
-    //   if (!a.selection && b.selection) return 1;
-    //   return 0;
-    // });
+    const { data } = response.data;
+
     const adoptedExists = data.answers.some(
       (answer) => answer.selection === true,
     );
+
     setAnyAdopted(adoptedExists);
     setIsAdopted(adoptedExists);
 
@@ -330,6 +357,12 @@ function QuestionDetailPage() {
     '스팸 혹은 홍보성 도배글이에요',
     '특정 이용자가 질문, 답변, 채택을 반복해요',
   ];
+
+  const handleOutSideClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (event?.target === event?.currentTarget) {
+      setIsShowReportModal(false);
+    }
+  };
   return (
     <StyledPage className="main-page-container">
       <StyledHeader>
@@ -364,11 +397,12 @@ function QuestionDetailPage() {
           </div>
         )}
         {isShowReport ? (
-          <div className="dropdown-question-detail-report-menu">
+          <div
+            onClick={toggleReportPopup}
+            className="dropdown-question-detail-report-menu"
+          >
             <ul>
-              <li onClick={toggleReportPopup} className="dropdown-item-report">
-                신고
-              </li>
+              <li className="dropdown-item-report">신고</li>
             </ul>
           </div>
         ) : null}
@@ -389,8 +423,9 @@ function QuestionDetailPage() {
           </div>
         </div>
         <FirstLine />
+
         {isShowReportModal && (
-          <div className="report-popup-overlay">
+          <div onClick={handleOutSideClick} className="report-popup-overlay">
             <div className="report-popup">
               <div className="report-title">사용자 신고</div>
               <div className="report-sub-title">사유 선택</div>
@@ -436,7 +471,13 @@ function QuestionDetailPage() {
           </button>
         </div>
       ) : null}
-
+      {!isLoggedIn && (
+        <IsNotLoggedIn>
+          <span>이 질문의 답변이 궁금하신가요?</span>
+          <span>로그인 하시고 답변을 확인해보세요</span>
+          <LoginButton onClick={handleClickLogin}>로그인 하러가기</LoginButton>
+        </IsNotLoggedIn>
+      )}
       <ContentBlur $isLoggedIn={isLoggedIn}>
         <AnswerList>
           <div className="answer-title">
@@ -446,6 +487,7 @@ function QuestionDetailPage() {
 
           {answers.map((answer) => (
             <Answer
+              questionerNickname={questionerNickname}
               key={answer.answerId}
               createAt={answer.createAt}
               answerContent={answer.answerContent}
@@ -459,14 +501,15 @@ function QuestionDetailPage() {
             />
           ))}
         </AnswerList>
-        <TabBar />
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          handlePagination={handlePagination}
-          className={answers.length === 0 ? 'hidden' : ''}
-        />
       </ContentBlur>
+
+      <TabBar />
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        handlePagination={handlePagination}
+        className={answers.length === 0 ? 'hidden' : ''}
+      />
     </StyledPage>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../../asset/sass/pages/myPage/feedbackPage.scss';
 import { StyledPage, StyledHeader } from '../../../styledComponent.js';
@@ -10,12 +10,20 @@ import { showErrorToast, showSuccessToast } from '../../ui/toast/toast.tsx';
 import { BASE_URL, ACCESS_TOKEN } from '../../global/constants/index.ts';
 
 function FeedbackPage() {
+  const [contact, setcontact] = useState('');
+
+  useEffect(()=>{
+    if (contact.length >=250){
+      showErrorToast('피드백은 250자 까지 입력 가능합니다.');
+    }
+  },[contact])
+
   const navigate = useNavigate();
 
   const handleGoBack = () => {
     navigate(-1);
   };
-  const [contact, setcontact] = useState('');
+
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
@@ -26,6 +34,11 @@ function FeedbackPage() {
     try {
       if (contact.length < 11) {
         showErrorToast('피드백을 10자 이상 작성해주세요.');
+        return;
+      }
+
+      if (contact.length >250){
+        showErrorToast('피드백을 250자 이하로 작성해주세요.');
         return;
       }
 
@@ -53,7 +66,7 @@ function FeedbackPage() {
         }
       }
     } catch (error) {
-      console.log('피드백 등록 실패:', error);
+      console.log(error);
       showErrorToast('피드백 등록 중 문제가 발생했습니다.');
     }
   };
@@ -76,6 +89,7 @@ function FeedbackPage() {
           value={contact}
           handleChange={handleChange}
           variant={'round'}
+          maxLength={250}
         />
 
         <Button

@@ -16,9 +16,10 @@ import { showErrorToast, showSuccessToast } from '../../ui/toast/toast.tsx';
 import { initializeSSE } from '../../global/utils/eventApiUtils.js';
 import { useQueryClient } from '@tanstack/react-query';
 import { useDispatch } from 'react-redux';
+import {setTokens} from '../../../store/actions/authActions';
 
 interface LocationState {
-  code?: string;
+  code: string;
 }
 
 interface TermsAgreement {
@@ -35,8 +36,8 @@ export default function TermsPage() {
   const location = useLocation();
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
-  const { code } = (location.state || {}) as LocationState;
-
+  const { code } = location.state as LocationState;
+  
   // =========================================================== 약관 동의 확인을 위한 부분
   const [allAgreed, setAllAgreed] = useState<boolean>(false);
   const [termsAgreement, setTermsAgreement] = useState<TermsAgreement>({
@@ -105,19 +106,34 @@ export default function TermsPage() {
 
   // =========================================================== 토큰 발급을 위한 부분
 
-  const fetchToken = async (code?: string): Promise<Headers> => {
-    if (!code) throw new Error('Code is required');
-    const response = await fetch(`${BASE_URL}/api/auth/token?code=${code}`, {
+  const fetchToken = async (code: string): Promise<Headers> => {
+    if (!code) throw new Error('No Code');
+
+    let queryParams = `code=${code}`;
+
+    if (termsAgreement.term6) {
+      queryParams += '&agreeMarketing=true';
+    }
+    if (termsAgreement.term7) {
+      queryParams += '&agreeCollection=true';
+    }
+    const url = `${BASE_URL}/api/auth/token?${queryParams}`;
+  
+
+    const response = await fetch(url, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
     });
+  
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      throw new Error(`${response.status}`);
     }
+  
     return response.headers;
   };
+  
 
   const agreeToTerms = async (): Promise<void> => {
     try {
@@ -125,7 +141,8 @@ export default function TermsPage() {
         !termsAgreement.term1 ||
         !termsAgreement.term2 ||
         !termsAgreement.term3 ||
-        !termsAgreement.term4
+        !termsAgreement.term4 ||
+        !termsAgreement.term5
       ) {
         showErrorToast('필수 약관에 동의해주세요.');
       }
@@ -139,6 +156,7 @@ export default function TermsPage() {
 
       localStorage.setItem(ACCESS_TOKEN, accessToken);
       localStorage.setItem(REFRESH_TOKEN, refreshToken);
+      dispatch(setTokens(accessToken, refreshToken));
       navigate('/login/member-info');
       showSuccessToast('회원 가입을 축하드립니다!');
       initializeSSE(queryClient, dispatch);
