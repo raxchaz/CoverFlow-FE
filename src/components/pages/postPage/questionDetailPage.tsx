@@ -238,7 +238,7 @@ function QuestionDetailPage() {
   };
 
   const handleEdit = async () => {
-    const res = await fetchAPI('/api/member/me', 'GET');
+    const res = await axios.get(`${BASE_URL}/api/member/me`);
 
     if (res.data.nickname === questionerNickname) {
       setIsShowEdit((isShow) => !isShow);
