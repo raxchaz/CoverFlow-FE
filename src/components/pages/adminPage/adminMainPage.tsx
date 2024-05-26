@@ -9,6 +9,8 @@ import ReportQuestions from '../../ui/adminSelection/reportQuestions';
 import ReportAnswers from '../../ui/adminSelection/reportAnswers';
 import ReportComments from '../../ui/adminSelection/reportComments';
 import NoticeSelection from '../../ui/adminSelection/noticeSelection';
+import QuestionSelection from '../../ui/adminSelection/questionSelection';
+import AnswerSelection from '../../ui/adminSelection/answerSelection';
 
 function AdminPage() {
   const [currentSection, setCurrentSection] = useState<string>('users');
@@ -24,8 +26,8 @@ function AdminPage() {
         {currentSection === 'users' && <MemberSelection />}
         {currentSection === 'company' && <CompanySelection />}
         {currentSection === 'notification' && <NoticeSelection />}
-        {currentSection === 'questions' && <div>질문관리 섹션</div>}
-        {currentSection === 'answers' && <div>답변관리 섹션</div>}
+        {currentSection === 'question' && <QuestionSelection />}
+        {currentSection === 'answer' && <AnswerSelection />}
         {currentSection === 'comments' && <div>댓글관리 섹션</div>}
         {/* 신고관리 매뉴 */}
         {currentSection === 'report-questions' && <ReportQuestions />}
