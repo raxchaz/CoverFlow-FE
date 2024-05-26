@@ -34,9 +34,11 @@ export default function AdminSideTap({ loadSection }: AdminSideTapProps) {
   const getContainerStyle = (
     sectionName: string,
     additionalSectionName?: string,
+    p0?: string,
   ) => {
     return sectionName === selectedSection ||
-      additionalSectionName === selectedSection
+      additionalSectionName === selectedSection ||
+      p0
       ? {
           backgroundColor: 'rgba(255, 244, 233, 1)',
           color: 'rgba(255, 141, 29, 1)',
@@ -177,18 +179,62 @@ export default function AdminSideTap({ loadSection }: AdminSideTapProps) {
         </div>
 
         <div
-          className="admin-container"
-          style={getContainerStyle('report')}
-          onClick={() => handleSectionClick('report')}
+          style={getContainerStyle(
+            'report-questions',
+            'report-answers',
+            'report-comments',
+          )}
+          onClick={() => handleSectionClick('report-questions')}
         >
-          <AdminReport />
-
-          <span
-            className={`admin-text ${selectedSection === 'report' ? 'selected' : ''}`}
-          >
-            신고 관리
-          </span>
+          <div className="admin-container">
+            <AdminReport />
+            <span
+              className={`admin-text ${
+                selectedSection === 'report-questions' ||
+                selectedSection === 'report-answers' ||
+                selectedSection === 'report-comments'
+                  ? 'selected'
+                  : ''
+              }`}
+            >
+              신고 관리
+            </span>
+          </div>
+          {(selectedSection === 'report-questions' ||
+            selectedSection === 'report-answers' ||
+            selectedSection === 'report-comments') && (
+            <div className="admin-contact-container">
+              <span
+                className={`admin-sub-text ${selectedSection === 'report-questions' ? 'selected' : ''}`}
+                onClick={(event) => {
+                  event.stopPropagation();
+                  handleSectionClick('report-questions');
+                }}
+              >
+                질문 관리
+              </span>
+              <span
+                className={` admin-sub-text ${selectedSection === 'report-answers' ? 'selected' : ''}`}
+                onClick={(event) => {
+                  event.stopPropagation();
+                  handleSectionClick('report-answers');
+                }}
+              >
+                답변 관리
+              </span>
+              <span
+                className={` admin-sub-text ${selectedSection === 'report-comments' ? 'selected' : ''}`}
+                onClick={(event) => {
+                  event.stopPropagation();
+                  handleSectionClick('report-comments');
+                }}
+              >
+                댓글 관리
+              </span>
+            </div>
+          )}
         </div>
+
         <div
           className="admin-container"
           style={getContainerStyle('notification')}

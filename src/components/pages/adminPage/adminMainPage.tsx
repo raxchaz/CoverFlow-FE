@@ -5,6 +5,9 @@ import AdminSideTap from '../../ui/adminSelection/adminSideTap';
 import FeedbackSelection from '../../ui/adminSelection/feedbackSelection';
 import MemberSelection from '../../ui/adminSelection/memberSelection';
 import ContactSelection from '../../ui/adminSelection/contactSelection';
+import ReportQuestions from '../../ui/adminSelection/reportQuestions';
+import ReportAnswers from '../../ui/adminSelection/reportAnswers';
+import ReportComments from '../../ui/adminSelection/reportComments';
 
 function AdminPage() {
   const [currentSection, setCurrentSection] = useState<string>('users');
@@ -23,6 +26,11 @@ function AdminPage() {
         {currentSection === 'questions' && <div>질문관리 섹션</div>}
         {currentSection === 'answers' && <div>답변관리 섹션</div>}
         {currentSection === 'comments' && <div>댓글관리 섹션</div>}
+        {/* 신고관리 매뉴 */}
+        {currentSection === 'report-questions' && <ReportQuestions />}
+        {currentSection === 'report-answers' && <ReportAnswers />}
+        {currentSection === 'report-comments' && <ReportComments />}
+        {/*  */}
         {currentSection === 'contact' && <ContactSelection />}
         {currentSection === 'feedback' && <FeedbackSelection />}
         {currentSection === 'companies' && <div>기업관리 섹션</div>}
