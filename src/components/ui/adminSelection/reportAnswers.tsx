@@ -5,8 +5,11 @@ import Button from '../button/Button/Button';
 import { ACCESS_TOKEN, BASE_URL } from '../../global/constants';
 import Calendar from '../calendar/calendar';
 import AdminPagination from './adminPagination';
+import Portal from '../modal/portal';
+import ReAnswerModals from '../modal/ReanswerModal';
 
 interface Reports {
+  reportedNickname: string;
   reportId: number;
   reportContent: string;
   reportType: string;
@@ -33,7 +36,13 @@ export default function ReportAnswers() {
   const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
-
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const open = () => {
+    setIsOpen(true);
+  };
+  const close = () => {
+    setIsOpen(false);
+  };
   useEffect(() => {
     fetchQuestions(currentPage);
   }, [currentPage]);
@@ -150,11 +159,17 @@ export default function ReportAnswers() {
                     <input type="checkbox" />
                     <span>{itemNumber}</span>
                     <span>{reports.reportId}</span>
+                    <span>{reports.reportedNickname}</span>
                     <span>{reports.reporterNickname}</span>
                     <span>{reports.createdAt}</span>
-                    <span onClick={() => {}}>
-                      <span className="ad-reportdetail">관리 변경</span>
+                    <span onClick={open}>
+                      <span className="ad-memberdetail">관리 변경</span>
                     </span>
+                    {isOpen && (
+                      <Portal>
+                        <ReAnswerModals close={close} />
+                      </Portal>
+                    )}
                   </li>
                 );
               })}
