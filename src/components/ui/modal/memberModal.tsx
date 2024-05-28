@@ -4,6 +4,7 @@ import React from 'react';
 // import { useOutSideClick } from './useOutsideClick';
 // import { ModalContainer } from './modalContainer';
 import CommonModal from './commonModal';
+import { styled } from 'styled-components';
 
 type ModalProps = {
   close?: () => void;
@@ -11,14 +12,28 @@ type ModalProps = {
   children?: React.ReactNode;
 };
 
-const CompanyModals = ({ close }: ModalProps) => {
+const MemberModals = ({ close }: ModalProps) => {
   return (
     <div>
       <CommonModal onClose={close}>
-        <div>멤버스멤버스</div>
+        <Inners onClick={(e) => e.stopPropagation()}>
+          <InnerTitle>회원 기본 정보</InnerTitle>
+        </Inners>
       </CommonModal>
     </div>
   );
 };
 
-export default CompanyModals;
+const Inners = styled.div`
+  align-content: center;
+  padding-left: 50px;
+  padding-top: 70px;
+  /* width: 100%; */
+`;
+
+const InnerTitle = styled.p`
+  font-size: 20px;
+  font-weight: bold;
+`;
+
+export default MemberModals;
