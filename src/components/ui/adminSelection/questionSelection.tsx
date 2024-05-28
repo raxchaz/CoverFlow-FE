@@ -5,7 +5,8 @@ import Button from '../button/Button/Button';
 import { ACCESS_TOKEN, BASE_URL } from '../../global/constants';
 import Calendar from '../calendar/calendar';
 import AdminPagination from './adminPagination';
-
+import QuestionModals from '../modal/questionModal';
+import Portal from '../modal/portal';
 interface AdminQuesions {
   questionId: number;
   companyName: string;
@@ -39,7 +40,13 @@ export default function QuestionSelection() {
   const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
-
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const open = () => {
+    setIsOpen(true);
+  };
+  const close = () => {
+    setIsOpen(false);
+  };
   useEffect(() => {
     fetchMember(currentPage);
   }, [currentPage]);
@@ -157,9 +164,14 @@ export default function QuestionSelection() {
                     <span>{questions.companyName}</span>
                     <span>{questions.questionViewCount}</span>
                     <span>{questions.answerCount}</span>
-                    <span onClick={() => {}}>
-                      <span className="ad-questiondetail">관리 변경</span>
+                    <span onClick={open}>
+                      <span className="ad-memberdetail">관리 변경</span>
                     </span>
+                    {isOpen && (
+                      <Portal>
+                        <QuestionModals close={close} />
+                      </Portal>
+                    )}
                   </li>
                 );
               })}

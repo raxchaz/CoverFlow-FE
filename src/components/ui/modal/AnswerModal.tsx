@@ -15,35 +15,29 @@ type ModalProps = {
   onClick?: React.MouseEventHandler<HTMLBodyElement>;
 };
 
-const MemberModals = ({ close }: ModalProps) => {
+const AnswerModals = ({ close }: ModalProps) => {
   return (
     <div>
       <CommonModal onClose={close}>
         <Inners onClick={(e) => e.stopPropagation()}>
-          <InnerTitle>회원 기본 정보</InnerTitle>
-          <MemberTables>
-            <MemberKind>닉네임</MemberKind>
-            <Memberapis>닉네임 api</Memberapis>
-            <MemberKind>계정</MemberKind>
-            <Memberapis>계정 api</Memberapis>
-            <MemberKind>가입일</MemberKind>
-            <Memberapis>가입일 api</Memberapis>
-            <MemberKind>최종로그인</MemberKind>
-            <Memberapis>최종로그인 api</Memberapis>
-          </MemberTables>
-          <InnersubTitle>회원 권한 변경</InnersubTitle>
-          <MemberStateContainer>
-            <StateTitle>회원 상태</StateTitle>
+          <InnerTitle>답변 기본 정보</InnerTitle>
+          <AnswerTables>
+            <MemberKind>질문번호</MemberKind>
+            <Answerapis> api</Answerapis>
+            <MemberKind>답변번호</MemberKind>
+            <Answerapis>api</Answerapis>
+            <MemberKind>작성자</MemberKind>
+            <Answerapis>api</Answerapis>
+            <MemberKind>채택여부</MemberKind>
+            <Answerapis>api</Answerapis>
+          </AnswerTables>
+          <InnersubTitle>답변 상태 변경</InnersubTitle>
+          <AnswerStateContainer>
+            <StateTitle>답변 상태</StateTitle>
             <StateSelection>
               <option value=""></option>
             </StateSelection>
-          </MemberStateContainer>
-          <MemberStateContainer>
-            <StateTitle>회원 권한</StateTitle>
-            <StateSelection>
-              <option value=""></option>
-            </StateSelection>
-          </MemberStateContainer>
+          </AnswerStateContainer>
           <ButtonContainer>
             <Button variant="admin" onClick={() => close}>
               수정
@@ -76,7 +70,7 @@ const InnersubTitle = styled.p`
   padding-top: 50px;
 `;
 
-const MemberTables = styled.div`
+const AnswerTables = styled.div`
   width: 702px;
   height: 146px;
   border: 1px solid black;
@@ -94,7 +88,7 @@ const MemberKind = styled.div`
   background-color: #a8a8a8;
 `;
 
-const Memberapis = styled.div`
+const Answerapis = styled.div`
   border: 1px solid black;
   width: 599px;
   text-align: left;
@@ -103,7 +97,7 @@ const Memberapis = styled.div`
   font-size: 16px;
 `;
 
-const MemberStateContainer = styled.div`
+const AnswerStateContainer = styled.div`
   display: flex;
   padding-bottom: 2%;
 
@@ -134,4 +128,4 @@ const ButtonContainer = styled.div`
 //   text-align: center;
 // `;
 
-export default MemberModals;
+export default AnswerModals;

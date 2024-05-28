@@ -15,35 +15,33 @@ type ModalProps = {
   onClick?: React.MouseEventHandler<HTMLBodyElement>;
 };
 
-const MemberModals = ({ close }: ModalProps) => {
+const ReCommentModals = ({ close }: ModalProps) => {
   return (
     <div>
       <CommonModal onClose={close}>
         <Inners onClick={(e) => e.stopPropagation()}>
-          <InnerTitle>회원 기본 정보</InnerTitle>
-          <MemberTables>
-            <MemberKind>닉네임</MemberKind>
-            <Memberapis>닉네임 api</Memberapis>
-            <MemberKind>계정</MemberKind>
-            <Memberapis>계정 api</Memberapis>
-            <MemberKind>가입일</MemberKind>
-            <Memberapis>가입일 api</Memberapis>
-            <MemberKind>최종로그인</MemberKind>
-            <Memberapis>최종로그인 api</Memberapis>
-          </MemberTables>
-          <InnersubTitle>회원 권한 변경</InnersubTitle>
-          <MemberStateContainer>
-            <StateTitle>회원 상태</StateTitle>
+          <InnerTitle>신고 기본 정보</InnerTitle>
+          <ReportTables>
+            <ReportKind>질문번호</ReportKind>
+            <Reportapis>api</Reportapis>
+            <ReportKind>답변번호</ReportKind>
+            <Reportapis>api</Reportapis>
+            <ReportKind>작성자</ReportKind>
+            <Reportapis>api</Reportapis>
+            <ReportKind>신고사유</ReportKind>
+            <Reportapis>api</Reportapis>
+            <ReportKind>신고자</ReportKind>
+            <Reportapis>api</Reportapis>
+            <ReportKind>신고일</ReportKind>
+            <Reportapis>api</Reportapis>
+          </ReportTables>
+          <InnersubTitle>신고 상태 변경</InnersubTitle>
+          <ReportStateContainer>
+            <StateTitle>신고 상태</StateTitle>
             <StateSelection>
               <option value=""></option>
             </StateSelection>
-          </MemberStateContainer>
-          <MemberStateContainer>
-            <StateTitle>회원 권한</StateTitle>
-            <StateSelection>
-              <option value=""></option>
-            </StateSelection>
-          </MemberStateContainer>
+          </ReportStateContainer>
           <ButtonContainer>
             <Button variant="admin" onClick={() => close}>
               수정
@@ -76,16 +74,16 @@ const InnersubTitle = styled.p`
   padding-top: 50px;
 `;
 
-const MemberTables = styled.div`
+const ReportTables = styled.div`
   width: 702px;
-  height: 146px;
+  height: 224px;
   border: 1px solid black;
   display: grid;
   grid-template-columns: 104px 599px;
-  grid-template-rows: 36.5px 36.5px 36.5px 36.5px;
+  grid-template-rows: 36.5px 36.5px 36.5px 36.5px 36.5px 36.5px;
 `;
 
-const MemberKind = styled.div`
+const ReportKind = styled.div`
   border: 1px solid black;
   width: 104px;
   text-align: center;
@@ -94,7 +92,7 @@ const MemberKind = styled.div`
   background-color: #a8a8a8;
 `;
 
-const Memberapis = styled.div`
+const Reportapis = styled.div`
   border: 1px solid black;
   width: 599px;
   text-align: left;
@@ -103,7 +101,7 @@ const Memberapis = styled.div`
   font-size: 16px;
 `;
 
-const MemberStateContainer = styled.div`
+const ReportStateContainer = styled.div`
   display: flex;
   padding-bottom: 2%;
 
@@ -134,4 +132,4 @@ const ButtonContainer = styled.div`
 //   text-align: center;
 // `;
 
-export default MemberModals;
+export default ReCommentModals;

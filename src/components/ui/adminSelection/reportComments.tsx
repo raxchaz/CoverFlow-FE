@@ -5,7 +5,8 @@ import Button from '../button/Button/Button';
 import { ACCESS_TOKEN, BASE_URL } from '../../global/constants';
 import Calendar from '../calendar/calendar';
 import AdminPagination from './adminPagination';
-
+import Portal from '../modal/portal';
+import ReCommentModals from '../modal/recommentModal';
 interface Reports {
   reportId: number;
   reportContent: string;
@@ -33,7 +34,13 @@ export default function ReportComments() {
   const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
-
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const open = () => {
+    setIsOpen(true);
+  };
+  const close = () => {
+    setIsOpen(false);
+  };
   useEffect(() => {
     fetchQuestions(currentPage);
   }, [currentPage]);
@@ -154,9 +161,14 @@ export default function ReportComments() {
                     <span>{reports.reportId}</span>
                     <span>{reports.reporterNickname}</span>
                     <span>{reports.createdAt}</span>
-                    <span onClick={() => {}}>
-                      <span className="ad-reportdetail">관리 변경</span>
+                    <span onClick={open}>
+                      <span className="ad-memberdetail">관리 변경</span>
                     </span>
+                    {isOpen && (
+                      <Portal>
+                        <ReCommentModals close={close} />
+                      </Portal>
+                    )}
                   </li>
                 );
               })}

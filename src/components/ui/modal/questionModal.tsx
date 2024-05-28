@@ -15,31 +15,25 @@ type ModalProps = {
   onClick?: React.MouseEventHandler<HTMLBodyElement>;
 };
 
-const MemberModals = ({ close }: ModalProps) => {
+const QuestionModals = ({ close }: ModalProps) => {
   return (
     <div>
       <CommonModal onClose={close}>
         <Inners onClick={(e) => e.stopPropagation()}>
           <InnerTitle>회원 기본 정보</InnerTitle>
           <MemberTables>
+            <MemberKind>번호</MemberKind>
+            <Memberapis>api</Memberapis>
+            <MemberKind>제목</MemberKind>
+            <Memberapis>api</Memberapis>
             <MemberKind>닉네임</MemberKind>
-            <Memberapis>닉네임 api</Memberapis>
-            <MemberKind>계정</MemberKind>
-            <Memberapis>계정 api</Memberapis>
-            <MemberKind>가입일</MemberKind>
-            <Memberapis>가입일 api</Memberapis>
-            <MemberKind>최종로그인</MemberKind>
-            <Memberapis>최종로그인 api</Memberapis>
+            <Memberapis>api</Memberapis>
+            <MemberKind>기업명</MemberKind>
+            <Memberapis>api</Memberapis>
           </MemberTables>
-          <InnersubTitle>회원 권한 변경</InnersubTitle>
+          <InnersubTitle>질문 상태 변경</InnersubTitle>
           <MemberStateContainer>
-            <StateTitle>회원 상태</StateTitle>
-            <StateSelection>
-              <option value=""></option>
-            </StateSelection>
-          </MemberStateContainer>
-          <MemberStateContainer>
-            <StateTitle>회원 권한</StateTitle>
+            <StateTitle>질문 상태</StateTitle>
             <StateSelection>
               <option value=""></option>
             </StateSelection>
@@ -134,4 +128,4 @@ const ButtonContainer = styled.div`
 //   text-align: center;
 // `;
 
-export default MemberModals;
+export default QuestionModals;

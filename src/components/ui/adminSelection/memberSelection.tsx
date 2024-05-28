@@ -8,7 +8,7 @@ import AdminPagination from './adminPagination';
 // import useModal from '../modal/useModal';
 // import CommonModal from '../modal/commonModal';
 import Portal from '../modal/portal';
-import MemberModals from '../modal/memberModal';
+import CompanyModals from '../modal/memberModal';
 
 interface Member {
   id: string;
@@ -186,7 +186,7 @@ export default function MemberSelection() {
                     </span>
                     {isOpen && (
                       <Portal>
-                        <MemberModals close={close} />
+                        <CompanyModals close={close} />
                       </Portal>
                     )}
                   </li>

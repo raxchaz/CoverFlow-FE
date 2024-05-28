@@ -5,7 +5,8 @@ import Button from '../button/Button/Button';
 import { ACCESS_TOKEN, BASE_URL } from '../../global/constants';
 import Calendar from '../calendar/calendar';
 import AdminPagination from './adminPagination';
-
+import Portal from '../modal/portal';
+import AnswerModals from '../modal/AnswerModal';
 interface AdminAnswer {
   answerId: number;
   answerContent: string;
@@ -31,6 +32,13 @@ export default function AnswerSelection() {
   const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const open = () => {
+    setIsOpen(true);
+  };
+  const close = () => {
+    setIsOpen(false);
+  };
 
   useEffect(() => {
     fetchMember(currentPage);
@@ -145,9 +153,14 @@ export default function AnswerSelection() {
                     <span>{answers.answerStatus}</span>
                     <span>{answers.selection}</span>
                     <span>{answers.answerContent}</span>
-                    <span onClick={() => {}}>
-                      <span className="ad-answerdetail">관리 변경</span>
+                    <span onClick={open}>
+                      <span className="ad-memberdetail">관리 변경</span>
                     </span>
+                    {isOpen && (
+                      <Portal>
+                        <AnswerModals close={close} />
+                      </Portal>
+                    )}
                   </li>
                 );
               })}
