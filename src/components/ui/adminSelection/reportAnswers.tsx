@@ -9,6 +9,7 @@ import Portal from '../modal/portal';
 import ReAnswerModals from '../modal/ReanswerModal';
 
 interface Reports {
+  reportedNickname: string;
   reportId: number;
   reportContent: string;
   reportType: string;
@@ -158,6 +159,7 @@ export default function ReportAnswers() {
                     <input type="checkbox" />
                     <span>{itemNumber}</span>
                     <span>{reports.reportId}</span>
+                    <span>{reports.reportedNickname}</span>
                     <span>{reports.reporterNickname}</span>
                     <span>{reports.createdAt}</span>
                     <span onClick={open}>

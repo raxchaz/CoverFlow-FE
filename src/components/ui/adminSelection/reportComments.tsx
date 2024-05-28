@@ -13,6 +13,7 @@ interface Reports {
   reportType: string;
   reportStatus: boolean;
   reporterNickname?: string;
+  reportedNickname?: string;
   questionId?: string;
   createdAt?: number;
 }
@@ -145,7 +146,7 @@ export default function ReportComments() {
                 <input type="checkbox" />
                 <span>질문번호</span>
                 <span>답변번호</span>
-                <span>댓글번호</span>
+                {/* <span>댓글번호</span> */}
                 <span>작성자</span>
                 <span>신고자</span>
                 <span>신고일</span>
@@ -153,12 +154,14 @@ export default function ReportComments() {
               </li>
               {reports.map((reports, index) => {
                 const itemNumber = index + 1 + currentPage * itemsPerPage;
+                console.log(itemNumber);
                 return (
                   <li key={reports.reportId} className="ad-reportResult-item">
                     <input type="checkbox" />
-                    <span>{itemNumber}</span>
+                    {/* <span>{itemNumber}</span> */}
                     <span>{reports.questionId}</span>
                     <span>{reports.reportId}</span>
+                    <span>{reports.reportedNickname}</span>
                     <span>{reports.reporterNickname}</span>
                     <span>{reports.createdAt}</span>
                     <span onClick={open}>

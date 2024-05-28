@@ -13,6 +13,7 @@ interface Reports {
   reportType: string;
   reportStatus: boolean;
   reporterNickname?: string;
+  reportedNickname?: string;
   questionId?: string;
   createdAt?: number;
 }
@@ -151,11 +152,13 @@ export default function ReportQuestions() {
               </li>
               {reports.map((reports, index) => {
                 const itemNumber = index + 1 + currentPage * itemsPerPage;
+                console.log(itemNumber);
                 return (
                   <li key={reports.reportId} className="ad-reportResult-item">
                     <input type="checkbox" />
-                    <span>{itemNumber}</span>
+                    {/* <span>{itemNumber}</span> */}
                     <span>{reports.reportId}</span>
+                    <span>{reports.reportedNickname}</span>
                     <span>{reports.reporterNickname}</span>
                     <span>{reports.createdAt}</span>
                     <span onClick={open}>
