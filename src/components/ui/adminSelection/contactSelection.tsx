@@ -130,22 +130,21 @@ export default function ContactSelection() {
                 <input type="checkbox" />
                 <span>번호</span>
                 <span>작성자</span>
-                <span>내용</span>
                 <span>등록일</span>
                 <span>상태관리</span>
               </li>
               {inquries.map((inquries, index) => {
                 const itemNumber = index + 1 + currentPage * itemsPerPage;
+                console.log(itemNumber);
                 return (
                   <li
                     key={inquries.inquiryId}
                     className="ad-contactResult-item"
                   >
                     <input type="checkbox" />
-                    <span>{itemNumber}</span>
+                    {/* <span>{itemNumber}</span> */}
                     <span>{inquries.inquiryId}</span>
                     <span>{inquries.inquirerNickname}</span>
-                    <span>{inquries.inquiryContent}</span>
                     <span>{inquries.createdAt}</span>
                     <span onClick={() => {}}>
                       <span className="ad-contactdetail">관리 변경</span>

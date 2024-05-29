@@ -1,38 +1,42 @@
 import React, { useEffect, useState } from 'react';
-import './reportStyling.scss';
+import './questionSelection.scss';
 import AdminSearch from '../../../asset/image/admin-search.svg';
 import Button from '../button/Button/Button';
 import { ACCESS_TOKEN, BASE_URL } from '../../global/constants';
 import Calendar from '../calendar/calendar';
 import AdminPagination from './adminPagination';
+import QuestionModals from '../modal/questionModal';
 import Portal from '../modal/portal';
-import ReAnswerModals from '../modal/ReanswerModal';
-
-interface Reports {
-  reportedNickname: string;
-  reportId: number;
-  reportContent: string;
-  reportType: string;
-  reportStatus: boolean;
-  reporterNickname?: string;
-  questionId?: string;
-  createdAt?: number;
+interface AdminQuesions {
+  questionId: number;
+  companyName: string;
+  nickname: string;
+  questionerNickname: string;
+  questionerTag: string;
+  questionTitle: string;
+  questionContent: string;
+  questionTag: string;
+  questionCategory: string;
+  answerCount: number;
+  questionViewCount: number;
+  reward: number;
+  selectionStatus: boolean;
+  questionStatus: boolean;
+  age: string;
 }
 
 interface ApiResponse {
   statusCode: string;
   data: {
     totalPages: number;
-    reports: Reports[];
+    questions: AdminQuesions[];
     totalElements: number;
   };
 }
 
-export default function ReportAnswers() {
+export default function QuestionSelection() {
   // const [isLoading, setIsLoading] = useState(false);
-  const [reports, setReportss] = useState<Reports[]>([]);
-  console.log(setReportss);
-  // console.log(questions);
+  const [questions, setQuestions] = useState<AdminQuesions[]>([]);
   const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
@@ -44,7 +48,7 @@ export default function ReportAnswers() {
     setIsOpen(false);
   };
   useEffect(() => {
-    fetchQuestions(currentPage);
+    fetchMember(currentPage);
   }, [currentPage]);
 
   const handlePagination = (direction) => {
@@ -57,14 +61,14 @@ export default function ReportAnswers() {
     }
   };
 
-  const fetchQuestions = (pageNo: number) => {
+  const fetchMember = (pageNo: number) => {
     // setIsLoading(true);
     const queryParams = new URLSearchParams({
       pageNo: pageNo.toString(),
       criterion: 'createdAt',
     });
-    const urls = `${BASE_URL}/api/report/admin?${queryParams.toString()}`;
-    fetch(urls, {
+    const url = `${BASE_URL}/api/question/admin?${queryParams.toString()}`;
+    fetch(url, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
         'Content-Type': 'application/json',
@@ -73,7 +77,7 @@ export default function ReportAnswers() {
       .then((response) => response.json())
       .then((data: ApiResponse) => {
         console.log(data);
-        setReportss(data.data.reports);
+        setQuestions(data.data.questions);
         setTotalPages(data.data.totalPages);
       })
       .catch((error) => {
@@ -82,10 +86,9 @@ export default function ReportAnswers() {
       });
   };
 
-  // console.log(fetchQuestions(0));
-
+  // console.log(fetchMember(0));
   return (
-    <div className="ad-reportSelection-container">
+    <div className="ad-questionSelection-container">
       <div className="ad-search">
         <div className="search-container">
           <div className="search-row">
@@ -103,26 +106,20 @@ export default function ReportAnswers() {
         </div>
       </div>
       <>
-        <div className="ad-reportOption">
-          <div className="ad-reportitem-direction">
-            <div className="ad-reportOption-maxitem">
-              <span className="ad-report-title">신고일</span>
-              <input type="checkbox" className="ad-member-checkbox" />
-              <span className="ad-report-total">전체</span>
+        <div className="ad-questionOption">
+          <div className="ad-questionitem-direction">
+            <div className="ad-questionOption-maxitem">
+              <span className="ad-question-title">가입일</span>
+              <input type="checkbox" className="ad-question-checkbox" />
+              <span className="ad-question-total">전체</span>
             </div>
-            <div className="ad-reportSelection-Calendar">
+            <div className="ad-questionSelection-Calendar">
               <Calendar />
             </div>
           </div>
 
-          <div className="ad-reportOption-item">
-            <span className="ad-report-title">신고사유</span>
-            <select className="ad-searchOption-select">
-              <option value=""></option>
-            </select>
-          </div>
-          <div className="ad-reportOption-item">
-            <span className="ad-report-title">신고상태</span>
+          <div className="ad-questionOption-item">
+            <span className="ad-question-title">질문상태</span>
             <select className="ad-searchOption-select">
               <option value=""></option>
             </select>
@@ -141,33 +138,38 @@ export default function ReportAnswers() {
             <p>로딩 중...</p>
           ) : (
             <div> */}
-          <div className="ad-report-result">
+          <div className="ad-question-result">
             <ul>
-              <li className="ad-reportResult-header">
+              <li className="ad-questionResult-header">
                 <input type="checkbox" />
-                <span>질문번호</span>
-                <span>답변번호</span>
-                <span>작성자</span>
-                <span>신고자</span>
-                <span>신고일</span>
-                <span>상태관리</span>
+                <span>번호</span>
+                <span>제목</span>
+                <span>닉네임</span>
+                <span>기업명</span>
+                <span>조회수</span>
+                <span>답변수</span>
+                <span>상태 관리</span>
               </li>
-              {reports.map((reports, index) => {
+              {questions.map((questions, index) => {
                 const itemNumber = index + 1 + currentPage * itemsPerPage;
                 return (
-                  <li key={reports.reportId} className="ad-reportResult-item">
+                  <li
+                    key={questions.questionId}
+                    className="ad-questionResult-item"
+                  >
                     <input type="checkbox" />
                     <span>{itemNumber}</span>
-                    <span>{reports.reportId}</span>
-                    <span>{reports.reportedNickname}</span>
-                    <span>{reports.reporterNickname}</span>
-                    <span>{reports.createdAt}</span>
+                    <span>{questions.questionTitle}</span>
+                    <span>{questions.questionerNickname}</span>
+                    <span>{questions.companyName}</span>
+                    <span>{questions.questionViewCount}</span>
+                    <span>{questions.answerCount}</span>
                     <span onClick={open}>
                       <span className="ad-memberdetail">관리 변경</span>
                     </span>
                     {isOpen && (
                       <Portal>
-                        <ReAnswerModals close={close} />
+                        <QuestionModals close={close} />
                       </Portal>
                     )}
                   </li>
@@ -175,8 +177,8 @@ export default function ReportAnswers() {
               })}
             </ul>
           </div>
-          <div className="ad-report-pagination">
-            {reports && (
+          <div className="ad-question-pagination">
+            {questions && (
               <AdminPagination
                 currentPage={currentPage}
                 totalPages={totalPages}
