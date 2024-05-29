@@ -78,8 +78,9 @@ interface QuestionModulesProps {
   createAt: string;
   questionContent: string;
   reward: number;
-  companyData: CompanInfoProps;
+  companyData?: CompanInfoProps;
   viewCount: number;
+  questionCategory?: string;
 }
 
 function QuestionModule({
@@ -91,8 +92,8 @@ function QuestionModule({
   createAt,
   reward,
   questionerTag,
-  companyData,
   viewCount,
+  questionCategory,
 }: QuestionModulesProps) {
   const navigate = useNavigate();
 
@@ -130,11 +131,7 @@ function QuestionModule({
                 {truncateTitle(questionTitle)}
               </div>
             </div>
-            <div className="category-select-style">
-              {companyData?.questions?.map(
-                (question) => question.questionCategory,
-              )}
-            </div>
+            <div className="category-select-style">{questionCategory}</div>
           </div>
 
           <div className="view-container">
