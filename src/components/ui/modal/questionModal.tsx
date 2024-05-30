@@ -6,36 +6,66 @@ import React from 'react';
 import CommonModal from './commonModal';
 import { styled } from 'styled-components';
 import Button from '../button/Button/Button';
+import { qStatus } from '../../global/constants/adminOption';
+
+interface AdminQuesions {
+  questionId: number;
+  companyName: string;
+  nickname: string;
+  questionerNickname: string;
+  questionerTag: string;
+  questionTitle: string;
+  questionContent: string;
+  questionTag: string;
+  questionCategory: string;
+  answerCount: number;
+  questionViewCount: number;
+  reward: number;
+  selectionStatus: boolean;
+  questionStatus: boolean;
+  age: string;
+}
 
 type ModalProps = {
   close?: () => void;
   open?: boolean;
   children?: React.ReactNode;
   // onClick?: () => void;
+  questions?: AdminQuesions;
   onClick?: React.MouseEventHandler<HTMLBodyElement>;
+  handleSearch: () => void;
+  showqList: () => void;
 };
 
-const QuestionModals = ({ close }: ModalProps) => {
+const QuestionModals = ({ close, questions }: ModalProps) => {
   return (
     <div>
       <CommonModal onClose={close}>
         <Inners onClick={(e) => e.stopPropagation()}>
           <InnerTitle>회원 기본 정보</InnerTitle>
-          <MemberTables>
+          <MemberTables key={questions?.questionId}>
             <MemberKind>번호</MemberKind>
-            <Memberapis>api</Memberapis>
+            <Memberapis>{questions?.questionId}</Memberapis>
             <MemberKind>제목</MemberKind>
-            <Memberapis>api</Memberapis>
+            <Memberapis>{questions?.questionTitle}</Memberapis>
             <MemberKind>닉네임</MemberKind>
-            <Memberapis>api</Memberapis>
+            <Memberapis>{questions?.questionerNickname}</Memberapis>
             <MemberKind>기업명</MemberKind>
-            <Memberapis>api</Memberapis>
+            <Memberapis>{questions?.companyName}</Memberapis>
           </MemberTables>
           <InnersubTitle>질문 상태 변경</InnersubTitle>
           <MemberStateContainer>
             <StateTitle>질문 상태</StateTitle>
-            <StateSelection>
+            <StateSelection
+              className="ad-searchOption-select"
+              value={String(questions?.questionStatus)}
+            >
               <option value=""></option>
+              {qStatus?.map((questionStatus) => (
+                <option key={questionStatus.key} value={questionStatus.key}>
+                  {questionStatus.value}
+                </option>
+              ))}
             </StateSelection>
           </MemberStateContainer>
           <ButtonContainer>

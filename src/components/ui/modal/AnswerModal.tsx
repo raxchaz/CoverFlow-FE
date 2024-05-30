@@ -6,6 +6,17 @@ import React from 'react';
 import CommonModal from './commonModal';
 import { styled } from 'styled-components';
 import Button from '../button/Button/Button';
+import { AStatus } from '../../global/constants/adminOption';
+interface AdminAnswer {
+  answerId: number;
+  questionId: number;
+  answerContent: string;
+  selection: string;
+  answererNickname: string;
+  memberType: string;
+  answererTag: string;
+  answerStatus: string;
+}
 
 type ModalProps = {
   close?: () => void;
@@ -13,29 +24,40 @@ type ModalProps = {
   children?: React.ReactNode;
   // onClick?: () => void;
   onClick?: React.MouseEventHandler<HTMLBodyElement>;
+  answers: AdminAnswer;
+  handleSearch: () => void;
+  showAList: () => void;
 };
 
-const AnswerModals = ({ close }: ModalProps) => {
+const AnswerModals = ({ close, answers }: ModalProps) => {
   return (
     <div>
       <CommonModal onClose={close}>
         <Inners onClick={(e) => e.stopPropagation()}>
           <InnerTitle>답변 기본 정보</InnerTitle>
-          <AnswerTables>
+          <AnswerTables key={answers.answerId}>
             <MemberKind>질문번호</MemberKind>
-            <Answerapis> api</Answerapis>
+            <Answerapis>{answers.questionId}</Answerapis>
             <MemberKind>답변번호</MemberKind>
-            <Answerapis>api</Answerapis>
+            <Answerapis>{answers.answerId}</Answerapis>
             <MemberKind>작성자</MemberKind>
-            <Answerapis>api</Answerapis>
+            <Answerapis>{answers.answererNickname}</Answerapis>
             <MemberKind>채택여부</MemberKind>
-            <Answerapis>api</Answerapis>
+            <Answerapis>{answers.answerStatus}</Answerapis>
           </AnswerTables>
           <InnersubTitle>답변 상태 변경</InnersubTitle>
           <AnswerStateContainer>
             <StateTitle>답변 상태</StateTitle>
-            <StateSelection>
+            <StateSelection
+              className="ad-searchOption-select"
+              value={String(Boolean(answers?.answerStatus))}
+            >
               <option value=""></option>
+              {AStatus.map((answers) => (
+                <option key={answers.key} value={answers.key}>
+                  {answers.value}
+                </option>
+              ))}
             </StateSelection>
           </AnswerStateContainer>
           <ButtonContainer>
