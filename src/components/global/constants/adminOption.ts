@@ -22,3 +22,9 @@ export const AStatus = [
   { key: 'true', value: '채택' },
   { key: 'false', value: '미채택' },
 ];
+
+// 신고 상태
+export const RSTATUS = [
+  { key: 'T', value: '등록' },
+  { key: 'F', value: '미등록' },
+];

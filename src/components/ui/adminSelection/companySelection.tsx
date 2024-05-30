@@ -49,9 +49,6 @@ export default function CompanySelection() {
   const [selectedDistrict, setSelectedDistrict] = useState('');
   const itemsPerPage = 10;
   const [isLoading, setIsLoading] = useState(false);
-  console.log(companyType);
-  console.log(selectedCompany);
-  console.log(companies);
   useEffect(() => {
     fetchCompanies(currentPage);
   }, [currentPage]);
