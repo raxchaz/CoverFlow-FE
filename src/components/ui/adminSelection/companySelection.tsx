@@ -36,6 +36,7 @@ export default function CompanySelection() {
   const [companies, setCompanies] = useState<Company[]>([]);
   const [totalCompanyCount, seTtotalCompanyCount] = useState(0);
   const [selectedCompany, setSelectedCompany] = useState(null);
+  console.log(selectedCompany);
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [companyType, setcompanyType] = useState('');

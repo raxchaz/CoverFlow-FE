@@ -6,6 +6,26 @@ import React from 'react';
 import CommonModal from './commonModal';
 import { styled } from 'styled-components';
 import Button from '../button/Button/Button';
+import {
+  MemberAuthorType,
+  MemberState,
+} from '../../global/constants/adminOption';
+// import { fetchAPI } from '../../global/utils/apiUtil';
+
+interface Member {
+  id: string;
+  nickname: string;
+  email: string;
+  gender: string;
+  memberType: string;
+  role: string;
+  memberStatus: string;
+  status: string;
+  fishShapedBun: number;
+  age: string;
+  createdAt?: string;
+  connectedAt?: string;
+}
 
 type ModalProps = {
   close?: () => void;
@@ -13,35 +33,78 @@ type ModalProps = {
   children?: React.ReactNode;
   // onClick?: () => void;
   onClick?: React.MouseEventHandler<HTMLBodyElement>;
+  member?: Member;
+  // showMemberModals?: (member:string) => void;
+  handleSearch: () => void;
+  showMemberList: () => void;
 };
 
-const MemberModals = ({ close }: ModalProps) => {
+const MemberModals = ({
+  close,
+  member,
+  // handleSearch,
+  // showCompanyList,
+}: ModalProps) => {
+  // const [editedMember, setEditedMember] = useState(member as Member);
+  // console.log(editedMember);
+
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setEditedMember((prev: Member) => ({
+  //     ...prev,
+  //     [name]: value,
+  //   }));
+  // };
+
+  // const handleMemberUpdate = async () => {
+  //   try {
+
+  //   }
+  // };
+
   return (
     <div>
       <CommonModal onClose={close}>
-        <Inners onClick={(e) => e.stopPropagation()}>
+        {/* <Inners onClick={(e) => e.stopPropagation()}> */}
+        <Inners>
           <InnerTitle>회원 기본 정보</InnerTitle>
-          <MemberTables>
+          <MemberTables key={member?.id}>
             <MemberKind>닉네임</MemberKind>
-            <Memberapis>닉네임 api</Memberapis>
+            <Memberapis>{member?.nickname}</Memberapis>
             <MemberKind>계정</MemberKind>
-            <Memberapis>계정 api</Memberapis>
+            <Memberapis>{member?.email}</Memberapis>
             <MemberKind>가입일</MemberKind>
-            <Memberapis>가입일 api</Memberapis>
+            <Memberapis>{member?.createdAt}</Memberapis>
             <MemberKind>최종로그인</MemberKind>
-            <Memberapis>최종로그인 api</Memberapis>
+            <Memberapis>{member?.connectedAt}</Memberapis>
           </MemberTables>
           <InnersubTitle>회원 권한 변경</InnersubTitle>
           <MemberStateContainer>
             <StateTitle>회원 상태</StateTitle>
-            <StateSelection>
+            <StateSelection
+              className="ad-searchOption-select"
+              value={member?.memberStatus}
+            >
               <option value=""></option>
+              {MemberState.map((memberStatus) => (
+                <option key={memberStatus.key} value={memberStatus.key}>
+                  {memberStatus.value}
+                </option>
+              ))}
             </StateSelection>
           </MemberStateContainer>
           <MemberStateContainer>
             <StateTitle>회원 권한</StateTitle>
-            <StateSelection>
+            <StateSelection
+              className="ad-searchOption-select"
+              value={member?.role}
+            >
               <option value=""></option>
+              {MemberAuthorType.map((role) => (
+                <option key={role.key} value={role.key}>
+                  {role.value}
+                </option>
+              ))}
             </StateSelection>
           </MemberStateContainer>
           <ButtonContainer>
