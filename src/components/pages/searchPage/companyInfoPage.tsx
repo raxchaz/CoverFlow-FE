@@ -72,6 +72,7 @@ const QuestionButton = styled.button`
   color: #ffffff;
   letter-spacing: -1px;
   font-family: 'Pretendard-SemiBold';
+  border:none;
 `;
 
 const QuestionList = styled.div`

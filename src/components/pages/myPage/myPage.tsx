@@ -50,6 +50,7 @@ const StatusTab = styled.div<{ $current: boolean }>`
 function Mypage() {
   const [currentCategory, setCurrentCategory] = useState('comments');
   const [nickname, setNickname] = useState('');
+  const [tag, setTag] = useState('');
   const [socialType, setSocialType] = useState('');
   const [question, setQuestion] = useState([]);
   const [answer, setAnswer] = useState([]);
@@ -77,6 +78,7 @@ function Mypage() {
       const data = await fetchAPI('/api/member/me', 'GET');
       setNickname(data.data.nickname);
       mySocialType(data.data.socialType);
+      setTag(data.data.tag)
     } catch (error) {
       showErrorToast('회원 정보 불러오기 실패');
     }
@@ -134,7 +136,7 @@ function Mypage() {
     showErrorToast("준비중인 페이지입니다.")
   };
   const goToEdit = () => {
-    navigate('/info-edit', { state: { nickname } });
+    navigate('/info-edit');
   };
 
   /* ========================================================= */
@@ -149,6 +151,7 @@ function Mypage() {
             {nickname}
             <span className="title-intro">님, 안녕하세요</span>
             <p className="my-social-type"> {socialType} 로그인 사용중</p>
+            <div className='my-tag'>{tag}</div> 
           </div>
 
           <div className="mypage-select-menu">

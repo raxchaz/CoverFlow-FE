@@ -46,6 +46,7 @@ const Box = styled.div`
 const DateContainer = styled(DatePicker)`
   width: 135px;
   height: 28px;
+  
 `;
 
 const Slash = styled.p`
