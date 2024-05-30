@@ -4,7 +4,7 @@ import CompanySelection from '../../ui/adminSelection/companySelection';
 import AdminSideTap from '../../ui/adminSelection/adminSideTap';
 import FeedbackSelection from '../../ui/adminSelection/feedbackSelection';
 import MemberSelection from '../../ui/adminSelection/memberSelection';
-import ContactSelection from '../../ui/adminSelection/contactSelection';
+import ContactSelection from "../../ui/adminSelection/contactSelection";
 import ReportQuestions from '../../ui/adminSelection/reportQuestions';
 import ReportAnswers from '../../ui/adminSelection/reportAnswers';
 import ReportComments from '../../ui/adminSelection/reportComments';
