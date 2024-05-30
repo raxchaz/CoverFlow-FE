@@ -13,13 +13,21 @@ export const StyledPage = styled.div`
 
 export const Heading = styled.div`
   display: flex;
-  position: relative;
+  position: fixed;
+  width:68rem;
+  height:17rem;
+  top:0;
   justify-content: center;
+  align-items:center;
   font-size: 1rem;
-  margin-top: 7%;
+  margin-left:1rem;
+  padding-right:21rem;
   letter-spacing: -1px;
   font-weight: 600;
+  background-color:white;
+  z-index:55;
 `;
+
 
 export const StyledHeader = styled.div`
   position: relative;
