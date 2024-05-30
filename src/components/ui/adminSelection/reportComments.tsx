@@ -178,7 +178,13 @@ export default function ReportComments() {
               >
                 검색
               </Button>
-              <Button variant="admin-white" onClick={() => {}}>
+              <Button
+                variant="admin-white"
+                onClick={() => {
+                  setRstatus('');
+                  setCurrentPage(0);
+                }}
+              >
                 초기화
               </Button>
             </div>
