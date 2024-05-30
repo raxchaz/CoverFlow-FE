@@ -5,10 +5,7 @@ import Button from '../button/Button/Button';
 import { ACCESS_TOKEN, BASE_URL } from '../../global/constants';
 import Calendar from '../calendar/calendar';
 import AdminPagination from './adminPagination';
-import {
-  MemberAuthorType,
-  MemberState,
-} from '../../global/constants/adminOption';
+import { Role, MemberStatus } from '../../global/constants/adminOption';
 import Portal from '../modal/portal';
 import MemberModals from '../modal/memberModal';
 
@@ -38,14 +35,12 @@ interface ApiResponse {
 
 export default function MemberSelection() {
   const [isLoading, setIsLoading] = useState(false);
-  console.log(isLoading);
   const [members, setMembers] = useState<Member[]>([]);
-  const [totalCompanyCount, seTtotalCompanyCount] = useState(0);
+  const [totalMemberCount, seTtotalMemberCoun] = useState(0);
   const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [selectedMember, setSelectedMember] = useState(null);
-  console.log(selectedMember);
   const [role, setRole] = useState('');
   const [memberStatus, setMemberStatus] = useState('');
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -78,10 +73,10 @@ export default function MemberSelection() {
     });
 
     if (role) {
-      queryParams.set('MemberAuthorType', role);
+      queryParams.set('Role', role);
     }
     if (memberStatus) {
-      queryParams.set('MemberState', memberStatus);
+      queryParams.set('MemberStatus', memberStatus);
     }
 
     const url = `${BASE_URL}/api/member/admin?${queryParams.toString()}`;
@@ -96,8 +91,8 @@ export default function MemberSelection() {
         console.log(data);
         setMembers(data.data.members);
         setTotalPages(data.data.totalPages);
-        seTtotalCompanyCount(data.data.totalElements);
-        // setIsLoading(false);
+        seTtotalMemberCoun(data.data.totalElements);
+        setIsLoading(false);
       })
       .catch((error) => {
         console.error('Error:', error);
@@ -167,7 +162,7 @@ export default function MemberSelection() {
                 onChange={(e) => setMemberStatus(e.target.value)}
               >
                 <option value=""></option>
-                {MemberState.map((memberStatus) => (
+                {MemberStatus.map((memberStatus) => (
                   <option key={memberStatus.key} value={memberStatus.key}>
                     {memberStatus.value}
                   </option>
@@ -182,7 +177,7 @@ export default function MemberSelection() {
                 onChange={(e) => setRole(e.target.value)}
               >
                 <option value=""></option>
-                {MemberAuthorType.map((role) => (
+                {Role.map((role) => (
                   <option key={role.key} value={role.key}>
                     {role.value}
                   </option>
@@ -214,73 +209,74 @@ export default function MemberSelection() {
                 초기화
               </Button>
             </div>
-            {/* {isLoading ? (
+            {isLoading ? (
               <p>로딩 중...</p>
-            ) : ( */}
-            <div>
-              <p className="ad-member-cnt">
-                <span className="ad-member-num">{totalCompanyCount}</span>건의
-                기업이 검색되었습니다.
-              </p>
+            ) : (
+              <div>
+                <p className="ad-member-cnt">
+                  <span className="ad-member-num">{totalMemberCount}</span>건의
+                  기업이 검색되었습니다.
+                </p>
 
-              <div className="ad-member-result">
-                <ul>
-                  <li className="ad-memberResult-header">
-                    <input type="checkbox" />
-                    <span>번호</span>
-                    <span>UUID</span>
-                    <span>계정</span>
-                    <span>닉네임</span>
-                    <span>붕어빵</span>
-                    <span>성별</span>
-                    <span>연령대</span>
-                    <span>관리</span>
-                  </li>
-                  {members.map((member, index) => {
-                    const itemNumber = index + 1 + currentPage * itemsPerPage;
-                    return (
-                      <li key={member.id} className="ad-memberResult-item">
-                        <input type="checkbox" />
-                        <span>{itemNumber}</span>
-                        <span>{member.id}</span>
-                        <span>{member.email}</span>
-                        <span>{member.nickname}</span>
-                        <span>{member.fishShapedBun}</span>
-                        <span>{member.gender}</span>
-                        <span>{member.age}</span>
-                        {/* <span>{member.role}</span> */}
-                        <span
-                          onClick={open}
-                          onSubmit={() => showMemberModals(member)}
-                        >
-                          <span className="ad-memberdetail">관리 변경</span>
-                        </span>
-                        {isOpen && (
-                          <Portal>
-                            <MemberModals
-                              close={close}
-                              showMemberList={showMemberList}
-                              handleSearch={handleSearch}
-                              member={member}
-                            />
-                          </Portal>
-                        )}
-                      </li>
-                    );
-                  })}
-                </ul>
+                <div className="ad-member-result">
+                  <ul>
+                    <li className="ad-memberResult-header">
+                      <input type="checkbox" />
+                      <span>번호</span>
+                      <span>UUID</span>
+                      <span>계정</span>
+                      <span>닉네임</span>
+                      <span>붕어빵</span>
+                      <span>성별</span>
+                      <span>연령대</span>
+                      <span>관리</span>
+                    </li>
+                    {members.map((member, index) => {
+                      const itemNumber = index + 1 + currentPage * itemsPerPage;
+                      return (
+                        <li key={member.id} className="ad-memberResult-item">
+                          <input type="checkbox" />
+                          <span>{itemNumber}</span>
+                          <span>{member.id}</span>
+                          <span>{member.email}</span>
+                          <span>{member.nickname}</span>
+                          <span>{member.fishShapedBun}</span>
+                          <span>{member.gender}</span>
+                          <span>{member.age}</span>
+                          {/* <span>{member.role}</span> */}
+                          <span
+                            onClick={open}
+                            onSubmit={() => showMemberModals(member)}
+                            // onChange={() => showMemberModals(member)}
+                          >
+                            <span className="ad-memberdetail">관리 변경</span>
+                          </span>
+                          {isOpen && (
+                            <Portal>
+                              <MemberModals
+                                close={close}
+                                showMemberList={showMemberList}
+                                handleSearch={handleSearch}
+                                member={member}
+                              />
+                            </Portal>
+                          )}
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+                <div className="ad-member-pagination">
+                  {members && (
+                    <AdminPagination
+                      currentPage={currentPage}
+                      totalPages={totalPages}
+                      handlePagination={handlePagination}
+                    />
+                  )}
+                </div>
               </div>
-              <div className="ad-member-pagination">
-                {members && (
-                  <AdminPagination
-                    currentPage={currentPage}
-                    totalPages={totalPages}
-                    handlePagination={handlePagination}
-                  />
-                )}
-              </div>
-            </div>
-            {/* )} */}
+            )}
           </div>
         </>
       )}

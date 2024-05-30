@@ -7,6 +7,7 @@ import Calendar from '../calendar/calendar';
 import AdminPagination from './adminPagination';
 import Portal from '../modal/portal';
 import AnswerModals from '../modal/AnswerModal';
+import { AStatus } from '../../global/constants/adminOption';
 interface AdminAnswer {
   answerId: number;
   questionId: number;
@@ -28,7 +29,10 @@ interface ApiResponse {
 }
 
 export default function AnswerSelection() {
-  // const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [totalACount, seTtotalACoun] = useState(0);
+  const [selectedA, setSelectedA] = useState(null);
+  const [answerStatus, setAnswerStatus] = useState('');
   const [answers, setAnswers] = useState<AdminAnswer[]>([]);
   const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(0);
@@ -61,6 +65,10 @@ export default function AnswerSelection() {
       pageNo: pageNo.toString(),
       criterion: 'createdAt',
     });
+
+    if (answerStatus) {
+      queryParams.set('AStatus', answerStatus);
+    }
     const url = `${BASE_URL}/api/answer/admin?${queryParams.toString()}`;
     fetch(url, {
       headers: {
@@ -73,14 +81,29 @@ export default function AnswerSelection() {
         console.log(data);
         setAnswers(data.data.answers);
         setTotalPages(data.data.totalPages);
+        seTtotalACoun(data.data.totalElements);
+        setIsLoading(false);
       })
       .catch((error) => {
         console.error('Error:', error);
         // setIsLoading(false);
+        setIsLoading(false);
       });
   };
 
-  // console.log(fetchMember(0));
+  const showAModals = (member) => {
+    setSelectedA(member);
+  };
+
+  const showAList = () => {
+    setSelectedA(null);
+  };
+
+  const handleSearch = () => {
+    setCurrentPage(0);
+    fetchMember(0);
+  };
+
   return (
     <div className="ad-answerSelection-container">
       <div className="ad-search">
@@ -99,93 +122,138 @@ export default function AnswerSelection() {
           <img className="search-icon" src={AdminSearch} alt="Search" />
         </div>
       </div>
-      <>
-        <div className="ad-answerOption">
-          <div className="ad-answeritem-direction">
-            <div className="ad-answerOption-maxitem">
-              <span className="ad-answer-title">가입일</span>
-              <input type="checkbox" className="ad-answer-checkbox" />
-              <span className="ad-answer-total">전체</span>
+      {selectedA ? (
+        <>
+          <AnswerModals
+            close={close}
+            answers={selectedA}
+            showAList={showAList}
+            handleSearch={handleSearch}
+          />
+        </>
+      ) : (
+        <>
+          <div className="ad-answerOption">
+            <div className="ad-answeritem-direction">
+              <div className="ad-answerOption-maxitem">
+                <span className="ad-answer-title">가입일</span>
+                <input type="checkbox" className="ad-answer-checkbox" />
+                <span className="ad-answer-total">전체</span>
+              </div>
+              <div className="ad-answerSelection-Calendar">
+                <Calendar />
+              </div>
             </div>
-            <div className="ad-answerSelection-Calendar">
-              <Calendar />
-            </div>
-          </div>
 
-          <div className="ad-answerOption-item">
-            <span className="ad-answer-title">답변상태</span>
-            <select className="ad-searchOption-select">
-              <option value=""></option>
-            </select>
+            <div className="ad-answerOption-item">
+              <span className="ad-answer-title">답변상태</span>
+              <select
+                className="ad-searchOption-select"
+                value={answerStatus}
+                onChange={(e) => setAnswerStatus(e.target.value)}
+              >
+                <option value=""></option>
+                {AStatus.map((answerStatus) => (
+                  <option key={answerStatus.key} value={answerStatus.key}>
+                    {answerStatus.value}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
-        </div>
-        <div className="ad-searchResult">
-          <div className="admin-btn-wrapper">
-            <Button variant="admin" onClick={() => {}}>
-              검색
-            </Button>
-            <Button variant="admin-white" onClick={() => {}}>
-              초기화
-            </Button>
-          </div>
-          {/* {isLoading ? (
-            <p>로딩 중...</p>
-          ) : (
-            <div> */}
-          <div className="ad-answer-result">
-            <ul>
-              <li className="ad-answerResult-header">
-                <input type="checkbox" />
-                {/* <span>번호</span> */}
-                <span>질문번호</span>
-                <span>답변번호</span>
-                <span>작성자</span>
-                <span>채택여부</span>
-                <span>상태관리</span>
-              </li>
-              {answers.map((answers, index) => {
-                const itemNumber = index + 1 + currentPage * itemsPerPage;
-                console.log(itemNumber);
-                if (Boolean(answers.answerStatus) === true) {
-                  answers.answerStatus = '채택';
-                } else {
-                  answers.answerStatus = '미채택';
-                }
-                return (
-                  <li key={answers.answerId} className="ad-answerResult-item">
-                    <input type="checkbox" />
-                    {/* <span>{itemNumber}</span> */}
-                    <span>{answers.questionId}</span>
-                    <span>{answers.answerId}</span>
-                    <span>{answers.answererNickname}</span>
-                    <span>{answers.answerStatus}</span>
-                    <span>{answers.selection}</span>
-                    <span onClick={open}>
-                      <span className="ad-memberdetail">관리 변경</span>
-                    </span>
-                    {isOpen && (
-                      <Portal>
-                        <AnswerModals close={close} />
-                      </Portal>
-                    )}
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-          <div className="ad-answer-pagination">
-            {answers && (
-              <AdminPagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                handlePagination={handlePagination}
-              />
+          <div className="ad-searchResult">
+            <div className="admin-btn-wrapper">
+              <Button
+                variant="admin"
+                onClick={() => {
+                  handleSearch();
+                }}
+              >
+                검색
+              </Button>
+              <Button
+                variant="admin-white"
+                onClick={() => {
+                  setAnswerStatus('');
+                }}
+              >
+                초기화
+              </Button>
+            </div>
+            {isLoading ? (
+              <p>로딩 중...</p>
+            ) : (
+              <div>
+                <p className="ad-member-cnt">
+                  <span className="ad-member-num">{totalACount}</span>건의
+                  기업이 검색되었습니다.
+                </p>
+                <div className="ad-answer-result">
+                  <ul>
+                    <li className="ad-answerResult-header">
+                      <input type="checkbox" />
+                      {/* <span>번호</span> */}
+                      <span>질문번호</span>
+                      <span>답변번호</span>
+                      <span>작성자</span>
+                      <span>채택여부</span>
+                      <span>상태관리</span>
+                    </li>
+                    {answers.map((answers, index) => {
+                      const itemNumber = index + 1 + currentPage * itemsPerPage;
+                      console.log(itemNumber);
+                      if (Boolean(answers.answerStatus) === true) {
+                        answers.answerStatus = '채택';
+                      } else {
+                        answers.answerStatus = '미채택';
+                      }
+                      return (
+                        <li
+                          key={answers.answerId}
+                          className="ad-answerResult-item"
+                        >
+                          <input type="checkbox" />
+                          {/* <span>{itemNumber}</span> */}
+                          <span>{answers.questionId}</span>
+                          <span>{answers.answerId}</span>
+                          <span>{answers.answererNickname}</span>
+                          <span>{answers.answerStatus}</span>
+                          <span>{answers.selection}</span>
+                          <span
+                            onClick={open}
+                            onSubmit={() => showAModals(answers)}
+                          >
+                            <span className="ad-memberdetail">관리 변경</span>
+                          </span>
+                          {isOpen && (
+                            <Portal>
+                              <AnswerModals
+                                close={close}
+                                showAList={showAList}
+                                handleSearch={handleSearch}
+                                answers={answers}
+                              />
+                            </Portal>
+                          )}
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+                <div className="ad-answer-pagination">
+                  {answers && (
+                    <AdminPagination
+                      currentPage={currentPage}
+                      totalPages={totalPages}
+                      handlePagination={handlePagination}
+                    />
+                  )}
+                </div>
+              </div>
             )}
           </div>
-        </div>
-        {/* )}
-        </div> */}
-      </>
+        </>
+      )}
     </div>
   );
 }

@@ -34,9 +34,10 @@ interface ApiResponse {
 
 export default function CompanySelection() {
   const [companies, setCompanies] = useState<Company[]>([]);
+
   const [totalCompanyCount, seTtotalCompanyCount] = useState(0);
   const [selectedCompany, setSelectedCompany] = useState(null);
-  console.log(selectedCompany);
+
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [companyType, setcompanyType] = useState('');
@@ -48,7 +49,9 @@ export default function CompanySelection() {
   const [selectedDistrict, setSelectedDistrict] = useState('');
   const itemsPerPage = 10;
   const [isLoading, setIsLoading] = useState(false);
-
+  console.log(companyType);
+  console.log(selectedCompany);
+  console.log(companies);
   useEffect(() => {
     fetchCompanies(currentPage);
   }, [currentPage]);

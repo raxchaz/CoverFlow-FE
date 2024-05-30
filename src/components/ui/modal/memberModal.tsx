@@ -6,10 +6,7 @@ import React from 'react';
 import CommonModal from './commonModal';
 import { styled } from 'styled-components';
 import Button from '../button/Button/Button';
-import {
-  MemberAuthorType,
-  MemberState,
-} from '../../global/constants/adminOption';
+import { Role, MemberStatus } from '../../global/constants/adminOption';
 // import { fetchAPI } from '../../global/utils/apiUtil';
 
 interface Member {
@@ -86,7 +83,7 @@ const MemberModals = ({
               value={member?.memberStatus}
             >
               <option value=""></option>
-              {MemberState.map((memberStatus) => (
+              {MemberStatus.map((memberStatus) => (
                 <option key={memberStatus.key} value={memberStatus.key}>
                   {memberStatus.value}
                 </option>
@@ -100,7 +97,7 @@ const MemberModals = ({
               value={member?.role}
             >
               <option value=""></option>
-              {MemberAuthorType.map((role) => (
+              {Role.map((role) => (
                 <option key={role.key} value={role.key}>
                   {role.value}
                 </option>
