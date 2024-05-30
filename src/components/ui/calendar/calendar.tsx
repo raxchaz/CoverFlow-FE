@@ -1,11 +1,18 @@
 import DatePicker from 'react-datepicker';
-import React, { useState } from 'react';
+import React from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
 import styled from 'styled-components';
 
-function Calendar() {
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
+
+interface CalendarProps {
+  startDate: Date;
+  setStartDate: React.Dispatch<React.SetStateAction<Date>>;
+  endDate: Date;
+  setEndDate: React.Dispatch<React.SetStateAction<Date>>;
+}
+
+function Calendar({ startDate, setStartDate, endDate, setEndDate }: CalendarProps) {
+
   return (
     <Box>
       <DateContainer

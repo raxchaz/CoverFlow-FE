@@ -29,6 +29,8 @@ interface ApiResponse {
 }
 
 export default function AnswerSelection() {
+  const [startDate,setStartDate]= useState(new Date())
+  const [endDate, setEndDate] = useState(new Date());
   const [isLoading, setIsLoading] = useState(false);
   const [totalACount, seTtotalACoun] = useState(0);
   const [selectedA, setSelectedA] = useState(null);
@@ -141,7 +143,12 @@ export default function AnswerSelection() {
                 <span className="ad-answer-total">전체</span>
               </div>
               <div className="ad-answerSelection-Calendar">
-                <Calendar />
+              <Calendar 
+              startDate={startDate}
+              setStartDate={setStartDate}
+              endDate={endDate}
+              setEndDate={setEndDate}
+              />
               </div>
             </div>
 
