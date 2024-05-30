@@ -52,7 +52,7 @@ const TabBar = () => {
         >
           <div className={activeNav === 2 ? 'nav-item tab-active' : 'nav-item'}>
             <img src={user} alt="user" className="icon" />
-            <div className="text">마이페이지</div>
+            {/* <div className="text">마이페이지</div> */}
           </div>
         </Link>
       </div>
@@ -64,7 +64,7 @@ const TabBar = () => {
         <Link to="/" className="nav-link" onClick={() => setActiveNav(1)}>
           <div className={activeNav === 1 ? 'nav-item tab-active' : 'nav-item'}>
             <img src={home} alt="user" className="icon" />{' '}
-            <div className="text">홈</div>
+            {/* <div className="text">홈</div> */}
           </div>
         </Link>
       </div>
@@ -80,7 +80,7 @@ const TabBar = () => {
               <img src={newAlert} alt="new alert" className="icon-overlay" />
             )}
             <img src={alert} alt="user" className="icon" />
-            <div className="text">알림</div>
+            {/* <div className="text">알림</div> */}
           </div>
         </Link>
       </div>
