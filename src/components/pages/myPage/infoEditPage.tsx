@@ -39,21 +39,46 @@ const Divider = styled.div`
   margin: 3% 0% 0% 12%;
 `;
 
+const genderMapping = {
+  Female: '여성',
+  Male: '남성',
+  Unknown: '밝히고 싶지 않음',
+};
+
+const ageMapping = {
+  '10-19': '10대',
+  '20-29': '20대',
+  '30-39': '30대',
+  '40-49': '40대',
+  '50-59': '50대',
+  '60-': '60대 이상',
+};
+
+const ageReverseMapping = {
+  '10대': '10-19',
+  '20대': '20-29',
+  '30대': '30-39',
+  '40대': '40-49',
+  '50대': '50-59',
+  '60대 이상': '60-',
+};
+
 function InfoEditPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const [userInfo, setUserInfo] = useState({ socialType: ' ' });
   const [nickname, setNickname] = useState('');
+  const [initialTag, setInitialTag] = useState('');
+  const [initialGender, setInitialGender] = useState('');
+  const [initialAge, setInitialAge] = useState('');
   const [selectedTag, setSelectedTag] = useState('');
   const [selectedGender, setSelectedGender] = useState('');
   const [selectedAge, setSelectedAge] = useState('');
-  const handleSelectTag = (tag) => setSelectedTag(tag);
-  const handleSelectGender = (gender) => setSelectedGender(gender);
-  const handleSelectAge = (age) => setSelectedAge(age);
 
-  /* 사용자의 토큰이 존재한다면, 사용자의 정보를 가져옵니다. */
+  const handleSelectTag = (tag: string) => setSelectedTag(tag);
+  const handleSelectGender = (gender: string) => setSelectedGender(gender);
+  const handleSelectAge = (age: string) => setSelectedAge(age);
+
   useEffect(() => {
-    // setNickname(''); // 렌덜이 전에 사용자의 nickname을 초기화!
     const token = localStorage.getItem(ACCESS_TOKEN);
 
     if (!token) {
@@ -62,14 +87,18 @@ function InfoEditPage() {
     } else {
       loadUserData();
     }
-  }, [nickname]);
+  }, []);
 
-  /* 사용자의 닉네임과 붕어빵 개수를 불러옵니다. */
   const loadUserData = async () => {
     try {
       const data = (await fetchAPI('/api/member/me', 'GET')) as UserResponse;
-      // console.log('사용자 정보:', data);
       setNickname(data.data.nickname);
+      setInitialTag(data.data.tag);
+      setInitialGender(genderMapping[data.data.gender]);
+      setInitialAge(ageMapping[data.data.age]);
+      setSelectedTag(data.data.tag);
+      setSelectedGender(genderMapping[data.data.gender]);
+      setSelectedAge(ageMapping[data.data.age]);
       dispatch(setRewardCount(data.data.fishShapedBun));
     } catch (error) {
       console.error(error);
@@ -78,38 +107,23 @@ function InfoEditPage() {
 
   const sendDataToServer = async () => {
     try {
-      let genderData = '';
       if (selectedTag === '' || selectedAge === '' || selectedGender === '') {
         showErrorToast('선택된 정보가 없습니다.');
+        return;
       }
-
-      if (selectedGender === '여성') {
-        genderData = 'Female';
-      } else if (selectedGender === '남성') {
-        genderData = 'Male';
-      } else {
-        genderData = 'Unknown';
-      }
-
-      const ageRange =
-        {
-          '10대': '10-19',
-          '20대': '20-29',
-          '30대': '30-39',
-          '40대': '40-49',
-          '50대': '50-59',
-          '60대 이상': '60-',
-        }[selectedAge] || selectedAge;
 
       const body = {
         tag: selectedTag,
-        age: ageRange,
-        gender: genderData,
+        age: ageReverseMapping[selectedAge],
+        gender: {
+          여성: 'Female',
+          남성: 'Male',
+          '밝히고 싶지 않음': 'Unknown',
+        }[selectedGender],
       };
 
       if (selectedTag && selectedAge && selectedGender) {
         await fetchAPI('/api/member', 'PATCH', body);
-        // console.log('서버 응답:', data);
         showSuccessToast('성공적으로 정보를 수정했습니다.');
         navigate('/mypage');
       }
@@ -137,6 +151,14 @@ function InfoEditPage() {
     }
   };
 
+  const isDataChanged = () => {
+    return (
+      initialTag !== selectedTag ||
+      initialGender !== selectedGender ||
+      initialAge !== selectedAge
+    );
+  };
+
   return (
     <StyledPage className="main-page-container">
       <StyledHeader>
@@ -148,15 +170,11 @@ function InfoEditPage() {
             <span className="modify-nick">닉네임</span>
             <div className="modify-nick-info">
               <span className="modify-nickname">{nickname}</span>
-              <div
-                className="modify-nickname-btn"
-                onClick={handleModifyNickname}
-              >
+              <div className="modify-nickname-btn" onClick={handleModifyNickname}>
                 변경
               </div>
-            </div>        
+            </div>
             <div className="nick-disclaimer">* 닉네임 변경 시, 붕어빵 20개가 차감됩니다 </div>
-
           </div>
         </div>
         <Divider />
@@ -213,9 +231,7 @@ function InfoEditPage() {
             ))}
           </div>
           <Button
-            disabled={
-              selectedTag === '' || selectedAge === '' || selectedGender === ''
-            }
+            disabled={!isDataChanged()}
             onClick={sendDataToServer}
           >
             저장
@@ -228,8 +244,7 @@ function InfoEditPage() {
           <div className="secessionUser-info">
             <div className="modify-nick">회원 탈퇴</div>
             <div className="userSecession-info">
-              회원 탈퇴를 할 경우, 계정을 되돌릴 수 없고 모든 데이터가
-              삭제됩니다
+              회원 탈퇴를 할 경우, 계정을 되돌릴 수 없고 모든 데이터가 삭제됩니다
             </div>
             <Button onClick={goToSecessionPage}>탈퇴</Button>
           </div>

@@ -76,7 +76,6 @@ function Mypage() {
   const loadUserData = async () => {
     try {
       const data = await fetchAPI('/api/member/me', 'GET');
-      console.log(data)
       setNickname(data.data.nickname);
       mySocialType(data.data.socialType);
       setTag(data.data.tag)
@@ -137,7 +136,7 @@ function Mypage() {
     showErrorToast("준비중인 페이지입니다.")
   };
   const goToEdit = () => {
-    navigate('/info-edit', { state: { nickname } });
+    navigate('/info-edit');
   };
 
   /* ========================================================= */
