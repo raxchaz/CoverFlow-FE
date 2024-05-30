@@ -32,6 +32,8 @@ interface ApiResponse {
 }
 
 export default function MemberSelection() {
+  const [startDate,setStartDate]= useState(new Date())
+  const [endDate, setEndDate] = useState(new Date());
   // const [isLoading, setIsLoading] = useState(false);
   const [members, setMembers] = useState<Member[]>([]);
   const itemsPerPage = 10;
@@ -118,7 +120,12 @@ export default function MemberSelection() {
               <span className="ad-member-total">전체</span>
             </div>
             <div className="ad-memberSelection-Calendar">
-              <Calendar />
+            <Calendar 
+              startDate={startDate}
+              setStartDate={setStartDate}
+              endDate={endDate}
+              setEndDate={setEndDate}
+              />
             </div>
           </div>
 
@@ -138,7 +145,12 @@ export default function MemberSelection() {
             <div className="ad-memberOption-maxend">
               <span className="ad-member-title">최종로그인</span>
               <div className="ad-member-Calendar">
-                <Calendar />
+              <Calendar 
+              startDate={startDate}
+              setStartDate={setStartDate}
+              endDate={endDate}
+              setEndDate={setEndDate}
+              />
               </div>
             </div>
           </div>

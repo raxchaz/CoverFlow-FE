@@ -26,6 +26,8 @@ interface ApiResponse {
 }
 
 export default function ContactSelection() {
+  const [startDate,setStartDate]= useState(new Date())
+  const [endDate, setEndDate] = useState(new Date());
   // const [isLoading, setIsLoading] = useState(false);
   const [inquries, setInquiries] = useState<Inquiries[]>([]);
   const itemsPerPage = 10;
@@ -100,7 +102,12 @@ export default function ContactSelection() {
               <span className="ad-contact-total">전체</span>
             </div>
             <div className="ad-contactSelection-Calendar">
-              <Calendar />
+            <Calendar 
+              startDate={startDate}
+              setStartDate={setStartDate}
+              endDate={endDate}
+              setEndDate={setEndDate}
+              />
             </div>
           </div>
 

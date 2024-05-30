@@ -28,6 +28,8 @@ interface ApiResponse {
 }
 
 export default function ReportQuestions() {
+  const [startDate,setStartDate]= useState(new Date())
+  const [endDate, setEndDate] = useState(new Date());
   // const [isLoading, setIsLoading] = useState(false);
   const [reports, setReportss] = useState<Reports[]>([]);
   console.log(setReportss);
@@ -110,7 +112,12 @@ export default function ReportQuestions() {
               <span className="ad-report-total">전체</span>
             </div>
             <div className="ad-reportSelection-Calendar">
-              <Calendar />
+            <Calendar 
+              startDate={startDate}
+              setStartDate={setStartDate}
+              endDate={endDate}
+              setEndDate={setEndDate}
+              />
             </div>
           </div>
 

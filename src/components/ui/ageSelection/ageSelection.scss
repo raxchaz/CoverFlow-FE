@@ -5,7 +5,7 @@
   width: 45%;
 }
 
-button {
+.age-button-container button {
   min-width: 8rem;
   font-size: 1.8rem;
   letter-spacing: -1px;
@@ -23,14 +23,14 @@ button {
     box-shadow 0.3s; /* 트랜지션 효과 추가 */
 }
 
-button.selected {
+.age-button-container button.selected {
   background-color: #ff8d1d;
   color: #ffffff;
   font-weight: bold;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
 }
 
-button:not(.selected) {
+.age-button-container button:not(.selected) {
   background-color: #cacaca;
   font-weight: bold;
   color: white;
