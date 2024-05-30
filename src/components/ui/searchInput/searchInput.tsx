@@ -17,7 +17,7 @@ const StyledSearchInput = styled.input`
   border: 2px solid #ffbd7c;
   background-color: #fff;
   border-radius: 3rem;
-  margin:13% 0% 0% 12.5%;
+  margin:30% 0% 0% 12.5%;
   outline: none;
 
   &:focus {
@@ -39,7 +39,7 @@ const AutoCompleteContainer = styled.div`
   width: 490px;
   letter-spacing: -1px;
   margin-left: 14%;
-  margin-top: 1%;
+  margin-top: 0.1%;
   border-radius: 0 0 10px 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   max-height: 300px;

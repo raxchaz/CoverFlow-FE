@@ -32,5 +32,5 @@ export const StyledHeader = styled.div`
   position: relative;
   display: block;
   flex-direction: row;
-  margin-top: 12%;
+
 `;

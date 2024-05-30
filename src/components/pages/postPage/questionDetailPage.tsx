@@ -390,7 +390,7 @@ function QuestionDetailPage() {
       <StyledHeader>
         <TitleHeader pageTitle="상세보기" handleGoBack={handleGoBack} />
       </StyledHeader>
-      <div className="question-detail-container">
+      <div className="question-detail-container" >
         <div className="job-info">
           <img src={questionerTag === '취준생' ? Leaf : Tree} alt="" />
           <span className={questionerTag === '취준생' ? `leaf` : ''}>

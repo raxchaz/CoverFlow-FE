@@ -49,7 +49,6 @@ const GlobalStyles = createGlobalStyle`
     justify-content: center;
     align-items: center;
     font-size: 1rem;
-    margin-top: 7%;
     letter-spacing: -1px;
     font-weight: 600;
   }
@@ -58,7 +57,7 @@ const GlobalStyles = createGlobalStyle`
     position: relative;
     display: block;
     flex-direction: row;
-    margin-top: 12%;
+   
   }
 `;
 

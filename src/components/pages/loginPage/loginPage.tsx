@@ -11,7 +11,7 @@ import { StyledHeader, StyledPage } from '../../../styledComponent';
 import { ACCESS_TOKEN, BASE_URL } from '../../global/constants';
 
 const WelcomeMessage = styled.p`
-  margin: 15% 0% 0% 15%;
+  margin: 30% 0% 0% 15%;
   font-size: 3.5rem;
   font-family: Pretendard-Bold;
   letter-spacing: -1px;

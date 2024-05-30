@@ -13,14 +13,23 @@
   cursor: pointer;
 }
 
-.nickname-info {
-  margin: 12% 0% 2.5% 10%;
+.nickname-info-con {
+  margin: 25% 0% 2.5% 10%;
   font-size: 3.5rem;
   letter-spacing: -1px;
   color: #000;
   font-family: 'pretendard-Bold';
   line-height: 1.2;
 }
+.nickname-info {
+  margin: 10% 0% 2.5% 10%;
+  font-size: 3.5rem;
+  letter-spacing: -1px;
+  color: #000;
+  font-family: 'pretendard-Bold';
+  line-height: 1.2;
+}
+
 
 .separator {
   width: 88%;

@@ -172,7 +172,7 @@ const NicknamePage = () => {
       <StyledPage className="main-page-container">
         <StyledHeader>
           <TitleHeader pageTitle="회원 정보 설정" />
-          <div className="nickname-info">
+          <div className="nickname-info-con">
             <span className="welcome-nickname">
               현재 본인의 상황을 <br /> 체크해 주세요
             </span>

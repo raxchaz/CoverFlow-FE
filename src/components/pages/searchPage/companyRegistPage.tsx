@@ -82,7 +82,7 @@ function CompanyRegistPage() {
     <StyledPage className="main-page-container">
       <StyledHeader>
         <TitleHeader pageTitle="기업 등록" handleGoBack={handleGoBack} />
-        <form onSubmit={handleSubmit} className="company-form">
+        <form onSubmit={handleSubmit} className="company-form" style={{marginTop:'10rem'}}>
           <div className="regist-company-name">
             <span>기업명</span> <div className="neccessary"> * 필수</div>
           </div>
