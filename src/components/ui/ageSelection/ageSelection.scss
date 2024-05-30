@@ -5,7 +5,7 @@
   width: 45%;
 }
 
-.age-button-container button {
+ button {
   min-width: 8rem;
   font-size: 1.8rem;
   letter-spacing: -1px;
@@ -17,21 +17,46 @@
   border-radius: 10px;
   margin: 5% 10px 0% 0%;
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
-  transition:
-    background-color 0.3s,
-    color 0.3s,
-    box-shadow 0.3s; /* 트랜지션 효과 추가 */
+  // transition:
+  //   background-color 0.3s,
+  //   color 0.3s,
+  //   box-shadow 0.3s; /* 트랜지션 효과 추가 */
 }
 
-.age-button-container button.selected {
+ button.selected {
   background-color: #ff8d1d;
   color: #ffffff;
   font-weight: bold;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
 }
 
-.age-button-container button:not(.selected) {
+button:not(.selected) {
   background-color: #cacaca;
   font-weight: bold;
   color: white;
+}
+
+.react-datepicker__navigation {
+  align-items: center !important;
+  background: none !important;
+  display: flex !important;
+  justify-content: center !important;
+  text-align: center !important;
+  cursor: pointer !important;
+  position: absolute !important;
+  top: 2px !important;
+  padding: 0 !important;
+  border: none !important;
+  z-index: 1 !important;
+  height: 32px !important;
+  width: 32px !important;
+  text-indent: -999em !important;
+  overflow: hidden !important;
+  box-shadow: none;
+  margin: 0;
+  border-radius:0%;
+  font-family:none;
+  letter-spacing:0;
+  font-size:0.5rem;
+  min-width:auto;
 }

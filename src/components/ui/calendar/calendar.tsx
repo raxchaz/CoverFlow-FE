@@ -46,6 +46,11 @@ const Box = styled.div`
 const DateContainer = styled(DatePicker)`
   width: 135px;
   height: 28px;
+
+  .react-datepicker__navigation{
+    width:auto !impotant;
+  }
+  .react-datepicker__navigation--next
 `;
 
 const Slash = styled.p`
