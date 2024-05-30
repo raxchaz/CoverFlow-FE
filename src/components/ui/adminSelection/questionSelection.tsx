@@ -7,6 +7,7 @@ import Calendar from '../calendar/calendar';
 import AdminPagination from './adminPagination';
 import QuestionModals from '../modal/questionModal';
 import Portal from '../modal/portal';
+import { qStatus } from '../../global/constants/adminOption';
 
 interface AdminQuestions {
   questionId: number;
@@ -44,12 +45,16 @@ export default function QuestionSelection() {
   const [startDate, setStartDate] = useState<Date>(new Date());
   const [endDate, setEndDate] = useState<Date>(new Date());
   const [questions, setQuestions] = useState<AdminQuestions[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [totalqCount, seTtotalqCount] = useState(0);
   const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isDateFilterChecked, setIsDateFilterChecked] = useState<boolean>(false);
 
+  const [questionStatus, setQuestionStatus] = useState('');
+  const [selectedq, setSelectedq] = useState(null);
   const open = () => {
     setIsOpen(true);
   };
@@ -59,7 +64,7 @@ export default function QuestionSelection() {
   };
 
   useEffect(() => {
-    fetchMember(currentPage);
+    fetchQuestion(currentPage);
   }, [currentPage]);
 
   const handlePagination = (direction) => {
@@ -89,13 +94,16 @@ export default function QuestionSelection() {
     setQuestions([])
     setTotalPages(0)
     setIsDateFilterChecked(false)
+    seTtotalqCount(0)
+    setQuestionStatus('')
   }
 
 
     // 2. 인자 : date로 기존에 설정되어있었기에, 아래처럼 작성하면 형식에 맞게 요청 가능합니다. 
     // 처음에 안내 드린 것 같이, 로그인 유지를 위해 fetchAPI 함수를 임포트하여 사용해주세요. 
     // 기존 처럼 단순 fetch 사용하시려면, 리프레쉬 토큰 재발급 로직을 추가해주셔야 합니다.
-    const fetchMember = async (pageNo: number) => {
+    const fetchQuestion = async (pageNo: number) => {
+      setIsLoading(true);
       try {
         const queryParams = new URLSearchParams({
           pageNo: pageNo.toString(),
@@ -105,16 +113,35 @@ export default function QuestionSelection() {
             createdEndDate: endDate.toISOString().split('T')[0],
           }),
         });
+        if (questionStatus) {
+          queryParams.set('questionStatus', questionStatus);
+        }
+    
   
         const endpoint = `/api/question/admin?${queryParams.toString()}`;
         const data: ApiResponse = await fetchAPI(endpoint, 'GET');
   
         setQuestions(data.data.questions);
         setTotalPages(data.data.totalPages);
+        seTtotalqCount(data.data.totalElements);
+        setIsLoading(false);
       } catch (error) {
         console.error('Error:', error);
       }
     };
+
+  const showqModals = (questions) => {
+    setSelectedq(questions);
+  };
+
+  const showqList = () => {
+    setSelectedq(null);
+  };
+
+  const handleSearch = () => {
+    setCurrentPage(0);
+    fetchQuestion(0);
+  };
 
   return (
     <div className="ad-questionSelection-container">
@@ -134,98 +161,142 @@ export default function QuestionSelection() {
           <img className="search-icon" src={AdminSearch} alt="Search" />
         </div>
       </div>
-      <>
-        <div className="ad-questionOption">
-          <div className="ad-questionitem-direction">
-            <div className="ad-questionOption-maxitem">
-              <span className="ad-question-title">가입일</span>
-              <input
+      {selectedq ? (
+        <>
+          <QuestionModals
+            close={close}
+            showqList={showqList}
+            questions={selectedq}
+            handleSearch={handleSearch}
+          />
+        </>
+      ) : (
+        <>
+          <div className="ad-questionOption">
+            <div className="ad-questionitem-direction">
+              <div className="ad-questionOption-maxitem">
+                <span className="ad-question-title">가입일</span>
+                <input
                 type="checkbox"
                 className="ad-question-checkbox"
                 checked={isDateFilterChecked}
                 onChange={handleDateFilterChange}
               />
-              <span className="ad-question-total">전체</span>
-            </div>
-            {!isDateFilterChecked && (
+                <span className="ad-question-total">전체</span>
+              </div>
+              {!isDateFilterChecked && (
               <div className="ad-questionSelection-Calendar">
-                <Calendar
+                  <Calendar
                   startDate={startDate}
                   setStartDate={setStartDate}
                   endDate={endDate}
                   setEndDate={setEndDate}
                 />
+                </div>
+              )}
+          </div>
+
+            <div className="ad-questionOption-item">
+              <span className="ad-question-title">질문상태</span>
+              <select
+                className="ad-searchOption-select"
+                value={questionStatus}
+                onChange={(e) => setQuestionStatus(e.target.value)}
+              >
+                <option value=""></option>
+                {qStatus?.map((questionStatus) => (
+                  <option key={questionStatus.key} value={questionStatus.key}>
+                    {questionStatus.value}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+          <div className="ad-searchResult">
+            <div className="admin-btn-wrapper">
+              <Button variant="admin" onClick={handleSearch}>
+                검색
+              </Button>
+              <Button
+                variant="admin-white"
+                onClick={() => {
+                  initiateQuestion()
+                }}
+              >
+                초기화
+              </Button>
+            </div>
+            {isLoading ? (
+              <p>로딩 중...</p>
+            ) : (
+              <div>
+                <div>
+                  <p className="ad-question-cnt">
+                    <span className="ad-question-num">{totalqCount}</span>건의
+                    기업이 검색되었습니다.
+                  </p>
+                </div>
+                <div className="ad-question-result">
+                  <ul>
+                    <li className="ad-questionResult-header">
+                      <input type="checkbox" />
+                      <span>번호</span>
+                      <span>제목</span>
+                      <span>닉네임</span>
+                      <span>기업명</span>
+                      <span>조회수</span>
+                      <span>답변수</span>
+                      <span>상태 관리</span>
+                    </li>
+                    {questions.map((questions, index) => {
+                      const itemNumber = index + 1 + currentPage * itemsPerPage;
+                      return (
+                        <li
+                          key={questions.questionId}
+                          className="ad-questionResult-item"
+                        >
+                          <input type="checkbox" />
+                          <span>{itemNumber}</span>
+                          <span>{questions.questionTitle}</span>
+                          <span>{questions.questionerNickname}</span>
+                          <span>{questions.companyName}</span>
+                          <span>{questions.questionViewCount}</span>
+                          <span>{questions.answerCount}</span>
+                          <span
+                            onClick={open}
+                            onSubmit={() => showqModals(questions)}
+                          >
+                            <span className="ad-memberdetail">관리 변경</span>
+                          </span>
+                          {isOpen && (
+                            <Portal>
+                              <QuestionModals
+                                close={close}
+                                showqList={showqList}
+                                handleSearch={handleSearch}
+                                questions={questions}
+                              />
+                            </Portal>
+                          )}
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+                <div className="ad-question-pagination">
+                  {questions.length>0 && (
+                    <AdminPagination
+                      currentPage={currentPage}
+                      totalPages={totalPages}
+                      handlePagination={handlePagination}
+                    />
+                  )}
+                </div>
               </div>
             )}
           </div>
-
-          <div className="ad-questionOption-item">
-            <span className="ad-question-title">질문상태</span>
-            <select className="ad-searchOption-select">
-              <option value=""></option>
-            </select>
-          </div>
-        </div>
-        <div className="ad-searchResult">
-          <div className="admin-btn-wrapper">
-            <Button variant="admin" onClick={() => {fetchMember(currentPage)}}>
-              검색
-            </Button>
-            <Button variant="admin-white" onClick={() => {initiateQuestion()}}>
-              초기화
-            </Button>
-          </div>
-          <div className="ad-question-result">
-            <ul>
-              <li className="ad-questionResult-header">
-                <input type="checkbox" />
-                <span>번호</span>
-                <span>제목</span>
-                <span>닉네임</span>
-                <span>기업명</span>
-                <span>조회수</span>
-                <span>답변수</span>
-                <span>작성일</span>
-                <span>상태 관리</span>
-              </li>
-              {questions.map((question, index) => {
-                const itemNumber = index + 1 + currentPage * itemsPerPage;
-                return (
-                  <li key={question.questionId} className="ad-questionResult-item">
-                    <input type="checkbox" />
-                    <span>{itemNumber}</span>
-                    <span>{question.questionTitle}</span>
-                    <span>{question.questionerNickname}</span>
-                    <span>{question.companyName}</span>
-                    <span>{question.questionViewCount}</span>
-                    <span>{question.answerCount}</span>
-                    <span>{question.createAt}</span>
-                    <span onClick={open}>
-                      <span className="ad-memberdetail">관리 변경</span>
-                    </span>
-                    {isOpen && (
-                      <Portal>
-                        <QuestionModals close={close} />
-                      </Portal>
-                    )}
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-          {questions.length>0 && (
-          <div className="ad-question-pagination">
-           
-              <AdminPagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                handlePagination={handlePagination}
-              />
-            
-          </div>
-          )}
-        </div>
-      </>
+        </>
+      )}
     </div>
   );
 }

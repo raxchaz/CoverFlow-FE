@@ -1,45 +1,66 @@
-// import React, { useRef } from 'react';
+// ReCommentModals
+
 import React from 'react';
-// import CommonModal from './commonModal';
-// import { useOutSideClick } from './useOutsideClick';
-// import { ModalContainer } from './modalContainer';
 import CommonModal from './commonModal';
 import { styled } from 'styled-components';
 import Button from '../button/Button/Button';
+import { RSTATUS } from '../../global/constants/adminOption';
+interface Reports {
+  reportId: number;
+  reportContent: string;
+  reportType: string;
+  reportStatus: boolean;
+  reporterNickname?: string;
+  reportedNickname?: string;
+  questionId?: string;
+  createdAt?: number;
+}
 
 type ModalProps = {
   close?: () => void;
   open?: boolean;
   children?: React.ReactNode;
-  // onClick?: () => void;
-  onClick?: React.MouseEventHandler<HTMLBodyElement>;
+  onClick?: () => void;
+  // onClick?: React.MouseEventHandler<HTMLBodyElement>;
+  reports?: Reports;
+  showList?: () => void;
+  handleSearch?: () => void;
 };
 
-const ReCommentModals = ({ close }: ModalProps) => {
+const ReCommentModals = ({ close, reports }: ModalProps) => {
   return (
     <div>
       <CommonModal onClose={close}>
-        <Inners onClick={(e) => e.stopPropagation()}>
+        {/* <Inners onClick={(e) => e.stopPropagation()}> */}
+        <Inners>
           <InnerTitle>신고 기본 정보</InnerTitle>
-          <ReportTables>
+          <ReportTables key={reports?.reportId}>
             <ReportKind>질문번호</ReportKind>
-            <Reportapis>api</Reportapis>
+            <Reportapis>{reports?.questionId}</Reportapis>
             <ReportKind>답변번호</ReportKind>
-            <Reportapis>api</Reportapis>
+            <Reportapis>{reports?.reportId}</Reportapis>
             <ReportKind>작성자</ReportKind>
-            <Reportapis>api</Reportapis>
+            <Reportapis>{reports?.reportedNickname}</Reportapis>
             <ReportKind>신고사유</ReportKind>
-            <Reportapis>api</Reportapis>
+            <Reportapis>{reports?.reportStatus}</Reportapis>
             <ReportKind>신고자</ReportKind>
-            <Reportapis>api</Reportapis>
+            <Reportapis>{reports?.reporterNickname}</Reportapis>
             <ReportKind>신고일</ReportKind>
-            <Reportapis>api</Reportapis>
+            <Reportapis>{reports?.createdAt}</Reportapis>
           </ReportTables>
           <InnersubTitle>신고 상태 변경</InnersubTitle>
           <ReportStateContainer>
             <StateTitle>신고 상태</StateTitle>
-            <StateSelection>
+            <StateSelection
+              className="ad-searchOption-select"
+              value={reports?.reportId}
+            >
               <option value=""></option>
+              {RSTATUS.map((RSTATUS) => (
+                <option key={RSTATUS.key} value={RSTATUS.key}>
+                  {RSTATUS.value}
+                </option>
+              ))}
             </StateSelection>
           </ReportStateContainer>
           <ButtonContainer>
