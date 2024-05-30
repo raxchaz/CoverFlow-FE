@@ -307,7 +307,7 @@ function QuestionDetailPage() {
 
       if (response.error) {
         if (response.status === 409) {
-          showErrorToast('답변이 달린 게시물은 삭제할 수 없습니다. ');
+          showErrorToast('답변이 달린 게시물은 삭제할 수 없습니다.');
           return;
         }
         throw new Error('요청 처리 중 오류가 발생했습니다.');
@@ -412,7 +412,6 @@ function QuestionDetailPage() {
               <li onClick={handleClickEdit} className="dropdown-item-edit">
                 수정
               </li>
-
               <li onClick={handleClickDelete} className="dropdown-item-delete">
                 삭제
               </li>

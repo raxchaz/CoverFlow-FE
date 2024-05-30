@@ -189,6 +189,7 @@ function CompanyInfoPage() {
         if (data) {
           setCompanyData(data.data);
           setTotalPages(data.data.totalPages);
+
           setQuestionsCount(data.data.questionCount);
         } else {
           throw new Error('데이터가 존재하지 않습니다.');
@@ -324,6 +325,7 @@ function CompanyInfoPage() {
                   reward={question.reward}
                   companyData={companyData}
                   viewCount={question.questionViewCount}
+                  questionCategory={question.questionCategory}
                 />
               ))}
             </QuestionList>
@@ -343,6 +345,7 @@ function CompanyInfoPage() {
                   reward={question.reward}
                   companyData={companyData}
                   viewCount={question.questionViewCount}
+                  questionCategory={question.questionCategory}
                 />
               ))}
             </QuestionList>
