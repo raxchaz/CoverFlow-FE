@@ -6,7 +6,7 @@ import React from 'react';
 import CommonModal from './commonModal';
 import { styled } from 'styled-components';
 import Button from '../button/Button/Button';
-
+import { AStatus } from '../../global/constants/adminOption';
 interface AdminAnswer {
   answerId: number;
   questionId: number;
@@ -48,8 +48,16 @@ const AnswerModals = ({ close, answers }: ModalProps) => {
           <InnersubTitle>답변 상태 변경</InnersubTitle>
           <AnswerStateContainer>
             <StateTitle>답변 상태</StateTitle>
-            <StateSelection>
+            <StateSelection
+              className="ad-searchOption-select"
+              value={String(Boolean(answers?.answerStatus))}
+            >
               <option value=""></option>
+              {AStatus.map((answers) => (
+                <option key={answers.key} value={answers.key}>
+                  {answers.value}
+                </option>
+              ))}
             </StateSelection>
           </AnswerStateContainer>
           <ButtonContainer>
