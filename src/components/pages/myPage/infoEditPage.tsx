@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { setRewardCount } from '../../../store/actions/userActions.js';
 import { useNavigate } from 'react-router-dom';
 import '../../../asset/sass/pages/myPage/infoEditPage.scss';
@@ -12,7 +12,6 @@ import { ACCESS_TOKEN } from '../../global/constants';
 import { showErrorToast, showSuccessToast } from '../../ui/toast/toast.tsx';
 import { fetchAPI } from '../../global/utils/apiUtil.js';
 import Button from '../../ui/button/Button/Button.jsx';
-
 interface UserData {
   email: string;
   nickname: string;
@@ -30,6 +29,13 @@ interface UserData {
 interface UserResponse {
   statusCode: string;
   data: UserData;
+}
+interface UserState {
+  rewardCount: number;
+}
+
+interface AppState {
+  user: UserState;
 }
 
 const Divider = styled.div`
@@ -64,6 +70,7 @@ const ageReverseMapping = {
 };
 
 function InfoEditPage() {
+  const { rewardCount } = useSelector((state: AppState) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [nickname, setNickname] = useState('');
@@ -73,6 +80,11 @@ function InfoEditPage() {
   const [selectedTag, setSelectedTag] = useState('');
   const [selectedGender, setSelectedGender] = useState('');
   const [selectedAge, setSelectedAge] = useState('');
+
+  // 팝업 관련
+  const [isShowModal, setIsShowModal] = useState(false);
+  const [isShowNicknameModal, setIsShowNicknameModal] = useState(false);
+  const reportMenuRef = useRef<HTMLDivElement>(null);
 
   const handleSelectTag = (tag: string) => setSelectedTag(tag);
   const handleSelectGender = (gender: string) => setSelectedGender(gender);
@@ -89,6 +101,40 @@ function InfoEditPage() {
     }
   }, []);
 
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (
+        reportMenuRef.current &&
+        !reportMenuRef.current.contains(event.target)
+      ) {
+        setIsShowModal(false);
+      }
+    };
+
+    if (isShowModal) {
+      window.addEventListener('click', handleOutsideClick);
+    } else {
+      window.removeEventListener('click', handleOutsideClick);
+    }
+
+    return () => {
+      window.removeEventListener('click', handleOutsideClick);
+    };
+  }, [isShowModal]);
+
+
+  const toggleReportPopup = () => {
+    setIsShowModal((showReport) => !showReport);
+    setIsShowNicknameModal((showReportModal) => !showReportModal);
+  };
+
+  const handleOutSideClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (event?.target === event?.currentTarget) {
+      setIsShowNicknameModal(false);
+    }
+  };
+
+  // 데이터 불러오기 관련
   const loadUserData = async () => {
     try {
       const data = (await fetchAPI('/api/member/me', 'GET')) as UserResponse;
@@ -142,10 +188,20 @@ function InfoEditPage() {
   };
 
   const handleModifyNickname = async () => {
+  
     try {
-      const data = await fetchAPI('/api/member/nickname', 'PATCH');
-      setNickname(data.nickname);
-      showSuccessToast('닉네임이 성공적으로 변경되었습니다.');
+      if(rewardCount<20){
+        setIsShowNicknameModal(false)
+        showErrorToast("붕어빵 갯수가 부족합니다.")
+        
+      }else if(rewardCount>20) {
+        const data = await fetchAPI('/api/member/nickname', 'PATCH');
+        setNickname(data.nickname);
+        showSuccessToast('닉네임이 성공적으로 변경되었습니다.');
+        setIsShowNicknameModal(false)
+        loadUserData()
+      }
+  
     } catch (error) {
       showErrorToast('닉네임 변경 중 예상치 못한 오류가 발생했습니다.');
     }
@@ -159,18 +215,41 @@ function InfoEditPage() {
     );
   };
 
+
+
   return (
     <StyledPage className="main-page-container">
       <StyledHeader>
         <TitleHeader pageTitle="내 정보 수정" handleGoBack={handleGoBack} />
         <UserInfoHeader />
+        
 
         <div className="modify-nick-container">
+        {isShowNicknameModal && (
+          <div onClick={handleOutSideClick} className="report-popup-overlay">
+            <div className="nickname-popup">
+              <div className="nickname-title">닉네임을 변경하시겠습니까?</div>
+              <div className="nickname-sub-title">닉네임 변경 시,</div>
+              <div className="nickname-sub-title">붕어빵 20개가 차감됩니다. </div>
+              <div className="change-nickname-btn">
+                <div
+                  className="close-nickname-popup"
+                  onClick={()=>{ setIsShowNicknameModal(false)}}
+                >
+                  아니요
+                </div>
+                <div className="submit-nickname" onClick={handleModifyNickname}>
+                  예
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
           <div className="modify-info">
             <span className="modify-nick">닉네임</span>
             <div className="modify-nick-info">
               <span className="modify-nickname">{nickname}</span>
-              <div className="modify-nickname-btn" onClick={handleModifyNickname}>
+              <div className="modify-nickname-btn" onClick={toggleReportPopup}>
                 변경
               </div>
             </div>
