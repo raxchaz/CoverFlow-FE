@@ -3,6 +3,7 @@ import { fetchAPI } from '../../global/utils/apiUtil';
 import AdminPagination from './adminPagination';
 import { ReactComponent as AdToggle } from '../../../asset/image/admin-toggle.svg';
 import { showSuccessToast } from '../toast/toast';
+import './feedback.scss';
 interface Feedback {
   feedbackId: number;
   feedbackContent: string;
@@ -69,7 +70,7 @@ export default function FeedbackSelection() {
             <li className="ad-searchResult-header">
               <input type="checkbox" />
               <span>번호</span>
-              <span>작성자</span>
+              {/* <span>작성자</span> */}
               <span>내용</span>
               <span>등록일 </span>
             </li>
@@ -82,15 +83,15 @@ export default function FeedbackSelection() {
                 >
                   <input type="checkbox" />
                   <span>{index + 1}</span>
-                  <span>이름 없음</span>
-                  <span>{company.feedbackContent}</span>
+                  {/* <span>이름 없음</span> */}
+                  <span className="ad-feeds">{company.feedbackContent}</span>
                   <span>
                     {company.createdAt}
                     <AdToggle style={{ marginLeft: '1rem' }} />
                   </span>
                 </li>
                 {selectedFeedback === company.feedbackId && (
-                  <li className="ad-feedback-content">
+                  <li className="ad-feedback-contents">
                     내용: {company.feedbackContent}
                   </li>
                 )}

@@ -28,3 +28,10 @@ export const RSTATUS = [
   { key: 'T', value: '등록' },
   { key: 'F', value: '미등록' },
 ];
+
+// 문의상태
+
+export const CSTATUS = [
+  { key: 'WAIT', value: '답변대기' },
+  { key: 'COMPLETE', value: '답변등록' },
+];
